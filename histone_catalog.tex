@@ -1,6 +1,9 @@
 \documentclass[10pt,a4paper,draft]{article}
-\usepackage[pdftex]{graphicx}           % to load images with pdflatex
-\usepackage{url}                        % nicely formatted URL's
+\usepackage[pdftex]{graphicx}                                           % load images with pdflatex
+\usepackage{url}                                                        % nicely formatted URL's
+\usepackage{todonotes}                                                  % insert to–do and missing figure items in the document
+  \newcommand{\addref}{\todo[color=red!40,size=\tiny]{Add reference}}   % new command for box about missing references
+  \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,#1]{#2}}       % new command for boxes of text that needs to be rewritten
 
 \begin{document}
   \section{Introduction}
