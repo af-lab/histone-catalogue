@@ -1,0 +1,125 @@
+LOCUS       NC_000011                383 bp    DNA     linear   CON 25-OCT-2010
+DEFINITION  Homo sapiens chromosome 11, GRCh37.p2 primary reference assembly.
+ACCESSION   NC_000011 REGION: complement(70125021..70125403) GPC_000000035
+VERSION     NC_000011.9  GI:224589802
+KEYWORDS    .
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 383)
+  AUTHORS   Taylor,T.D., Noguchi,H., Totoki,Y., Toyoda,A., Kuroki,Y.,
+            Dewar,K., Lloyd,C., Itoh,T., Takeda,T., Kim,D.W., She,X.,
+            Barlow,K.F., Bloom,T., Bruford,E., Chang,J.L., Cuomo,C.A.,
+            Eichler,E., FitzGerald,M.G., Jaffe,D.B., LaButti,K., Nicol,R.,
+            Park,H.S., Seaman,C., Sougnez,C., Yang,X., Zimmer,A.R., Zody,M.C.,
+            Birren,B.W., Nusbaum,C., Fujiyama,A., Hattori,M., Rogers,J.,
+            Lander,E.S. and Sakaki,Y.
+  TITLE     Human chromosome 11 DNA sequence and analysis including novel gene
+            identification
+  JOURNAL   Nature 440 (7083), 497-500 (2006)
+   PUBMED   16554811
+REFERENCE   2  (bases 1 to 383)
+  CONSRTM   International Human Genome Sequencing Consortium
+  TITLE     Finishing the euchromatic sequence of the human genome
+  JOURNAL   Nature 431 (7011), 931-945 (2004)
+   PUBMED   15496913
+REFERENCE   3  (bases 1 to 383)
+  AUTHORS   Lander,E.S., Linton,L.M., Birren,B., Nusbaum,C., Zody,M.C.,
+            Baldwin,J., Devon,K., Dewar,K., Doyle,M., FitzHugh,W., Funke,R.,
+            Gage,D., Harris,K., Heaford,A., Howland,J., Kann,L., Lehoczky,J.,
+            LeVine,R., McEwan,P., McKernan,K., Meldrim,J., Mesirov,J.P.,
+            Miranda,C., Morris,W., Naylor,J., Raymond,C., Rosetti,M.,
+            Santos,R., Sheridan,A., Sougnez,C., Stange-Thomann,N.,
+            Stojanovic,N., Subramanian,A., Wyman,D., Rogers,J., Sulston,J.,
+            Ainscough,R., Beck,S., Bentley,D., Burton,J., Clee,C., Carter,N.,
+            Coulson,A., Deadman,R., Deloukas,P., Dunham,A., Dunham,I.,
+            Durbin,R., French,L., Grafham,D., Gregory,S., Hubbard,T.,
+            Humphray,S., Hunt,A., Jones,M., Lloyd,C., McMurray,A.,
+            Matthews,L., Mercer,S., Milne,S., Mullikin,J.C., Mungall,A.,
+            Plumb,R., Ross,M., Shownkeen,R., Sims,S., Waterston,R.H.,
+            Wilson,R.K., Hillier,L.W., McPherson,J.D., Marra,M.A.,
+            Mardis,E.R., Fulton,L.A., Chinwalla,A.T., Pepin,K.H., Gish,W.R.,
+            Chissoe,S.L., Wendl,M.C., Delehaunty,K.D., Miner,T.L.,
+            Delehaunty,A., Kramer,J.B., Cook,L.L., Fulton,R.S., Johnson,D.L.,
+            Minx,P.J., Clifton,S.W., Hawkins,T., Branscomb,E., Predki,P.,
+            Richardson,P., Wenning,S., Slezak,T., Doggett,N., Cheng,J.F.,
+            Olsen,A., Lucas,S., Elkin,C., Uberbacher,E., Frazier,M.,
+            Gibbs,R.A., Muzny,D.M., Scherer,S.E., Bouck,J.B., Sodergren,E.J.,
+            Worley,K.C., Rives,C.M., Gorrell,J.H., Metzker,M.L., Naylor,S.L.,
+            Kucherlapati,R.S., Nelson,D.L., Weinstock,G.M., Sakaki,Y.,
+            Fujiyama,A., Hattori,M., Yada,T., Toyoda,A., Itoh,T., Kawagoe,C.,
+            Watanabe,H., Totoki,Y., Taylor,T., Weissenbach,J., Heilig,R.,
+            Saurin,W., Artiguenave,F., Brottier,P., Bruls,T., Pelletier,E.,
+            Robert,C., Wincker,P., Smith,D.R., Doucette-Stamm,L.,
+            Rubenfield,M., Weinstock,K., Lee,H.M., Dubois,J., Rosenthal,A.,
+            Platzer,M., Nyakatura,G., Taudien,S., Rump,A., Yang,H., Yu,J.,
+            Wang,J., Huang,G., Gu,J., Hood,L., Rowen,L., Madan,A., Qin,S.,
+            Davis,R.W., Federspiel,N.A., Abola,A.P., Proctor,M.J., Myers,R.M.,
+            Schmutz,J., Dickson,M., Grimwood,J., Cox,D.R., Olson,M.V.,
+            Kaul,R., Raymond,C., Shimizu,N., Kawasaki,K., Minoshima,S.,
+            Evans,G.A., Athanasiou,M., Schultz,R., Roe,B.A., Chen,F., Pan,H.,
+            Ramser,J., Lehrach,H., Reinhardt,R., McCombie,W.R., de la
+            Bastide,M., Dedhia,N., Blocker,H., Hornischer,K., Nordsiek,G.,
+            Agarwala,R., Aravind,L., Bailey,J.A., Bateman,A., Batzoglou,S.,
+            Birney,E., Bork,P., Brown,D.G., Burge,C.B., Cerutti,L., Chen,H.C.,
+            Church,D., Clamp,M., Copley,R.R., Doerks,T., Eddy,S.R.,
+            Eichler,E.E., Furey,T.S., Galagan,J., Gilbert,J.G., Harmon,C.,
+            Hayashizaki,Y., Haussler,D., Hermjakob,H., Hokamp,K., Jang,W.,
+            Johnson,L.S., Jones,T.A., Kasif,S., Kaspryzk,A., Kennedy,S.,
+            Kent,W.J., Kitts,P., Koonin,E.V., Korf,I., Kulp,D., Lancet,D.,
+            Lowe,T.M., McLysaght,A., Mikkelsen,T., Moran,J.V., Mulder,N.,
+            Pollara,V.J., Ponting,C.P., Schuler,G., Schultz,J., Slater,G.,
+            Smit,A.F., Stupka,E., Szustakowski,J., Thierry-Mieg,D.,
+            Thierry-Mieg,J., Wagner,L., Wallis,J., Wheeler,R., Williams,A.,
+            Wolf,Y.I., Wolfe,K.H., Yang,S.P., Yeh,R.F., Collins,F.,
+            Guyer,M.S., Peterson,J., Felsenfeld,A., Wetterstrand,K.A.,
+            Patrinos,A., Morgan,M.J., de Jong,P., Catanese,J.J., Osoegawa,K.,
+            Shizuya,H., Choi,S. and Chen,Y.J.
+  CONSRTM   International Human Genome Sequencing Consortium International
+            Human Genome Sequencing Consortium
+  TITLE     Initial sequencing and analysis of the human genome
+  JOURNAL   Nature 409 (6822), 860-921 (2001)
+   PUBMED   11237011
+  REMARK    Erratum:[Nature 2001 Aug 2;412(6846):565]
+COMMENT     REFSEQ INFORMATION: Features on this sequence have been produced
+            for build 37 version 2 of the NCBI's genome annotation [see
+            documentation]. The reference sequence is identical to CM000673.1.
+            On Jun 10, 2009 this sequence version replaced gi:51511727.
+            Assembly Name: GRCh37.p2 Primary Assembly The DNA sequence is
+            composed of genomic sequence, primarily finished clones that were
+            sequenced as part of the Human Genome Project. PCR products and
+            WGS shotgun sequence have been added where necessary to fill gaps
+            or correct errors. All such additions are manually curated by GRC
+            staff. For more information see: http://genomereference.org.
+FEATURES             Location/Qualifiers
+     source          1..383
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="11"
+                     /organism="Homo sapiens"
+     gene            complement(<1..>383)
+                     /db_xref="GeneID:8500"
+                     /db_xref="HGNC:9245"
+                     /db_xref="HPRD:11451"
+                     /db_xref="MIM:611054"
+                     /gene="PPFIA1"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     gene            1..383
+                     /db_xref="GeneID:100462795"
+                     /db_xref="HGNC:38015"
+                     /pseudo
+                     /gene="H2AFZP4"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Curated Genomic."
+ORIGIN      
+        1 atggctggca gtaaggctgg gaaggactcc agaaaggcca acaaaggcag cttcccactc
+       61 acaagagagc caatttgcag ttcctggtgg gccgtattca ctgacacctg aaatctagga
+      121 caatcagtcc tggacgtgtg ggcgcgactg ccgctgtgaa tagcacagcc atcctggagt
+      181 acctcaccgc agaggtactt gaactggcaa gaaatgcgtc aaaagacttc acagtaaagc
+      241 atactacccc tcattacttg caacttgcca ttcgtggaga taaagaattg ggctctctct
+      301 tcaagtctac aattgctggt aaaggtgtca ttccacacat ccacaaatct ctaattggga
+      361 agaaaggaca acagcagact gtc
+//

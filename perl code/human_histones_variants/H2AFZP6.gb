@@ -1,0 +1,124 @@
+LOCUS       NC_000022                386 bp    DNA     linear   CON 25-OCT-2010
+DEFINITION  Homo sapiens chromosome 22, GRCh37.p2 primary reference assembly.
+ACCESSION   NC_000022 REGION: complement(31917188..31917573) GPC_000000046
+VERSION     NC_000022.10  GI:224589814
+KEYWORDS    .
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 386)
+  CONSRTM   International Human Genome Sequencing Consortium
+  TITLE     Finishing the euchromatic sequence of the human genome
+  JOURNAL   Nature 431 (7011), 931-945 (2004)
+   PUBMED   15496913
+REFERENCE   2  (bases 1 to 386)
+  AUTHORS   Lander,E.S., Linton,L.M., Birren,B., Nusbaum,C., Zody,M.C.,
+            Baldwin,J., Devon,K., Dewar,K., Doyle,M., FitzHugh,W., Funke,R.,
+            Gage,D., Harris,K., Heaford,A., Howland,J., Kann,L., Lehoczky,J.,
+            LeVine,R., McEwan,P., McKernan,K., Meldrim,J., Mesirov,J.P.,
+            Miranda,C., Morris,W., Naylor,J., Raymond,C., Rosetti,M.,
+            Santos,R., Sheridan,A., Sougnez,C., Stange-Thomann,N.,
+            Stojanovic,N., Subramanian,A., Wyman,D., Rogers,J., Sulston,J.,
+            Ainscough,R., Beck,S., Bentley,D., Burton,J., Clee,C., Carter,N.,
+            Coulson,A., Deadman,R., Deloukas,P., Dunham,A., Dunham,I.,
+            Durbin,R., French,L., Grafham,D., Gregory,S., Hubbard,T.,
+            Humphray,S., Hunt,A., Jones,M., Lloyd,C., McMurray,A.,
+            Matthews,L., Mercer,S., Milne,S., Mullikin,J.C., Mungall,A.,
+            Plumb,R., Ross,M., Shownkeen,R., Sims,S., Waterston,R.H.,
+            Wilson,R.K., Hillier,L.W., McPherson,J.D., Marra,M.A.,
+            Mardis,E.R., Fulton,L.A., Chinwalla,A.T., Pepin,K.H., Gish,W.R.,
+            Chissoe,S.L., Wendl,M.C., Delehaunty,K.D., Miner,T.L.,
+            Delehaunty,A., Kramer,J.B., Cook,L.L., Fulton,R.S., Johnson,D.L.,
+            Minx,P.J., Clifton,S.W., Hawkins,T., Branscomb,E., Predki,P.,
+            Richardson,P., Wenning,S., Slezak,T., Doggett,N., Cheng,J.F.,
+            Olsen,A., Lucas,S., Elkin,C., Uberbacher,E., Frazier,M.,
+            Gibbs,R.A., Muzny,D.M., Scherer,S.E., Bouck,J.B., Sodergren,E.J.,
+            Worley,K.C., Rives,C.M., Gorrell,J.H., Metzker,M.L., Naylor,S.L.,
+            Kucherlapati,R.S., Nelson,D.L., Weinstock,G.M., Sakaki,Y.,
+            Fujiyama,A., Hattori,M., Yada,T., Toyoda,A., Itoh,T., Kawagoe,C.,
+            Watanabe,H., Totoki,Y., Taylor,T., Weissenbach,J., Heilig,R.,
+            Saurin,W., Artiguenave,F., Brottier,P., Bruls,T., Pelletier,E.,
+            Robert,C., Wincker,P., Smith,D.R., Doucette-Stamm,L.,
+            Rubenfield,M., Weinstock,K., Lee,H.M., Dubois,J., Rosenthal,A.,
+            Platzer,M., Nyakatura,G., Taudien,S., Rump,A., Yang,H., Yu,J.,
+            Wang,J., Huang,G., Gu,J., Hood,L., Rowen,L., Madan,A., Qin,S.,
+            Davis,R.W., Federspiel,N.A., Abola,A.P., Proctor,M.J., Myers,R.M.,
+            Schmutz,J., Dickson,M., Grimwood,J., Cox,D.R., Olson,M.V.,
+            Kaul,R., Raymond,C., Shimizu,N., Kawasaki,K., Minoshima,S.,
+            Evans,G.A., Athanasiou,M., Schultz,R., Roe,B.A., Chen,F., Pan,H.,
+            Ramser,J., Lehrach,H., Reinhardt,R., McCombie,W.R., de la
+            Bastide,M., Dedhia,N., Blocker,H., Hornischer,K., Nordsiek,G.,
+            Agarwala,R., Aravind,L., Bailey,J.A., Bateman,A., Batzoglou,S.,
+            Birney,E., Bork,P., Brown,D.G., Burge,C.B., Cerutti,L., Chen,H.C.,
+            Church,D., Clamp,M., Copley,R.R., Doerks,T., Eddy,S.R.,
+            Eichler,E.E., Furey,T.S., Galagan,J., Gilbert,J.G., Harmon,C.,
+            Hayashizaki,Y., Haussler,D., Hermjakob,H., Hokamp,K., Jang,W.,
+            Johnson,L.S., Jones,T.A., Kasif,S., Kaspryzk,A., Kennedy,S.,
+            Kent,W.J., Kitts,P., Koonin,E.V., Korf,I., Kulp,D., Lancet,D.,
+            Lowe,T.M., McLysaght,A., Mikkelsen,T., Moran,J.V., Mulder,N.,
+            Pollara,V.J., Ponting,C.P., Schuler,G., Schultz,J., Slater,G.,
+            Smit,A.F., Stupka,E., Szustakowski,J., Thierry-Mieg,D.,
+            Thierry-Mieg,J., Wagner,L., Wallis,J., Wheeler,R., Williams,A.,
+            Wolf,Y.I., Wolfe,K.H., Yang,S.P., Yeh,R.F., Collins,F.,
+            Guyer,M.S., Peterson,J., Felsenfeld,A., Wetterstrand,K.A.,
+            Patrinos,A., Morgan,M.J., de Jong,P., Catanese,J.J., Osoegawa,K.,
+            Shizuya,H., Choi,S. and Chen,Y.J.
+  CONSRTM   International Human Genome Sequencing Consortium International
+            Human Genome Sequencing Consortium
+  TITLE     Initial sequencing and analysis of the human genome
+  JOURNAL   Nature 409 (6822), 860-921 (2001)
+   PUBMED   11237011
+  REMARK    Erratum:[Nature 2001 Aug 2;412(6846):565]
+REFERENCE   3  (bases 1 to 386)
+  AUTHORS   Dunham,I., Shimizu,N., Roe,B.A., Chissoe,S., Hunt,A.R.,
+            Collins,J.E., Bruskiewich,R., Beare,D.M., Clamp,M., Smink,L.J.,
+            Ainscough,R., Almeida,J.P., Babbage,A., Bagguley,C., Bailey,J.,
+            Barlow,K., Bates,K.N., Beasley,O., Bird,C.P., Blakey,S.,
+            Bridgeman,A.M., Buck,D., Burgess,J., Burrill,W.D., O'Brien,K.P. et
+            al.
+  TITLE     The DNA sequence of human chromosome 22
+  JOURNAL   Nature 402 (6761), 489-495 (1999)
+   PUBMED   10591208
+  REMARK    Erratum:[Nature 2000 Apr 20;404(6780):904]
+COMMENT     REFSEQ INFORMATION: Features on this sequence have been produced
+            for build 37 version 2 of the NCBI's genome annotation [see
+            documentation]. The reference sequence is identical to CM000684.1.
+            On Jun 10, 2009 this sequence version replaced gi:89161203.
+            Assembly Name: GRCh37.p2 Primary Assembly The DNA sequence is
+            composed of genomic sequence, primarily finished clones that were
+            sequenced as part of the Human Genome Project. PCR products and
+            WGS shotgun sequence have been added where necessary to fill gaps
+            or correct errors. All such additions are manually curated by GRC
+            staff. For more information see: http://genomereference.org.
+FEATURES             Location/Qualifiers
+     source          1..386
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="22"
+                     /organism="Homo sapiens"
+     gene            complement(<1..>386)
+                     /db_xref="GeneID:9814"
+                     /db_xref="HGNC:29064"
+                     /db_xref="HPRD:11550"
+                     /db_xref="MIM:612765"
+                     /gene="SFI1"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     gene            1..386
+                     /db_xref="GeneID:100462800"
+                     /db_xref="HGNC:38019"
+                     /pseudo
+                     /gene="H2AFZP6"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Curated Genomic."
+ORIGIN      
+        1 ggcgttaagg ctgagcagga cactggaaag gccagaacaa aggtggttgt ttcccgctca
+       61 cagagagcct ccttacagtt ccgggtgggc catattcata gacagacacc tcaaatgtag
+      121 gacgaccagt catggatgtg taggggcgtg actgccactg tgaacagtgc agccatcctt
+      181 ggatacctca ctgcagagat acttgaagtg acatcaaagg caccaaaaga tttaaaggta
+      241 aagctattac ccctcatcat ttgcaacctg ctattagtga agaagaagaa ttggactctc
+      301 tcatcaaggc tacaattgct ggtgatggtg tcattccaca cattcgcaag tctctgattg
+      361 ggaagaaaga acaacagaag actatg
+//

@@ -1,0 +1,107 @@
+Finished search for '"homo sapiens"[ORGANISM] AND (hist1[GENE] OR hist11s[GENE] OR hist12bs[GENE] OR hist1h1a[GENE] OR hist1h1b[GENE] OR hist1h1c[GENE] OR hist1h1d[GENE] OR hist1h1e[GENE] OR hist1h1ps1[GENE] OR hist1h1ps2[GENE] OR hist1h1t[GENE] OR hist1h2aa[GENE] OR hist1h2ab[GENE] OR hist1h2ac[GENE] OR hist1h2ad[GENE] OR hist1h2ae[GENE] OR hist1h2af[GENE] OR hist1h2ag[GENE] OR hist1h2ah[GENE] OR hist1h2ai[GENE] OR hist1h2ail[GENE] OR hist1h2aj[GENE] OR hist1h2ak[GENE] OR hist1h2al[GENE] OR hist1h2am[GENE] OR hist1h2an[GENE] OR hist1h2ao[GENE] OR hist1h2aps1[GENE] OR hist1h2aps2[GENE] OR hist1h2aps3[GENE] OR hist1h2aps4[GENE] OR hist1h2aps5[GENE] OR hist1h2ba[GENE] OR hist1h2bb[GENE] OR hist1h2bc[GENE] OR hist1h2bcl1[GENE] OR hist1h2bd[GENE] OR hist1h2be[GENE] OR hist1h2bf[GENE] OR hist1h2bg[GENE] OR hist1h2bh[GENE] OR hist1h2bi[GENE] OR hist1h2bj[GENE] OR hist1h2bk[GENE] OR hist1h2bl[GENE] OR hist1h2bm[GENE] OR hist1h2bn[GENE] OR hist1h2bo[GENE] OR hist1h2bp[GENE] OR hist1h2bps1[GENE] OR hist1h2bps2[GENE] OR hist1h3a[GENE] OR hist1h3b[GENE] OR hist1h3c[GENE] OR hist1h3d[GENE] OR hist1h3e[GENE] OR hist1h3f[GENE] OR hist1h3g[GENE] OR hist1h3h[GENE] OR hist1h3i[GENE] OR hist1h3j[GENE] OR hist1h3ps1[GENE] OR hist1h4a[GENE] OR hist1h4b[GENE] OR hist1h4c[GENE] OR hist1h4d[GENE] OR hist1h4e[GENE] OR hist1h4f[GENE] OR hist1h4g[GENE] OR hist1h4h[GENE] OR hist1h4i[GENE] OR hist1h4j[GENE] OR hist1h4k[GENE] OR hist1h4l[GENE] OR hist1h4m[GENE] OR hist1h4ps1[GENE])'
+  - Found 69 results
+  - Ids: 554313; 8370; 8368; 8367; 8366; 8365; 8364; 8363; 8362; 8361; 8360; 8359; 8294; 121504; 8358; 8357; 8356; 8355; 8354; 8353; 8352; 8350; 8968; 8347; 8346; 8344; 8343; 8339; 8336; 8332; 8330; 8329; 8969; 8341; 8335; 3024; 3013; 3012; 8369; 8351; 8348; 8345; 8342; 8340; 8334; 8333; 8331; 255626; 221613; 3018; 3017; 3010; 3009; 3008; 3007; 3006; 10341; 10340; 10338; 10337; 85303; 85236; 85235; 387325; 387324; 387323; 387319; 387318; 8970
+  - Found 69 unique ids
+  - Ids: 387325; 8359; 85235; 8350; 8358; 387324; 8329; 8365; 3010; 8366; 8364; 387323; 10337; 8335; 3017; 8331; 8352; 8370; 85236; 387318; 8340; 8294; 8361; 3007; 8362; 10338; 8351; 3009; 3006; 10340; 8367; 3008; 8970; 387319; 8355; 8969; 8347; 8360; 8356; 10341; 121504; 3024; 221613; 8353; 8346; 8345; 8332; 8348; 8968; 3018; 8336; 8341; 255626; 85303; 554313; 8333; 8363; 8368; 8357; 8369; 3013; 8330; 8344; 8339; 3012; 8334; 8342; 8343; 8354
+Finished search for '"homo sapiens"[ORGANISM] AND (hist2[GENE] OR hist2av[GENE] OR hist2h2aa[GENE] OR hist2h2aa1[GENE] OR hist2h2aa2[GENE] OR hist2h2aa3[GENE] OR hist2h2aa4[GENE] OR hist2h2ab[GENE] OR hist2h2ac[GENE] OR hist2h2ba[GENE] OR hist2h2bb[GENE] OR hist2h2bc[GENE] OR hist2h2bd[GENE] OR hist2h2be[GENE] OR hist2h2bf[GENE] OR hist2h2l[GENE] OR hist2h3a[GENE] OR hist2h3b[GENE] OR hist2h3c[GENE] OR hist2h3c1[GENE] OR hist2h3c2[GENE] OR hist2h3c2ps[GENE] OR hist2h3ca1[GENE] OR hist2h3ca2[GENE] OR hist2h3d[GENE] OR hist2h3ps1[GENE] OR hist2h3ps2[GENE] OR hist2h4[GENE] OR hist2h4a[GENE] OR hist2h4b[GENE])'
+  - Found 31 results
+  - Ids: 8370; 653604; 333932; 126961; 554313; 8368; 8367; 8366; 8365; 8364; 8363; 8362; 8361; 8360; 8359; 8337; 8294; 121504; 333931; 337873; 723790; 8349; 8338; 440689; 440686; 317772; 338391; 333930; 337875; 337874; 724021
+  - Found 31 unique ids
+  - Ids: 126961; 8359; 337874; 8349; 724021; 440689; 8365; 8366; 8364; 333930; 723790; 8370; 8294; 8361; 8362; 8337; 8338; 8367; 317772; 8360; 121504; 337875; 440686; 653604; 338391; 554313; 8363; 8368; 333931; 337873; 333932
+Finished search for '"homo sapiens"[ORGANISM] AND (hist3[GENE] OR hist3h2a[GENE] OR hist3h2ba[GENE] OR hist3h2bb[GENE] OR hist3h2bbps[GENE] OR hist3h3[GENE])'
+  - Found 4 results
+  - Ids: 8290; 128312; 337872; 92815
+  - Found 4 unique ids
+  - Ids: 8290; 128312; 337872; 92815
+Removing duplicate entries from total search
+  - Found 90 unique ids
+HIST2H3C is found at Acession number NC_000001.10 with start and stop coordinates 149812764 and 149812258
+HIST1H1PS1 had an empty value of GenomicInfoType
+HIST1H4A is found at Acession number NC_000006.11 with start and stop coordinates 26021906 and 26022277
+HIST2H2BD is found at Acession number NC_000001.10 with start and stop coordinates 149815202 and 149814373
+HIST2H2BE is found at Acession number NC_000001.10 with start and stop coordinates 149858231 and 149856009
+HIST1H2AH is found at Acession number NC_000006.11 with start and stop coordinates 27114907 and 27115393
+HIST1H3A is found at Acession number NC_000006.11 with start and stop coordinates 26020717 and 26021185
+HIST1H3B is found at Acession number NC_000006.11 with start and stop coordinates 26032287 and 26031816
+HIST3H3 is found at Acession number NC_000001.10 with start and stop coordinates 228613025 and 228612545
+HIST1H3PS1 had an empty value of GenomicInfoType
+HIST2H2BF is found at Acession number NC_000001.10 with start and stop coordinates 149765366 and 149763335
+HIST2H4B had an empty value of GenomicInfoType
+HIST1H2AI is found at Acession number NC_000006.11 with start and stop coordinates 27775976 and 27776444
+HIST1H4H is found at Acession number NC_000006.11 with start and stop coordinates 26285726 and 26285353
+HIST1H1T is found at Acession number NC_000006.11 with start and stop coordinates 26108363 and 26107639
+HIST1H4B is found at Acession number NC_000006.11 with start and stop coordinates 26027479 and 26027123
+HIST1H4C is found at Acession number NC_000006.11 with start and stop coordinates 26104160 and 26104564
+HIST1H2APS3 had an empty value of GenomicInfoType
+HIST1H4PS1 is found at Acession number NC_000006.11 with start and stop coordinates 27774944 and 27775114
+HIST1H2AB is found at Acession number NC_000006.11 with start and stop coordinates 26033795 and 26033319
+HIST1H2BD is found at Acession number NC_000006.11 with start and stop coordinates 26158348 and 26171576
+HIST1H2AJ is found at Acession number NC_000006.11 with start and stop coordinates 27782517 and 27782079
+HIST1H3C is found at Acession number NC_000006.11 with start and stop coordinates 26045638 and 26046096
+HIST2H3C had an empty value of GenomicInfoType
+HIST2H2AA4 is found at Acession number NC_000001.10 with start and stop coordinates 149822627 and 149823160
+HIST2H4A is found at Acession number NC_000001.10 with start and stop coordinates 149804220 and 149804615
+HIST1H2BK is found at Acession number NC_000006.11 with start and stop coordinates 27114618 and 27106072
+HIST1H2BPS1 had an empty value of GenomicInfoType
+HIST1H2BL is found at Acession number NC_000006.11 with start and stop coordinates 27775708 and 27775256
+HIST1H4I is found at Acession number NC_000006.11 with start and stop coordinates 27107087 and 27107456
+HIST1H4F is found at Acession number NC_000006.11 with start and stop coordinates 26240653 and 26241020
+HIST1H1D is found at Acession number NC_000006.11 with start and stop coordinates 26235215 and 26234439
+HIST1H4K is found at Acession number NC_000006.11 with start and stop coordinates 27799304 and 27798951
+HIST1H1PS2 is found at Acession number NC_000006.11 with start and stop coordinates 26016334 and 26017068
+HIST1H3D is found at Acession number NC_000006.11 with start and stop coordinates 26199463 and 26197011
+HIST1H1B is found at Acession number NC_000006.11 with start and stop coordinates 27835424 and 27834569
+HIST2H2AA3 is found at Acession number NC_000001.10 with start and stop coordinates 149814317 and 149813784
+HIST3H2BB is found at Acession number NC_000001.10 with start and stop coordinates 228645807 and 228646258
+HIST2H2AC is found at Acession number NC_000001.10 with start and stop coordinates 149858524 and 149858960
+HIST1H1C is found at Acession number NC_000006.11 with start and stop coordinates 26056698 and 26055914
+HIST3H2BA is found at Acession number NC_000001.10 with start and stop coordinates 228652294 and 228651916
+HIST1H2BPS2 is found at Acession number NC_000006.11 with start and stop coordinates 27832178 and 27831839
+HIST1H4E is found at Acession number NC_000006.11 with start and stop coordinates 26204872 and 26205248
+HIST1H1E is found at Acession number NC_000006.11 with start and stop coordinates 26156558 and 26157342
+HIST1H2BJ is found at Acession number NC_000006.11 with start and stop coordinates 27100574 and 27100094
+HIST1H2APS1 had an empty value of GenomicInfoType
+HIST1H3G is found at Acession number NC_000006.11 with start and stop coordinates 26271611 and 26271145
+HIST1H2AG is found at Acession number NC_000006.11 with start and stop coordinates 27100820 and 27103070
+HIST2H2AB is found at Acession number NC_000001.10 with start and stop coordinates 149859465 and 149859018
+HIST1H2BC is found at Acession number NC_000006.11 with start and stop coordinates 26124131 and 26123694
+HIST1H4D is found at Acession number NC_000006.11 with start and stop coordinates 26189303 and 26188937
+HIST1H3J is found at Acession number NC_000006.11 with start and stop coordinates 27858569 and 27858092
+HIST1H2APS5 is found at Acession number NC_000006.11 with start and stop coordinates 26044127 and 26044777
+HIST4H4 is found at Acession number NC_000012.11 with start and stop coordinates 14924064 and 14923653
+HIST2H2BA is found at Acession number NC_000001.9 with start and stop coordinates 120699045 and 120707904
+HIST1H1A is found at Acession number NC_000006.11 with start and stop coordinates 26018039 and 26017259
+HIST2H3D is found at Acession number NC_000001.10 with start and stop coordinates 149785235 and 149784825
+HIST2H3PS2 is found at Acession number NC_000001.10 with start and stop coordinates 149400541 and 149398876
+HIST1H2AA is found at Acession number NC_000006.11 with start and stop coordinates 25726789 and 25726290
+HIST1H3E is found at Acession number NC_000006.11 with start and stop coordinates 26225382 and 26225843
+HIST1H2BI is found at Acession number NC_000006.11 with start and stop coordinates 26273203 and 26273639
+HIST1H2BH is found at Acession number NC_000006.11 with start and stop coordinates 26251878 and 26252302
+HIST1H2AL is found at Acession number NC_000006.11 with start and stop coordinates 27833106 and 27833575
+HIST3H2A is found at Acession number NC_000001.10 with start and stop coordinates 228645559 and 228645064
+HIST1H2BO is found at Acession number NC_000006.11 with start and stop coordinates 27861202 and 27861668
+HIST1H3F is found at Acession number NC_000006.11 with start and stop coordinates 26250834 and 26250369
+HIST1H2BB is found at Acession number NC_000006.11 with start and stop coordinates 26043884 and 26043454
+HIST1H2AM is found at Acession number NC_000006.11 with start and stop coordinates 27860962 and 27860476
+HIST2H2BB is found at Acession number NC_000001.10 with start and stop coordinates 120905663 and 120906799
+HIST1H2BN is found at Acession number NC_000006.11 with start and stop coordinates 27806363 and 27806893
+HIST1H2BA is found at Acession number NC_000006.11 with start and stop coordinates 25727136 and 25727572
+HIST1H2APS2 is found at Acession number NC_000006.11 with start and stop coordinates 25882643 and 25882153
+HIST2H4B is found at Acession number NC_000001.10 with start and stop coordinates 149832724 and 149832329
+HIST1H2APS4 is found at Acession number NC_000006.11 with start and stop coordinates 26272767 and 26272420
+HIST1H4J is found at Acession number NC_000006.11 with start and stop coordinates 27791902 and 27792257
+HIST1H4L is found at Acession number NC_000006.11 with start and stop coordinates 27841288 and 27840925
+HIST1H3H is found at Acession number NC_000006.11 with start and stop coordinates 27777841 and 27778313
+HIST1H4G is found at Acession number NC_000006.11 with start and stop coordinates 26247204 and 26246838
+HIST1H2AD is found at Acession number NC_000006.11 with start and stop coordinates 26199470 and 26199011
+HIST1H2AK is found at Acession number NC_000006.11 with start and stop coordinates 27806123 and 27805625
+HIST1H2BE is found at Acession number NC_000006.11 with start and stop coordinates 26184023 and 26184457
+HIST1H2AC is found at Acession number NC_000006.11 with start and stop coordinates 26124372 and 26124917
+HIST1H2AE is found at Acession number NC_000006.11 with start and stop coordinates 26217147 and 26217710
+HIST1H2BG is found at Acession number NC_000006.11 with start and stop coordinates 26216871 and 26216427
+HIST2H3B had an empty value of GenomicInfoType
+HIST1H2BM is found at Acession number NC_000006.11 with start and stop coordinates 27782821 and 27783266
+HIST2H2BC is found at Acession number NC_000001.10 with start and stop coordinates 149822339 and 149821758
+HIST1H2BF is found at Acession number NC_000006.11 with start and stop coordinates 26199786 and 26200215
+HIST2H3A is found at Acession number NC_000001.10 with start and stop coordinates 149824180 and 149824686
+HIST1H3I is found at Acession number NC_000006.11 with start and stop coordinates 27840098 and 27839622

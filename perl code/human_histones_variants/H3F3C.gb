@@ -1,0 +1,189 @@
+LOCUS       NC_000012               1057 bp    DNA     linear   CON 25-OCT-2010
+DEFINITION  Homo sapiens chromosome 12, GRCh37.p2 primary reference assembly.
+ACCESSION   NC_000012 REGION: complement(31944119..31945175) GPC_000000036
+VERSION     NC_000012.11  GI:224589803
+KEYWORDS    .
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 1057)
+  AUTHORS   Scherer,S.E., Muzny,D.M., Buhay,C.J., Chen,R., Cree,A., Ding,Y.,
+            Dugan-Rocha,S., Gill,R., Gunaratne,P., Harris,R.A., Hawes,A.C.,
+            Hernandez,J., Hodgson,A.V., Hume,J., Jackson,A., Khan,Z.M.,
+            Kovar-Smith,C., Lewis,L.R., Lozado,R.J., Metzker,M.L.,
+            Milosavljevic,A., Miner,G.R., Montgomery,K.T., Morgan,M.B.,
+            Nazareth,L.V., Scott,G., Sodergren,E., Song,X.Z., Steffen,D.,
+            Lovering,R.C., Wheeler,D.A., Worley,K.C., Yuan,Y., Zhang,Z.,
+            Adams,C.Q., Ansari-Lari,M.A., Ayele,M., Brown,M.J., Chen,G.,
+            Chen,Z., Clerc-Blankenburg,K.P., Davis,C., Delgado,O., Dinh,H.H.,
+            Draper,H., Gonzalez-Garay,M.L., Havlak,P., Jackson,L.R.,
+            Jacob,L.S., Kelly,S.H., Li,L., Li,Z., Liu,J., Liu,W., Lu,J.,
+            Maheshwari,M., Nguyen,B.V., Okwuonu,G.O., Pasternak,S.,
+            Perez,L.M., Plopper,F.J., Santibanez,J., Shen,H., Tabor,P.E.,
+            Verduzco,D., Waldron,L., Wang,Q., Williams,G.A., Zhang,J.,
+            Zhou,J., Allen,C.C., Amin,A.G., Anyalebechi,V., Bailey,M.,
+            Barbaria,J.A., Bimage,K.E., Bryant,N.P., Burch,P.E., Burkett,C.E.,
+            Burrell,K.L., Calderon,E., Cardenas,V., Carter,K., Casias,K.,
+            Cavazos,I., Cavazos,S.R., Ceasar,H., Chacko,J., Chan,S.N.,
+            Chavez,D., Christopoulos,C., Chu,J., Cockrell,R., Cox,C.D.,
+            Dang,M., Dathorne,S.R., David,R., Davis,C.M., Davy-Carroll,L.,
+            Deshazo,D.R., Donlin,J.E., D'Souza,L., Eaves,K.A., Egan,A.,
+            Emery-Cohen,A.J., Escotto,M., Flagg,N., Forbes,L.D., Gabisi,A.M.,
+            Garza,M., Hamilton,C., Henderson,N., Hernandez,O., Hines,S.,
+            Hogues,M.E., Huang,M., Idlebird,D.G., Johnson,R., Jolivet,A.,
+            Jones,S., Kagan,R., King,L.M., Leal,B., Lebow,H., Lee,S.,
+            LeVan,J.M., Lewis,L.C., London,P., Lorensuhewa,L.M., Loulseged,H.,
+            Lovett,D.A., Lucier,A., Lucier,R.L., Ma,J., Madu,R.C., Mapua,P.,
+            Martindale,A.D., Martinez,E., Massey,E., Mawhiney,S., Meador,M.G.,
+            Mendez,S., Mercado,C., Mercado,I.C., Merritt,C.E., Miner,Z.L.,
+            Minja,E., Mitchell,T., Mohabbat,F., Mohabbat,K., Montgomery,B.,
+            Moore,N., Morris,S., Munidasa,M., Ngo,R.N., Nguyen,N.B.,
+            Nickerson,E., Nwaokelemeh,O.O., Nwokenkwo,S., Obregon,M., Oguh,M.,
+            Oragunye,N., Oviedo,R.J., Parish,B.J., Parker,D.N., Parrish,J.,
+            Parks,K.L., Paul,H.A., Payton,B.A., Perez,A., Perrin,W.,
+            Pickens,A., Primus,E.L., Pu,L.L., Puazo,M., Quiles,M.M.,
+            Quiroz,J.B., Rabata,D., Reeves,K., Ruiz,S.J., Shao,H., Sisson,I.,
+            Sonaike,T., Sorelle,R.P., Sutton,A.E., Svatek,A.F., Svetz,L.A.,
+            Tamerisa,K.S., Taylor,T.R., Teague,B., Thomas,N., Thorn,R.D.,
+            Trejos,Z.Y., Trevino,B.K., Ukegbu,O.N., Urban,J.B., Vasquez,L.I.,
+            Vera,V.A., Villasana,D.M., Wang,L., Ward-Moore,S., Warren,J.T.,
+            Wei,X., White,F., Williamson,A.L., Wleczyk,R., Wooden,H.S.,
+            Wooden,S.H., Yen,J., Yoon,L., Yoon,V., Zorrilla,S.E., Nelson,D.,
+            Kucherlapati,R., Weinstock,G. and Gibbs,R.A.
+  CONSRTM   Baylor College of Medicine Human Genome Sequencing Center Sequence
+            Production Team
+  TITLE     The finished DNA sequence of human chromosome 12
+  JOURNAL   Nature 440 (7082), 346-351 (2006)
+   PUBMED   16541075
+REFERENCE   2  (bases 1 to 1057)
+  CONSRTM   Baylor College of Medicine Human Genome Sequencing Center Sequence
+            Production Team International Human Genome Sequencing Consortium
+  TITLE     Finishing the euchromatic sequence of the human genome
+  JOURNAL   Nature 431 (7011), 931-945 (2004)
+   PUBMED   15496913
+REFERENCE   3  (bases 1 to 1057)
+  AUTHORS   Lander,E.S., Linton,L.M., Birren,B., Nusbaum,C., Zody,M.C.,
+            Baldwin,J., Devon,K., Dewar,K., Doyle,M., FitzHugh,W., Funke,R.,
+            Gage,D., Harris,K., Heaford,A., Howland,J., Kann,L., Lehoczky,J.,
+            LeVine,R., McEwan,P., McKernan,K., Meldrim,J., Mesirov,J.P.,
+            Miranda,C., Morris,W., Naylor,J., Raymond,C., Rosetti,M.,
+            Santos,R., Sheridan,A., Sougnez,C., Stange-Thomann,N.,
+            Stojanovic,N., Subramanian,A., Wyman,D., Rogers,J., Sulston,J.,
+            Ainscough,R., Beck,S., Bentley,D., Burton,J., Clee,C., Carter,N.,
+            Coulson,A., Deadman,R., Deloukas,P., Dunham,A., Dunham,I.,
+            Durbin,R., French,L., Grafham,D., Gregory,S., Hubbard,T.,
+            Humphray,S., Hunt,A., Jones,M., Lloyd,C., McMurray,A.,
+            Matthews,L., Mercer,S., Milne,S., Mullikin,J.C., Mungall,A.,
+            Plumb,R., Ross,M., Shownkeen,R., Sims,S., Waterston,R.H.,
+            Wilson,R.K., Hillier,L.W., McPherson,J.D., Marra,M.A.,
+            Mardis,E.R., Fulton,L.A., Chinwalla,A.T., Pepin,K.H., Gish,W.R.,
+            Chissoe,S.L., Wendl,M.C., Delehaunty,K.D., Miner,T.L.,
+            Delehaunty,A., Kramer,J.B., Cook,L.L., Fulton,R.S., Johnson,D.L.,
+            Minx,P.J., Clifton,S.W., Hawkins,T., Branscomb,E., Predki,P.,
+            Richardson,P., Wenning,S., Slezak,T., Doggett,N., Cheng,J.F.,
+            Olsen,A., Lucas,S., Elkin,C., Uberbacher,E., Frazier,M.,
+            Gibbs,R.A., Muzny,D.M., Scherer,S.E., Bouck,J.B., Sodergren,E.J.,
+            Worley,K.C., Rives,C.M., Gorrell,J.H., Metzker,M.L., Naylor,S.L.,
+            Kucherlapati,R.S., Nelson,D.L., Weinstock,G.M., Sakaki,Y.,
+            Fujiyama,A., Hattori,M., Yada,T., Toyoda,A., Itoh,T., Kawagoe,C.,
+            Watanabe,H., Totoki,Y., Taylor,T., Weissenbach,J., Heilig,R.,
+            Saurin,W., Artiguenave,F., Brottier,P., Bruls,T., Pelletier,E.,
+            Robert,C., Wincker,P., Smith,D.R., Doucette-Stamm,L.,
+            Rubenfield,M., Weinstock,K., Lee,H.M., Dubois,J., Rosenthal,A.,
+            Platzer,M., Nyakatura,G., Taudien,S., Rump,A., Yang,H., Yu,J.,
+            Wang,J., Huang,G., Gu,J., Hood,L., Rowen,L., Madan,A., Qin,S.,
+            Davis,R.W., Federspiel,N.A., Abola,A.P., Proctor,M.J., Myers,R.M.,
+            Schmutz,J., Dickson,M., Grimwood,J., Cox,D.R., Olson,M.V.,
+            Kaul,R., Raymond,C., Shimizu,N., Kawasaki,K., Minoshima,S.,
+            Evans,G.A., Athanasiou,M., Schultz,R., Roe,B.A., Chen,F., Pan,H.,
+            Ramser,J., Lehrach,H., Reinhardt,R., McCombie,W.R., de la
+            Bastide,M., Dedhia,N., Blocker,H., Hornischer,K., Nordsiek,G.,
+            Agarwala,R., Aravind,L., Bailey,J.A., Bateman,A., Batzoglou,S.,
+            Birney,E., Bork,P., Brown,D.G., Burge,C.B., Cerutti,L., Chen,H.C.,
+            Church,D., Clamp,M., Copley,R.R., Doerks,T., Eddy,S.R.,
+            Eichler,E.E., Furey,T.S., Galagan,J., Gilbert,J.G., Harmon,C.,
+            Hayashizaki,Y., Haussler,D., Hermjakob,H., Hokamp,K., Jang,W.,
+            Johnson,L.S., Jones,T.A., Kasif,S., Kaspryzk,A., Kennedy,S.,
+            Kent,W.J., Kitts,P., Koonin,E.V., Korf,I., Kulp,D., Lancet,D.,
+            Lowe,T.M., McLysaght,A., Mikkelsen,T., Moran,J.V., Mulder,N.,
+            Pollara,V.J., Ponting,C.P., Schuler,G., Schultz,J., Slater,G.,
+            Smit,A.F., Stupka,E., Szustakowski,J., Thierry-Mieg,D.,
+            Thierry-Mieg,J., Wagner,L., Wallis,J., Wheeler,R., Williams,A.,
+            Wolf,Y.I., Wolfe,K.H., Yang,S.P., Yeh,R.F., Collins,F.,
+            Guyer,M.S., Peterson,J., Felsenfeld,A., Wetterstrand,K.A.,
+            Patrinos,A., Morgan,M.J., de Jong,P., Catanese,J.J., Osoegawa,K.,
+            Shizuya,H., Choi,S. and Chen,Y.J.
+  CONSRTM   Baylor College of Medicine Human Genome Sequencing Center Sequence
+            Production Team International Human Genome Sequencing Consortium
+            International Human Genome Sequencing Consortium
+  TITLE     Initial sequencing and analysis of the human genome
+  JOURNAL   Nature 409 (6822), 860-921 (2001)
+   PUBMED   11237011
+  REMARK    Erratum:[Nature 2001 Aug 2;412(6846):565]
+COMMENT     REFSEQ INFORMATION: Features on this sequence have been produced
+            for build 37 version 2 of the NCBI's genome annotation [see
+            documentation]. The reference sequence is identical to CM000674.1.
+            On Jun 10, 2009 this sequence version replaced gi:89161190.
+            Assembly Name: GRCh37.p2 Primary Assembly The DNA sequence is
+            composed of genomic sequence, primarily finished clones that were
+            sequenced as part of the Human Genome Project. PCR products and
+            WGS shotgun sequence have been added where necessary to fill gaps
+            or correct errors. All such additions are manually curated by GRC
+            staff. For more information see: http://genomereference.org.
+FEATURES             Location/Qualifiers
+     source          1..1057
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="12"
+                     /organism="Homo sapiens"
+     gene            1..1057
+                     /db_xref="GeneID:440093"
+                     /db_xref="HGNC:33164"
+                     /db_xref="HPRD:18443"
+                     /gene="H3F3C"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     mRNA            1..1057
+                     /db_xref="GI:188528666"
+                     /db_xref="GeneID:440093"
+                     /db_xref="HGNC:33164"
+                     /db_xref="HPRD:18443"
+                     /gene="H3F3C"
+                     /product="H3 histone, family 3C"
+                     /transcript_id="NM_001013699.2"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     CDS             76..483
+                     /db_xref="GI:188528667"
+                     /db_xref="CCDS:CCDS31769.1"
+                     /db_xref="GeneID:440093"
+                     /db_xref="HGNC:33164"
+                     /db_xref="HPRD:18443"
+                     /codon_start=1
+                     /protein_id="NP_001013721.2"
+                     /gene="H3F3C"
+                     /product="histone H3.3C"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+ORIGIN      
+        1 ggctcttcct cgggcagcgg aagcagcgcg gaggtcggag aagtggccta aaacttcggc
+       61 gttgggtgaa agaaaatggc ccgaaccaag cagactgctc gtaaatccac cggtgggaaa
+      121 gccccccgca aacagctggc cacgaaagct gccaggaaaa gcaccccctc tacctgcggg
+      181 gtgaagcctc atcgctacag gcctgggacc gtggcgcttc gagagattcg tcgttatcag
+      241 aagtcgaccg agctgctcat ccggaagctg cccttccaga ggttggtgag ggagatcgcg
+      301 caggatttca acactgacct gaggtttcag agcgcagccg tcggtgcgct gcaggaggct
+      361 agcgaagcgt acctggtggg tctgttggaa gatactaacc tgtgtgccat ccacgctaag
+      421 agagtcacca tcatgcccaa agacatccag ttggctcgcc ggatacgggg agagagagct
+      481 taagtgaagg cagtttttat ggcattttgt agtaaattct gtaaaatact ttggtttaat
+      541 tggtgacttt ttttgtaaga aattgtttat atgttgcatt tgtacttaag tcattccatc
+      601 tttcactcag gatgaatgcg aaaagtgact gtttacagac ctcagtgatg tcagcactgt
+      661 tgctcaggag tgacaagttg ttaatatgca aaacggatgc gtgatatttc ttgcttctca
+      721 tgatgcatgt ttctgtatgt taatgacttg ttgggtagct attaaggtac tagaattgat
+      781 aaatgtgtac aacagggtcc ttttgcaata aaactggtta tgacttgatc caagtgttta
+      841 acaattgggg ctgttaagtc tgaccataca tcactgtgat agaatgtagg ctttttcaag
+      901 ggtgaagata caaaccttaa ccacagtgta acttatagtt tcctttaaaa aaaaaaaatt
+      961 aaacctggca gctatagaat acaatatgtg catttataat agctatttta tatattgtag
+     1021 tgtcaacatt ttcaaattaa atgttttaca ttcacaa
+//

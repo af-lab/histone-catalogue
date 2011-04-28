@@ -1,0 +1,191 @@
+LOCUS       NC_000004               2269 bp    DNA     linear   CON 25-OCT-2010
+DEFINITION  Homo sapiens chromosome 4, GRCh37.p2 primary reference assembly.
+ACCESSION   NC_000004 REGION: complement(100869244..100871512) GPC_000000028
+VERSION     NC_000004.11  GI:224589816
+KEYWORDS    .
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 2269)
+  AUTHORS   Hillier,L.W., Graves,T.A., Fulton,R.S., Fulton,L.A., Pepin,K.H.,
+            Minx,P., Wagner-McPherson,C., Layman,D., Wylie,K., Sekhon,M.,
+            Becker,M.C., Fewell,G.A., Delehaunty,K.D., Miner,T.L., Nash,W.E.,
+            Kremitzki,C., Oddy,L., Du,H., Sun,H., Bradshaw-Cordum,H., Ali,J.,
+            Carter,J., Cordes,M., Harris,A., Isak,A., van Brunt,A., Nguyen,C.,
+            Du,F., Courtney,L., Kalicki,J., Ozersky,P., Abbott,S.,
+            Armstrong,J., Belter,E.A., Caruso,L., Cedroni,M., Cotton,M.,
+            Davidson,T., Desai,A., Elliott,G., Erb,T., Fronick,C., Gaige,T.,
+            Haakenson,W., Haglund,K., Holmes,A., Harkins,R., Kim,K.,
+            Kruchowski,S.S., Strong,C.M., Grewal,N., Goyea,E., Hou,S.,
+            Levy,A., Martinka,S., Mead,K., McLellan,M.D., Meyer,R.,
+            Randall-Maher,J., Tomlinson,C., Dauphin-Kohlberg,S.,
+            Kozlowicz-Reilly,A., Shah,N., Swearengen-Shahid,S., Snider,J.,
+            Strong,J.T., Thompson,J., Yoakum,M., Leonard,S., Pearman,C.,
+            Trani,L., Radionenko,M., Waligorski,J.E., Wang,C., Rock,S.M.,
+            Tin-Wollam,A.M., Maupin,R., Latreille,P., Wendl,M.C., Yang,S.P.,
+            Pohl,C., Wallis,J.W., Spieth,J., Bieri,T.A., Berkowicz,N.,
+            Nelson,J.O., Osborne,J., Ding,L., Meyer,R., Sabo,A., Shotland,Y.,
+            Sinha,P., Wohldmann,P.E., Cook,L.L., Hickenbotham,M.T., Eldred,J.,
+            Williams,D., Jones,T.A., She,X., Ciccarelli,F.D., Izaurralde,E.,
+            Taylor,J., Schmutz,J., Myers,R.M., Cox,D.R., Huang,X.,
+            McPherson,J.D., Mardis,E.R., Clifton,S.W., Warren,W.C.,
+            Chinwalla,A.T., Eddy,S.R., Marra,M.A., Ovcharenko,I., Furey,T.S.,
+            Miller,W., Eichler,E.E., Bork,P., Suyama,M., Torrents,D.,
+            Waterston,R.H. and Wilson,R.K.
+  TITLE     Generation and annotation of the DNA sequences of human
+            chromosomes 2 and 4
+  JOURNAL   Nature 434 (7034), 724-731 (2005)
+   PUBMED   15815621
+REFERENCE   2  (bases 1 to 2269)
+  CONSRTM   International Human Genome Sequencing Consortium
+  TITLE     Finishing the euchromatic sequence of the human genome
+  JOURNAL   Nature 431 (7011), 931-945 (2004)
+   PUBMED   15496913
+REFERENCE   3  (bases 1 to 2269)
+  AUTHORS   Lander,E.S., Linton,L.M., Birren,B., Nusbaum,C., Zody,M.C.,
+            Baldwin,J., Devon,K., Dewar,K., Doyle,M., FitzHugh,W., Funke,R.,
+            Gage,D., Harris,K., Heaford,A., Howland,J., Kann,L., Lehoczky,J.,
+            LeVine,R., McEwan,P., McKernan,K., Meldrim,J., Mesirov,J.P.,
+            Miranda,C., Morris,W., Naylor,J., Raymond,C., Rosetti,M.,
+            Santos,R., Sheridan,A., Sougnez,C., Stange-Thomann,N.,
+            Stojanovic,N., Subramanian,A., Wyman,D., Rogers,J., Sulston,J.,
+            Ainscough,R., Beck,S., Bentley,D., Burton,J., Clee,C., Carter,N.,
+            Coulson,A., Deadman,R., Deloukas,P., Dunham,A., Dunham,I.,
+            Durbin,R., French,L., Grafham,D., Gregory,S., Hubbard,T.,
+            Humphray,S., Hunt,A., Jones,M., Lloyd,C., McMurray,A.,
+            Matthews,L., Mercer,S., Milne,S., Mullikin,J.C., Mungall,A.,
+            Plumb,R., Ross,M., Shownkeen,R., Sims,S., Waterston,R.H.,
+            Wilson,R.K., Hillier,L.W., McPherson,J.D., Marra,M.A.,
+            Mardis,E.R., Fulton,L.A., Chinwalla,A.T., Pepin,K.H., Gish,W.R.,
+            Chissoe,S.L., Wendl,M.C., Delehaunty,K.D., Miner,T.L.,
+            Delehaunty,A., Kramer,J.B., Cook,L.L., Fulton,R.S., Johnson,D.L.,
+            Minx,P.J., Clifton,S.W., Hawkins,T., Branscomb,E., Predki,P.,
+            Richardson,P., Wenning,S., Slezak,T., Doggett,N., Cheng,J.F.,
+            Olsen,A., Lucas,S., Elkin,C., Uberbacher,E., Frazier,M.,
+            Gibbs,R.A., Muzny,D.M., Scherer,S.E., Bouck,J.B., Sodergren,E.J.,
+            Worley,K.C., Rives,C.M., Gorrell,J.H., Metzker,M.L., Naylor,S.L.,
+            Kucherlapati,R.S., Nelson,D.L., Weinstock,G.M., Sakaki,Y.,
+            Fujiyama,A., Hattori,M., Yada,T., Toyoda,A., Itoh,T., Kawagoe,C.,
+            Watanabe,H., Totoki,Y., Taylor,T., Weissenbach,J., Heilig,R.,
+            Saurin,W., Artiguenave,F., Brottier,P., Bruls,T., Pelletier,E.,
+            Robert,C., Wincker,P., Smith,D.R., Doucette-Stamm,L.,
+            Rubenfield,M., Weinstock,K., Lee,H.M., Dubois,J., Rosenthal,A.,
+            Platzer,M., Nyakatura,G., Taudien,S., Rump,A., Yang,H., Yu,J.,
+            Wang,J., Huang,G., Gu,J., Hood,L., Rowen,L., Madan,A., Qin,S.,
+            Davis,R.W., Federspiel,N.A., Abola,A.P., Proctor,M.J., Myers,R.M.,
+            Schmutz,J., Dickson,M., Grimwood,J., Cox,D.R., Olson,M.V.,
+            Kaul,R., Raymond,C., Shimizu,N., Kawasaki,K., Minoshima,S.,
+            Evans,G.A., Athanasiou,M., Schultz,R., Roe,B.A., Chen,F., Pan,H.,
+            Ramser,J., Lehrach,H., Reinhardt,R., McCombie,W.R., de la
+            Bastide,M., Dedhia,N., Blocker,H., Hornischer,K., Nordsiek,G.,
+            Agarwala,R., Aravind,L., Bailey,J.A., Bateman,A., Batzoglou,S.,
+            Birney,E., Bork,P., Brown,D.G., Burge,C.B., Cerutti,L., Chen,H.C.,
+            Church,D., Clamp,M., Copley,R.R., Doerks,T., Eddy,S.R.,
+            Eichler,E.E., Furey,T.S., Galagan,J., Gilbert,J.G., Harmon,C.,
+            Hayashizaki,Y., Haussler,D., Hermjakob,H., Hokamp,K., Jang,W.,
+            Johnson,L.S., Jones,T.A., Kasif,S., Kaspryzk,A., Kennedy,S.,
+            Kent,W.J., Kitts,P., Koonin,E.V., Korf,I., Kulp,D., Lancet,D.,
+            Lowe,T.M., McLysaght,A., Mikkelsen,T., Moran,J.V., Mulder,N.,
+            Pollara,V.J., Ponting,C.P., Schuler,G., Schultz,J., Slater,G.,
+            Smit,A.F., Stupka,E., Szustakowski,J., Thierry-Mieg,D.,
+            Thierry-Mieg,J., Wagner,L., Wallis,J., Wheeler,R., Williams,A.,
+            Wolf,Y.I., Wolfe,K.H., Yang,S.P., Yeh,R.F., Collins,F.,
+            Guyer,M.S., Peterson,J., Felsenfeld,A., Wetterstrand,K.A.,
+            Patrinos,A., Morgan,M.J., de Jong,P., Catanese,J.J., Osoegawa,K.,
+            Shizuya,H., Choi,S. and Chen,Y.J.
+  CONSRTM   International Human Genome Sequencing Consortium International
+            Human Genome Sequencing Consortium
+  TITLE     Initial sequencing and analysis of the human genome
+  JOURNAL   Nature 409 (6822), 860-921 (2001)
+   PUBMED   11237011
+  REMARK    Erratum:[Nature 2001 Aug 2;412(6846):565]
+COMMENT     REFSEQ INFORMATION: Features on this sequence have been produced
+            for build 37 version 2 of the NCBI's genome annotation [see
+            documentation]. The reference sequence is identical to CM000666.1.
+            On Jun 10, 2009 this sequence version replaced gi:89161207.
+            Assembly Name: GRCh37.p2 Primary Assembly The DNA sequence is
+            composed of genomic sequence, primarily finished clones that were
+            sequenced as part of the Human Genome Project. PCR products and
+            WGS shotgun sequence have been added where necessary to fill gaps
+            or correct errors. All such additions are manually curated by GRC
+            staff. For more information see: http://genomereference.org.
+FEATURES             Location/Qualifiers
+     source          1..2269
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="4"
+                     /organism="Homo sapiens"
+     gene            1..2269
+                     /db_xref="GeneID:3015"
+                     /db_xref="HGNC:4741"
+                     /db_xref="HPRD:00823"
+                     /db_xref="MIM:142763"
+                     /gene="H2AFZ"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     mRNA            join(1..188,616..693,970..1083,1416..1545,1833..2269)
+                     /db_xref="GI:53759146"
+                     /db_xref="GeneID:3015"
+                     /db_xref="HGNC:4741"
+                     /db_xref="HPRD:00823"
+                     /db_xref="MIM:142763"
+                     /gene="H2AFZ"
+                     /product="H2A histone family, member Z"
+                     /transcript_id="NM_002106.3"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+     CDS             join(186..188,616..693,970..1083,1416..1545,1833..1894)
+                     /db_xref="GI:4504255"
+                     /db_xref="CCDS:CCDS3654.1"
+                     /db_xref="GeneID:3015"
+                     /db_xref="HGNC:4741"
+                     /db_xref="HPRD:00823"
+                     /db_xref="MIM:142763"
+                     /codon_start=1
+                     /protein_id="NP_002097.1"
+                     /gene="H2AFZ"
+                     /product="histone H2A.Z"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: BestRefseq."
+ORIGIN      
+        1 attggtggga tgagcaatcc gagttcccgg atgagggaac attctgcagt ataaagggag
+       61 cagggaaggc gggagacagc gcagtttgaa tcgcggtgcg acgaaggagt aggtggtggg
+      121 atctcaccgt gggtccgatt agccttttct ctgccttgct tgcttgagct tcagcggaat
+      181 tcgaaatggt aaacttcgca gagacgctcg atgactccgc gggtttttgc cggcgagaga
+      241 aaaacccgtt acacagaggg atgggggtga agtggcgacg gttgggaacg cgcggagaca
+      301 ggatttagaa gagtgggggg aggtgttttg tcggctgcta gcggagcagc ctcggatctc
+      361 gcggcgggcg gcgacggttg ggtggcgcgc gcagcgccgc tgggggccgg cgggcggagg
+      421 cgcgcggccg tggcgagcgc gcggcggggg gcgaacgggc ggggtcgccc ctgcggcgcg
+      481 ccgcgggccg gagaccccgg cagggtgcgg ggacgcgctc gcggcgggac gcgccgcggt
+      541 gggggatggg cgcgccgcct tggtaattct atattctccg ttcctcctcc gctcgcgggc
+      601 gtgtgcgcgc cgcaggctgg cggtaaggct ggaaaggact ccggaaaggc caagacaaag
+      661 gcggtttccc gctcgcagag agccggcttg caggtcagta gttgttcgtg cagtctggga
+      721 gtcatgatgt ttttctttgc atttcctttt ttgttattca tcgctctcga tgggcgtttt
+      781 gtgtatgcgt gggtgatgcg gtgtcgcgac ttgggctgcc catacgataa atatgggggg
+      841 gaggaatcac gtgtttcgat gtcgggacgc gttgctgcgc ccgtgcccct tgctttggcg
+      901 cgcatataat ttccccatct ctagttctca tttttgtgca tttatgtttg tgtatgctta
+      961 aaatttaagt tcccagtggg ccgtattcat cgacacctaa aatctaggac gaccagtcat
+     1021 ggacgtgtgg gcgcgactgc cgctgtgtac agcgcagcca tcctggagta cctcaccgca
+     1081 gaggtaaatg ggtgaacgcc tataatccgg agaaggtttg gggggcgggg aggcggcaag
+     1141 agggaaggag gaaagtgatg caagaaaact cccaggccct gaacgcggcg agaggcctaa
+     1201 gagaacgcta gagggagctg gtgttcaaca aggatcctac tgagcttgag ttctctgctc
+     1261 ttggaattaa aattgcgtgc cccctgtata tcttgccagt cagatagtga ggaacgattc
+     1321 cagttggtag atctgcgttt gtgagggttt tattctgttc tctgaatctt ggccaaagga
+     1381 aagttggaag gcaactgaca gattctgcct tttaggtact tgaactggca ggaaatgcat
+     1441 caaaagactt aaaggtaaag cgtattaccc ctcgtcactt gcaacttgct attcgtggag
+     1501 atgaagaatt ggattctctc atcaaggcta caattgctgg tggtggtatg ttaacttcta
+     1561 acattttaaa aaatttcttc agaggaagga attttttgct gcttttaatt agtttttcca
+     1621 ggagaggaaa tttaagtata ttttcaatga tggaagtatg gttgtatcat gaaatttgat
+     1681 ttatatgtat aactcaatga atttttactt catacttgag ctgcatgttt ttaaagatac
+     1741 ctttcaagtt gaacagtata cactttcttg gtttcaaata ctgtgatttt ttaaaaaatc
+     1801 ttaagtagaa ttaattcctg tcactctcct aggtgtcatt ccacacatcc acaaatctct
+     1861 gattgggaag aaaggacaac agaagactgt ctaaaggatg cctggattcc ttgttatctc
+     1921 aggactctaa atactctaac agctgtccag tgttggtgat tccagtggac tgtatctctg
+     1981 tgaaaaacac aattttgcct ttttgtaatt ctatttgagc aagttggaag tttaattagc
+     2041 tttccaacca accaaatttc tgcattcgag tcttaaccat atttaagtgt tactgtggct
+     2101 tcaaagaagc tattgattct gaagtagtgg gttttgattg agttgactgt ttttaaaaaa
+     2161 ctgtttggat tttaattgtg atgcagaagt tatagtaaca aacatttggt tttgtacaga
+     2221 cattatttcc actctggtgg ataagttcaa taaaggtcat atcccaaac
+//

@@ -1,0 +1,129 @@
+LOCUS       NC_000015                606 bp    DNA     linear   CON 25-OCT-2010
+DEFINITION  Homo sapiens chromosome 15, GRCh37.p2 primary reference assembly.
+ACCESSION   NC_000015 REGION: complement(93276901..93277506) GPC_000000039
+VERSION     NC_000015.9  GI:224589806
+KEYWORDS    .
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 606)
+  AUTHORS   Zody,M.C., Garber,M., Sharpe,T., Young,S.K., Rowen,L., O'Neill,K.,
+            Whittaker,C.A., Kamal,M., Chang,J.L., Cuomo,C.A., Dewar,K.,
+            FitzGerald,M.G., Kodira,C.D., Madan,A., Qin,S., Yang,X.,
+            Abbasi,N., Abouelleil,A., Arachchi,H.M., Baradarani,L.,
+            Birditt,B., Bloom,S., Bloom,T., Borowsky,M.L., Burke,J.,
+            Butler,J., Cook,A., DeArellano,K., DeCaprio,D., Dorris,L. III,
+            Dors,M., Eichler,E.E., Engels,R., Fahey,J., Fleetwood,P.,
+            Friedman,C., Gearin,G., Hall,J.L., Hensley,G., Johnson,E.,
+            Jones,C., Kamat,A., Kaur,A., Locke,D.P., Madan,A., Munson,G.,
+            Jaffe,D.B., Lui,A., Macdonald,P., Mauceli,E., Naylor,J.W.,
+            Nesbitt,R., Nicol,R., O'Leary,S.B., Ratcliffe,A., Rounsley,S.,
+            She,X., Sneddon,K.M., Stewart,S., Sougnez,C., Stone,S.M.,
+            Topham,K., Vincent,D., Wang,S., Zimmer,A.R., Birren,B.W., Hood,L.,
+            Lander,E.S. and Nusbaum,C.
+  TITLE     Analysis of the DNA sequence and duplication history of human
+            chromosome 15
+  JOURNAL   Nature 440 (7084), 671-675 (2006)
+   PUBMED   16572171
+REFERENCE   2  (bases 1 to 606)
+  CONSRTM   International Human Genome Sequencing Consortium
+  TITLE     Finishing the euchromatic sequence of the human genome
+  JOURNAL   Nature 431 (7011), 931-945 (2004)
+   PUBMED   15496913
+REFERENCE   3  (bases 1 to 606)
+  AUTHORS   Lander,E.S., Linton,L.M., Birren,B., Nusbaum,C., Zody,M.C.,
+            Baldwin,J., Devon,K., Dewar,K., Doyle,M., FitzHugh,W., Funke,R.,
+            Gage,D., Harris,K., Heaford,A., Howland,J., Kann,L., Lehoczky,J.,
+            LeVine,R., McEwan,P., McKernan,K., Meldrim,J., Mesirov,J.P.,
+            Miranda,C., Morris,W., Naylor,J., Raymond,C., Rosetti,M.,
+            Santos,R., Sheridan,A., Sougnez,C., Stange-Thomann,N.,
+            Stojanovic,N., Subramanian,A., Wyman,D., Rogers,J., Sulston,J.,
+            Ainscough,R., Beck,S., Bentley,D., Burton,J., Clee,C., Carter,N.,
+            Coulson,A., Deadman,R., Deloukas,P., Dunham,A., Dunham,I.,
+            Durbin,R., French,L., Grafham,D., Gregory,S., Hubbard,T.,
+            Humphray,S., Hunt,A., Jones,M., Lloyd,C., McMurray,A.,
+            Matthews,L., Mercer,S., Milne,S., Mullikin,J.C., Mungall,A.,
+            Plumb,R., Ross,M., Shownkeen,R., Sims,S., Waterston,R.H.,
+            Wilson,R.K., Hillier,L.W., McPherson,J.D., Marra,M.A.,
+            Mardis,E.R., Fulton,L.A., Chinwalla,A.T., Pepin,K.H., Gish,W.R.,
+            Chissoe,S.L., Wendl,M.C., Delehaunty,K.D., Miner,T.L.,
+            Delehaunty,A., Kramer,J.B., Cook,L.L., Fulton,R.S., Johnson,D.L.,
+            Minx,P.J., Clifton,S.W., Hawkins,T., Branscomb,E., Predki,P.,
+            Richardson,P., Wenning,S., Slezak,T., Doggett,N., Cheng,J.F.,
+            Olsen,A., Lucas,S., Elkin,C., Uberbacher,E., Frazier,M.,
+            Gibbs,R.A., Muzny,D.M., Scherer,S.E., Bouck,J.B., Sodergren,E.J.,
+            Worley,K.C., Rives,C.M., Gorrell,J.H., Metzker,M.L., Naylor,S.L.,
+            Kucherlapati,R.S., Nelson,D.L., Weinstock,G.M., Sakaki,Y.,
+            Fujiyama,A., Hattori,M., Yada,T., Toyoda,A., Itoh,T., Kawagoe,C.,
+            Watanabe,H., Totoki,Y., Taylor,T., Weissenbach,J., Heilig,R.,
+            Saurin,W., Artiguenave,F., Brottier,P., Bruls,T., Pelletier,E.,
+            Robert,C., Wincker,P., Smith,D.R., Doucette-Stamm,L.,
+            Rubenfield,M., Weinstock,K., Lee,H.M., Dubois,J., Rosenthal,A.,
+            Platzer,M., Nyakatura,G., Taudien,S., Rump,A., Yang,H., Yu,J.,
+            Wang,J., Huang,G., Gu,J., Hood,L., Rowen,L., Madan,A., Qin,S.,
+            Davis,R.W., Federspiel,N.A., Abola,A.P., Proctor,M.J., Myers,R.M.,
+            Schmutz,J., Dickson,M., Grimwood,J., Cox,D.R., Olson,M.V.,
+            Kaul,R., Raymond,C., Shimizu,N., Kawasaki,K., Minoshima,S.,
+            Evans,G.A., Athanasiou,M., Schultz,R., Roe,B.A., Chen,F., Pan,H.,
+            Ramser,J., Lehrach,H., Reinhardt,R., McCombie,W.R., de la
+            Bastide,M., Dedhia,N., Blocker,H., Hornischer,K., Nordsiek,G.,
+            Agarwala,R., Aravind,L., Bailey,J.A., Bateman,A., Batzoglou,S.,
+            Birney,E., Bork,P., Brown,D.G., Burge,C.B., Cerutti,L., Chen,H.C.,
+            Church,D., Clamp,M., Copley,R.R., Doerks,T., Eddy,S.R.,
+            Eichler,E.E., Furey,T.S., Galagan,J., Gilbert,J.G., Harmon,C.,
+            Hayashizaki,Y., Haussler,D., Hermjakob,H., Hokamp,K., Jang,W.,
+            Johnson,L.S., Jones,T.A., Kasif,S., Kaspryzk,A., Kennedy,S.,
+            Kent,W.J., Kitts,P., Koonin,E.V., Korf,I., Kulp,D., Lancet,D.,
+            Lowe,T.M., McLysaght,A., Mikkelsen,T., Moran,J.V., Mulder,N.,
+            Pollara,V.J., Ponting,C.P., Schuler,G., Schultz,J., Slater,G.,
+            Smit,A.F., Stupka,E., Szustakowski,J., Thierry-Mieg,D.,
+            Thierry-Mieg,J., Wagner,L., Wallis,J., Wheeler,R., Williams,A.,
+            Wolf,Y.I., Wolfe,K.H., Yang,S.P., Yeh,R.F., Collins,F.,
+            Guyer,M.S., Peterson,J., Felsenfeld,A., Wetterstrand,K.A.,
+            Patrinos,A., Morgan,M.J., de Jong,P., Catanese,J.J., Osoegawa,K.,
+            Shizuya,H., Choi,S. and Chen,Y.J.
+  CONSRTM   International Human Genome Sequencing Consortium International
+            Human Genome Sequencing Consortium
+  TITLE     Initial sequencing and analysis of the human genome
+  JOURNAL   Nature 409 (6822), 860-921 (2001)
+   PUBMED   11237011
+  REMARK    Erratum:[Nature 2001 Aug 2;412(6846):565]
+COMMENT     REFSEQ INFORMATION: Features on this sequence have been produced
+            for build 37 version 2 of the NCBI's genome annotation [see
+            documentation]. The reference sequence is identical to CM000677.1.
+            On Jun 10, 2009 this sequence version replaced gi:51511731.
+            Assembly Name: GRCh37.p2 Primary Assembly The DNA sequence is
+            composed of genomic sequence, primarily finished clones that were
+            sequenced as part of the Human Genome Project. PCR products and
+            WGS shotgun sequence have been added where necessary to fill gaps
+            or correct errors. All such additions are manually curated by GRC
+            staff. For more information see: http://genomereference.org.
+FEATURES             Location/Qualifiers
+     source          1..606
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="15"
+                     /organism="Homo sapiens"
+     gene            1..606
+                     /db_xref="GeneID:654500"
+                     /db_xref="HGNC:31026"
+                     /gene_synonym="H2AFVP; HsT19970"
+                     /pseudo
+                     /gene="H2AFVP1"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Curated Genomic."
+ORIGIN      
+        1 gagagcggcg gcggcggcgc gggtcggcag cgggagggcg cgcggcgggg cggaggcgga
+       61 ggcggagtcg gcgccgagaa catggccgga ggcaaagctg gaaaggacag tgggaaggcc
+      121 aaggctaagg cagtatctcg ctcacagaga gctgggctac agtttcctgt gggccgcatc
+      181 cacagacact tgaagactcg caccacaagc catggaaggg tgggtgccac tgctgccgtg
+      241 cacagggctg cgattccggg gtacctcact gcagaggtgc tggagctggc aggtaatgct
+      301 tctaagggtc tcaaagcaaa gcgtatcact ccgcgtcact ggcagcttgc agtccgtggt
+      361 gatgaagagt tggattctct tatcaaggct accacagctg ggggtggcgt gatcccctca
+      421 catccacaaa tctctgactg gaaagaaggg acagcggaaa actgcttaga gggatgcttt
+      481 aaccaaccct cttcctcccc gtcattgtac tggaactggg acagaagaaa taatggggat
+      541 atgtggaatt tttaacaaca gttaaatgga aaagcataga caattactgt agacatgata
+      601 aaagaa
+//
