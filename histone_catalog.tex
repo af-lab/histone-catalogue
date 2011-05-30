@@ -12,12 +12,38 @@
     %% Say that no one bothers to explain which one they are using
     %% Comment that maybe the lack of information is because they are so similiar which makes difficult most of the analysis
     %% We are going to annotate all canonical histone genes on (at least GenBank and Ensembl)
+    \rewrite{short 2-3 lines on chromatin organization and dynamics}
+    \rewrite{there's several isoforms for histones and no one bothers about them}
+    \rewrite{
+    Marzluff et al (2002) is the existing reference for histone nomenclature. However, it contains some oversights, most likeley due to the "draft" status of the genome it was based on. One gene had not been identified, some proteins have different sequences, gene names had been swapped, and others have found to be pseudo-genes. Similarly, the annotation of RefSeq and SwissProt is not yet complete and contains some errors for the untranslated regions.
+    }
+    \rewrite{ we catalogued and fixed the annotations of all replication-dependent on Entrez and Ensembl}
 
-    \subsection{Canonical isoforms vs variants}
-      %% Characteristics of a variant are the fact they seem to have special functions. Emphasis that some canonical may have special functions whicyh no one bothered to check
-      %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
-      %% Complain about the lack of information on the different isoforms
-      %% Complain that there's small reason to call some the .1 variant, and the others .2
+  \section{Histone nomenclature}
+    \todo{Should the nomenclature come after explaining the cluster an multiple genes? Or should we just reference the next section here?}
+    \rewrite{
+    The histone gene names have a specific nomeclature, different for canonical and variant histones.
+    
+    Canonical gene names state the histone cluster number and the last letter is related to its position on the cluster.
+    
+    Names for the variants are either related to their function or to historic meaning.
+    }
+
+  \section{Histone clusters}
+      %% Talk about the histone clusters and the distribution of each histone
+    
+      %% IMAGE - diagram of each histone position on the histone cluster
+    \rewrite{
+    histones are organized in clusters. Clusters have several copies os each histone (except HIST4)
+    
+      Mammals and birds seem to have jumbled clusters instead of tandemly repeated clusters like frogs.
+    }
+    \missingfigure{diagram of histones organizatin on clusters}
+
+
+  \section{Genes}
+    \missingfigure{table with number of genes per cluster and total. Also show number of unique proteins and identified variants}
+    \missingfigure{table with all gene ids, accession numbers and official symbols}
 
     \subsection{Special characteristics of the histone genes}
       %% no poly-A tail, a stem-loop instead
@@ -25,24 +51,55 @@
       %% explain expression control of histones
       %% IMAGE - diagram of expression model for cell biologists (blobs representing proteins)
 
-    \subsection{Genome organization}
-      %% Talk about the histone clusters and the distribution of each histone
-    
-      %% IMAGE - diagram of each histone position on the histone cluster
+      \subsubsection{Stem-loop}
+        %% Consensus of each stem-loop
+        \missingfigure{consensus of human stem-loop}
+        \rewrite{
+          no poly-A tail, explain stem-loop
+        }
 
-  \section{Canonical core histones}
+      \subsubsection{mRNA expression levels}
+        %% levels of mRNA of each gistone gene in 2-3 different human cell lines (at least one primary cell line)
+        \rewrite{
+          mainly expression on S-phase hence replication-dependent
+          
+          no study on different expression levels but mouse study shows different expression even in the same cluster
+        }
+
+  \section{Proteins}
     %% Consensus for each of them, table with their differences (there's at least 1 error on the Marzulff tables)
     %% table with all gene ids, acession number, official symbols etc
+    \missingfigure{table with protein ids and recommended protein names italicized official genes names. Also add the variant and separate isoforms}
     \subsection{H2A}
+      \missingfigure{weblogo from poster}
+      \missingfigure{consensus and list of changes for each variant --- Marluzz paper style}
+      \rewrite{comment on H2AFJ}
     \subsection{H2B}
+      \missingfigure{weblogo from poster}
+      \missingfigure{consensus and list of changes for each variant --- Marluzz paper style}
     \subsection{H3}
-      %% I wonder what we'll be saying here
+      \missingfigure{weblogo from poster}
+      \missingfigure{consensus and list of changes for each variant --- Marluzz paper style}
     \subsection{H4}
-      %% these should all be the same
+      %% these should all be the same bu they are not. And there's an H4 in HIST4
+      %% which is also present in mouse, which means has been conserved  in evolution
+      \missingfigure{weblogo from poster}
+      \missingfigure{consensus and list of changes for each variant --- Marluzz paper style}
 
-  \section{Stem-loop}
-    %% Consensus of each stem-loop
+  \section{SNP's}
+    \rewrite{writing is dependent on what is found}
 
-  \section{mRNA expression levels}
-    %% levels of mRNA of each gistone gene in 2-3 different human cell lines (at least one primary cell line)
+  \section{Canonical isoforms vs variants}
+    %% Characteristics of a variant are the fact they seem to have special functions. Emphasis that some canonical may have special functions whicyh no one bothered to check
+    %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
+    %% Complain about the lack of information on the different isoforms
+    %% Complain that there's small reason to call some the .1 variant, and the others .2
+    \rewrite{
+      Rules and exceptions to definition of canonical and variants. Also point that the word canonical suggest antecedence which is not necessarily true (ref to our paper and Henikoff's)
+    }
+
+  \section{Appendix}
+    \rewrite{
+      perl code
+    }
 \end{document}
