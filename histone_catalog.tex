@@ -18,13 +18,19 @@
     %% We are going to annotate all canonical histone genes on (at least GenBank and Ensembl)
 
     %% short 2-3 lines on chromatin organization and dynamics}
-    Histones are the building blocks of the nucleosome, chromatin's basic structural unit. As such,
-    their structures \look{repeated `structural'} have a major impact on the chromatin dynamics,
-    controlling the way genetic \look{what about epigenetic? Isn't chromatin more than just genes?}
-    information can be accessed.
+	Histones are among the most abundant proteins in eukaryotic cells and contribute up to half the mass of chromatin. They define the structure and accessibility of the nucleosome as the fundamental unit of genome organisation. In addition, the reactive sidechains of histones are post-translationally modified as a nexus for signalling and potentially for heritable epigenetics.
 
-    \rewrite{should we have a note on nucleosome structure? It's the background of the background. Someone
-    who's reading this should already know it, right?}
+	Histones have been studied for many decades as abundant proteins which were readily isolated due to their highly basic chemical character. Successive improvements in fractionation revealed 5 main types under a nomenclature as histone H1, H2A, H2B, H3 and H4. An additional histone H5 related to H1 is found in nucleus-containing avian erythrocytes and has been of research interest due to its elevated binding stability. Since the ratio of arginine/lysine is ? for H1 and H5 these became known as "lysine-rich", whereas the remaining 4 histones with ratios ?-? are "arginine-rich". The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed that H2A, H2B, H3 and H4 associated as an octamer of two copies each within the nucleosome core particle, so they are referred to as "core histones". H1 and H5 associate with the linker DNA between nucleosome core particles, and are referred to as "linker histones".
+
+	Extracting histones from cells and separating them by polyacrylamide gel electrophoresis (PAGE) using the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral buffers gives single bands for each histone type. However, PAGE with acetic acid in gels containing the non-ionic detergent Triton X-100 and uncharged urea as denaturants (TAU or AUT) allows the separation of histones into multiple species due to both post-translational modifications and variations in sequence within types. Historically, the major species in TAU separations due to polypeptide differences were identified by numerical suffixes as H2A.1 and H2A.2; H2B.1 and H2B.2; and H3.1, H3.2 and H3.3.
+
+	There are two recognised classes of histone sequence variation: "Variants" play functionally distinctive roles, have lower net abundance, and typically show less identity in alignments. Most are significantly expressed outside S phase of the cell cycle and are referred to as "replication independent" (RI). In contrast, "canonical" histones contribute to the primary function and majority of nucleosome structures, and the "isoforms" exhibit high identity in alignments. Despite these small differences, canonical histones are sometimes known as "wild type" sequences and are usually considered together as a single histone. Because they are primarily expressed to package the duplicated genome during S phase, they are referred to as "replication dependent" (RD) or "replacement" histones.
+
+	The two classes of histone sequence variations are distinguished by their regulation in humans and other metazoans. Histone variants typically have unique promoter elements and transcripts carry 3' polyadenylation. Canonical histones appear to share a common promoter structure (???) and a unique stem-loop structure in the 3' untranslated region that is the basis for their turnover. In general, metazoan canonical histones are not thought to be polyadenylated, although S. cerevisiae histone transcript stability appears to be regulated by polyadenylation instead of RNA structures.
+
+	The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic genomes, possibly for regulatory and expression functions and to facilitate sequence conservation. The gene clusters are observed to aggregate within the nucleoplasm with processing factors as Histone Locus Bodies (HLBs) similar but distinct from Cajal Bodies. Human histone genes are grouped in 4 nominal clusters (table 1). The major HIST1 histone gene cluster on chromosome 6 and the secondary HIST2 contain contiguous high density arrays of histone genes, whereas the minor HIST3 and HIST4 loci on chromosomes 1 and 12 have a handful of histone genes interspersed with non-histone coding genes.
+
+The widespread awareness of high conservation in histone protein sequences means that the true extent of protein and gene sequence variation in canonical histones is often under-appreciated. Albig and 
 
     %% there's several isoforms for histones and no one bothers about them
     Fitting to their important task, histone genes and proteins show some unusual characteristics.
@@ -89,7 +95,7 @@
 
     A typical replication histone gene has a name such as HIST1H3B. This name can be split in 3 parts, HIST1, H3 and B.
     The first states the histone cluster it's located, the second the type of histone and the last, its position on
-    the cluster taking in account mouse homologos. Some letters may be missing, e.g. HIST1H2AF, since it exists in the
+    the cluster taking in account mouse homologous. Some letters may be missing, e.g. HIST1H2AF, since it exists in the
     mouse genome (this is to make it easier to cross data between the two animal models).
 
     The names for the variants tend to be more random. With the exception of CENP--A (H3 variant named CENtromeric Protein A)
@@ -115,14 +121,15 @@
       \centering
       \begin{tabular}{l | l | l | l | l | l }
         %% what about using HIST# instead of Cluster # on the headers?
-        \null & Cluster 1 & Cluster 2 & Cluster 3 & Cluster 4 & Total \\
+        \null & HIST1 & HIST2 & HIST3 & HIST4 & Total \\
+        location & 6p21-22 & 1q21 & 1q42 & 12p12 & \null \\
         \hline
         H2A   & 12+5      & 4         & 1         & $-$       & 17+5  \\
         H2B   & 15+2      & 2+4       & 1+1       & $-$       & 18+7  \\
         H3    & 10+1      & 3+3       & 1         & $-$       & 14+4  \\
         H4    & 12+1      & 2         & $-$       & 1         & 15+1  \\
       \end{tabular}
-      \caption{Count of expected functional histone genes and proteins (add unique proteins per cluster)}
+      \caption{Count of expected functional histone genes and pseudogenes}
       \label{tab:histone}
     \end{table}
 
@@ -368,6 +375,16 @@
     \rewrite{
       Rules and exceptions to definition of canonical and variants. Also point that the word canonical suggest antecedence which is not necessarily true (ref to our paper and Henikoff's)
     }
+
+  \section{Characteristics of clusters}
+    %% Talk about gene density of clusters, GC content, patterns of divergent promoters?
+%% HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
+HIST1 encodes 49 genes and 9 pseudogenes over a span of 2.3 megabasepairs and is the second most gene dense region on the megabase scale the genome (Xie 2003). It is located at the distal end of the major histocompatibility complex (MHC) in the extended class I region at chromosome 6p21-22 (MHC consortium Nature 1999).
+
+HIST2 encodes 11 genes and 7 pseudogenes over a span of 105 kilobasepairs.
+
+  \section{Proximity of stability and variation}
+    %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
 
   \section{Sequence extractor}
     To obtain the sequences for the alignment, curation, and IDs for the tables, a perl program using the
