@@ -1,11 +1,13 @@
 \documentclass[10pt,a4paper,draft]{article}
 
-\usepackage[pdftex]{graphicx}                                           % load images with pdflatex
+\usepackage{graphicx}                                                   % load and handle pictures
+\graphicspath{{./figs/}}                                                % look for images here
+
 \usepackage{url}                                                        % nicely formatted URL's
-\usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                                                  % insert to–do and missing figure items in the document
+\usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                 % insert to–do and missing figure items in the document
   \newcommand{\addref}{\todo[color=red!40,size=\tiny]{Add reference}}   % new command for box about missing references
   \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,#1]{#2}}       % new command for boxes of text that needs to be rewritten
-  \newcommand{\look}[2][]{\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+  \newcommand{\think}[2][]{\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
 
 %  \newcommand{\think}[2][]{\todo[texwidth=5cm,color=green!40,#1]{#2}}       % new command for boxes of text that needs to be rewritten
 \begin{document}
@@ -73,7 +75,7 @@
     %% there's several isoforms for histones and no one bothers about them
     Fitting to their important task, histone genes and proteins show some unusual characteristics.
     One of the most blatant of them but still mostly ignored, is the existence of several unique protein
-    sequences \look{should explain better that we're not talking about SNP?} that despite having
+    sequences \think{should explain better that we're not talking about SNP?} that despite having
     officially different names are grouped together and rarely identified. These histone
     \emph{isoforms} are different from the so-called histone \emph{variants} whose distinction
     is based on their 3' UTR processing and genome positioning.
@@ -86,9 +88,9 @@
     is not yet complete and contains some omissions for the untranslated regions.
 
     %% we catalogued and fixed the annotations of all replication-dependent on Entrez and Ensembl
-    Since we were in a position of need of such information \look{mention that it's human only.
+    Since we were in a position of need of such information \think{mention that it's human only.
     After marzullf reference?} we extracted the update sequences
-    from GenBank \look{and Emsembl} and finished their annotation. Having finished cataloguing
+    from GenBank \think{and Emsembl} and finished their annotation. Having finished cataloguing
     all of them, and submitting the completed annotations, we hope to have created a useful
     reference for other researchers while raising awareness of the multitude of histone isoforms.
 
@@ -99,7 +101,7 @@
 
 
     Variants are the most likely with a standard gene, are considered independent from each other,
-    spread around the genome and its expression is mostly independent of cell cycle \look{explain
+    spread around the genome and its expression is mostly independent of cell cycle \think{explain
     why mostly? Do it next paragraph when complaining the naming}. When people say H2AX that's
     a variant. Note, H2A.2 or H3.2 are not considered variants.
 
@@ -126,9 +128,9 @@
   \section{Histone gene nomenclature}
   \label{sec:nomenclature}
     %%The histone gene names have a specific nomeclature, different for canonical and variant histones.
-    Histone genes have a specific nomenclature that reflects their organization on the genome \look{possible
+    Histone genes have a specific nomenclature that reflects their organization on the genome \think{possible
     confusion with specific histone distribution on chromatin?}. Albeit a bit long and confusing at first sight,
-    once undersood they're logical and easy to remember\look{not really for the variants. But will we even
+    once undersood they're logical and easy to remember\think{not really for the variants. But will we even
     talk deeply about the variant genes?}.
 
     A typical replication histone gene has a name such as HIST1H3B. This name can be split in 3 parts, HIST1, H3 and B.
@@ -299,7 +301,7 @@
       %% great increase on expression during S-phase only
       %% explain expression control of histones
       %% IMAGE - diagram of expression model for cell biologists (blobs representing proteins)
-      Replication-dependent histone genes have a group of special identifying characteristics \look{other than encoding a histone}. These
+      Replication-dependent histone genes have a group of special identifying characteristics \think{other than encoding a histone}. These
       are the stem-loop (in substitution of the poly-A tail), absence of introns and a 35-fold increased
       on its expression levels.
 
@@ -343,9 +345,9 @@
   \section{Proteins}
     %% Consensus for each of them, table with their differences (there's at least 1 error on the Marzulff tables)
     %% table with all gene ids, acession number, official symbols etc
-    While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \lok{are H3 and H4
+    While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \think{are H3 and H4
     maybe more important for the nucleosome structure} the number of unique proteins are low, 3 for H3 and 2 for H4. For H2A and H2B
-    this number is much higher.\look{should I get a table for the number of unique proteins? The more complex table with the mutatinos
+    this number is much higher.\think{should I get a table for the number of unique proteins? The more complex table with the mutatinos
     is more complex but says the same}
     
     The numbering of these proteins amino acids also has a catch. The first methionine is cleaved after expression and as such, it is
@@ -354,7 +356,7 @@
     \subsection{H2A}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{figs/H2A_weblogo.png}
+        \includegraphics[width=\textwidth]{H2A_weblogo.png}
         \caption{WebLogo of all H2A sequences. The bottom line are the amino acids of H2AFJ whose sequence is different from any of the H2A proteins}
         \label{fig:h2a-weblogo}
       \end{figure}
@@ -364,7 +366,7 @@
     \subsection{H2B}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{figs/H2B_weblogo.png}
+        \includegraphics[width=\textwidth]{H2B_weblogo.png}
         \caption{WebLogo of all H2B sequences.}
         \label{fig:h2b-weblogo}
       \end{figure}
@@ -373,7 +375,7 @@
     \subsection{H3}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{figs/H3_weblogo.png}
+        \includegraphics[width=\textwidth]{H3_weblogo.png}
         \caption{WebLogo of all H3 sequences.}
         \label{fig:h3-weblogo}
       \end{figure}
@@ -385,7 +387,7 @@
       only gene on that ``cluster''.
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{figs/H4_weblogo.png}
+        \includegraphics[width=\textwidth]{H4_weblogo.png}
         \caption{WebLogo of all H4 sequences. The non-conserved amino acids are all from one single gene --- HIST1H4G}
         \label{fig:h4-weblogo}
       \end{figure}
