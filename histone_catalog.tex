@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[10pt,a4paper,draft]{article}
 
 \usepackage{graphicx}                                                   % load and handle pictures
 \graphicspath{{./figs/}}                                                % look for images here
@@ -158,19 +158,7 @@
   \section{Histone gene nomenclature}
   \label{sec:nomenclature}
     %%The histone gene names have a specific nomeclature, different for canonical and variant histones.
-    Histone genes have a specific nomenclature that reflects their organization on the genome \think{possible
-    confusion with specific histone distribution on chromatin?}. Albeit a bit long and confusing at first sight,
-    once undersood they're logical and easy to remember\think{not really for the variants. But will we even
-    talk deeply about the variant genes?}.
-
-    A typical replication histone gene has a name such as HIST1H3B. This name can be split in 3 parts, HIST1, H3 and B.
-    The first states the histone cluster it's located, the second the type of histone and the last, its position on
-    the cluster taking in account mouse homologous. Some letters may be missing, e.g. HIST1H2AF, since it exists in the
-    mouse genome (this is to make it easier to cross data between the two animal models).
-
-    The names for the variants tend to be more random. With the exception of CENP--A (H3 variant named CENtromeric Protein A)
-    all are named similarly to H2AFX where F stands for Family and the letters after have some historical or functional meaning.
-    For example, H2AFZ was the last (hence Z) blot on a gel.
+    Histone genes have a very specific nomenclature that reflects their organization in the genome.
 
     \begin{figure}
       \centering
@@ -178,6 +166,39 @@
       \caption{Nomenclature}
       \label{fig:nomenclature}
     \end{figure}
+
+    A typical replication histone gene has a name such as HIST1H3B. This name can be split in
+    3 parts (Fig.~\ref{fig:nomenclature}): HIST1, H3, and B. The first two parts are self-explanatory,
+    an H3 gene on the histone cluster 1. The last letter indicates that is the second H3 gene on the cluster.
+    The first gene of the cluster, and by association the start of the cluster, is the gene closest to the telomere
+    while the last gene of the cluster, marking the end of the cluster, is the one closer to the centromere. When
+    there was only one gene of the histone in a cluster, there was no letter indicating its position. However, there is
+    one omission from the list, the gene HIST1H2AE is followed by HIST1H2AG, skipping the letter F. This is due
+    to another characteristic of the nomenclature, the names also represent the mouse orthologs which makes it easier
+    to cross data between the two animal models. There is a Hist1h2af (capitalization
+    of the gene name is different between human and mouse) gene in mouse that simply has no correspondent in human.
+
+    This nomenclature was originally described in \cite{Marzluff02} and made no distinction between pseudo and protein coding genes; suspected
+    pseudo genes were still named based on their position inside the cluster. ``New'' histone genes have since been found in the clusters,\think{some of them are just inferred}
+    most of them pseudo genes, and others had their type changed from coding to pseudo and vice-versa (Table~\ref{tab:difference-from-Marzluff02}).
+    This forced some genes to be renamed: HIST2H2AA is now named HIST2H2AA3 (a new H2A coding gene HIST2H2AA4 was found between HIST1H2AA and HIST1H2AB);
+    and HIST2H2B is now named HIST2H2BA (after the discovery of another H2B coding gene in the cluster named HIST2H2BB).\think{it seems their names are not correspondent to the order in cluster}
+    Other new coding genes were discovered at the end of the cluster and as such their names could respect the nomenclature. However,
+    several new pseudo genes were discovered in the middle of the cluster. These were named differently, with the suffix PS#
+    and numbered by order of discovery. Genes reported at the time of the nomenclature but had their gene type changed to pseudo
+    kept their original names.
+
+    \begin{table}
+      \centering
+      \input{results/table-difference-from-Marzluff02}
+      \caption{Difference from \cite{Marzluff02}}
+      \label{tab:difference-from-Marzluff02}
+    \end{table}
+
+    The names for the variants are much more different. With the exception of CENP--A (H3 variant named CENtromeric Protein A),
+    all histone variants are named in a similar fashion to H2AFX. The histone type, followed by the letter F (which stands for
+    Family). The last characters identify the variant and usually have an historical or functional meaning. For example, H2AFX
+    and H2AFZ are named accordingly to their migration order in acetic acid-urea gels.
 
   \section{Histone clusters}
   \label{sec:cluster}
@@ -191,11 +212,41 @@
     \missingfigure{diagram of histones organizatin on clusters}
 
   \section{Genes}
-    \input{results/table-histone-count}
-    \input{results/table-H2A-ids}
-    \input{results/table-H2B-ids}
-    \input{results/table-H3-ids}
-    \input{results/table-H4-ids}
+
+    \begin{table}
+      \centering
+      \input{results/table-histone-count}
+      \caption{Count of expected functional histone genes and pseudogenes}
+      \label{tab:histone}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \input{results/table-H2A-ids}
+      \caption{histone H2A genes reference table}
+      \label{tab:H2A-ref}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \input{results/table-H2B-ids}
+      \caption{histone H2B genes reference table}
+      \label{tab:H2B-ref}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \input{results/table-H3-ids}
+      \caption{histone H3 genes reference table}
+      \label{tab:H3-ref}
+    \end{table}
+
+    \begin{table}
+      \centering
+      \input{results/table-H4-ids}
+      \caption{histone H4 genes reference table}
+      \label{tab:H4-ref}
+    \end{table}
 
     \subsection{Special characteristics of the histone genes}
       %% no poly-A tail, a stem-loop instead
@@ -255,25 +306,68 @@
     never counter when numbering them.
 
     \subsection{H2A}
-      \input{results/fig-H2A-weblogo}
-      \input{results/table-H2A-consensus}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{H2A_weblogo.png}
+        \caption{WebLogo of all H2A sequences. The bottom line are the amino acids of H2AFJ whose sequence is different from any of the H2A proteins}
+        \label{fig:h2a-weblogo}
+      \end{figure}
+
+      \begin{table}
+        \centering
+        \input{results/table-H2A-consensus}
+        \caption{histone H2A protein consensus}
+        \label{tab:H2A-consensus}
+      \end{table}
+
       \rewrite{comment on H2AFJ}
 
     \subsection{H2B}
-      \input{results/fig-H2B-weblogo}
-      \input{results/table-H2B-consensus}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{H2B_weblogo.png}
+        \caption{WebLogo of all H2B sequences.}
+        \label{fig:h2b-weblogo}
+      \end{figure}
+      \begin{table}
+        \centering
+        \input{results/table-H2B-consensus}
+        \caption{histone H2B protein consensus}
+        \label{tab:H2B-consensus}
+      \end{table}
 
     \subsection{H3}
-      \input{results/fig-H3-weblogo}
-      \input{results/table-H3-consensus}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{H3_weblogo.png}
+        \caption{WebLogo of all H3 sequences.}
+        \label{fig:h3-weblogo}
+      \end{figure}
+      \begin{table}
+        \centering
+        \input{results/table-H3-consensus}
+        \caption{histone H3 protein consensus}
+        \label{tab:H3-consensus}
+      \end{table}
 
     \subsection{H4}
       %% these should all be the same bu they are not. And there's an H4 in HIST4
       %% which is also present in mouse, which means has been conserved  in evolution
       With the exception of HIST1H4G, all H4 genes seem to encode the same protein. Even HIST4H4 which is the
       only gene on that ``cluster''.
-      \input{results/fig-H4-weblogo}
-      \input{results/table-H4-consensus}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{H4_weblogo.png}
+        \caption{WebLogo of all H4 sequences. The non-conserved amino acids are all from one single gene --- HIST1H4G}
+        \label{fig:h4-weblogo}
+      \end{figure}
+
+      \begin{table}
+        \centering
+        \input{results/table-H4-consensus}
+        \caption{Count of expected functional histone genes and proteins}
+        \label{tab:H4-consensus}
+      \end{table}
 
 %  \section{SNP's}
 %    \rewrite{writing is dependent on what is found}
@@ -298,7 +392,7 @@
     their sequences from the reference assembly, mRNAs and proteins. The sequences are saved in separate files whose
     names are either the gene/transcript/protein name or id.
     
-    The program (sequence\_extractor) was submitted to the BioPerl project to be distributed together with it under the Perl artistic license
+    The program (bp\_sequence\_extractor) was submitted to the BioPerl project to be distributed together with it under the GPLv3.
 
   \section{Reproducible research}
     While writing this document, we attempted to follow the principles of reproducible research \cite{reproducible-research-bioinformatics, reproducible-research-law}.
