@@ -11,14 +11,14 @@
 
 \input{results/variables}
 
+\author{David Miguel Susano Pinto and Andrew Flaus}
+\title{The canonical core histone catalogue}
+
 \begin{document}
+  \maketitle
+
   \section{Introduction}
-  \label{sec:intro}
     %% Complementary introduction on the chromatin organization and how it's dynamic
-    %% Explain that despite the fact that there's 4 core histones, there's actually several isoforms of each
-    %% Say that no one bothers to explain which one they are using
-    %% Comment that maybe the lack of information is because they are so similiar which makes difficult most of the analysis
-    %% We are going to annotate all canonical histone genes on (at least GenBank and Ensembl)
 
     %% short 2-3 lines on chromatin organization and dynamics}
     Histones are among the most abundant proteins in eukaryotic cells and contribute up to half
@@ -32,269 +32,253 @@
     5 main types under a nomenclature as histone H1, H2A, H2B, H3 and H4\cite{Histonenomenc}. An additional histone H5
     related to H1 is found in nucleus-containing avian erythrocytes and has been of research interest
     due to its elevated binding stability. Since the ratio of arginine/lysine is \HOneArgLysRatio\ for H1 and H5 these
-    became known as ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ are``arginine-rich''.
+    became known as ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ are ``arginine-rich''.
     The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed that H2A,
     H2B, H3 and H4 associated as an octamer of two copies each within the nucleosome core particle,
     so they are referred to as ``core histones''. H1 and H5 associate with the linker DNA between
     nucleosome core particles, and are referred to as ``linker histones''.
 
-    %% note on calling 'histones' to 'core histones' should be at the end of introduction and after introducing the difference
-    Since we write here only about the core histones, for sake of brevity we will refer to them as simply ``histones''.
+    \subsection{Histone variation\think{call this section 'histone variants?' would be stronger and hints at the message we want to pass but may sound arrogant}}
+      %% Explain that despite the fact that there's 4 core histones, there's actually several isoforms of each
+      %% Say that no one bothers to explain which one they are using
+      %% Comment that maybe the lack of information is because they are so similiar which makes difficult most of the analysis
+      %% We are going to annotate all canonical histone genes on (at least GenBank and Ensembl)
+      %% Complain that there's small reason to call some the .1 variant, and the others .2
 
-  \section{Canonical isoforms vs variants\think{maybe call this section 'histone variation'? Or 'histone variants?' ?}} 
-    %% Characteristics of a variant are the fact they seem to have special functions. Emphasis that some canonical may have special functions whicyh no one bothered to check
-    %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
-    %% Complain about the lack of information on the different isoforms
-    %% Complain that there's small reason to call some the .1 variant, and the others .2
-    \rewrite{
-      Rules and exceptions to definition of canonical and variants. Also point that the word canonical suggest antecedence which is not necessarily true (ref to our paper and Henikoff's)
-    }
+      For each histone type, there are two recognised classes of histone sequence variation which are distinguished
+      by their expression regulation: \think{expression regulation sounds bad} ``variants'', and ``canonical isoforms'' (Table~\ref{tab:typical-histone-differences}).
+      However, the variation level of the later is frequently underestimated, usually \think{or often?} ignored,
+      and the main subject of this report.\think{can I call it paper or article?}
 
-    Extracting histones from cells and separating them by polyacrylamide gel electrophoresis (PAGE) using
-    the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral buffers gives single bands
-    for each histone type. However, PAGE with acetic acid in gels containing the non-ionic detergent
-    Triton X--100 and uncharged urea as denaturants (TAU or AUT) allows the separation of histones
-    into multiple species due to both post-translational modifications and variations in sequence
-    within types. Historically, the major species in TAU separations due to polypeptide differences
-    were identified by numerical suffixes as H2A.1 and H2A.2; H2B.1 and H2B.2; and H3.1, H3.2 and H3.3\cite{Non-allelicva}.
+      For sake of brevity, we will refer to the core canonical histones as simply ``histones''.
 
-    There are two recognised classes of histone sequence variation, ``variants'' and ``canonical'', which are distinguished
-    by their regulation in humans and other metazoans (Table~\ref{tab:typical-histone-differences}).
+%      Despite the small differences between these canonical histone isoforms,
+%      canonical histones are sometimes known as ``wild type'' sequences and are usually considered together
+%      as a single histone.
+%      The widespread awareness of high conservation in histone protein sequences means that the true extent
+%      of protein and gene sequence variation in canonical histones is often under-appreciated. Albig and 
 
-    \begin{table}
-      \centering
-      \begin{tabular}{l | l | l | l | l }
-        \null     & Expression              & Sequence identity & Function    & 3' UTR \\
-        \hline
-        Canonical & Replication Dependent   & High              & Structural  & Stem--loop  \\
-        Variants  & Replication Independent & Low               & Specialized & poly-A tail \\
-      \end{tabular}
-      \caption{Typical vision of differences between canonical and variant histones.}
-      \label{tab:typical-histone-differences}
-    \end{table}
+      \begin{table}
+        \centering
+        \begin{tabular}{l | l | l | l | l }
+          \null     & Expression              & Sequence identity & Function    & 3' UTR \\
+          \hline
+          Canonical & Replication Dependent   & High              & Structural  & Stem--loop  \\
+          Variants  & Replication Independent & Low               & Specialized & poly-A tail \\
+        \end{tabular}
+        \caption{Typical vision of differences between canonical and variant histones.}
+        \label{tab:typical-histone-differences}
+      \end{table}
 
-    ``Variants'' play functionally distinctive roles, have lower net abundance, and typically show less
-    identity in alignments. Most are significantly expressed outside S~phase of the cell cycle and are
-    referred to as ``replication independent''~(RI). They typically have unique promoter elements and their
-    transcripts carry 3' polyadenylated tails.
+      Histone ``variants'' play functionally distinctive roles, have lower net abundance, and typically show less
+      identity in alignments. Most are significantly expressed outside S~phase of the cell cycle and as such, are
+      referred to as ``replication independent''~(RI). They typically have unique promoter elements\addref{} and their
+      transcripts carry 3' polyadenylated tails.
 
-    In contrast, ``canonical'' histones contribute to the primary function and majority of nucleosome
-    structures, and their ``isoforms'' exhibit high identity in alignments. Because they are primarily
-    expressed to package the duplicated genome during S~phase, and show a 35~fold increase on expression
-    during this phase \cite{harris-1991}, they are referred to as ``replication dependent''~(RD) or ``replacement''
-    histones. They appear to share a common promoter structure (Fig.~\ref{fig:promoter-alignment}) and
-    a unique stem-loop structure in the 3' untranslated region that is the
-    basis for their turnover. In general, metazoan canonical histones
+      In contrast, ``canonical isoforms'' histones contribute to the primary function and majority of nucleosome
+      structures, and show high identity in alignments. Because they are primarily
+      expressed to package the duplicated genome during S~phase, showing a 35~fold increase on expression
+      during this phase \cite{harris-1991}, they are referred to as ``replication dependent''~(RD) or ``replacement''
+      histones. They appear to share a common promoter structure (Fig.~\ref{fig:promoter-alignment}) and
+      a unique stem-loop structure in the 3' untranslated region that is the
+      basis for their turnover.
+
+      Extracting histones from cells and separating them by polyacrylamide gel electrophoresis (PAGE) using
+      the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral buffers gives single bands
+      for each histone type.\think{even for the very different H2AZ and CENP--A?} However, PAGE with acetic acid in gels containing the non-ionic detergent
+      Triton X--100 and uncharged urea as denaturants (TAU or AUT) allows the separation of histones
+      into multiple species due to both post-translational modifications and variations in sequence
+      within types. However, not all variations in sequence create a large enough effect on protein charge
+      to allow TAU separation which lead to the distinction between H2A.1 and H2A.2; H2B.1 and H2B.2;
+      and H3.1, H3.2 and H3.3\cite{Non-allelicva}. This distinction is purely chemical, has no known
+      functional significance, and camouflages the actual variation within each histone type.
+
+    \subsection{Current situation\think{this name sucks}}
+      \cite{Marzluff02} is the existing reference for histone variation and nomenclature. However, it contains
+      some oversights, most likeley due to the ``draft'' status of the genome it was based on (Table~\ref{tab:difference-from-Marzluff02}).
+      Similarly, the annotation of RefSeq and SwissProt \think{swissprot is not the ensembl equivalent to genbank's RefSeq. Is it Havana? But HAVANA only annoates the genome. And RefSeq is the project not the sequences, it's the sequences who needs annotation}
+      is not yet complete, the histone gens containing some omissions and inconsistencies for the untranslated regions,
+      transcripts and classification of genes between protein coding and pseudo genes.
+
+      We have extracted the current sequences for all histone genes from RefSeq, finished \think{it's really never finished}
+      their annotation and submitted them back to RefSeq. With this, we hope to have created a useful
+      reference for other researchers while raising awareness of the multitude of histone isoforms.
+
+      Due to the computational nature of this project, we have developed a method that would generate the tables and
+      figures for this report automatically (Sec.~\ref{sec:reproducible}). This implied choosing a reference which
+      was RefSeq from NCBI. As such, tables and figures on this paper are representative of RefSeq's current annotation and
+      different results would be obtained had HAVANA been used. Likewise, the RefSeq maintainers did not always
+      agreed with our suggested changes, and we have expressed those differences in the main text or figure and
+      table captions.
+
+  \section{The genes}
+   %%there's several isoforms for histones and no one bothers about them
+%    Fitting to their important task, histone genes and proteins show some unusual characteristics.
+%    One of the most blatant of them but still mostly ignored, is the existence of several unique protein
+%    sequences \think{should explain better that we're not talking about SNP?} that despite having
+%    officially different names, are grouped together and rarely identified. These histone
+%    \emph{isoforms} are different from the so-called histone \emph{variants} whose distinction
+%    is based on their 3' UTR processing and genome positioning.
+
+    \subsection{Gene clusters}
+      The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic genomes,
+      possibly for regulatory and expression functions and to facilitate sequence conservation. These clusters
+      are observed to aggregate within the nucleoplasm with processing factors as Histone Locus Bodies
+      (HLBs) similar but distinct from Cajal Bodies\addref. In human, there are 4 histone gene clusters which
+      are numbered by their size (Table~\ref{histone-gene-count}). The major and secondary histone gene clusters,
+      HIST1 on chromosome 6, and the HIST2 on chromosome 1, contain contiguous high density arrays
+      of histone genes, with \CodingGenesInHistOne{} and \CodingGenesInHistTwo{} functional\think{should count pseudogenes?}
+      genes respectively.
+      On the other hand, the minor clusters, HIST3 also on chromosome 1, and HIST4 on chromosome 12, have only a
+      handful of histone genes, \CodingGenesInHistThree{} and \CodingGenesInHistFour{} respectively, interspersed with
+      non-histone coding genes.
+
+      In humans, these genes are all jumbled in the clusters unlike
+      frogs where the genes appear organized in tandem. Not all genes in the cluster are functional, several have
+      been annotated has pseudo-genes, ususally due to not found promotor sequences.
+
+      To note that all H1 genes exist on HIST1 and that HIST4 has a single gene (HIST4H4) which has been reported to be transcripted.
+
+      \missingfigure{diagram of histones organizatin on clusters}
+
+      %%Talk about gene density of clusters, GC content, patterns of divergent promoters?
+      %%HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
+      HIST1 encodes \CodingGenesInHistOne{} genes and \PseudoGenesInHistOne{} pseudogenes over a span of 2.3 megabasepairs and is the second
+      most gene dense region on the megabase scale the genome \addref{Xie 2003}. It is located at the distal
+      end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
+      6p21-22 \addref{MHC consortium Nature 1999}.
+
+      HIST2 encodes \CodingGenesInHistTwo{} genes and \PseudoGenesInHistTwo{} pseudogenes over a span of 105 kilobasepairs.
+
+        \subsubsection{Proximity of stability and variation}
+        %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
+
+    \subsection{Gene nomenclature}
+
+      Histone genes have a very specific nomenclature that reflects their organization in the genome.
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
+        \caption{Nomenclature}
+        \label{fig:nomenclature}
+      \end{figure}
+
+      A typical replication histone gene has a name such as HIST1H3B. This name can be split in
+      3 parts (Fig.~\ref{fig:nomenclature}): HIST1, H3, and B. The first two parts are self-explanatory,
+      an H3 gene on the histone cluster 1. The last letter indicates that is the second H3 gene on the cluster.
+      The first gene of the cluster, and by association the start of the cluster, is the gene closest to the telomere
+      while the last gene of the cluster, marking the end of the cluster, is the one closer to the centromere. When
+      there was only one gene of the histone in a cluster, there was no letter indicating its position. However, there is
+      one omission from the list, the gene HIST1H2AE is followed by HIST1H2AG, skipping the letter F. This is due
+      to another characteristic of the nomenclature, the names also represent the mouse orthologs which makes it easier
+      to cross data between the two animal models. There is a Hist1h2af (capitalization
+      of the gene name is different between human and mouse) gene in mouse that simply has no correspondent in human.
+
+      This nomenclature was originally described in \cite{Marzluff02} and made no distinction between pseudo and protein coding genes; suspected
+      pseudo genes were still named based on their position inside the cluster. ``New'' histone genes have since been found in the clusters,\think{some of them are just inferred}
+      most of them pseudo genes, and others had their type changed from coding to pseudo and vice-versa (Table~\ref{tab:difference-from-Marzluff02}).
+      This forced some genes to be renamed: HIST2H2AA is now named HIST2H2AA3 (a new H2A coding gene HIST2H2AA4 was found between HIST1H2AA and HIST1H2AB);
+      and HIST2H2B is now named HIST2H2BA (after the discovery of another H2B coding gene in the cluster named HIST2H2BB).\think{it seems their names are not correspondent to the order in cluster}
+      Other new coding genes were discovered at the end of the cluster and as such their names could respect the nomenclature. However,
+      several new pseudo genes were discovered in the middle of the cluster. These were named differently, with the suffix PS#
+      and numbered by order of discovery. Genes reported at the time of the nomenclature but had their gene type changed to pseudo
+      kept their original names.
+
+      \begin{table}
+        \centering
+        \input{results/table-difference-from-Marzluff02}
+        \caption{Difference from \cite{Marzluff02}}
+        \label{tab:difference-from-Marzluff02}
+      \end{table}
+
+      The names for the variants are much more different. With the exception of CENP--A (H3 variant named CENtromeric Protein A),
+      all histone variants are named in a similar fashion to H2AFX. The histone type, followed by the letter F (which stands for
+      Family). The last characters identify the variant and usually have an historical or functional meaning. For example, H2AFX
+      and H2AFZ are named accordingly to their migration order in acetic acid-urea gels.
+
+    \subsection{Gene catalogue}
+
+      \begin{table}
+        \centering
+        \input{results/table-histone-count}
+        \caption{Count of expected functional histone genes and pseudogenes}
+        \label{tab:histone-gene-count}
+      \end{table}
+
+      \begin{table}
+        \centering
+        \input{results/table-H2A-ids}
+        \caption{histone H2A genes reference table}
+        \label{tab:H2A-ref}
+      \end{table}
+
+      \begin{table}
+        \centering
+        \input{results/table-H2B-ids}
+        \caption{histone H2B genes reference table}
+        \label{tab:H2B-ref}
+      \end{table}
+
+      \begin{table}
+        \centering
+        \input{results/table-H3-ids}
+        \caption{histone H3 genes reference table}
+        \label{tab:H3-ref}
+      \end{table}
+
+      \begin{table}
+        \centering
+        \input{results/table-H4-ids}
+        \caption{histone H4 genes reference table}
+        \label{tab:H4-ref}
+      \end{table}
+
+
+    \subsection{Gene promoters}
+
+  \section{The transcripts}
+
+    In general, metazoan canonical histones
     are not thought to be polyadenylated, although \textit{S.\ cerevisiae} histone transcript stability
-    appears to be regulated by polyadenylation instead of RNA structures. Despite the small differences between these canonical histone isoforms,
-    canonical histones are sometimes known as ``wild type'' sequences and are usually considered together
-    as a single histone.
+    appears to be regulated by polyadenylation instead of RNA structures.
 
-    The widespread awareness of high conservation in histone protein sequences means that the true extent
-    of protein and gene sequence variation in canonical histones is often under-appreciated. Albig and 
+    \subsection{mRNA expression levels}
+      %% levels of mRNA of each histone gene in 2-3 different human cell lines (at least one primary cell line)
+      Expression of the RD histone genes is highly regulated by the cell cycle (hence the RD name). Probably due
+      to the cell high demand for histone proteins during DNA replication, their expression levels rise dramatically
+      during this phase of the cell cycle. During the rest of the cell cycle, histone genes are still transcribed
+      but with much lower levels.
 
+      However, there is only a 5-fold increase in their transcription rate at S phase, compared to the other phases
+      of cell cycle so regulation acts strongly at the post-transcriptional level\addref.
 
-    The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic genomes,
-    possibly for regulatory and expression functions and to facilitate sequence conservation. The gene clusters
-    are observed to aggregate within the nucleoplasm with processing factors as Histone Locus Bodies
-    (HLBs) similar but distinct from Cajal Bodies. Human histone genes are grouped in 4 nominal clusters
-    (Table~\ref{tab:histone}). The major HIST1 histone gene cluster on chromosome 6 and the secondary
-    HIST2 contain contiguous high density arrays of histone genes, whereas the minor HIST3 and HIST4
-    loci on chromosomes 1 and 12 have a handful of histone genes interspersed with non-histone coding genes.
+      To note however, that each gene seems to have different levels of increased transcription, even between genes in the
+      same cluster.
 
+      RI histone genes have expression dependent on their needs (testis specific, DNA damage, etc).
 
-    %% there's several isoforms for histones and no one bothers about them
-    Fitting to their important task, histone genes and proteins show some unusual characteristics.
-    One of the most blatant of them but still mostly ignored, is the existence of several unique protein
-    sequences \think{should explain better that we're not talking about SNP?} that despite having
-    officially different names, are grouped together and rarely identified. These histone
-    \emph{isoforms} are different from the so-called histone \emph{variants} whose distinction
-    is based on their 3' UTR processing and genome positioning.
+    \subsection{Stem-loop}
+      Unlike all the other human genes, RD histone genes lack a poly-A tail for the 3' mRNA processing.
+      Instead, they encode a stem-loop followed by a purine-rich Histone Downstream Element (HDE)
+      downstream of the stop codon. The stem-loop interacts with the Stem-Loop
+      Binding Protein (SLBP) to stabilise the mRNA in S phase \addref
+      while the HDE interacts with U7 snRNA to direct efficient 3 end processing\addref.
 
-    Marzluff et al (2002) is the existing reference for histone nomenclature. However, it contains
-    some oversights, most likeley due to the ``draft'' status of the genome it was based on. \todo{in
-    the end must recheck this list of errors} One gene
-    had not been identified, some proteins have different sequences, gene names had been swapped,
-    and others have been found to be pseudo-genes. Similarly, the annotation of RefSeq and SwissProt
-    is not yet complete and contains some omissions for the untranslated regions.
+      This specific machinery for mRNA processing is a large part of increase on transcription during the S--phase
+      since their expression is also regulated by the cell-cycle \adderf and allow for the histone mRNA stability \addref.
 
-    %% we catalogued and fixed the annotations of all replication-dependent on Entrez and Ensembl
-    Since we were in a position of need of such information \think{mention that it's human only.
-    After marzullf reference?} we extracted the update sequences
-    from GenBank \think{and Emsembl} and finished their annotation. Having finished cataloguing
-    all of them, and submitting the completed annotations, we hope to have created a useful
-    reference for other researchers while raising awareness of the multitude of histone isoforms.
+      Some RD histone genes also have annotated a poly-A tail and in similarlity with H2AFX have two annotated transcripts.
+      
+      However, RI histone genes do show a poly-A tail with the notable pseudo-exception of H2AFX which has both
+      a stem-loop and poly-A tail and transcribes 2 different mRNA (one for each).
+  %        \missingfigure{consensus of human stem-loop.}
 
-  \section{Overview of histone genes}
-  \label{sec:overview}
-    The human histones can be separated in two main groups: canonical or replication-dependent, and
-    variants or replication-independent.
+      No RI histone genes show introns on their genes probably to circumvent the requirement
+      for primary transcript processing when histones must be rapidly produced at S--phase.
+      However, some of the variants do have introns.
 
-
-    Variants are the most likely with a standard gene, are considered independent from each other,
-    spread around the genome and its expression is mostly independent of cell cycle \think{explain
-    why mostly? Do it next paragraph when complaining the naming}. When people say H2AX that's
-    a variant. Note, H2A.2 and H3.2 are not considered variants.
-
-    Both this separation and their naming is very misleading\think{say that the fact that no one cares is proof?}
-    for several reasons.
-    \begin{itemize}
-      \item The word canonical suggests precedence which is not necessarily true. It has been
-            suggested that at least in the case of H2A, the `canonical' gene may have evolved
-            from one of the `variant' genes\addref.
-      \item Not all `variant' are replication-independent. H2AX gene for example expression
-            increases during S--phase together with other `canonical' histones and does show
-            a transcript with stem-loop.
-      \item The `variant' vs `canonical' separation suggests that there's no variance inside
-            the `canonical' which is false. There's several unique protein sequences for each
-            `canonical' protein. And even the sometime named H2A.2 and H3.2 variants are actually
-            `canonical' histone proteins.
-    \end{itemize}
-
-%    \rewrite{seems its missing here some definition of isoforms and replication-dependent or independent
-%    and variants and replication-independent. But to explai that we need to explain clusters. And the line
-%    cluster -> gene -> transcript -> protein will be broken}
-
-  \section{Histone gene nomenclature}
-  \label{sec:nomenclature}
-    %%The histone gene names have a specific nomeclature, different for canonical and variant histones.
-    Histone genes have a very specific nomenclature that reflects their organization in the genome.
-
-    \begin{figure}
-      \centering
-      \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
-      \caption{Nomenclature}
-      \label{fig:nomenclature}
-    \end{figure}
-
-    A typical replication histone gene has a name such as HIST1H3B. This name can be split in
-    3 parts (Fig.~\ref{fig:nomenclature}): HIST1, H3, and B. The first two parts are self-explanatory,
-    an H3 gene on the histone cluster 1. The last letter indicates that is the second H3 gene on the cluster.
-    The first gene of the cluster, and by association the start of the cluster, is the gene closest to the telomere
-    while the last gene of the cluster, marking the end of the cluster, is the one closer to the centromere. When
-    there was only one gene of the histone in a cluster, there was no letter indicating its position. However, there is
-    one omission from the list, the gene HIST1H2AE is followed by HIST1H2AG, skipping the letter F. This is due
-    to another characteristic of the nomenclature, the names also represent the mouse orthologs which makes it easier
-    to cross data between the two animal models. There is a Hist1h2af (capitalization
-    of the gene name is different between human and mouse) gene in mouse that simply has no correspondent in human.
-
-    This nomenclature was originally described in \cite{Marzluff02} and made no distinction between pseudo and protein coding genes; suspected
-    pseudo genes were still named based on their position inside the cluster. ``New'' histone genes have since been found in the clusters,\think{some of them are just inferred}
-    most of them pseudo genes, and others had their type changed from coding to pseudo and vice-versa (Table~\ref{tab:difference-from-Marzluff02}).
-    This forced some genes to be renamed: HIST2H2AA is now named HIST2H2AA3 (a new H2A coding gene HIST2H2AA4 was found between HIST1H2AA and HIST1H2AB);
-    and HIST2H2B is now named HIST2H2BA (after the discovery of another H2B coding gene in the cluster named HIST2H2BB).\think{it seems their names are not correspondent to the order in cluster}
-    Other new coding genes were discovered at the end of the cluster and as such their names could respect the nomenclature. However,
-    several new pseudo genes were discovered in the middle of the cluster. These were named differently, with the suffix PS#
-    and numbered by order of discovery. Genes reported at the time of the nomenclature but had their gene type changed to pseudo
-    kept their original names.
-
-    \begin{table}
-      \centering
-      \input{results/table-difference-from-Marzluff02}
-      \caption{Difference from \cite{Marzluff02}}
-      \label{tab:difference-from-Marzluff02}
-    \end{table}
-
-    The names for the variants are much more different. With the exception of CENP--A (H3 variant named CENtromeric Protein A),
-    all histone variants are named in a similar fashion to H2AFX. The histone type, followed by the letter F (which stands for
-    Family). The last characters identify the variant and usually have an historical or functional meaning. For example, H2AFX
-    and H2AFZ are named accordingly to their migration order in acetic acid-urea gels.
-
-  \section{Histone clusters}
-  \label{sec:cluster}
-    %% Talk about the histone clusters and the distribution of each histone
-    The human histone genes are organized in 4 clusters (HIST1, HIST2, HIST3 and HIST4). These are locations in the human genome, all in different
-    chromosomes, which have several histone genes. In humans, these genes are all jumbled in the clusters unlike
-    frogs where the genes appear organized in tandem. Not all genes in the cluster are functional, several have
-    been annotated has pseudo-genes, ususally due to not found promotor sequences.
-
-    To note that all H1 genes exist on HIST1 and that HIST4 has a single gene (HIST4H4) which has been reported to be transcripted.
-    \missingfigure{diagram of histones organizatin on clusters}
-
-  \section{Genes}
-
-    \begin{table}
-      \centering
-      \input{results/table-histone-count}
-      \caption{Count of expected functional histone genes and pseudogenes}
-      \label{tab:histone}
-    \end{table}
-
-    \begin{table}
-      \centering
-      \input{results/table-H2A-ids}
-      \caption{histone H2A genes reference table}
-      \label{tab:H2A-ref}
-    \end{table}
-
-    \begin{table}
-      \centering
-      \input{results/table-H2B-ids}
-      \caption{histone H2B genes reference table}
-      \label{tab:H2B-ref}
-    \end{table}
-
-    \begin{table}
-      \centering
-      \input{results/table-H3-ids}
-      \caption{histone H3 genes reference table}
-      \label{tab:H3-ref}
-    \end{table}
-
-    \begin{table}
-      \centering
-      \input{results/table-H4-ids}
-      \caption{histone H4 genes reference table}
-      \label{tab:H4-ref}
-    \end{table}
-
-    \subsection{Special characteristics of the histone genes}
-      %% no poly-A tail, a stem-loop instead
-      %% great increase on expression during S-phase only
-      %% explain expression control of histones
-      %% IMAGE - diagram of expression model for cell biologists (blobs representing proteins)
-      Replication-dependent histone genes have a group of special identifying characteristics \think{other than encoding a histone}. These
-      are the stem-loop (in substitution of the poly-A tail), absence of introns and a 35-fold increased
-      on its expression levels.
-
-      \subsubsection{mRNA expression levels}
-        %% levels of mRNA of each histone gene in 2-3 different human cell lines (at least one primary cell line)
-        Expression of the RD histone genes is highly regulated by the cell cycle (hence the RD name). Probably due
-        to the cell high demand for histone proteins during DNA replication, their expression levels rise dramatically
-        during this phase of the cell cycle. During the rest of the cell cycle, histone genes are still transcribed
-        but with much lower levels.
-
-        However, there is only a 5-fold increase in their transcription rate at S phase, compared to the other phases
-        of cell cycle so regulation acts strongly at the post-transcriptional level\addref.
-
-        To note however, that each gene seems to have different levels of increased transcription, even between genes in the
-        same cluster.
-
-        RI histone genes have expression dependent on their needs (testis specific, DNA damage, etc).
-
-      \subsubsection{Stem-loop}
-        Unlike all the other human genes, RD histone genes lack a poly-A tail for the 3' mRNA processing.
-        Instead, they encode a stem-loop followed by a purine-rich Histone Downstream Element (HDE)
-        downstream of the stop codon. The stem-loop interacts with the Stem-Loop
-        Binding Protein (SLBP) to stabilise the mRNA in S phase \addref
-        while the HDE interacts with U7 snRNA to direct efficient 3 end processing\addref.
-
-        This specific machinery for mRNA processing is a large part of increase on transcription during the S--phase
-        since their expression is also regulated by the cell-cycle \adderf and allow for the histone mRNA stability \addref.
-
-        Some RD histone genes also have annotated a poly-A tail and in similarlity with H2AFX have two annotated transcripts.
-        
-        However, RI histone genes do show a poly-A tail with the notable pseudo-exception of H2AFX which has both
-        a stem-loop and poly-A tail and transcribes 2 different mRNA (one for each).
-%        \missingfigure{consensus of human stem-loop.}
-
-      \subsubsection{Stem-loop}
-        No RI histone genes show introns on their genes probably to circumvent the requirement
-        for primary transcript processing when histones must be rapidly produced at S--phase.
-        However, some of the variants do have introns.
-
-
-  \section{Proteins}
+  \section{The proteins}
     %% Consensus for each of them, table with their differences (there's at least 1 error on the Marzulff tables)
     %% table with all gene ids, acession number, official symbols etc
     While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \think{are H3 and H4
@@ -372,33 +356,57 @@
 %  \section{SNP's}
 %    \rewrite{writing is dependent on what is found}
 
+  \section{Canonical isoforms vs.~variants}
+    %% Characteristics of a variant are the fact they seem to have special functions. Emphasis that some canonical may have special functions whicyh no one bothered to check
+    %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
+    %% Complain about the lack of information on the different isoforms
+    \rewrite{
+      Rules and exceptions to definition of canonical and variants. Also point that the word canonical suggest antecedence which is not necessarily true (ref to our paper and Henikoff's)
+    }
 
-  \section{Characteristics of clusters}
-    %% Talk about gene density of clusters, GC content, patterns of divergent promoters?
-    %% HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
-    HIST1 encodes 49 genes and 9 pseudogenes over a span of 2.3 megabasepairs and is the second
-    most gene dense region on the megabase scale the genome (Xie 2003). It is located at the distal
-    end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
-    6p21-22 (MHC consortium Nature 1999).
+    Variants are the most likely with a standard gene, are considered independent from each other,
+    spread around the genome and its expression is mostly independent of cell cycle \think{explain
+    why mostly? Do it next paragraph when complaining the naming}. When people say H2AX that's
+    a variant. Note, H2A.2 and H3.2 are not considered variants.
 
-    HIST2 encodes 11 genes and 7 pseudogenes over a span of 105 kilobasepairs.
-
-  \section{Proximity of stability and variation}
-    %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
+    Both this separation and their naming is very misleading\think{say that the fact that no one cares is proof?}
+    for several reasons.
+    \begin{itemize}
+      \item The word canonical suggests precedence which is not necessarily true. It has been
+            suggested that at least in the case of H2A, the `canonical' gene may have evolved
+            from one of the `variant' genes\addref.
+      \item Not all `variant' are replication-independent. H2AX gene for example expression
+            increases during S--phase together with other `canonical' histones and does show
+            a transcript with stem-loop.
+      \item The `variant' vs `canonical' separation suggests that there's no variance inside
+            the `canonical' which is false. There's several unique protein sequences for each
+            `canonical' protein. And even the sometime named H2A.2 and H3.2 variants are actually
+            `canonical' histone proteins.
+    \end{itemize}
 
   \section{Sequence extractor}
     To obtain the sequences for the alignment, curation, and IDs for the tables, a perl program using the
-    BioPerl modules was written. This program performs a search on a specific database (Ensembl or GenBank), retrieves
+    BioPerl modules was written. This program performs a search for genes on entrez, retrieves
     their sequences from the reference assembly, mRNAs and proteins. The sequences are saved in separate files whose
     names are either the gene/transcript/protein name or id.
-    
+
     The program (bp\_sequence\_extractor) was submitted to the BioPerl project to be distributed together with it under the GPLv3.
 
   \section{Reproducible research}
+  \label{sec:reproducible}
     While writing this document, we attempted to follow the principles of reproducible research \cite{reproducible-research-bioinformatics, reproducible-research-law}.
     We are also aware of the continuous development of databases and genetic knowledge. As such,
     the source code to replicate the tables and figures shown in this document are freely accessible
     online at gitorious. We hope that in the future, it can be used to create up to date information
     that reflects the current knowledge on the human histone genes.
+
+    The choice of RefSeq through Entrez over HAVANA through Ensembl was mainly based in one reason --- the ease
+    to automate the gene search and retrieve their IDs. Entrez has made available E-utilities with a SOAP interface
+    that is already part of the bioperl project. This allowed us to retrieve the search results very easily.
+    However, the Ensembl search is done by a Lucene server which is not publicly accessible. Setting up our own
+    Lucene instance to provide SOAP services from it was not straightforward for us. The Ensembl perl API is
+    also not part of the bioperl project, needing to be installed separately, and is dependent on a very
+    out of date version of Bioperl, further complicating its installation. All this would make reproducibility
+    of our data a much more difficult process by other researchers.
 
 \end{document}
