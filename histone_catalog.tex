@@ -23,16 +23,16 @@
     %% short 2-3 lines on chromatin organization and dynamics}
     Histones are among the most abundant proteins in eukaryotic cells and contribute up to half
     the mass of chromatin. They define the structure and accessibility of the nucleosome as the
-    fundamental unit of genome organisation. In addition, the reactive sidechains of histones
+    fundamental unit of genome organisation. In addition, the reactive sidechains\think{what about H3 T45?} of histones
     are post-translationally modified as a nexus for signalling and potentially for heritable
     epigenetics.
 
     Histones have been studied for many decades as abundant proteins which were readily isolated
     due to their highly basic chemical character. Successive improvements in fractionation revealed
-    5 main types under a nomenclature as histone H1, H2A, H2B, H3 and H4\cite{Histonenomenc}. An additional histone H5
-    related to H1 is found in nucleus-containing avian erythrocytes and has been of research interest
+    5 main types currently known as histone H1, H2A, H2B, H3 and H4\cite{Histonenomenc}. An additional histone type, H5
+    related to H1, is found in nucleus-containing avian erythrocytes and has been of research interest
     due to its elevated binding stability. Since the ratio of arginine/lysine is \HOneArgLysRatio\ for H1 and H5 these
-    became known as ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ are ``arginine-rich''.
+    became known as ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ \think{should repeated proteins count twice?}are ``arginine-rich''.
     The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed that H2A,
     H2B, H3 and H4 associated as an octamer of two copies each within the nucleosome core particle,
     so they are referred to as ``core histones''. H1 and H5 associate with the linker DNA between
@@ -47,10 +47,9 @@
 
       For each histone type, there are two recognised classes of histone sequence variation which are distinguished
       by their expression regulation: \think{expression regulation sounds bad} ``variants'', and ``canonical isoforms'' (Table~\ref{tab:typical-histone-differences}).
-      However, the variation level of the later is frequently underestimated, usually \think{or often?} ignored,
-      and the main subject of this report.\think{can I call it paper or article?}
-
-      For sake of brevity, we will refer to the core canonical histones as simply ``histones''.
+      However, the variation level among the canonical isoforms, the main subject of this report\think{should I call it paper or article?},
+      is frequently underestimated and usually ignored. For sake of brevity, we will
+      refer to the core canonical histones as simply ``histones''.
 
 %      Despite the small differences between these canonical histone isoforms,
 %      canonical histones are sometimes known as ``wild type'' sequences and are usually considered together
@@ -85,8 +84,8 @@
 
       Extracting histones from cells and separating them by polyacrylamide gel electrophoresis (PAGE) using
       the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral buffers gives single bands
-      for each histone type.\think{even for the very different H2AZ and CENP--A?} However, PAGE with acetic acid in gels containing the non-ionic detergent
-      Triton X--100 and uncharged urea as denaturants (TAU or AUT) allows the separation of histones
+      for each histone type\think{even for the very different H2AZ and CENP--A?}. If instead, it is done in acetic acid in gels containing the non-ionic detergent
+      Triton X--100 and uncharged urea as denaturants (TAU or AUT), the histones are separated
       into multiple species due to both post-translational modifications and variations in sequence
       within types. However, not all variations in sequence create a large enough effect on protein charge
       to allow TAU separation which lead to the distinction between H2A.1 and H2A.2; H2B.1 and H2B.2;
@@ -95,9 +94,9 @@
 
     \subsection{Current situation\think{this name sucks}}
       \cite{Marzluff02} is the existing reference for histone variation and nomenclature. However, it contains
-      some oversights, most likeley due to the ``draft'' status of the genome it was based on (Table~\ref{tab:difference-from-Marzluff02}).
+      some oversights~(Table~\ref{tab:difference-from-Marzluff02}), most likeley due to the ``draft'' status of the genome it was based on.
       Similarly, the annotation of RefSeq and SwissProt \think{swissprot is not the ensembl equivalent to genbank's RefSeq. Is it Havana? But HAVANA only annoates the genome. And RefSeq is the project not the sequences, it's the sequences who needs annotation}
-      is not yet complete, the histone gens containing some omissions and inconsistencies for the untranslated regions,
+      is not yet complete, the histone genes containing some omissions and inconsistencies for the untranslated regions,
       transcripts and classification of genes between protein coding and pseudo genes.
 
       We have extracted the current sequences for all histone genes from RefSeq, finished \think{it's really never finished}
@@ -124,31 +123,34 @@
       The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic genomes,
       possibly for regulatory and expression functions and to facilitate sequence conservation. These clusters
       are observed to aggregate within the nucleoplasm with processing factors as Histone Locus Bodies
-      (HLBs) similar but distinct from Cajal Bodies\addref. In human, there are 4 histone gene clusters which
-      are numbered by their size (Table~\ref{histone-gene-count}). The major and secondary histone gene clusters,
-      HIST1 on chromosome 6, and the HIST2 on chromosome 1, contain contiguous high density arrays
-      of histone genes, with \CodingGenesInHistOne{} and \CodingGenesInHistTwo{} functional\think{should count pseudogenes?}
-      genes respectively.
-      On the other hand, the minor clusters, HIST3 also on chromosome 1, and HIST4 on chromosome 12, have only a
-      handful of histone genes, \CodingGenesInHistThree{} and \CodingGenesInHistFour{} respectively, interspersed with
-      non-histone coding genes.
+      (HLBs) similar but distinct from Cajal bodies\addref. In human, there are 4 histone gene clusters which
+      are numbered by their size (Table~\ref{tab:histone-gene-count}).
 
-      In humans, these genes are all jumbled in the clusters unlike
-      frogs where the genes appear organized in tandem. Not all genes in the cluster are functional, several have
-      been annotated has pseudo-genes, ususally due to not found promotor sequences.
+      \subsubsection{Internal cluster organization}
+        The major and secondary histone gene clusters,
+        HIST1 on chromosome 6, and HIST2 on chromosome 1, contain contiguous high density arrays
+        of histone genes. HIST1 encodes \CodingGenesInHistOne{}~functional genes and \PseudoGenesInHistOne{}~pseudogenes
+        over a span of \HistOneSpan{} and is the second most gene dense region on the megabase scale the genome \addref{Xie 2003}.
+        It is located at the distal end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
+        6p21-22 \addref{MHC consortium Nature 1999} which may have an effect on its recombination. HIST2 encodes \CodingGenesInHistTwo{}~functional
+        genes and \PseudoGenesInHistTwo{}~pseudogenes over a span of \HistTwoSpan{}.
+        %%HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
 
-      To note that all H1 genes exist on HIST1 and that HIST4 has a single gene (HIST4H4) which has been reported to be transcripted.
+        On the other hand, the minor clusters, HIST3 also on chromosome 1, and HIST4 on chromosome 12, have only a
+        handful of histone genes, \CodingGenesInHistThree{} and \CodingGenesInHistFour{} respectively, interspersed with
+        non-histone coding genes.
 
-      \missingfigure{diagram of histones organizatin on clusters}
+        \rewrite{Talk about gene density of clusters, GC content, patterns of divergent promoters?}
 
-      %%Talk about gene density of clusters, GC content, patterns of divergent promoters?
-      %%HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
-      HIST1 encodes \CodingGenesInHistOne{} genes and \PseudoGenesInHistOne{} pseudogenes over a span of 2.3 megabasepairs and is the second
-      most gene dense region on the megabase scale the genome \addref{Xie 2003}. It is located at the distal
-      end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
-      6p21-22 \addref{MHC consortium Nature 1999}.
+        In humans, these genes are all jumbled in the clusters unlike
+        frogs where the genes appear organized in tandem. Not all genes in the cluster are functional, several have
+        been annotated has pseudo-genes, ususally due to not found promotor sequences.
 
-      HIST2 encodes \CodingGenesInHistTwo{} genes and \PseudoGenesInHistTwo{} pseudogenes over a span of 105 kilobasepairs.
+        To note that all H1 genes exist on HIST1 and that HIST4 has a single gene (HIST4H4) which has been reported to be transcripted.
+
+        \missingfigure{diagram of histones organizatin on clusters}
+
+
 
         \subsubsection{Proximity of stability and variation}
         %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
