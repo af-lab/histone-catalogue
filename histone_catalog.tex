@@ -5,7 +5,7 @@
 
 \usepackage{url}                                                        % nicely formatted URL's
 \usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                 % insert to–do and missing figure items in the document
-  \newcommand{\addref}{\todo[color=red!40,size=\tiny]{Add reference}}   % new command for box about missing references
+  \newcommand{\addref}[1][]{\todo[color=red!40,size=\tiny]{Add reference #1}}   % new command for box about missing references
   \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,#1]{#2}}       % new command for boxes of text that needs to be rewritten
   \newcommand{\think}[2][]{\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
 
@@ -71,7 +71,7 @@
 
       Histone ``variants'' play functionally distinctive roles, have lower net abundance, and typically show less
       identity in alignments. Most are significantly expressed outside S~phase of the cell cycle and as such, are
-      referred to as ``replication independent''~(RI). They typically have unique promoter elements\addref{} and their
+      referred to as ``replication independent''~(RI). They typically have unique promoter elements\addref and their
       transcripts carry 3' polyadenylated tails.
 
       In contrast, ``canonical isoforms'' histones contribute to the primary function and majority of nucleosome
@@ -130,9 +130,9 @@
         The major and secondary histone gene clusters,
         HIST1 on chromosome 6, and HIST2 on chromosome 1, contain contiguous high density arrays
         of histone genes. HIST1 encodes \CodingGenesInHistOne{}~functional genes and \PseudoGenesInHistOne{}~pseudogenes
-        over a span of \HistOneSpan{} and is the second most gene dense region on the megabase scale the genome \addref{Xie 2003}.
+        over a span of \HistOneSpan{} and is the second most gene dense region on the megabase scale the genome \addref[Xie 2003].
         It is located at the distal end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
-        6p21-22 \addref{MHC consortium Nature 1999} which may have an effect on its recombination. HIST2 encodes \CodingGenesInHistTwo{}~functional
+        6p21-22 \addref[MHC consortium Nature 1999] which may have an effect on its recombination. HIST2 encodes \CodingGenesInHistTwo{}~functional
         genes and \PseudoGenesInHistTwo{}~pseudogenes over a span of \HistTwoSpan{}.
         %%HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
 
