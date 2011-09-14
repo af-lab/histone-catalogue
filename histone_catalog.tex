@@ -1,13 +1,13 @@
 \documentclass[10pt,a4paper,draft]{article}
 
-\usepackage{graphicx}                                                   % load and handle pictures
-\graphicspath{{./figs/}}                                                % look for images here
+\usepackage{graphicx}                                                           % load and handle pictures
+\graphicspath{{./figs/}}                                                        % look for images here
 
-\usepackage{url}                                                        % nicely formatted URL's
-\usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                 % insert to–do and missing figure items in the document
+\usepackage{url}                                                                % nicely formatted URL's
+\usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                         % insert to–do and missing figure items in the document
   \newcommand{\addref}[1][]{\todo[color=red!40,size=\tiny]{Add reference #1}}   % new command for box about missing references
-  \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,#1]{#2}}       % new command for boxes of text that needs to be rewritten
-  \newcommand{\think}[2][]{\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+  \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,caption={chunk of text to be rewritten}#1]{#2}} % new command for boxes of text that need to be rewritten
+  \newcommand{\think}[2][]{\todo[size=\small, caption={think about this}#1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}} % new command for long notes
 
 \input{results/variables}
 
