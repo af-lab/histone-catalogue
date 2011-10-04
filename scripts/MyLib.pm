@@ -1,4 +1,4 @@
-package Local::MODULE_NAME;
+package MyLib;
 ## Copyright (C) 2011 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -18,14 +18,27 @@ use 5.010;                                  # use Perl 5.10
 use strict;                                 # enforce some good programming rules
 use warnings;                               # replacement for the -w flag, but lexically scoped
 use Carp;                                   # alternative warn and die for modules
+use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all
+use FindBin;                                # Locate directory of original perl script
 
-## setting up Exporter
-our (@ISA, @EXPORT, @EXPORT_OK, $VERSION);  # must be package global variables for Exporter
-use Exporter;                               # handle module's external interface
-$VERSION    = 0.9;                          # set module version number
-@ISA        = qw(Exporter);                 # inherit import method from Exporter
-@EXPORT     = qw();                         # export nothing automatically
-@EXPORT_OK  = qw();                         # export only these and by request
+use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
+use MyVars;                                 # Load variables
 
+sub load_csv {
+  ## To cover the widest range of parsing options, you will always want to set binary
+  my $csv = Text::CSV->new ({
+                              binary => 1,
+                              eol    => $/,
+                              }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
+  open (my $file, "<", $MyVars::data_path) or die "Could not open $MyVars::data_path for reading: $!";
 
-1;    # last line. A module must return a true value so that 'require' and 'use succeeds
+  $csv->column_names ($csv->getline ($file));   # read first line and sets it as the column name
+
+  ## note that get_line_hr_all was only implemented on 1.21. If using 1.18, would
+  ## need a while loop and use get_line_hr
+  my $data_ref = $csv->getline_hr_all ($file);  # reads all lines of file into an array of hashes (returns ref to array)
+  close $file;                                  # close file
+  return @$data_ref;                            # dereference the array and return it
+}
+
+1; # a package must return true
