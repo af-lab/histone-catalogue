@@ -33,8 +33,10 @@ File::Path::remove_tree($MyVars::sequences_path, {verbose => 1});
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
 my $search = '"homo sapiens"[organism] ';
 $search   .= '(';
-$search   .= "$_*[gene name] OR " for ('H2A', 'H2B', 'H3', 'H4', 'HIST2', 'HIST2', 'HIST3', 'HIST4', 'HIST5');
-$search   .= 'CENPA[gene name])';
+$search   .= "$_*[gene name] OR " for ('H2A', 'H2B', 'H3', 'H4');             # get all variants
+$search   .= "HIST$_*[gene name] OR " for (1 .. $MyVars::cluster_number + 1); # all clusters and try +1 to see if there's a new one
+$search   .= 'CENPA[gene name]';                                              # CENP-A name is special
+$search   .= ')';
 
 ## run sequence extractor
 my @extractor_args = (
