@@ -21,7 +21,7 @@ use Lingua::EN::Numbers;        # Turn a number into its 'english' form
 use FindBin;                    # Locate directory of original perl script
 
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVars;                     # Load variables
+use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
 ## this returns an array of references to an hash whose keys are the column names
@@ -37,7 +37,7 @@ foreach my $gene (@data) {
 
   ## warn if a gene is found who nomeclature suggests belongs to a cluster whose
   ## number is higher than the currently known
-  if ( $cluster =~ m/(\d*)$/ && $1 > $MyVars::cluster_number) {
+  if ( $cluster =~ m/(\d*)$/ && $1 > $MyVar::cluster_number) {
     warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
   }
 

@@ -1,4 +1,4 @@
-package MyVars;
+package MyVar;
 ## Copyright (C) 2011 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify

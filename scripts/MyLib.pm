@@ -22,7 +22,7 @@ use Text::CSV 1.21;                         # Comma-separated values manipulator
 use FindBin;                                # Locate directory of original perl script
 
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
-use MyVars;                                 # Load variables
+use MyVar;                                  # Load variables
 
 sub load_csv {
   ## To cover the widest range of parsing options, you will always want to set binary
@@ -30,7 +30,7 @@ sub load_csv {
                               binary => 1,
                               eol    => $/,
                               }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
-  open (my $file, "<", $MyVars::data_path) or die "Could not open $MyVars::data_path for reading: $!";
+  open (my $file, "<", $MyVar::data_path) or die "Could not open $MyVar::data_path for reading: $!";
 
   $csv->column_names ($csv->getline ($file));   # read first line and sets it as the column name
 

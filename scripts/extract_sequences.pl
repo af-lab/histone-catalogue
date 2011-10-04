@@ -24,17 +24,17 @@ use File::Path;                 # Create or remove directory trees
 use FindBin;                    # Locate directory of original perl script
 
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVars;                     # Load variables
+use MyVar;                      # Load variables
 
 ## remove old files to avoid problems with previous results
-File::Path::remove_tree($MyVars::sequences_path, {verbose => 1});
+File::Path::remove_tree($MyVar::sequences_path, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
 my $search = '"homo sapiens"[organism] ';
 $search   .= '(';
 $search   .= "$_*[gene name] OR " for ('H2A', 'H2B', 'H3', 'H4');             # get all variants
-$search   .= "HIST$_*[gene name] OR " for (1 .. $MyVars::cluster_number + 1); # all clusters and try +1 to see if there's a new one
+$search   .= "HIST$_*[gene name] OR " for (1 .. $MyVar::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
 $search   .= 'CENPA[gene name]';                                              # CENP-A name is special
 $search   .= ')';
 
@@ -50,9 +50,9 @@ my @extractor_args = (
                       '--proteins',     'accession',
                       '--limit',        '300',
                       '--format',       'genbank',
-                      '--save',         $MyVars::sequences_path,
+                      '--save',         $MyVar::sequences_path,
                       '--save-data',    'csv',
                       );
-unshift (@extractor_args, $MyVars::seq_extractor);
+unshift (@extractor_args, $MyVar::seq_extractor);
 push    (@extractor_args, $search);
 system  (@extractor_args) == 0 or die "Running @extractor_args failed: $?";
