@@ -23,11 +23,13 @@ use File::Spec;                 # Perform operation on file names
 use FindBin;                    # Locate directory of original perl script
 
 ## how to call bp_genbank_ref_extractor
-our $seq_extractor = 'bp_genbank_ref_extractor';
+our $seq_extractor  = 'bp_genbank_ref_extractor';
 ## directory where the results are saved
-our $results_dir   = 'results';
+our $results_dir    = 'results';
 ## directory where bp_genbank_ref_extractor saves the sequences
-our $sequences_dir = 'sequences';
+our $sequences_dir  = 'sequences';
+## current number of known clusters
+our $cluster_number = 4;
 
 ################################################################################
 ## calculate complete relative paths
