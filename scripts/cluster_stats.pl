@@ -47,12 +47,56 @@ foreach my $gene (@data) {
     next;
   }
 
-  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
-  $canon{$cluster}{$symbol}{'end'}   = $$gene{'chromosome stop coordinates'};
+  ## need to initialize these vars for each cluster so can't do it before the loop
+  if ( !$canon{$cluster} ) {
+    $canon{$cluster}{'start'} = $$gene{'chromosome start coordinates'};
+    $canon{$cluster}{'end'}   = $$gene{'chromosome stop coordinates'};
+  }
+
+  foreach ( $$gene{'chromosome start coordinates'}, $$gene{'chromosome stop coordinates'} ) {
+    $canon{$cluster}{'start'} = $_ if $_ < $canon{$cluster}{'start'};
+    $canon{$cluster}{'end'}   = $_ if $_ > $canon{$cluster}{'end'};
+  }
+
+  ## to create a hash specific for each gene
+#  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
 
 }
 
-my $number = Lingua::EN::Numbers::num2en($cluster =~ m/(\d*)$/);
-$nn =~ s/^(\w)/\U$1/g;
-say $nn;
+for (keys %canon) {
+  my $length  = abs ($canon{$_}{'start'} - $canon{$_}{'end'});
+  $canon{$_}{'length'} = MyLib::pretty_length($length);
+}
+
+
+## write to results file
+open($file, ">", $MyVar::results_clust) or die "Could not open $MyVar::results_clust for reading: $!";
+
+close($file);
+say "$_ is $canon{$_}{'length'}" for (keys %canon);
+#for (keys %canon) {
+
+#  say $canon{$_}{'start'};
+#  my $remainder = length($length) % 3;
+#  my $etc;
+#  given ($remainder) {
+#    when (0) {  $etc = sprintf("%1.3g", $length); }
+
+#    default {  $etc = sprintf("%2.2g", $length); }
+#  }
+##  my $etc = sprintf("%1.${MyVar::size_precision}g", $length);
+#  say "$_ has pot $pot from $length";
+#say length( "23.4535433" );
+
+#printf("%3.1f", value / pow(10, pot) )
+#$pot = 0;
+#while ( 10**($pot +3) ) {
+#  $pot += 3;
+#}
+#printf("%3.1f", value / pow(10, pot) )
+#use Data::Dumper;
+#print Dumper %canon;
+#my $number = Lingua::EN::Numbers::num2en($cluster =~ m/(\d*)$/);
+#$nn =~ s/^(\w)/\U$1/g;
+#say $nn;
 

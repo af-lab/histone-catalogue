@@ -30,6 +30,10 @@ our $results_dir    = 'results';
 our $sequences_dir  = 'sequences';
 ## current number of known clusters
 our $cluster_number = 4;
+## max number of significant figures (digits) for sizes (cluster length)
+our $size_precision = 2;
+## file (inside $results_dir) to store the results for the LaTeX compiler
+our $results_clust  = 'variables-cluster_stats.tex';
 
 ################################################################################
 ## calculate complete relative paths

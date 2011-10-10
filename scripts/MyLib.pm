@@ -18,7 +18,8 @@ use 5.010;                                  # use Perl 5.10
 use strict;                                 # enforce some good programming rules
 use warnings;                               # replacement for the -w flag, but lexically scoped
 use Carp;                                   # alternative warn and die for modules
-use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all
+use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all)
+use POSIX;                                  # Perl interface to IEEE Std 1003.1
 use FindBin;                                # Locate directory of original perl script
 
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
@@ -39,6 +40,34 @@ sub load_csv {
   my $data_ref = $csv->getline_hr_all ($file);  # reads all lines of file into an array of hashes (returns ref to array)
   close $file;                                  # close file
   return @$data_ref;                            # dereference the array and return it
+}
+
+sub pretty_length {
+  my $length   = $_[0];
+  ## (ceil() +1 ) because when /3, if it's 3, floor will give 1 when we want 0
+  my $power    = ( ceil(length($length) / 3) -1) * 3;
+  my $dec_case = 0;
+  my $number   = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
+  if ( length($length) < $MyVar::size_precision) {
+    ## nothing, no decimal cases at all in these cases
+  } elsif (length($number) < $MyVar::size_precision) {
+    my $dec_case = $MyVar::size_precision - length ($number);
+    $number      = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
+  }
+  my $prefix;
+  given ($power) {
+    when  (0) { $prefix = ''  }
+    when  (3) { $prefix = 'k' }
+    when  (6) { $prefix = 'M' }
+    when  (9) { $prefix = 'G' }
+    when (12) { $prefix = 'T' }
+    when (15) { $prefix = 'P' }
+    when (18) { $prefix = 'E' }
+    when (21) { $prefix = 'Z' }
+    when (24) { $prefix = 'Y' }
+    default   { $power -= 24; $prefix = "e+${power}Y" }
+  }
+  return "$number\\,${prefix}bp";
 }
 
 1; # a package must return true
