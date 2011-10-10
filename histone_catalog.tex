@@ -31,15 +31,15 @@
     Histones have been studied for many decades as abundant proteins which were readily
     isolated due to their highly basic chemical character. Successive improvements in
     fractionation revealed 5 main types under a nomenclature as histone H1, H2A, H2B, H3
-    and H4. An additional histone H5 related to H1 is found in nucleus-containing avian
+    and H4\cite{Histonenomenc}. An additional histone H5 related to H1 is found in nucleus-containing avian
     erythrocytes and has been of research interest due to its elevated binding stability.
-    Since the ratio of arginine/lysine is ?? for H1 and H5 these became known as
-    "lysine-rich", whereas the remaining 4 histones with ratios ??-?? are "arginine-rich".
+    Since the ratio of arginine/lysine is \HOneArgLysRatio\ for H1 and H5 these became known as
+    ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ \think{should repeated proteins count twice?} are ``arginine-rich''.
     The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed
     that H2A, H2B, H3 and H4 associated as an octamer of two copies each within the
-    nucleosome core particle, so they are referred to as "core histones". H1 and H5
+    nucleosome core particle, so they are referred to as ``core histones''. H1 and H5
     associate with the linker DNA between nucleosome core particles, and are referred to
-    as "linker histones".
+    as ``linker histones''.
 
     Extracting histones from cells and separating them by polyacrylamide gel electrophoresis
     (PAGE) using the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral
@@ -49,25 +49,25 @@
     post-translational modifications and variations in sequence within types.
 
     There are two recognised classes of histone protein sequence variation as summarised in
-    table 1. "Variants" play functionally distinctive roles, have lower aggregate abundance,
+    Table~\ref{tab:typical-histone-differences}. ``Variants'' play functionally distinctive roles, have lower aggregate abundance,
     and show less identity in alignments. Examples of histone variants are H2A.Z, H2AX, H2Abbd
-    and H3.3. Most are significantly expressed outside S phase of the cell cycle and referred
-    to as "replication independent" (RI).
+    and H3.3. Most are significantly expressed outside S~phase of the cell cycle and referred
+    to as ``replication independent''~(RI).
 
-    In contrast, "canonical" histones contribute to the primary function and bulk nucleosome
+    In contrast, ``canonical'' histones contribute to the primary function and bulk nucleosome
     structures. Although the canonical histones are encoded by multiple genes with varying
-    sequence, the resulting protein "isoforms" differ at only a few sites and are often
-    referred to as "wild type" sequences. This has led to their portrayal as a single histone
+    sequence, the resulting protein ``isoforms'' differ at only a few sites and are often
+    referred to as ``wild type'' sequences. This has led to their portrayal as a single histone
     type, with an implicit suggestion that they can be represented by a single sequence. Because
     a primary role of canonical histones is to package the newly duplicated genome during
-    S phase, they are "replication dependent" (RD).
+    S~phase, they are ``replication dependent''~(RD).
 
     The two classes of histones are also distinguished by their regulation in humans and other
-    metazoans: Histone variants typically have unique promoter elements and transcripts that
+    metazoans: histone variants typically have unique promoter elements and transcripts that
     are polyadenylated on their 3' termini. \think{Are they transcribed by pol II?} Canonical
     histones share a common promoter structure (???) and a unique stem-loop in the 3' untranslated
     region that is the basis for regulation of turnover. In general, canonical histone transcripts
-    are not thought to be polyadenylated except in S. cerevisiae.
+    are not thought to be polyadenylated except in \textit{S. cerevisiae}.
 
     The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic
     genomes, possibly for regulatory efficiency and to facilitate their sequence conservation. In
@@ -76,10 +76,10 @@
     \begin{table}
       \centering
       \begin{tabular}{l | l | l | l | l }
-        \null     & Expression timing       & Sequence identity & Functional relationships    & Transcript stabilisation \\
+        \null     & Expression timing       & Sequence identity & Functional relationships       & Transcript stabilisation \\
         \hline
-        Canonical & Replication Dependent   & High              & Isoforms & Stem--loop in 3' UTR \\
-        Variants  & Replication Independent & Low               & Distinct specialised functions& poly-A tail \\
+        Canonical & Replication Dependent   & High              & Isoforms                       & Stem--loop in 3' UTR \\
+        Variants  & Replication Independent & Low               & Distinct specialised functions & poly--A tail \\
       \end{tabular}
       \caption{Table 1: General properties of canonical and variant histone proteins.}
       \label{tab:typical-histone-differences}
@@ -91,12 +91,12 @@
     the draft human genome has been finalised and rich annotations have been propogated through gene
     and protein sequence databases. We have exhaustively searched the popular RefSeq and UniProt
     databases to curate and report a number of oversights in untranslated regions, transcripts and
-    classification of pseudo genes (supplementary table 1).
+    classification of pseudo genes (Table~\ref{tab:difference-from-Marzluff02}).
 
     In this paper we provide a comprehensive overview of the nomenclature and distribution of canonical
     and variant histone genes. Furthermore, since curation and annotation are dynamic processes, we have
     implemented an accompanying resource that automatically generates the tables and figures presented
-    in the submitted manuscript (\ref{sec:reproducible}) based on the most current data from the NCBI
+    in the submitted manuscript (Section~\ref{sec:reproducible}) based on the most current data from the NCBI
     RefSeq database.
 
   \section{Histone genes}
@@ -234,7 +234,7 @@
       during this phase of the cell cycle. During the rest of the cell cycle, histone genes are still transcribed
       but with much lower levels.
 
-      However, there is only a 5-fold increase in their transcription rate at S phase, compared to the other phases
+      However, there is only a 5-fold increase in their transcription rate at S~phase, compared to the other phases
       of cell cycle so regulation acts strongly at the post-transcriptional level\addref.
 
       To note however, that each gene seems to have different levels of increased transcription, even between genes in the
@@ -246,7 +246,7 @@
       Unlike all the other human genes, RD histone genes lack a poly-A tail for the 3' mRNA processing.
       Instead, they encode a stem-loop followed by a purine-rich Histone Downstream Element (HDE)
       downstream of the stop codon. The stem-loop interacts with the Stem-Loop
-      Binding Protein (SLBP) to stabilise the mRNA in S phase \addref
+      Binding Protein (SLBP) to stabilise the mRNA in S~phase \addref
       while the HDE interacts with U7 snRNA to direct efficient 3 end processing\addref.
 
       This specific machinery for mRNA processing is a large part of increase on transcription during the S--phase
