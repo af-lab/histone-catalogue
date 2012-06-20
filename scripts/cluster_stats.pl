@@ -58,16 +58,31 @@ foreach my $gene (@data) {
     $canon{$cluster}{'end'}   = $_ if $_ > $canon{$cluster}{'end'};
   }
 
+  ## count them
+  if ($$gene{'pseudo'}) {
+    $canon{$cluster}{'pseudo'}++;
+  } else {
+    $canon{$cluster}{'coding'}++;
+  }
+  $canon{'H2A'}++ if $symbol =~/H2A/ && !$$gene{'pseudo'};
+  $canon{'H2B'}++ if $symbol =~/H2B/ && !$$gene{'pseudo'};
+  $canon{'H3'}++  if $symbol =~/H3/  && !$$gene{'pseudo'};
+  $canon{'H4'}++  if $symbol =~/H4/  && !$$gene{'pseudo'};
   ## to create a hash specific for each gene
 #  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
-
 }
 
 for (keys %canon) {
   my $length  = abs ($canon{$_}{'start'} - $canon{$_}{'end'});
   $canon{$_}{'length'} = MyLib::pretty_length($length);
+  say "$_ $canon{$_}{'length'}";
+  say "Pseudo genes on $_ are $canon{$_}{'pseudo'}";
+  say "Coding genes on $_ are $canon{$_}{'coding'}";
 }
 
+for (("H2A", "H2B", "H3", "H4")) {
+  say "Found $canon{$_} $_";
+}
 
 ## write to results file
 open($file, ">", $MyVar::results_clust) or die "Could not open $MyVar::results_clust for reading: $!";
