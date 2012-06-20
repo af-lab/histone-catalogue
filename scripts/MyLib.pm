@@ -102,4 +102,39 @@ sub pretty_length {
   return "$number\\,${prefix}bp";
 }
 
+## make LaTeX tables (we probably should use one of the LaTeX modules in CPAN
+## but our needs are so simple). First argument is the type of row, followed
+## by the values for each column. Possible values are:
+##    * start  - start table environment (second argument string with column alignments)
+##    * header - values for header
+##    * row    - values for each row
+##    * end    - only closes table enviroment (use `row' to enter values for last row)
+sub latex_table {
+  my $tab;
+  my $cols = @_ - 1;
+  given ($_[0]) {
+    when ("row") {
+      $tab .= "  ";
+      $tab .= "$_ & " for @_[1 .. $#_ -1];
+      $tab .= "$_[-1] \\\\";
+    }
+    when ("start") {
+      $tab .= "\\begin{tabular}{$_[1]}";
+    }
+    when ("header") {
+      $tab .= latex_table ("row", @_[1 .. $#_]);
+      $tab .= "\n";
+      $tab .= '  \hline';
+    }
+    when ("end") {
+      $tab .= '\end{tabular}';
+      ## the end should be ONLY to close the environment. Let's be nice and warn
+      ## if someone tries to give more arguments
+      warn "MyLib::latex_table: ignoring some arguments. Do not use end for the last row" if $cols > 0;
+    }
+    default         { die "Unrecognized value $_[0] for MyLib::latex_table" }
+  }
+  return $tab;
+}
+
 1; # a package must return true
