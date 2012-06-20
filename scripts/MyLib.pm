@@ -25,6 +25,7 @@ use FindBin;                                # Locate directory of original perl 
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
 use MyVar;                                  # Load variables
 
+## load the gene information from all genes found
 sub load_csv {
   ## To cover the widest range of parsing options, you will always want to set binary
   my $csv = Text::CSV->new ({
@@ -42,6 +43,37 @@ sub load_csv {
   return @$data_ref;                            # dereference the array and return it
 }
 
+## rather than load information from all genes found and extracted, get only
+## the canonical histones
+sub load_canonical {
+  my @data = load_csv;
+  my @canon;
+  foreach my $gene (@data) {
+      my $symbol = $$gene{'gene symbol'};
+
+      ## skip genes that don't look canonical and get cluster number
+      next unless $symbol =~ m/^HIST(\d*)/;
+      my $cluster = $1;
+
+      ## warn if a gene is found whose nomeclature mentions an unknown cluster
+      if ($cluster > $MyVar::cluster_number) {
+        warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
+      }
+
+      ## skip genes without genomic information
+      if ( !$$gene{'chromosome accession'}) {
+        warn ("Gene '$symbol' has no genomic information. Skipping it!");
+        next;
+      }
+
+    push (@canon, $gene);
+  }
+  return @canon;
+}
+
+## turn a distance in base pairs (a positive integer) into a string appropriate
+## for text (in LaTeX format), e.g. 1000000 -> 1\,Mbp; 1540 -> 1.54\,kbp (the
+## precision is defined in MyVar.pm
 sub pretty_length {
   my $length   = $_[0];
   ## (ceil() +1 ) because when /3, if it's 3, floor will give 1 when we want 0
