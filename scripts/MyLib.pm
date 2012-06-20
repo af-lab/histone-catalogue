@@ -52,7 +52,7 @@ sub load_canonical {
       my $symbol = $$gene{'gene symbol'};
 
       ## skip genes that don't look canonical and get cluster number
-      next unless $symbol =~ m/^HIST(\d*)/;
+      next unless $symbol =~ m/^HIST(\d+)/;
       my $cluster = $1;
 
       ## warn if a gene is found whose nomeclature mentions an unknown cluster
