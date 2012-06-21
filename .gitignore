@@ -37,4 +37,4 @@
 .sconsign.dblite
 
 ## do not commit any of the results
-results/
+results/*
