@@ -22,6 +22,9 @@ use warnings;                   # Replacement for the -w flag, but lexically sco
 use File::Spec;                 # Perform operation on file names
 use FindBin;                    # Locate directory of original perl script
 
+## histones that we care about (in case one day we start caring about H1)
+our @histones       = qw(H2A H2B H3 H4);
+our $histone_regexp = join ("|", @histones);
 ## how to call bp_genbank_ref_extractor
 our $seq_extractor  = 'bp_genbank_ref_extractor';
 ## directory where the results are saved
