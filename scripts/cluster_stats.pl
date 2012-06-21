@@ -33,15 +33,12 @@ foreach my $gene (@data) {
   my $cluster = $1 if $symbol =~ m/^(HIST\d+)/;
   die "unable to identify cluster of $symbol" unless defined $cluster;
 
-  ## need to initialize these vars for each cluster so can't do it before the loop
-  if ( !$canon{$cluster} ) {
-    $canon{$cluster}{'start'} = $$gene{'chromosome start coordinates'};
-    $canon{$cluster}{'end'}   = $$gene{'chromosome stop coordinates'};
-  }
-
+  ## find the start and end of each cluster (smallest and larger coordinate values
+  ## of each gene on the cluster)
   foreach ( $$gene{'chromosome start coordinates'}, $$gene{'chromosome stop coordinates'} ) {
-    $canon{$cluster}{'start'} = $_ if $_ < $canon{$cluster}{'start'};
-    $canon{$cluster}{'end'}   = $_ if $_ > $canon{$cluster}{'end'};
+    ## start and end values may still be uninitialized so we check them first
+    $canon{$cluster}{'start'} = $_ if !exists $canon{$cluster}{'start'} || $_ < $canon{$cluster}{'start'};
+    $canon{$cluster}{'end'}   = $_ if !exists $canon{$cluster}{'end'}   || $_ > $canon{$cluster}{'end'};
   }
 
   ## count them
