@@ -53,10 +53,9 @@ sub load_canonical {
 
       ## skip genes that don't look canonical and get cluster number
       next unless $symbol =~ m/^HIST(\d+)/;
-      my $cluster = $1;
 
       ## warn if a gene is found whose nomeclature mentions an unknown cluster
-      if ($cluster > $MyVar::cluster_number) {
+      if ($1 > $MyVar::cluster_number) {
         warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
       }
 

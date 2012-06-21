@@ -25,27 +25,13 @@ use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
 ## this returns an array of references to an hash whose keys are the column names
-my @data = MyLib::load_csv;
+my @data = MyLib::load_canonical;
 my %canon;
 foreach my $gene (@data) {
-
   my $symbol = $$gene{'gene symbol'};
 
-  ## skip genes unless they are on cluster numbered 1-$limit
-  next unless $symbol =~ m/^(HIST\d*)/;
-  my $cluster = $1;
-
-  ## warn if a gene is found who nomeclature suggests belongs to a cluster whose
-  ## number is higher than the currently known
-  if ( $cluster =~ m/(\d*)$/ && $1 > $MyVar::cluster_number) {
-    warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
-  }
-
-  ## this will skip genes that do not have genomic information
-  if ( !$$gene{'chromosome accession'}) {
-    warn ("Gene '$symbol' has no genomic information. Skipping it!");
-    next;
-  }
+  my $cluster = $1 if $symbol =~ m/^(HIST\d+)/;
+  die "unable to identify cluster of $symbol" unless defined $cluster;
 
   ## need to initialize these vars for each cluster so can't do it before the loop
   if ( !$canon{$cluster} ) {
