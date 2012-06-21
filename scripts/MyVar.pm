@@ -42,10 +42,13 @@ our $results_clust  = 'variables-cluster_stats.tex';
 ## calculate complete relative paths
 ################################################################################
 
-our @dirs           = File::Spec->splitdir( $0 );
-## set path to save sequences
-our $sequences_path = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $results_dir, $sequences_dir);
-## get path of data saved by sequence extractor
-our $data_path      = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $results_dir, $sequences_dir, 'data.csv');
+my @dirs            = File::Spec->splitdir($0);
+
+$results_dir        = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $results_dir);
+$sequences_dir      = File::Spec->catdir($results_dir, $sequences_dir);
+$results_clust      = File::Spec->catdir($results_dir, $results_clust);
+
+## path for data saved by sequence extractor
+our $data_path      = File::Spec->catdir($sequences_dir, 'data.csv');
 
 1; # a package must return true
