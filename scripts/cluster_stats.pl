@@ -19,6 +19,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use Lingua::EN::Numbers;        # Turn a number into its 'english' form
 use FindBin;                    # Locate directory of original perl script
+use File::Spec;                 # Perform operation on file names
 
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
@@ -26,7 +27,10 @@ use MyLib;                      # Load functions
 
 ## this returns an array of references to an hash whose keys are the column names
 my @data = MyLib::load_canonical;
-my %canon;
+
+my %canon;          # will store the gene info
+my %id_tables;      # will store data for the ID tables
+
 foreach my $gene (@data) {
   my $symbol = $$gene{'gene symbol'};
 
@@ -54,8 +58,35 @@ foreach my $gene (@data) {
   $canon{$cluster}{"total"}++;
   $canon{$cluster}{$histone}{"total"}++;
   $canon{$cluster}{$histone}{$codness}++;
+
+  ## as we check each gene we would want to add them to the tables. However, we
+  ## also want them to appear sorted so we prepare everything here, store in a
+  ## hash and print them later when we have them all. For each histone, there is
+  ## an array with the data in order for the table (order of table is name, uid,
+  ## transcript accession, protein accession)
+  @{$id_tables{$histone}{$symbol}} = ($symbol, $$gene{'gene UID'});
+  if ($$gene{'pseudo'}) {
+    $id_tables{$histone}{$symbol}[0] .= " $MyVar::pseudo_mark"; # pseudo genes need to have their name marked
+    push (@{$id_tables{$histone}{$symbol}}, 'n/a', 'n/a')       # not applicable
+  } else {
+    push (@{$id_tables{$histone}{$symbol}}, $$gene{'transcript accession'}, $$gene{'protein accession'})
+  }
+
   ## to create a hash specific for each gene
 #  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
+}
+
+## for each histone, one table with corresponding IDs
+foreach my $histone (@MyVar::histones) {
+  my $ids_path = File::Spec->catdir($MyVar::results_dir, "table-$histone-ids.tex");
+  open (my $table, ">", $ids_path) or die "Could not open $ids_path for writing: $!";
+  say $table MyLib::latex_table ("start", " l | l | l | l ");
+  say $table MyLib::latex_table ("header", "Gene name", "Gene UID", "Transcript accession", "Protein accession");
+  foreach my $gene (sort keys %{$id_tables{$histone}}) {
+    say $table MyLib::latex_table ("row", @{$id_tables{$histone}{$gene}});
+  }
+  say $table MyLib::latex_table ("end");
+  close $table or warn "Could not close $ids_path: $!";
 }
 
 for (keys %canon) {

@@ -37,6 +37,8 @@ our $cluster_number = 4;
 our $size_precision = 2;
 ## file (inside $results_dir) to store the results for the LaTeX compiler
 our $results_clust  = 'variables-cluster_stats.tex';
+## LaTeX code to mark genes as pseudo on tables
+our $pseudo_mark    = '($\psi$)';
 
 ################################################################################
 ## calculate complete relative paths
