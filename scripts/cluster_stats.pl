@@ -41,16 +41,19 @@ foreach my $gene (@data) {
     $canon{$cluster}{'end'}   = $_ if !exists $canon{$cluster}{'end'}   || $_ > $canon{$cluster}{'end'};
   }
 
-  ## count them
+  ## count histones (by cluster, type and coding/pseudo)
+  my $codness;
   if ($$gene{'pseudo'}) {
-    $canon{$cluster}{'pseudo'}++;
+    $codness = "pseudo";
   } else {
-    $canon{$cluster}{'coding'}++;
+    $codness = "coding";
   }
-  $canon{'H2A'}++ if $symbol =~/H2A/ && !$$gene{'pseudo'};
-  $canon{'H2B'}++ if $symbol =~/H2B/ && !$$gene{'pseudo'};
-  $canon{'H3'}++  if $symbol =~/H3/  && !$$gene{'pseudo'};
-  $canon{'H4'}++  if $symbol =~/H4/  && !$$gene{'pseudo'};
+  my $histone = $1 if $symbol =~ m/^${cluster}($MyVar::histone_regexp)/;
+  die "unable to identify histone type of $symbol" unless defined $histone;
+
+  $canon{$cluster}{"total"}++;
+  $canon{$cluster}{$histone}{"total"}++;
+  $canon{$cluster}{$histone}{$codness}++;
   ## to create a hash specific for each gene
 #  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
 }
@@ -61,10 +64,6 @@ for (keys %canon) {
   say "$_ $canon{$_}{'length'}";
   say "Pseudo genes on $_ are $canon{$_}{'pseudo'}";
   say "Coding genes on $_ are $canon{$_}{'coding'}";
-}
-
-for (("H2A", "H2B", "H3", "H4")) {
-  say "Found $canon{$_} $_";
 }
 
 ## write to results file
