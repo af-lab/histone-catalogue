@@ -113,9 +113,10 @@ sub latex_table {
   my $cols = @_ - 1;
   given ($_[0]) {
     when ("row") {
-      $tab .= "  ";
-      $tab .= "$_ & " for @_[1 .. $#_ -1];
-      $tab .= "$_[-1] \\\\";
+      my @vals = latex_string (@_[1 .. $#_]);   # escape characters (we can't values of modify @_)
+      $tab .= "  ";                             # indentation
+      $tab .= "$_ & " for @vals[0 .. $#_ -1];   # all cells except last val &
+      $tab .= "$vals[-1] \\\\";                 # end row with \\
     }
     when ("start") {
       $tab .= "\\begin{tabular}{$_[1]}";
@@ -131,9 +132,19 @@ sub latex_table {
       ## if someone tries to give more arguments
       warn "MyLib::latex_table: ignoring some arguments. Do not use end for the last row" if $cols > 0;
     }
-    default         { die "Unrecognized value $_[0] for MyLib::latex_table" }
+    default {
+      die "Unrecognized value $_[0] for MyLib::latex_table"
+    }
   }
   return $tab;
+}
+
+## escape necessary characters for latex (we will have really basic needs,
+## probably only the underscore)
+sub latex_string {
+  ## the list of characters to escape in a look-ahead operator so they are not
+  ## captured. This way the substution actually only adds a \ before them
+  map { my $s = $_ ; $s =~ s/(?=[_])/\\/g; $s; } @_;
 }
 
 1; # a package must return true
