@@ -1,13 +1,25 @@
 \documentclass[10pt,a4paper,draft]{article}
 
-\usepackage{graphicx}                                                           % load and handle pictures
-\graphicspath{{./figs/}}                                                        % look for images here
+\usepackage[T1]{fontenc}
+\usepackage{palatino}
+\usepackage{graphicx}
+  \graphicspath{{./figs/}}
 
-\usepackage{url}                                                                % nicely formatted URL's
-\usepackage[textwidth=\marginparwidth + 2cm]{todonotes}                         % insert to–do and missing figure items in the document
-  \newcommand{\addref}[1][]{\todo[color=red!40,size=\tiny]{Add reference #1}}   % new command for box about missing references
-  \newcommand{\rewrite}[2][]{\todo[inline,color=green!40,caption={chunk of text to be rewritten}#1]{#2}} % new command for boxes of text that need to be rewritten
-  \newcommand{\think}[2][]{\todo[size=\small, caption={think about this}#1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}} % new command for long notes
+
+\usepackage{ifdraft}
+\ifdraft{
+  \usepackage[final,hyperindex,hyperfootnotes,bookmarksnumbered,colorlinks]{hyperref}
+}{
+  \usepackage[final,hyperindex,hyperfootnotes,bookmarksnumbered]{hyperref}
+}
+
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[textsize=small]{todonotes}
+  %% new command for box about missing references
+  \newcommand{\addref}[1][]{\todo[color=red!40,size=\tiny]{Add reference: #1}}
+
+\usepackage{natbib}
 
 \input{results/variables-cluster_stats}
 \input{results/variables-proteins}
@@ -32,10 +44,12 @@
     Histones have been studied for many decades as abundant proteins which were readily
     isolated due to their highly basic chemical character. Successive improvements in
     fractionation revealed 5 main types under a nomenclature as histone H1, H2A, H2B, H3
-    and H4\cite{Histonenomenc}. An additional histone H5 related to H1 is found in nucleus-containing avian
+    and H4\citep{nomenclature}.  %% FIXME should we refer the foreword of the Ciba Foundation symposium 28?
+    An additional histone H5 related to H1 is found in nucleus-containing avian
     erythrocytes and has been of research interest due to its elevated binding stability.
     Since the ratio of arginine/lysine is \HOneArgLysRatio\ for H1 and H5 these became known as
-    ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ \think{should repeated proteins count twice?} are ``arginine-rich''.
+    ``lysine-rich'', whereas the remaining 4 histones with ratios \OthersArgLysRatio\ \todo{should
+    repeated proteins count twice?} are ``arginine-rich''.
     The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed
     that H2A, H2B, H3 and H4 associated as an octamer of two copies each within the
     nucleosome core particle, so they are referred to as ``core histones''. H1 and H5
@@ -50,7 +64,8 @@
     post-translational modifications and variations in sequence within types.
 
     There are two recognised classes of histone protein sequence variation as summarised in
-    Table~\ref{tab:typical-histone-differences}. ``Variants'' play functionally distinctive roles, have lower aggregate abundance,
+    Table~\ref{tab:typical-histone-differences}. ``Variants'' play functionally distinctive
+    roles, have lower aggregate abundance,
     and show less identity in alignments. Examples of histone variants are H2A.Z, H2AX, H2Abbd
     and H3.3. Most are significantly expressed outside S~phase of the cell cycle and referred
     to as ``replication independent''~(RI).
@@ -65,7 +80,7 @@
 
     The two classes of histones are also distinguished by their regulation in humans and other
     metazoans: histone variants typically have unique promoter elements and transcripts that
-    are polyadenylated on their 3' termini. \think{Are they transcribed by pol II?} Canonical
+    are polyadenylated on their 3' termini. \todo{Are they transcribed by pol II?} Canonical
     histones share a common promoter structure (???) and a unique stem-loop in the 3' untranslated
     region that is the basis for regulation of turnover. In general, canonical histone transcripts
     are not thought to be polyadenylated except in \textit{S. cerevisiae}.
@@ -112,18 +127,20 @@
       \subsubsection{Internal cluster organization}
         The major and secondary histone gene clusters,
         HIST1 on chromosome 6, and HIST2 on chromosome 1, contain contiguous high density arrays
-        of histone genes. HIST1 encodes \CodingGenesInHistOne{}~functional genes and \PseudoGenesInHistOne{}~pseudogenes
-        over a span of \HistOneSpan{} and is the second most gene dense region on the megabase scale the genome \addref[Xie 2003].
-        It is located at the distal end of the major histocompatibility complex (MHC) in the extended class I region at chromosome
-        6p21-22 \addref[MHC consortium Nature 1999] which may have an effect on its recombination. HIST2 encodes \CodingGenesInHistTwo{}~functional
+        of histone genes. HIST1 encodes \CodingGenesInHistOne{}~functional genes and
+        \PseudoGenesInHistOne{}~pseudogenes over a span of \HistOneSpan{} and is the second most
+        gene dense region on the megabase scale the genome \addref[Xie 2003]. It is located at the
+        distal end of the major histocompatibility complex (MHC) in the extended class~I region at chromosome
+        6p21-22 \addref[MHC consortium Nature 1999] which may have an effect on
+        its recombination. HIST2 encodes \CodingGenesInHistTwo{}~functional
         genes and \PseudoGenesInHistTwo{}~pseudogenes over a span of \HistTwoSpan{}.
         %%HIST1 spans HIST1H2AA-HIST1H2BO 25726291-27861669; HIST2 spans HIST2H2BF-HIST2H2AB 149754245-149859466 (ensembl genome browser)
 
-        On the other hand, the minor clusters, HIST3 also on chromosome 1, and HIST4 on chromosome 12, have only a
-        handful of histone genes, \CodingGenesInHistThree{} and \CodingGenesInHistFour{} respectively, interspersed with
-        non-histone coding genes.
+        On the other hand, the minor clusters, HIST3 also on chromosome 1, and HIST4 on
+        chromosome 12, have only a handful of histone genes, \CodingGenesInHistThree{} and
+        \CodingGenesInHistFour{} respectively, interspersed with non-histone coding genes.
 
-        \rewrite{Talk about gene density of clusters, GC content, patterns of divergent promoters?}
+        \todo[inline]{Talk about gene density of clusters, GC content, patterns of divergent promoters?}
 
         In humans, these genes are all jumbled in the clusters unlike
         frogs where the genes appear organized in tandem. Not all genes in the cluster are functional, several have
@@ -136,7 +153,8 @@
 
 
         \subsubsection{Proximity of stability and variation}
-        %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
+        %% Talk about how hyperrecombinational MHC next to HIST1, and deletion-duplication
+        %% prone 1q21.1 adjacent to HIST2 (Brunetti-Pierri 2008)
 
     \subsection{Gene nomenclature}
 
@@ -144,7 +162,7 @@
 
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
+%        \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
         \caption{Nomenclature}
         \label{fig:nomenclature}
       \end{figure}
@@ -160,13 +178,17 @@
       to cross data between the two animal models. There is a Hist1h2af (capitalization
       of the gene name is different between human and mouse) gene in mouse that simply has no correspondent in human.
 
-      This nomenclature was originally described in \cite{Marzluff02} and made no distinction between pseudo and protein coding genes; suspected
-      pseudo genes were still named based on their position inside the cluster. ``New'' histone genes have since been found in the clusters,\think{some of them are just inferred}
-      most of them pseudo genes, and others had their type changed from coding to pseudo and vice-versa (Table~\ref{tab:difference-from-Marzluff02}).
-      This forced some genes to be renamed: HIST2H2AA is now named HIST2H2AA3 (a new H2A coding gene HIST2H2AA4 was found between HIST1H2AA and HIST1H2AB);
-      and HIST2H2B is now named HIST2H2BA (after the discovery of another H2B coding gene in the cluster named HIST2H2BB).\think{it seems their names are not correspondent to the order in cluster}
+      This nomenclature was originally described in \cite{Marzluff02} and made no distinction between
+      pseudo and protein coding genes; suspected pseudo genes were still named based on their position
+      inside the cluster. ``New'' histone genes have since been found in the clusters,\todo{some of them are just inferred}
+      most of them pseudo genes, and others had their type changed from coding to pseudo and
+      vice-versa (Table~\ref{tab:difference-from-Marzluff02}).
+      This forced some genes to be renamed: HIST2H2AA is now named HIST2H2AA3 (a new H2A coding gene
+      HIST2H2AA4 was found between HIST1H2AA and HIST1H2AB);
+      and HIST2H2B is now named HIST2H2BA (after the discovery of another H2B coding gene in the
+      cluster named HIST2H2BB).\todo{it seems their names are not correspondent to the order in cluster}
       Other new coding genes were discovered at the end of the cluster and as such their names could respect the nomenclature. However,
-      several new pseudo genes were discovered in the middle of the cluster. These were named differently, with the suffix PS#
+      several new pseudo genes were discovered in the middle of the cluster. These were named differently, with the suffix PS\#
       and numbered by order of discovery. Genes reported at the time of the nomenclature but had their gene type changed to pseudo
       kept their original names.
 
@@ -186,35 +208,35 @@
 
       \begin{table}
         \centering
-        \input{results/table-histone-count}
+%        \input{results/table-histone-count}
         \caption{Count of expected functional histone genes and pseudogenes}
         \label{tab:histone-gene-count}
       \end{table}
 
       \begin{table}
         \centering
-        \input{results/table-H2A-ids}
+%        \input{results/table-H2A-ids}
         \caption{histone H2A genes reference table}
         \label{tab:H2A-ref}
       \end{table}
 
       \begin{table}
         \centering
-        \input{results/table-H2B-ids}
+%        \input{results/table-H2B-ids}
         \caption{histone H2B genes reference table}
         \label{tab:H2B-ref}
       \end{table}
 
       \begin{table}
         \centering
-        \input{results/table-H3-ids}
+%        \input{results/table-H3-ids}
         \caption{histone H3 genes reference table}
         \label{tab:H3-ref}
       \end{table}
 
       \begin{table}
         \centering
-        \input{results/table-H4-ids}
+%        \input{results/table-H4-ids}
         \caption{histone H4 genes reference table}
         \label{tab:H4-ref}
       \end{table}
@@ -251,7 +273,7 @@
       while the HDE interacts with U7 snRNA to direct efficient 3 end processing\addref.
 
       This specific machinery for mRNA processing is a large part of increase on transcription during the S--phase
-      since their expression is also regulated by the cell-cycle \adderf and allow for the histone mRNA stability \addref.
+      since their expression is also regulated by the cell-cycle \addref and allow for the histone mRNA stability \addref.
 
       Some RD histone genes also have annotated a poly-A tail and in similarlity with H2AFX have two annotated transcripts.
       
@@ -266,9 +288,9 @@
   \section{The proteins}
     %% Consensus for each of them, table with their differences (there's at least 1 error on the Marzulff tables)
     %% table with all gene ids, acession number, official symbols etc
-    While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \think{are H3 and H4
+    While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \todo{are H3 and H4
     maybe more important for the nucleosome structure} the number of unique proteins are low, 3 for H3 and 2 for H4. For H2A and H2B
-    this number is much higher.\think{should I get a table for the number of unique proteins? The more complex table with the mutatinos
+    this number is much higher.\todo{should I get a table for the number of unique proteins? The more complex table with the mutatinos
     is more complex but says the same}
 
     The numbering of these proteins amino acids also has a catch. The first methionine is cleaved after expression and as such, it is
@@ -277,30 +299,30 @@
     \subsection{H2A}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{H2A_weblogo.png}
+%        \includegraphics[width=\textwidth]{H2A_weblogo.png}
         \caption{WebLogo of all H2A sequences. The bottom line are the amino acids of H2AFJ whose sequence is different from any of the H2A proteins}
         \label{fig:h2a-weblogo}
       \end{figure}
 
       \begin{table}
         \centering
-        \input{results/table-H2A-consensus}
+%        \input{results/table-H2A-consensus}
         \caption{histone H2A protein consensus}
         \label{tab:H2A-consensus}
       \end{table}
 
-      \rewrite{comment on H2AFJ}
+      \todo[inline]{comment on H2AFJ}
 
     \subsection{H2B}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{H2B_weblogo.png}
+%        \includegraphics[width=\textwidth]{H2B_weblogo.png}
         \caption{WebLogo of all H2B sequences.}
         \label{fig:h2b-weblogo}
       \end{figure}
       \begin{table}
         \centering
-        \input{results/table-H2B-consensus}
+%        \input{results/table-H2B-consensus}
         \caption{histone H2B protein consensus}
         \label{tab:H2B-consensus}
       \end{table}
@@ -308,13 +330,13 @@
     \subsection{H3}
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{H3_weblogo.png}
+%        \includegraphics[width=\textwidth]{H3_weblogo.png}
         \caption{WebLogo of all H3 sequences.}
         \label{fig:h3-weblogo}
       \end{figure}
       \begin{table}
         \centering
-        \input{results/table-H3-consensus}
+%        \input{results/table-H3-consensus}
         \caption{histone H3 protein consensus}
         \label{tab:H3-consensus}
       \end{table}
@@ -326,35 +348,36 @@
       only gene on that ``cluster''.
       \begin{figure}
         \centering
-        \includegraphics[width=\textwidth]{H4_weblogo.png}
+%        \includegraphics[width=\textwidth]{H4_weblogo.png}
         \caption{WebLogo of all H4 sequences. The non-conserved amino acids are all from one single gene --- HIST1H4G}
         \label{fig:h4-weblogo}
       \end{figure}
 
       \begin{table}
         \centering
-        \input{results/table-H4-consensus}
+%        \input{results/table-H4-consensus}
         \caption{Count of expected functional histone genes and proteins}
         \label{tab:H4-consensus}
       \end{table}
 
-%  \section{SNP's}
-%    \rewrite{writing is dependent on what is found}
+  \section{SNP's}
+    \todo[inline]{writing is dependent on what is found}
 
   \section{Canonical isoforms vs.~variants}
-    %% Characteristics of a variant are the fact they seem to have special functions. Emphasis that some canonical may have special functions whicyh no one bothered to check
+    %% Characteristics of a variant are the fact they seem to have special functions. Emphasis
+    %% that some canonical may have special functions whicyh no one bothered to check
     %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
     %% Complain about the lack of information on the different isoforms
-    \rewrite{
-      Rules and exceptions to definition of canonical and variants. Also point that the word canonical suggest antecedence which is not necessarily true (ref to our paper and Henikoff's)
-    }
+    \todo[inline]{Rules and exceptions to definition of canonical and variants. Also point
+    that the word canonical suggest antecedence which is not necessarily true (ref to our
+    paper and Henikoff's)}
 
     Variants are the most likely with a standard gene, are considered independent from each other,
-    spread around the genome and its expression is mostly independent of cell cycle \think{explain
+    spread around the genome and its expression is mostly independent of cell cycle \todo{explain
     why mostly? Do it next paragraph when complaining the naming}. When people say H2AX that's
     a variant. Note, H2A.2 and H3.2 are not considered variants.
 
-    Both this separation and their naming is very misleading \think{say that the fact that no one cares is proof?}
+    Both this separation and their naming is very misleading \todo{say that the fact that no one cares is proof?}
     for several reasons.
     \begin{itemize}
       \item The word canonical suggests precedence which is not necessarily true. It has been
@@ -376,14 +399,17 @@
     names are either the gene/transcript/protein name or id.
 
     The program (bp\_genbank\_ref\_extractor) was released under GPLv3 and is distributed with
-    BioPerl since version 1.6.10\think{actually, it's in the development version, next version might be 1.7 or 2.0 with the project restructure and evrything}.
+    BioPerl since version 1.6.10\todo{actually, it's in the development version, next version might be
+    1.7 or 2.0 with the project restructure and everything}.
 
   \section{Reproducible research}
   \label{sec:reproducible}
-    While writing this document, we attempted to follow the principles of reproducible research \cite{reproducible-research-bioinformatics, reproducible-research-law}.
+    While writing this document, we attempted to follow the principles of reproducible research
+    \citep{reproducible-research-bioinformatics, reproducible-research-law}.
     We are also aware of the continuous development of databases and genetic knowledge. As such,
     the source code to replicate the tables and figures shown in this document are freely accessible
-    online at \url{https://gitorious.org/human-histone-catalogue}. We hope that in the future, it can be used to create up to date information
+    online at \url{https://github.com/af-lab/histone-catalog}. We hope that in the future, it can
+    be used to create up to date information
     that reflects the current knowledge on the human histone genes.
 
     The choice of RefSeq through Entrez over HAVANA through Ensembl was mainly based in one reason --- the ease
@@ -398,5 +424,8 @@
   \section{Acknowledgements}
     We would like to thank everyone at \#perl and \#bioperl from FreeNode, specially Altreus, mst, LeoNerd and pyrimidine. David Miguel
     Susano Pinto is funded by a personal grant by the Portuguese Foundation for Science and Technology (FCT).
+
+  \bibliographystyle{plainnat}
+  \bibliography{references}
 
 \end{document}

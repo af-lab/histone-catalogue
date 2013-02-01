@@ -1,37 +1,33 @@
-paper = PDF(target = 'histone_catalog.pdf', source = 'histone_catalog.tex')
+env = Environment()
+paper = env.PDF(target = 'histone_catalog.pdf', source = 'histone_catalog.tex')
 
-Depends(paper, ['library.bib',
-                'figs/nomenclature-schematic.pdf',
-                'figs/H2A_weblogo.pdf', 'figs/H2B_weblogo.pdf',
-                'results/tables.tex', 'results/variables.tex'])
-Decider('content')  # same as MD5
+Depends(paper, ['references.bib',
+                ])
+Decider('content')
 
-## we'll use inkscape to generate pdfs of image from their svgs
-SVGS = """
-figs/nomenclature-schematic
-figs/H2A_weblogo
-figs/H2B_weblogo
-figs/H3_weblogo
-figs/H4_weblogo
-""".split()
+def BuildPackageTest(package):
+    package_test_text = "\documentclass{article}\n\usepackage{%s}\n\\begin{document}\n\end{document}" % package
+    def PackageTest(context):
+        context.Message("Checking for LaTeX package %s..." % package)
+        try:
+            b = context.env.PDF
+        except AttributeError:
+            return False
+        is_ok = context.TryBuild(b, package_test_text, '.tex')
+        context.Result(is_ok)
+        return is_ok
+    return PackageTest
 
-for SVG in SVGS:
-  ## should skip if svg has not changed since last time
-  x    = Command(SVG + '.pdf', SVG +'.svg', 'inkscape `basename ' + SVG + '.svg` --export-pdf=`basename ' + SVG + '.pdf`', chdir=1)
+required_packages = ["graphicx", "multirow", "url", "todonotes", "natbib", "hyperref", "ifdraft", "palatino"]
+package_tests = dict()
+for package in required_packages:
+    package_tests[package] = BuildPackageTest(package)
 
-## should create option to get data again
+conf = Configure(env, package_tests)
 
-## should create option to recreate tables and figs from data
+for package in required_packages:
+    if not getattr(conf, package)():
+        print "Unable to find required LaTeX package %s" % package
+        Exit(1)
 
-## specific option to reconvert svg and add inkscape as dependency
-
-## should create option to do everything
-
-## should mark Latex dependencies:
-##      * bibtex style
-##      * url package
-##      * todonotes package
-##      * graphicx
-
-## dependencies for perl modules, only if running the specific sections so that building paper from data does not need bioperl
-
+env = conf.Finish()
