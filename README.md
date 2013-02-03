@@ -27,4 +27,5 @@ The following needs to be installed for a successful build:
   * Text::CSV
   * Bio::EUtilities
   * Bio::DB::SeqIO
+  * Bio::Tools::Run::Alignment::TCoffee
 * [weblogo](weblogo.threeplusone.com) - generate the sequence logos
