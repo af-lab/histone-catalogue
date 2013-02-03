@@ -27,7 +27,7 @@ use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 
 ## remove old files to avoid problems with previous results
-File::Path::remove_tree($MyVar::sequences_path, {verbose => 1});
+#File::Path::remove_tree($MyVar::sequences_dir, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
@@ -50,7 +50,7 @@ my @extractor_args = (
                       '--proteins',     'accession',
                       '--limit',        '300',
                       '--format',       'genbank',
-                      '--save',         $MyVar::sequences_path,
+                      '--save',         $MyVar::sequences_dir,
                       '--save-data',    'csv',
                       );
 unshift (@extractor_args, $MyVar::seq_extractor);
