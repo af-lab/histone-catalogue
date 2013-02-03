@@ -140,11 +140,11 @@ sub mod_weblogo_eps {
       if ($fixed) {
         die "Trying to fix previously fixed sequence Logo. Probably new version of weblogo and we need to update our script.\n"
       }
-      print {$save} "ysize stack_height stack_margin sub ge {\n" .
-                    "    0.7 0.7 0.7 setrgbcolor\n" .
-                    "} {\n" .
-                    "    0.0 0.0 0.0 setrgbcolor\n" .
-                    "}ifelse\n";
+      print {$save} "        ysize stack_height stack_margin sub ge {\n" .
+                    "            0.7 0.7 0.7 setrgbcolor\n" .
+                    "        } {\n" .
+                    "            0.0 0.0 0.0 setrgbcolor\n" .
+                    "        }ifelse\n";
       $fixed = 1;
     }
     print {$save} $_;
