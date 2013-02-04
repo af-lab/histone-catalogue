@@ -22,12 +22,24 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
 use FindBin;                    # Locate directory of original perl script
+use Getopt::Long;               # Parse program arguments
+use Email::Valid;               # Validate e-mail address
 
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 
+## check the e-mail is valid to avoid problems with NCBI
+my $email;
+GetOptions(
+            'email=s'  => sub {
+                                $email = Email::Valid->address($_[1])
+                                  or die "Invalid e-mail adress $_[1]: $Email::Valid::Details";
+                              },
+          ) or die "Error processing options";
+die "No email specified. Use the --email option." unless $email;
+
 ## remove old files to avoid problems with previous results
-#File::Path::remove_tree($MyVar::sequences_dir, {verbose => 1});
+File::Path::remove_tree($MyVar::sequences_dir, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
@@ -52,6 +64,7 @@ my @extractor_args = (
                       '--format',       'genbank',
                       '--save',         $MyVar::sequences_dir,
                       '--save-data',    'csv',
+                      '--email',        $email,
                       );
 unshift (@extractor_args, $MyVar::seq_extractor);
 push    (@extractor_args, $search);
