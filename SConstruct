@@ -1,4 +1,6 @@
 env = Environment()
+env.Append(PDFLATEXFLAGS = '-interaction=batchmode') # make pdflatex quieter
+
 paper = env.PDF(target = 'histone_catalog.pdf', source = 'histone_catalog.tex')
 
 Depends(paper, ['references.bib',
