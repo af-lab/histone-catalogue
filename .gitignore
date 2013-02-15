@@ -33,8 +33,10 @@
 *.xdy
 *.tdo
 
-## SCons db
+## SCons stuff
+.sconf_temp/*
 .sconsign.dblite
+config.log
 
 ## gedit latex plugin
 *.ini
