@@ -41,7 +41,7 @@ The different target names are:
     report      - prepare PDF of short report of the analysis
     publication - prepare PDF of the published paper
 
-Not specifying any target, calling `scons' on its own, is equivalent to
+Not specifying any target, calling `scons` on its own, is equivalent to
 selecting all of them. That means, if all dependencies are installed, the
 following command will take care of everything:
 
@@ -49,8 +49,8 @@ following command will take care of everything:
 
 Note than in order to prevent overload of the NCBI servers, a valid email is
 required to connect to the Entrez Gene database using E-utilities. Other
-limitations may be in place. See "Usage guidelines and requirements", on
-[A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books/NBK25497/).
+limitations may be in place. See section *"Usage guidelines and requirements"*,
+on [A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books/NBK25497/).
 
 > In order not to overload the E-utility servers, NCBI recommends that users
 > post no more than three URL requests per second and limit large jobs to either
@@ -70,7 +70,7 @@ Dependencies
 ------------
 
 The following dependencies need to be installed for a successful build of all
-targets (see Building instructions). Individual targets will require only a
+targets (see *Building instructions*). Individual targets will require only a
 subset of these. Run `scons -h` for a complete list, divided by target.
 
 * [SCons](www.scons.org) - the build system
