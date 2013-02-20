@@ -108,27 +108,25 @@ publication = env.PDF(target = "histone_catalog.pdf",
 
 
 ## The really really really right way to do the checks would be to set up a
-## scanner that finds the required LaTeX packages and perl modules. And that's
-## something that should be done upstream in SCons.
+## scanner that finds the required LaTeX packages and perl modules. But that's
+## something that should be done upstream in SCons (the scan for LaTeX source is
+## already being worked on so this may not be necessary in the future)
 
 def CheckLaTeXPackage(context, package):
-    test_text = ("\documentclass{article}\n"
-                 "\usepackage{%s}\n"
-                 "\\begin{document}\n"
-                 "dummy text\n"
-                 "\end{document}") % package
     context.Message("Checking for LaTeX package %s..." % package)
-    is_ok = context.TryBuild(context.env.PDF, test_text, ".tex")
+    is_ok = True
+    if (subprocess.call(["kpsewhich", "%s.sty" % package],
+                        stdout = open(os.devnull, "wb"))):
+      is_ok = False
     context.Result(is_ok)
     return is_ok
 
 def CheckLaTeXClass(context, doc_class):
-    test_text = ("\documentclass{%s}\n"
-                 "\\begin{document}\n"
-                 "dummy text\n"
-                 "\end{document}") % doc_class
     context.Message("Checking for LaTeX document class %s..." % doc_class)
-    is_ok = context.TryBuild (context.env.PDF, test_text, ".tex")
+    is_ok = True
+    if (subprocess.call(["kpsewhich", "%s.cls" % doc_class],
+                        stdout = open(os.devnull, "wb"))):
+      is_ok = False
     context.Result(is_ok)
     return is_ok
 
