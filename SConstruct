@@ -1,4 +1,7 @@
 ## coding: utf-8
+import os
+import re
+import subprocess
 
 ## reuse the building instructions already written on the README file
 def readme_help():
@@ -6,7 +9,6 @@ def readme_help():
     ini_str = ("Building instructions\n"
                "---------------------\n")
     end_str = "Run `scons -h` for more details on the building targets and options\."
-    import re
     match   = re.search("(?<=^%s).*(?=%s)" % (ini_str, end_str),
                         readme,
                         re.M | re.S | re.I)
@@ -15,7 +17,6 @@ def readme_help():
     else:
       return ""
 Help(readme_help())
-
 Help("""
 Each target may require specific tools to be installed in your system, or
 certain options to be specified.
@@ -33,6 +34,7 @@ OPTIONS
             batchmode and terse options. Set this option to revert it.
 
 """)
+
 AddOption("--email",
           type = "string",
           dest = "email",
@@ -53,7 +55,6 @@ if not GetOption("verbose"):
     env.AppendUnique(TEXFLAGS       = "-interaction=batchmode")
     env.AppendUnique(LATEXFLAGS     = "-interaction=batchmode")
     env.AppendUnique(BIBTEXFLAGS    = "--terse")  # some ports of BibTeX may use --quiet instead
-
 
 Help("""
 TARGETS
@@ -81,11 +82,15 @@ TARGETS
 
 """)
 
-env.Alias("data", "results/sequences/data.csv")
-data = env.Command(target = "results/sequences/data.csv",   # scons doesn't like it when target is a directory
+## scons does not like it when target is a directory. It will always consider it
+## up to date, even the source changes. So we use the data.csv file as target
+datapath    = os.path.join("results", "sequences")
+datatarget  = os.path.join(datapath, "data.csv")
+env.Alias("data", datatarget)
+data = env.Command(target = datatarget,
                    source = "scripts/extract_sequences.pl",
                    action = "$SOURCES --email %s" % GetOption('email'))
-env.Clean(data, "results/sequences")
+env.Clean(data, datapath)
 
 ## we will probably need to create our own builder for this
 env.Alias("analysis",  "")
@@ -129,13 +134,11 @@ def CheckLaTeXClass(context, doc_class):
 
 def CheckEmail(context, email):
     context.Message("Checking e-mail address...")
-    from email.utils import parseaddr
-    ## RFC-822 accepts a LOT of things. Many accepted things will likely be wrong
-    ## We use [1] because [0] will be the name "name is here <email@host>"
-    is_ok = parseaddr(email)[1] # this will
-    if not is_ok:
-        ## because empty strings will also work
-        is_ok = False
+    is_ok = False
+    if email:
+      ## leave the actual email validation to the script. email.utils.parseaddr
+      ## does not actually make sure the address is valid
+      is_ok = email
     context.Result(is_ok)
     return is_ok
 
@@ -150,10 +153,10 @@ def CheckApp(context, app_name):
 
 def CheckPerlModule(context, module_name):
     context.Message("Checking for perl module %s..." % module_name)
-    ## FIXME this will fail but Execute is too noisy
-    is_ok = context.TryBuild(context.env.Command(target = [],
-                                                 source = [],
-                                                 action = "perl -M%s -e 1" % module_name))
+    is_ok = True
+    if (subprocess.call(["perl", "-M%s" % module_name, "-e 1"],
+                        stderr = open(os.devnull, "wb"))):
+      is_ok = False
     context.Result(is_ok)
     return is_ok
 
