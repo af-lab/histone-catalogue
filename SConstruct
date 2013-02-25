@@ -101,11 +101,14 @@ analysis = env.Command(target = [],
 env.Alias("report", "report.pdf")
 report = env.PDF(target = "report.pdf",
                  source = "report.tex")
+Depends (report, figures)
 
 env.Alias("publication", "histone_catalog.pdf")
 publication = env.PDF(target = "histone_catalog.pdf",
                       source = "histone_catalog.tex")
+Depends (publication, figures)
 
+figures = env.PDF(source = Glob("figs/*.eps"))
 
 ## The really really really right way to do the checks would be to set up a
 ## scanner that finds the required LaTeX packages and perl modules. But that's
