@@ -14,6 +14,17 @@
   \usepackage[final,hyperindex,hyperfootnotes,bookmarksnumbered]{hyperref}
 }
 
+\usepackage{eqparbox}
+  %% keep size of first column of sequence align table on memory to calculate
+  %% the size limit for the second column
+  \newsavebox{\firstentrybox}
+  \newcolumntype{F}{%
+    >{\begin{lrbox}{\firstentrybox}}%
+      l%
+    <{\end{lrbox}%
+    \eqmakebox[firstentry][l]{\unhcopy\firstentrybox}}}
+
+\usepackage{seqsplit}
 \usepackage{multirow}
 \usepackage{url}
 \usepackage[textsize=small]{todonotes}
@@ -300,14 +311,14 @@
     \subsection{H2A}
       \begin{figure}
         \centering
-%        \includegraphics[width=\textwidth]{H2A_weblogo.png}
+        \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
         \caption{WebLogo of all H2A sequences. The bottom line are the amino acids of H2AFJ whose sequence is different from any of the H2A proteins}
         \label{fig:h2a-weblogo}
       \end{figure}
 
       \begin{table}
         \centering
-%        \input{results/table-H2A-consensus}
+        \input{results/table-H2A-align}
         \caption{histone H2A protein consensus}
         \label{tab:H2A-consensus}
       \end{table}
@@ -317,13 +328,13 @@
     \subsection{H2B}
       \begin{figure}
         \centering
-%        \includegraphics[width=\textwidth]{H2B_weblogo.png}
+        \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
         \caption{WebLogo of all H2B sequences.}
         \label{fig:h2b-weblogo}
       \end{figure}
       \begin{table}
         \centering
-%        \input{results/table-H2B-consensus}
+        \input{results/table-H2B-align}
         \caption{histone H2B protein consensus}
         \label{tab:H2B-consensus}
       \end{table}
@@ -331,13 +342,13 @@
     \subsection{H3}
       \begin{figure}
         \centering
-%        \includegraphics[width=\textwidth]{H3_weblogo.png}
+        \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
         \caption{WebLogo of all H3 sequences.}
         \label{fig:h3-weblogo}
       \end{figure}
       \begin{table}
         \centering
-%        \input{results/table-H3-consensus}
+        \input{results/table-H3-align}
         \caption{histone H3 protein consensus}
         \label{tab:H3-consensus}
       \end{table}
@@ -349,14 +360,14 @@
       only gene on that ``cluster''.
       \begin{figure}
         \centering
-%        \includegraphics[width=\textwidth]{H4_weblogo.png}
+        \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
         \caption{WebLogo of all H4 sequences. The non-conserved amino acids are all from one single gene --- HIST1H4G}
         \label{fig:h4-weblogo}
       \end{figure}
 
       \begin{table}
         \centering
-%        \input{results/table-H4-consensus}
+        \input{results/table-H4-align}
         \caption{Count of expected functional histone genes and proteins}
         \label{tab:H4-consensus}
       \end{table}

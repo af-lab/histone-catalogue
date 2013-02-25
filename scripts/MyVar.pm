@@ -29,6 +29,8 @@ our $histone_regexp = join ("|", @histones);
 our $seq_extractor  = 'bp_genbank_ref_extractor';
 ## directory where the results are saved
 our $results_dir    = 'results';
+## directory where the figures are saved
+our $figs_dir       = 'figs';
 ## directory where bp_genbank_ref_extractor saves the sequences
 our $sequences_dir  = 'sequences';
 ## current number of known clusters
@@ -47,6 +49,7 @@ our $pseudo_mark    = '($\psi$)';
 my @dirs            = File::Spec->splitdir($0);
 
 $results_dir        = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $results_dir);
+$figs_dir           = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $figs_dir);
 $sequences_dir      = File::Spec->catdir($results_dir, $sequences_dir);
 $results_clust      = File::Spec->catdir($results_dir, $results_clust);
 

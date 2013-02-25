@@ -240,6 +240,8 @@ if ("publication" or "report") in map (str, BUILD_TARGETS):
                          "todonotes",
                          "natbib",
                          "palatino",
+                         "seqsplit",
+                         "eqparbox",
                           ]
     for package in required_packages:
         if not conf.CheckLaTeXPackage(package):
