@@ -331,9 +331,9 @@ sub most_common_str {
     if ($cluster ne $1) {
       $cluster = $1;
       $str    .= "; $cluster$histone";
-      $str    .= "--" if $2;
+      $str    .= " " if $2;
     }
-    $str .= ", --$2";
+    $str .= ", --$2" if $2;
   }
   return $str;
 }
