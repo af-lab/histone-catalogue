@@ -80,7 +80,6 @@ subset of these. Run `scons -h` for a complete list, divided by target.
   * Bio::SeqIO
   * Bio::Tools::Run::Alignment::TCoffee
   * Email::Valid
-  * Lingua::EN::Numbers
   * Text::CSV
 * [weblogo](weblogo.threeplusone.com) - generate the sequence logos
 

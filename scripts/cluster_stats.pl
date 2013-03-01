@@ -17,7 +17,6 @@
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use Lingua::EN::Numbers;        # Turn a number into its 'english' form
 use FindBin;                    # Locate directory of original perl script
 use File::Spec;                 # Perform operation on file names
 
@@ -64,6 +63,7 @@ foreach my $gene (@data) {
   ## hash and print them later when we have them all. For each histone, there is
   ## an array with the data in order for the table (order of table is name, uid,
   ## transcript accession, protein accession)
+  ## FIXME how to deal with genes that have more than 1 transcript?
   @{$id_tables{$histone}{$symbol}} = ($symbol, $$gene{'gene UID'});
   if ($$gene{'pseudo'}) {
     $id_tables{$histone}{$symbol}[0] .= " $MyVar::pseudo_mark"; # pseudo genes need to have their name marked
@@ -124,7 +124,7 @@ say "$_ is $canon{$_}{'length'}" for (keys %canon);
 #printf("%3.1f", value / pow(10, pot) )
 #use Data::Dumper;
 #print Dumper %canon;
-#my $number = Lingua::EN::Numbers::num2en($cluster =~ m/(\d*)$/);
+#my $number = $cluster =~ m/(\d*)$/;
 #$nn =~ s/^(\w)/\U$1/g;
 #say $nn;
 

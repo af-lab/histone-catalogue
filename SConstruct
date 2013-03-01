@@ -208,7 +208,6 @@ DEPENDENCIES
         * the following perl modules:
               * Bio::SeqIO
               * Bio::Tools::Run::Alignment::TCoffee
-              * Lingua::EN::Numbers
               * Text::CSV
     
     for REPORT and PUBLICATION
@@ -245,7 +244,6 @@ if "analysis" in map (str, BUILD_TARGETS):
     required_modules = [
                         "Bio::SeqIO",
                         "Bio::Tools::Run::Alignment::TCoffee",
-                        "Lingua::EN::Numbers",
                         "Text::CSV",
                         ]
     for module in required_modules:
@@ -267,6 +265,7 @@ if ("publication" or "report") in map (str, BUILD_TARGETS):
                          "palatino",
                          "seqsplit",
                          "eqparbox",
+                         "fmtcount",
                           ]
     for package in required_packages:
         if not conf.CheckLaTeXPackage(package):
