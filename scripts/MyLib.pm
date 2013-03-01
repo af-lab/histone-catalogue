@@ -113,7 +113,7 @@ sub latex_table {
   my $cols = @_ - 1;
   given ($_[0]) {
     when ("row") {
-      my @vals = latex_string (@_[1 .. $#_]);   # escape characters (we can't values of modify @_)
+      my @vals = latex_string (@_[1 .. $#_]);   # escape characters (we can't modify values of @_)
       $tab .= "  ";                             # indentation
       $tab .= "$_ & " for @vals[0 .. $#_ -1];   # all cells except last val &
       $tab .= "$vals[-1] \\\\";                 # end row with \\
