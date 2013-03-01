@@ -82,34 +82,56 @@ TARGETS
 
 """)
 
-## scons does not like it when target is a directory. It will always consider it
-## up to date, even the source changes. So we use the data.csv file as target
-datapath    = os.path.join("results", "sequences")
-datatarget  = os.path.join(datapath, "data.csv")
-env.Alias("data", datatarget)
-data = env.Command(target = datatarget,
-                   source = "scripts/extract_sequences.pl",
-                   action = "$SOURCES --email %s" % GetOption('email'))
-env.Clean(data, datapath)
+## Defining paths
+scripts_dir = os.path.join("scripts")
+results_dir = os.path.join("results")
+data_dir    = os.path.join(results_dir, "sequences")
+figures_dir = os.path.join("figs")
 
-## we will probably need to create our own builder for this
-env.Alias("analysis",  "")
-analysis = env.Command(target = [],
-                       source = [],
-                       action = [])
 
-env.Alias("report", "report.pdf")
+## TARGET data
+##
+## SCons does not like it when the target is a directory. It will always consider
+## it up to date, even the source changes. So we use the data.csv file as target
+data = env.Command(target = os.path.join(data_dir, "data.csv"),
+                   source = os.path.join(scripts_dir, "extract_sequences.pl"),
+                   action = "$SOURCE --email %s" % GetOption('email'))
+env.Alias("data", data)
+env.AlwaysBuild(data)
+env.Clean(data, data_dir)
+
+
+## TARGET analysis
+##
+## For analysis, each script is its own target. We then set an alias that groups
+## all of them
+align_sequences = env.Command(target = os.path.join(results_dir, "variables-sequences.tex"),
+                              source = os.path.join(scripts_dir, "align_sequences.pl"),
+                              action = "$SOURCE ")
+cluster_stats   = env.Command(target = os.path.join(results_dir, "variables-cluster_stats.tex"),
+                              source = os.path.join(scripts_dir, "cluster_stats.pl"),
+                              action = "$SOURCE ")
+env.Alias("analysis", [align_sequences, cluster_stats])
+
+
+## TARGET report and publication
+##
+## Both are dependent on the figures being converted into PDF.
+figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
+
 report = env.PDF(target = "report.pdf",
                  source = "report.tex")
-Depends (report, figures)
+env.Alias("report", report)
+Depends(report, figures)
 
-env.Alias("publication", "histone_catalog.pdf")
 publication = env.PDF(target = "histone_catalog.pdf",
                       source = "histone_catalog.tex")
-Depends (publication, figures)
+env.Alias("publication", publication)
+Depends(publication, figures)
 
-figures = env.PDF(source = Glob("figs/*.eps"))
 
+## Build configuration (check if everything is installed)
+##
 ## The really really really right way to do the checks would be to set up a
 ## scanner that finds the required LaTeX packages and perl modules. But that's
 ## something that should be done upstream in SCons (the scan for LaTeX source is
