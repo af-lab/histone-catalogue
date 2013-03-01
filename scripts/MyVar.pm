@@ -27,33 +27,11 @@ our @histones       = qw(H2A H2B H3 H4);
 our $histone_regexp = join ("|", @histones);
 ## how to call bp_genbank_ref_extractor
 our $seq_extractor  = 'bp_genbank_ref_extractor';
-## directory where the results are saved
-our $results_dir    = 'results';
-## directory where the figures are saved
-our $figs_dir       = 'figs';
-## directory where bp_genbank_ref_extractor saves the sequences
-our $sequences_dir  = 'sequences';
 ## current number of known clusters
 our $cluster_number = 4;
 ## max number of significant figures (digits) for sizes (cluster length)
 our $size_precision = 2;
-## file (inside $results_dir) to store the results for the LaTeX compiler
-our $results_clust  = 'variables-cluster_stats.tex';
 ## LaTeX code to mark genes as pseudo on tables
 our $pseudo_mark    = '($\psi$)';
-
-################################################################################
-## calculate complete relative paths
-################################################################################
-
-my @dirs            = File::Spec->splitdir($0);
-
-$results_dir        = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $results_dir);
-$figs_dir           = File::Spec->catdir(@dirs[0 .. ($#dirs - 2)], $figs_dir);
-$sequences_dir      = File::Spec->catdir($results_dir, $sequences_dir);
-$results_clust      = File::Spec->catdir($results_dir, $results_clust);
-
-## path for data saved by sequence extractor
-our $data_path      = File::Spec->catdir($sequences_dir, 'data.csv');
 
 1; # a package must return true

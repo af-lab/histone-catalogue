@@ -15,16 +15,18 @@
 ## along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 ## all this script does is run bp_genbank_ref_extractor (now part of bioperl) and
-## save the sequences in the sequences directory
+## save the sequences in the sequences directory. Usage is:
+##
+## extract_sequences --email you@there.eu path_to_save_sequences
 
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
-use FindBin;                    # Locate directory of original perl script
 use Getopt::Long;               # Parse program arguments
 use Email::Valid;               # Validate e-mail address
 
+use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 
@@ -38,8 +40,10 @@ GetOptions(
           ) or die "Error processing options";
 die "No email specified. Use the --email option." unless $email;
 
+my $sequences_dir = $ARGV[0]; # path to save sequences
+
 ## remove old files to avoid problems with previous results
-File::Path::remove_tree($MyVar::sequences_dir, {verbose => 1});
+File::Path::remove_tree($sequences_dir, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
@@ -62,7 +66,7 @@ my @extractor_args = (
                       '--proteins',     'accession',
                       '--limit',        '300',
                       '--format',       'genbank',
-                      '--save',         $MyVar::sequences_dir,
+                      '--save',         $sequences_dir,
                       '--save-data',    'csv',
                       '--email',        $email,
                       );

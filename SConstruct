@@ -95,7 +95,7 @@ figures_dir = os.path.join("figs")
 ## it up to date, even the source changes. So we use the data.csv file as target
 data = env.Command(target = os.path.join(data_dir, "data.csv"),
                    source = os.path.join(scripts_dir, "extract_sequences.pl"),
-                   action = "$SOURCE --email %s" % GetOption('email'))
+                   action = "$SOURCE --email %s %s" % (GetOption('email'), data_dir))
 env.Alias("data", data)
 env.AlwaysBuild(data)
 env.Clean(data, data_dir)
@@ -107,10 +107,10 @@ env.Clean(data, data_dir)
 ## all of them
 align_sequences = env.Command(target = os.path.join(results_dir, "variables-sequences.tex"),
                               source = os.path.join(scripts_dir, "align_sequences.pl"),
-                              action = "$SOURCE ")
+                              action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
 cluster_stats   = env.Command(target = os.path.join(results_dir, "variables-cluster_stats.tex"),
                               source = os.path.join(scripts_dir, "cluster_stats.pl"),
-                              action = "$SOURCE ")
+                              action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
 env.Alias("analysis", [align_sequences, cluster_stats])
 
 

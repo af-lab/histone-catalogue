@@ -17,15 +17,29 @@
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use FindBin;                    # Locate directory of original perl script
 use File::Spec;                 # Perform operation on file names
+use Getopt::Long;               # Parse program arguments
 
+use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
+## Check input options
+my %path = ("sequences" => "",
+            "figures"   => "",
+            "results"   => "");
+GetOptions(
+            "sequences=s" => \$path{sequences},
+            "figures=s"   => \$path{figures},
+            "results=s"   => \$path{results},
+          ) or die "Error processing options. Paths must be strings";
+for (keys %path) {
+  die "No path for $_ specified. Use the --$_ option." unless $path{$_};
+}
+
 ## this returns an array of references to an hash whose keys are the column names
-my @data = MyLib::load_canonical;
+my @data = MyLib::load_canonical ($path{sequences});
 
 my %canon;          # will store the gene info
 my %id_tables;      # will store data for the ID tables
@@ -78,7 +92,7 @@ foreach my $gene (@data) {
 
 ## for each histone, one table with corresponding IDs
 foreach my $histone (@MyVar::histones) {
-  my $ids_path = File::Spec->catdir($MyVar::results_dir, "table-$histone-ids.tex");
+  my $ids_path = File::Spec->catdir($path{results}, "table-$histone-ids.tex");
   open (my $table, ">", $ids_path) or die "Could not open $ids_path for writing: $!";
   say $table MyLib::latex_table ("start", " l | l | l | l ");
   say $table MyLib::latex_table ("header", "Gene name", "Gene UID", "Transcript accession", "Protein accession");
@@ -97,11 +111,11 @@ for (keys %canon) {
   say "Coding genes on $_ are $canon{$_}{'coding'}";
 }
 
-## write to results file
-open($file, ">", $MyVar::results_clust) or die "Could not open $MyVar::results_clust for reading: $!";
+### write to results file
+#open($file, ">", $MyVar::results_clust) or die "Could not open $MyVar::results_clust for reading: $!";
 
-close($file);
-say "$_ is $canon{$_}{'length'}" for (keys %canon);
+#close($file);
+#say "$_ is $canon{$_}{'length'}" for (keys %canon);
 #for (keys %canon) {
 
 #  say $canon{$_}{'start'};

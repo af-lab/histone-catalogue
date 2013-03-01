@@ -27,12 +27,13 @@ use MyVar;                                  # Load variables
 
 ## load the gene information from all genes found
 sub load_csv {
+  my $data_path = File::Spec->catdir($_[0], 'data.csv');
   ## To cover the widest range of parsing options, you will always want to set binary
   my $csv = Text::CSV->new ({
                               binary => 1,
                               eol    => $/,
                               }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
-  open (my $file, "<", $MyVar::data_path) or die "Could not open $MyVar::data_path for reading: $!";
+  open (my $file, "<", $data_path) or die "Could not open $data_path for reading: $!";
 
   $csv->column_names ($csv->getline ($file));   # read first line and sets it as the column name
 
@@ -46,7 +47,7 @@ sub load_csv {
 ## rather than load information from all genes found and extracted, get only
 ## the canonical histones
 sub load_canonical {
-  my @data = load_csv;
+  my @data = load_csv (@_);
   my @canon;
   foreach my $gene (@data) {
       my $symbol = $$gene{'gene symbol'};
