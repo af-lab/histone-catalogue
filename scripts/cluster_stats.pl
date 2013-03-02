@@ -95,9 +95,13 @@ foreach my $histone (keys %id_tables) {
   say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
   say {$table} "  \\midrule";
   foreach my $symbol (sort keys %{$id_tables{$histone}}) {
-    print {$table} "  $id_tables{$histone}{$symbol}{'name'} & $id_tables{$histone}{$symbol}{'uid'} &";
-    foreach (sort @{$id_tables{$histone}{$symbol}{'accessions'}}) {
-      print {$table} " $_ \\\\\n"
+    print {$table} "  $id_tables{$histone}{$symbol}{'name'} & $id_tables{$histone}{$symbol}{'uid'} & ";
+    ## in case of multiple transcripts and proteins, the first two columns are
+    ## empty for the other rows
+    my @accessions = sort @{$id_tables{$histone}{$symbol}{'accessions'}};
+    print {$table} (shift (@accessions)) . " \\\\\n";
+    foreach (@accessions) {
+      say {$table} " & & $_ \\\\";
     }
   }
   say {$table} "  \\bottomrule";
