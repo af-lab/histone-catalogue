@@ -61,8 +61,13 @@ foreach my $gene (@data) {
   ## count histones (by cluster, type and coding/pseudo)
   $canon{$cluster}{"total"}++;
   $canon{$cluster}{$histone}{"total"}++;
-  $canon{$cluster}{$histone}{"pseudo"}++ if $$gene{'pseudo'};
-  $canon{$cluster}{$histone}{"coding"}++ if !$$gene{'pseudo'};
+  if ($$gene{'pseudo'}) {
+    $canon{$cluster}{"pseudo"}++;
+    $canon{$cluster}{$histone}{"pseudo"}++;
+  } else {
+    $canon{$cluster}{"coding"}++;
+    $canon{$cluster}{$histone}{"coding"}++;
+  }
 
   ## it's a pain to create a good data structure here and then open it up again
   ## later. Specially considering there's genes with multiple transcripts,
@@ -79,7 +84,6 @@ foreach my $gene (@data) {
      $accession .= MyLib::latex_string ($$gene{"protein accession"} || "n/a");
   push (@{$id_tables{$histone}{$symbol}{"accessions"}}, $accession);
 }
-
 
 ## Make a LaTeX table with all canonical histones (one per type)
 foreach my $histone (keys %id_tables) {
@@ -105,39 +109,31 @@ foreach my $histone (keys %id_tables) {
 ##    * start and end coordinates of each cluster
 ##    * length of each cluster
 for (keys %canon) {
-  $canon{$_}{"start"} = List::Util::min (@{$canon{$_}{"coordinates"}});
-  $canon{$_}{"end"}   = List::Util::max (@{$canon{$_}{"coordinates"}});
-  my $length  = abs ($canon{$_}{'start'} - $canon{$_}{'end'});
-  $canon{$_}{'length'} = MyLib::pretty_length($length);
 }
 
-### write to results file
-#open($file, ">", $MyVar::results_clust) or die "Could not open $MyVar::results_clust for reading: $!";
+## Write down results
+my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
+open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
 
-#close($file);
-#say "$_ is $canon{$_}{'length'}" for (keys %canon);
-#for (keys %canon) {
+foreach my $cluster (keys %canon) {
+  $canon{$cluster}{"start"}  = List::Util::min (@{$canon{$cluster}{"coordinates"}});
+  $canon{$cluster}{"end"}    = List::Util::max (@{$canon{$cluster}{"coordinates"}});
+  $canon{$cluster}{"length"} = abs ($canon{$cluster}{'start'} - $canon{$cluster}{'end'});
 
-#  say $canon{$_}{'start'};
-#  my $remainder = length($length) % 3;
-#  my $etc;
-#  given ($remainder) {
-#    when (0) {  $etc = sprintf("%1.3g", $length); }
+  ## because some clusters may not have coding or pseudo genes in which case
+  ## these were never initialized
+  $canon{$cluster}{'coding'} //= 0;
+  $canon{$cluster}{'pseudo'} //= 0;
 
-#    default {  $etc = sprintf("%2.2g", $length); }
-#  }
-##  my $etc = sprintf("%1.${MyVar::size_precision}g", $length);
-#  say "$_ has pot $pot from $length";
-#say length( "23.4535433" );
+  ## latex commands can't have numbers so we must replace them by english
+  my $number_en = MyLib::num2en ($cluster);
+  ## use SI suffix for length
+  my $length = MyLib::pretty_length ($canon{$cluster}{"length"});
 
-#printf("%3.1f", value / pow(10, pot) )
-#$pot = 0;
-#while ( 10**($pot +3) ) {
-#  $pot += 3;
-#}
-#printf("%3.1f", value / pow(10, pot) )
-#use Data::Dumper;
-#print Dumper %canon;
-#my $number = $cluster =~ m/(\d*)$/;
-#$nn =~ s/^(\w)/\U$1/g;
-#say $nn;
+  say {$stats} "\\newcommand{\\CodingGenesIn$number_en}{$canon{$cluster}{'total'}}";
+  say {$stats} "\\newcommand{\\PseudoGenesIn$number_en}{$canon{$cluster}{'pseudo'}}";
+  say {$stats} "\\newcommand{\\TotalGenesIn$number_en}{$canon{$cluster}{'coding'}}";
+  say {$stats} "\\newcommand{\\${number_en}Span}{$length}";
+}
+
+close ($stats) or die "Couldn't close $stats_path after writing: $!";

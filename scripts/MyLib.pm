@@ -111,4 +111,27 @@ sub latex_string {
   return $fixed;
 }
 
+## Replaces numbers in a string by their english word, and capitalizes the
+## first character. This is not meant to be correct, there's perl modules for
+## that (Lingua::EN::Nums2Words, Lingua::EN::Numbers or Number::Spell). We
+## really just want this to create valid LaTeX commands
+sub num2en {
+  my $string = shift;
+  my %trans = (
+               1 => "One",
+               2 => "Two",
+               3 => "Three",
+               4 => "Four",
+               5 => "Five",
+               6 => "Six",
+               7 => "Seven",
+               8 => "Eight",
+               9 => "Nine",
+               0 => "Zero",
+               );
+  my $keys = join ('', keys %trans);
+  $string =~ s/([$keys])/$trans{$1}/g;
+  return $string;
+}
+
 1; # a package must return true
