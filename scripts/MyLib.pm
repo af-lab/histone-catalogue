@@ -102,50 +102,13 @@ sub pretty_length {
   return "$number\\,${prefix}bp";
 }
 
-## make LaTeX tables (we probably should use one of the LaTeX modules in CPAN
-## but our needs are so simple). First argument is the type of row, followed
-## by the values for each column. Possible values are:
-##    * start  - start table environment (second argument string with column alignments)
-##    * header - values for header
-##    * row    - values for each row
-##    * end    - only closes table enviroment (use `row' to enter values for last row)
-sub latex_table {
-  my $tab;
-  my $cols = @_ - 1;
-  given ($_[0]) {
-    when ("row") {
-      my @vals = latex_string (@_[1 .. $#_]);   # escape characters (we can't modify values of @_)
-      $tab .= "  ";                             # indentation
-      $tab .= "$_ & " for @vals[0 .. $#_ -1];   # all cells except last val &
-      $tab .= "$vals[-1] \\\\";                 # end row with \\
-    }
-    when ("start") {
-      $tab .= "\\begin{tabular}{$_[1]}";
-    }
-    when ("header") {
-      $tab .= latex_table ("row", @_[1 .. $#_]);
-      $tab .= "\n";
-      $tab .= '  \hline';
-    }
-    when ("end") {
-      $tab .= '\end{tabular}';
-      ## the end should be ONLY to close the environment. Let's be nice and warn
-      ## if someone tries to give more arguments
-      warn "MyLib::latex_table: ignoring some arguments. Do not use end for the last row" if $cols > 0;
-    }
-    default {
-      die "Unrecognized value $_[0] for MyLib::latex_table"
-    }
-  }
-  return $tab;
-}
-
 ## escape necessary characters for latex (we will have really basic needs,
 ## probably only the underscore)
 sub latex_string {
   ## the list of characters to escape in a look-ahead operator so they are not
   ## captured. This way the substution actually only adds a \ before them
-  map { my $s = $_ ; $s =~ s/(?=[_])/\\/g; $s; } @_;
+  (my $fixed = $_[0]) =~ s/(?=[_])/\\/g;
+  return $fixed;
 }
 
 1; # a package must return true

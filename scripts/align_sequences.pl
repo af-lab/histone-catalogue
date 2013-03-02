@@ -213,7 +213,7 @@ foreach my $histone (keys %aligned) {
   my %muts;
   foreach my $sequence (keys %seqs) {
     next if $sequence eq $common;
-    my ($str) = MyLib::latex_string (seq_diff_str (\$common, \$sequence));
+    my $str = MyLib::latex_string (seq_diff_str (\$common, \$sequence));
     ## not the most memory efficient but makes it easier to sort the table alphabeticaly
     $muts{$_} = $str foreach (@{$seqs{$sequence}});
   }

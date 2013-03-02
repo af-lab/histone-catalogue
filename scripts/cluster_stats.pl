@@ -19,6 +19,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use Getopt::Long;               # Parse program arguments
+use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -38,77 +39,76 @@ for (keys %path) {
   die "No path for $_ specified. Use the --$_ option." unless $path{$_};
 }
 
-## this returns an array of references to an hash whose keys are the column names
-my @data = MyLib::load_canonical ($path{sequences});
 
+## Read the data and create a data structure for the analysis
 my %canon;          # will store the gene info
 my %id_tables;      # will store data for the ID tables
-
+my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
   my $symbol = $$gene{'gene symbol'};
 
   my $cluster = $1 if $symbol =~ m/^(HIST\d+)/;
-  die "unable to identify cluster of $symbol" unless defined $cluster;
+  die "Unable to identify cluster of $symbol" unless defined $cluster;
+  my $histone = $1 if $symbol =~ m/^${cluster}($MyVar::histone_regexp)/;
+  die "Unable to identify histone type of $symbol" unless defined $histone;
 
-  ## find the start and end of each cluster (smallest and larger coordinate values
-  ## of each gene on the cluster)
-  foreach ( $$gene{'chromosome start coordinates'}, $$gene{'chromosome stop coordinates'} ) {
-    ## start and end values may still be uninitialized so we check them first
-    $canon{$cluster}{'start'} = $_ if !exists $canon{$cluster}{'start'} || $_ < $canon{$cluster}{'start'};
-    $canon{$cluster}{'end'}   = $_ if !exists $canon{$cluster}{'end'}   || $_ > $canon{$cluster}{'end'};
-  }
+  ## to find the start and end of each cluster, we just list all the start and
+  ## end coordinates. At the end, we get the min and max of them.
+  push (@{$canon{$cluster}{"coordinates"}},
+        $$gene{'chromosome start coordinates'},
+        $$gene{'chromosome stop coordinates'});
 
   ## count histones (by cluster, type and coding/pseudo)
-  my $codness;
-  if ($$gene{'pseudo'}) {
-    $codness = "pseudo";
-  } else {
-    $codness = "coding";
-  }
-  my $histone = $1 if $symbol =~ m/^${cluster}($MyVar::histone_regexp)/;
-  die "unable to identify histone type of $symbol" unless defined $histone;
-
   $canon{$cluster}{"total"}++;
   $canon{$cluster}{$histone}{"total"}++;
-  $canon{$cluster}{$histone}{$codness}++;
+  $canon{$cluster}{$histone}{"pseudo"}++ if $$gene{'pseudo'};
+  $canon{$cluster}{$histone}{"coding"}++ if !$$gene{'pseudo'};
 
-  ## as we check each gene we would want to add them to the tables. However, we
-  ## also want them to appear sorted so we prepare everything here, store in a
-  ## hash and print them later when we have them all. For each histone, there is
-  ## an array with the data in order for the table (order of table is name, uid,
-  ## transcript accession, protein accession)
-  ## FIXME how to deal with genes that have more than 1 transcript?
-  @{$id_tables{$histone}{$symbol}} = ($symbol, $$gene{'gene UID'});
-  if ($$gene{'pseudo'}) {
-    $id_tables{$histone}{$symbol}[0] .= " $MyVar::pseudo_mark"; # pseudo genes need to have their name marked
-    push (@{$id_tables{$histone}{$symbol}}, 'n/a', 'n/a')       # not applicable
-  } else {
-    push (@{$id_tables{$histone}{$symbol}}, $$gene{'transcript accession'}, $$gene{'protein accession'})
+  ## it's a pain to create a good data structure here and then open it up again
+  ## later. Specially considering there's genes with multiple transcripts,
+  ## pseudo-genes, and non-coding transcripts. We could create a nice class for
+  ## it, like we did for bp_genbank_ref_extractor, but that's overkill. Instead,
+  ## we prepare the latex text in advance
+  if (! exists $id_tables{$histone}{$symbol}{"name"}) {
+    $id_tables{$histone}{$symbol}{"name"}  = $symbol;
+    $id_tables{$histone}{$symbol}{"name"} .= " $MyVar::pseudo_mark" if $$gene{'pseudo'};
+    $id_tables{$histone}{$symbol}{"uid"}   = $$gene{'gene UID'};
   }
-
-  ## to create a hash specific for each gene
-#  $canon{$cluster}{$symbol}{'start'} = $$gene{'chromosome start coordinates'};
+  my $accession .= MyLib::latex_string ($$gene{"transcript accession"} || "n/a");
+     $accession .= " & ";
+     $accession .= MyLib::latex_string ($$gene{"protein accession"} || "n/a");
+  push (@{$id_tables{$histone}{$symbol}{"accessions"}}, $accession);
 }
 
-## for each histone, one table with corresponding IDs
-foreach my $histone (@MyVar::histones) {
+
+## Make a LaTeX table with all canonical histones (one per type)
+foreach my $histone (keys %id_tables) {
   my $ids_path = File::Spec->catdir($path{results}, "table-$histone-ids.tex");
   open (my $table, ">", $ids_path) or die "Could not open $ids_path for writing: $!";
-  say $table MyLib::latex_table ("start", " l | l | l | l ");
-  say $table MyLib::latex_table ("header", "Gene name", "Gene UID", "Transcript accession", "Protein accession");
-  foreach my $gene (sort keys %{$id_tables{$histone}}) {
-    say $table MyLib::latex_table ("row", @{$id_tables{$histone}{$gene}});
+
+  say {$table} "\\begin{ctabular}{l l l l}";
+  say {$table} "  \\toprule";
+  say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+  say {$table} "  \\midrule";
+  foreach my $symbol (sort keys %{$id_tables{$histone}}) {
+    print {$table} "  $id_tables{$histone}{$symbol}{'name'} & $id_tables{$histone}{$symbol}{'uid'} &";
+    foreach (sort @{$id_tables{$histone}{$symbol}{'accessions'}}) {
+      print {$table} " $_ \\\\\n"
+    }
   }
-  say $table MyLib::latex_table ("end");
-  close $table or warn "Could not close $ids_path: $!";
+  say {$table} "  \\bottomrule";
+  say {$table} "\\end{ctabular}";
+  close($table) or die "Couldn't close $ids_path after writing: $!";
 }
 
+## Calculate:
+##    * start and end coordinates of each cluster
+##    * length of each cluster
 for (keys %canon) {
+  $canon{$_}{"start"} = List::Util::min (@{$canon{$_}{"coordinates"}});
+  $canon{$_}{"end"}   = List::Util::max (@{$canon{$_}{"coordinates"}});
   my $length  = abs ($canon{$_}{'start'} - $canon{$_}{'end'});
   $canon{$_}{'length'} = MyLib::pretty_length($length);
-  say "$_ $canon{$_}{'length'}";
-  say "Pseudo genes on $_ are $canon{$_}{'pseudo'}";
-  say "Coding genes on $_ are $canon{$_}{'coding'}";
 }
 
 ### write to results file
@@ -141,4 +141,3 @@ for (keys %canon) {
 #my $number = $cluster =~ m/(\d*)$/;
 #$nn =~ s/^(\w)/\U$1/g;
 #say $nn;
-
