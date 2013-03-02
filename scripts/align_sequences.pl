@@ -197,17 +197,17 @@ foreach my $histone (keys %aligned) {
   (my $common_seq = $common) =~ s/-//g;
 
   my $filepath = File::Spec->catdir($path{results}, "table-$histone-align.tex");
-  open (my $table, ">", $filepath) or die "Couldn't open $filepath for writing: $!\n";
+  open (my $table, ">", $filepath) or die "Couldn't open $filepath for writing: $!";
 
-  print {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}\n";
-  print {$table} "  \\toprule\n";
-  print {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
-                  length ($common_seq) .
-                  " amino acids" .
-                  most_common_str ($histone, @{$seqs{$common}}) .
-                  ")}\\\\\n";
-  print {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$common_seq}}} \\\\\n";
-  print {$table} "  \\midrule \\\\\n";
+  say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
+  say {$table} "  \\toprule";
+  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
+                length ($common_seq) .
+                " amino acids" .
+                most_common_str ($histone, @{$seqs{$common}}) .
+                ")}\\\\";
+  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$common_seq}}} \\\\";
+  say {$table} "  \\midrule \\\\";
 
   ## write the variance description for each sequence
   my %muts;
@@ -218,12 +218,12 @@ foreach my $histone (keys %aligned) {
     $muts{$_} = $str foreach (@{$seqs{$sequence}});
   }
   foreach (sort keys %muts) {
-    print {$table} "  $_ & $muts{$_} \\\\\n";
+    say {$table} "  $_ & $muts{$_} \\\\";
   }
 
   ## close table
-  print {$table} "  \\bottomrule\n";
-  print {$table} "\\end{tabular}";
+  say {$table} "  \\bottomrule";
+  say {$table} "\\end{tabular}";
   close($table) or die "Couldn't close $filepath after writing: $!";
 }
 
