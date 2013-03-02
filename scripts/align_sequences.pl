@@ -207,7 +207,7 @@ foreach my $histone (keys %aligned) {
                 most_common_str ($histone, @{$seqs{$common}}) .
                 ")}\\\\";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$common_seq}}} \\\\";
-  say {$table} "  \\midrule \\\\";
+  say {$table} "  \\midrule";
 
   ## write the variance description for each sequence
   my %muts;
