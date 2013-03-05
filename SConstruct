@@ -97,22 +97,34 @@ data = env.Command(target = os.path.join(data_dir, "data.csv"),
                    source = os.path.join(scripts_dir, "extract_sequences.pl"),
                    action = "$SOURCE --email %s %s" % (GetOption('email'), data_dir))
 env.Alias("data", data)
-env.AlwaysBuild(data)
 env.Clean(data, data_dir)
 
 
 ## TARGET analysis
 ##
 ## For analysis, each script is its own target. We then set an alias that groups
-## all of them
-align_sequences = env.Command(target = os.path.join(results_dir, "variables-sequences.tex"),
+## all of them. Each of these scripts generate a large number of files, the
+## targets, we need to make lists of them all
+
+align_targets = list()
+clust_targets = list()
+for histone in ["H2A", "H2B", "H3", "H4"]:
+    align_targets.append(os.path.join(results_dir, "aligned_%s.fasta" % histone))
+    align_targets.append(os.path.join(results_dir, "table-%s-align.tex" % histone))
+    align_targets.append(os.path.join(figures_dir, "seqlogo_%s.eps" % histone))
+    clust_targets.append(os.path.join(results_dir, "table-%s-ids.tex" % histone))
+
+clust_targets.append(os.path.join(results_dir, "variables-cluster_stats.tex"))
+
+align_sequences = env.Command(target = align_targets,
                               source = os.path.join(scripts_dir, "align_sequences.pl"),
                               action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
-cluster_stats   = env.Command(target = os.path.join(results_dir, "variables-cluster_stats.tex"),
+cluster_stats   = env.Command(target = clust_targets,
                               source = os.path.join(scripts_dir, "cluster_stats.pl"),
                               action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
 env.Alias("analysis", [align_sequences, cluster_stats])
-
+env.Depends("analysis", [os.path.join(scripts_dir, "MyLib.pm"),
+                         os.path.join(scripts_dir, "MyVar.pm")]
 
 ## TARGET report and publication
 ##
