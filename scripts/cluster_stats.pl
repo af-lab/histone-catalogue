@@ -109,12 +109,6 @@ foreach my $histone (keys %id_tables) {
   close($table) or die "Couldn't close $ids_path after writing: $!";
 }
 
-## Calculate:
-##    * start and end coordinates of each cluster
-##    * length of each cluster
-for (keys %canon) {
-}
-
 ## Write down results
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
