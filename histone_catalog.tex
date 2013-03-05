@@ -34,6 +34,7 @@
 
 \usepackage{natbib}
 
+\input{results/variables-align_results}
 \input{results/variables-cluster_stats}
 \input{results/variables-proteins}
 \input{data/variables-Marzluff-stats}
@@ -43,6 +44,24 @@
 
 \begin{document}
   \maketitle
+
+  \begin{abstract}
+    The histone proteins are encoded by a large family of genes distributed throughout the
+    genome. This large family is divided into sub-families, one for each histone type, H2A,
+    H2B, H3 and H4. While there are variants of these histones, the canonical histones
+    also display variance within themselves, each encoding \TotalHTwoA{}, \TotalHTwoB{}, \TotalHThree{},
+    and \TotalHFour{} unique protein sequences respectively. This common mistake, leads
+    to people forgetting that this multitude of sequences, some of them special characteristics.
+    
+    Using common tools of software development, we developed a framework capable of generating
+    an up to date report on. All figures and tables, as well as all values displayed on
+    this publication including the abstract, are calculated at ``build'' time. This framework
+    is not limited to the human histones and after finalization, we successfully ``forked'' the
+    project for different organisms, with minimal changes of code. In the same way, we see no
+    reason why it should be limited to histone genes. We reason that the use of mature software
+    development tools, could be used in other quantitative biology.
+
+  \end{abstract}
 
   \section{Introduction}
     %% Complementary introduction on the chromatin organization and how it's dynamic
