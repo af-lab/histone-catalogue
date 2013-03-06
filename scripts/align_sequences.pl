@@ -151,24 +151,35 @@ foreach my $histone (keys %multi_seq) {
   $aligned{$histone}{$pacc2gsym{$_->display_id}} = $_->seq foreach ($align->each_seq);
 }
 
-## Why we did not store the consensus sequence after the alignment, and why Marzluff
-## notation was wrong on the paper.
+## Why we do not get the consensus sequence from the align object, why is it wrong to use
+## the consensus sequence, and what did Marzluff used on the paper then?
 ##
-## Because he was calling `consensus sequence' to `most common isoform sequence'.
 ## A consensus sequence is the most frequent residue at _each_ position, not the most
-## frequent sequence. Compared to the most frequent sequence, some isoforms will have
-## inserts (in our case, specially longer C-terminal). The consensus sequences includes
-## all these inserts since after the alignment, there are no other residues at those
-## locations which makes it the most frequent. If indeed we use the consensus sequence
-## (instead of the most common sequence), we will end up listing "mutation" for all
-## proteins that have inserts or deletions.
+## frequent sequence. So, how should we act with respect to insertions and deletions?
+## The aligned sequences will have "-" (nothing) at such locations, which means that
+## even if only one of the proteins has a residue at a certain location, the consensus
+## sequence will keep it. For example:
 ##
-## SHHK----K
+## SIHK----K
 ## SKHKAKGLK <-- the only that is different
-## SHHK----K
-## SHHK----K
-## SHHK----K
-## SHHKAKGLK <-- consensus sequence (different from all of them)
+## SIHK----K
+## SIHK----K
+## SIHK----K
+##
+## SIHKAKGLK <-- consensus sequence (different from all of them)
+##
+## In this case, the consensus sequence does not actually exist. Even considering the
+## empty positions (-) if it was a residue and count it on the frequency. To work around
+## this cases, programs to define a consensus sequence often have tuning parameters such
+## as threshold. Marzluff's paper, says that the consensus sequence was calculated with
+## the PRETTYBOX program, part of the GCG package http://www.csd.hku.hk/bruhk/gcgdoc/prettybox.html
+## which indeed does have such paremeters. He does not mention what parameteres were used
+## but should be safe to assume he used the default values.
+##
+## Anyway, the consensus can still lead to a new sequence, one that is different from all
+## the sequences used in the alignment and I'm surprised that he did not. What we actually
+## want to use in the tables describing the variants, is the most common sequence, not the
+## consensus.
 
 ## Write down results
 my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex");
