@@ -34,6 +34,11 @@
 
 \usepackage{natbib}
 
+%% to keep a pair of related table and figures, we set a new float and use it
+%%conjunction with the captionof command from capt-of
+\usepackage{capt-of}
+\newfloat{TableAndFigure}{X}{capname}
+
 \input{results/variables-align_results}
 \input{results/variables-cluster_stats}
 \input{results/variables-proteins}
@@ -333,67 +338,56 @@
     never counter when numbering them.
 
     \subsection{H2A}
-      \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
-        \caption{WebLogo of all H2A sequences. The bottom line are the amino acids of H2AFJ whose sequence is different from any of the H2A proteins}
-        \label{fig:h2a-weblogo}
-      \end{figure}
-      \begin{table}
-        \caption{histone H2A protein consensus}
+      \begin{TableAndFigure}
+        \captionof{table}{histone H2A protein consensus}
         \label{tab:H2A-consensus}
-        \centering
         \input{results/table-H2A-align}
-      \end{table}
+
+        \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
+        \captionof{figure}{WebLogo of all H2A sequences. The bottom line are the amino acids
+                           of H2AFJ whose sequence is different from any of the H2A proteins}
+        \label{fig:H2A-weblogo}
+      \end{TableAndFigure}
 
       \todo[inline]{comment on H2AFJ}
 
     \subsection{H2B}
-      \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
-        \caption{WebLogo of all H2B sequences.}
-        \label{fig:h2b-weblogo}
-      \end{figure}
-      \begin{table}
-        \caption{histone H2B protein consensus}
+      \begin{TableAndFigure}
+        \captionof{table}{histone H2B protein consensus}
         \label{tab:H2B-consensus}
-        \centering
         \input{results/table-H2B-align}
-      \end{table}
+
+        \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
+        \captionof{figure}{WebLogo of all H2B sequences.}
+        \label{fig:H2B-weblogo}
+      \end{TableAndFigure}
 
     \subsection{H3}
-      \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
-        \caption{WebLogo of all H3 sequences.}
-        \label{fig:h3-weblogo}
-      \end{figure}
-      \begin{table}
-        \caption{histone H3 protein consensus}
+      \begin{TableAndFigure}
+        \captionof{table}{histone H3 protein consensus}
         \label{tab:H3-consensus}
-        \centering
         \input{results/table-H3-align}
-      \end{table}
+
+        \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
+        \captionof{figure}{WebLogo of all H3 sequences.}
+        \label{fig:H3-weblogo}
+      \end{TableAndFigure}
 
     \subsection{H4}
       %% these should all be the same bu they are not. And there's an H4 in HIST4
       %% which is also present in mouse, which means has been conserved  in evolution
       With the exception of HIST1H4G, all H4 genes seem to encode the same protein. Even HIST4H4 which is the
       only gene on that ``cluster''.
-      \begin{figure}
-        \centering
-        \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
-        \caption{WebLogo of all H4 sequences. The non-conserved amino acids are all from one single gene --- HIST1H4G}
-        \label{fig:h4-weblogo}
-      \end{figure}
-
-      \begin{table}
-        \caption{Count of expected functional histone genes and proteins}
+      \begin{TableAndFigure}
+        \captionof{table}{histone H4 protein consensus}
         \label{tab:H4-consensus}
-        \centering
         \input{results/table-H4-align}
-      \end{table}
+
+        \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
+        \captionof{figure}{WebLogo of all H4 sequences.}
+        \label{fig:H4-weblogo}
+      \end{TableAndFigure}
+
 
   \section{SNP's}
     \todo[inline]{writing is dependent on what is found}
