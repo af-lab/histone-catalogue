@@ -20,8 +20,9 @@ use warnings;                               # replacement for the -w flag, but l
 use Carp;                                   # alternative warn and die for modules
 use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all)
 use POSIX;                                  # Perl interface to IEEE Std 1003.1
-use FindBin;                                # Locate directory of original perl script
+use Bio::SeqIO;                             # Handler for SeqIO formats
 
+use FindBin;                                # Locate directory of original perl script
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
 use MyVar;                                  # Load variables
 
@@ -69,6 +70,17 @@ sub load_canonical {
     push (@canon, $gene);
   }
   return @canon;
+}
+
+## loads a sequence file for protein, returning a Bio::Seq object with the
+## first amino acid cleaved off, as it is typical for histones
+sub load_protein {
+  my ($path, $access) = @_;
+  $path = File::Spec->catdir($path, "proteins", "$access.gb");
+  ## we make no next_seq loop because we know there's only one sequence in those genbank files
+  my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
+  ## we remove the first amino acid since in histones is cleaved off
+  return $seq->trunc(2, $seq->length);
 }
 
 ## turn a distance in base pairs (a positive integer) into a string appropriate

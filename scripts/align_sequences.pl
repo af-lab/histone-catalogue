@@ -20,7 +20,6 @@ use warnings;                   # Replacement for the -w flag, but lexically sco
 use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
 use Getopt::Long;               # Parse program arguments
-use Bio::SeqIO;                 # Handler for SeqIO formats
 use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCoffee
 
 use FindBin;                    # Locate directory of original perl script
@@ -114,11 +113,7 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
   next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
   my $histone = $2;
   $pacc2gsym{$access} = $symbol;
-  my $path = File::Spec->catdir($path{sequences}, "proteins", "$access.gb");
-  ## We make no next_seq loop because we know there's only one sequence in those genbank file
-  my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
-  ## in histones, the first amino-acid, methionine, since it's cleaved off
-  $seq =~ s/^M//i;
+  my $seq = MyLib::load_protein($path{sequences}, $access);
   push (@{$multi_seq{$histone}}, $seq);
 }
 
