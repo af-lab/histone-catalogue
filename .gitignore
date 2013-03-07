@@ -41,5 +41,6 @@ config.log
 ## gedit latex plugin
 *.ini
 
-## do not commit any of the results
+## do not commit any of the results and figures
 results/*
+figs/*
