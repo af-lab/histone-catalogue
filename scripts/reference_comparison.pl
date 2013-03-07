@@ -232,12 +232,12 @@ foreach (@{$reference{coding}}) {
 
 
 my %changes = (
-  current => [], # list of all current genes
-  removed => [], # were removed
-  added   => [], # were added
-  pseudo  => [], # changed to pseudo genes
-  coding  => [], # changed to coding genes
-  changed => [], # sequence has changed
+  current  => [], # list of all current genes
+  removed  => [], # were removed
+  added    => [], # were added
+  pseudo   => [], # changed to pseudo genes
+  coding   => [], # changed to coding genes
+  sequence => [], # sequence has changed
 );
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
@@ -258,7 +258,7 @@ foreach my $gene (@data) {
     my $seq = MyLib::load_protein($path{sequences}, $$gene{'protein accession'});
     if ($seq->seq ne $reference{$symbol}) {
       ## sequence has changed
-      push (@{$changes{changed}}, $symbol);
+      push (@{$changes{sequence}}, $symbol);
     }
   }
 }
@@ -276,25 +276,25 @@ open (my $var_fh, ">", $var_path) or die "Could not open $var_path for writing: 
 
 say {$var_fh} "\\begin{tabular}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}";
 say {$var_fh} "  \\toprule";
-if (scalar (@{$changes{added}})) {
-  say {$var_fh} "  New genes: \\\\";
-  say {$var_fh} join (", ", @{$changes{added}}) . "\\\\";
+
+my %pairs = (
+             "Changed sequences",              => \@{$changes{sequence}},
+             "New genes",                      => \@{$changes{added}},
+             "Removed genes",                  => \@{$changes{removed}},
+             "Now identified as pseudo genes", => \@{$changes{pseudo}},
+             "Now identified as coding genes", => \@{$changes{coding}},
+             );
+
+my $space = 1; # have we left a space yet?
+foreach (keys %pairs) {
+  if (scalar (@{$pairs{$_}})) {
+    say {$var_fh} "  \\addlinespace" unless $space;
+    say {$var_fh} "  $_: \\\\";
+    say {$var_fh} join (", ", @{$pairs{$_}}) . "\\\\";
+    $space = 0;
+  }
 }
-if (scalar (@{$changes{removed}})) {
-  say {$var_fh} "\\addlinespace";
-  say {$var_fh} "  Removed genes: \\\\";
-  say {$var_fh} join (", ", @{$changes{removed}}) . "\\\\";
-}
-if (scalar (@{$changes{pseudo}})) {
-  say {$var_fh} "\\addlinespace";
-  say {$var_fh} "  Now identified as pseudo genes: \\\\";
-  say {$var_fh} join (", ", @{$changes{pseudo}}) . "\\\\";
-}
-if (scalar (@{$changes{coding}})) {
-  say {$var_fh} "\\addlinespace";
-  say {$var_fh} "  Now identified as coding genes: \\\\";
-  say {$var_fh} join (", ", @{$changes{coding}}) . "\\\\";
-}
+
 say {$var_fh} "  \\bottomrule";
 say {$var_fh} "\\end{tabular}";
 
