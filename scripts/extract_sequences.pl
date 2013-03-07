@@ -49,7 +49,7 @@ File::Path::remove_tree($sequences_dir, {verbose => 1});
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
 my $search = '"homo sapiens"[organism] ';
 $search   .= '(';
-$search   .= "$_*[gene name] OR " for (@MyVar::histones);                     # get all variants
+$search   .= "$_*[gene name] OR " for (@MyVar::histones, "H1");               # get all variants
 $search   .= "HIST$_*[gene name] OR " for (1 .. $MyVar::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
 $search   .= 'CENPA[gene name]';                                              # CENP-A name is special
 $search   .= ')';

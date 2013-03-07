@@ -72,6 +72,24 @@ sub load_canonical {
   return @canon;
 }
 
+## load csv but return only the H1 genes
+sub load_H1 {
+  my @data = load_csv (@_);
+  my @h1;
+  foreach my $gene (@data) {
+      my $symbol = $$gene{'gene symbol'};
+      ## skip genes that don't look canonical and get cluster number
+      next unless $symbol =~ m/^HIST\dH1/;
+      ## skip genes without genomic information
+      if ( !$$gene{'chromosome accession'}) {
+        warn ("Gene '$symbol' has no genomic information. Skipping it!");
+        next;
+      }
+    push (@h1, $gene);
+  }
+  return @h1;
+}
+
 ## loads a sequence file for protein, returning a Bio::Seq object with the
 ## first amino acid cleaved off, as it is typical for histones
 sub load_protein {
