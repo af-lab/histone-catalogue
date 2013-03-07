@@ -283,6 +283,7 @@ if ("publication" or "report") in map (str, BUILD_TARGETS):
                          "seqsplit",
                          "eqparbox",
                          "fmtcount",
+                         "capt-of",
                           ]
     for package in required_packages:
         if not conf.CheckLaTeXPackage(package):
