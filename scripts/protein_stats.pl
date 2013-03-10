@@ -54,6 +54,10 @@ sub arg_lys_ratio {
     my $access = $$gene{'protein accession'};
     next unless $access; # skip entries with no protein acession such as pseudogenes
     my $seq = MyLib::load_protein($path{sequences}, $access)->seq;
+    ## we know that some genes will encode proteins with the same sequence. We
+    ## are counting those again on purpose. This gives us the Arg/Lys ratio for
+    ## the proteins being expressed. Of course, we do not know the expression
+    ## levels of each gene so we have to assume they are equal
     $arg++ while $seq =~ m/R/ig;
     $lys++ while $seq =~ m/K/ig;
   }
