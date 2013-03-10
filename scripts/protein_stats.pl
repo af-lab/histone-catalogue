@@ -42,8 +42,8 @@ my $linker_ratio = arg_lys_ratio(MyLib::load_H1 ($path{sequences}));
 
 my $filepath = File::Spec->catdir($path{results}, "variables-protein_stats.tex");
 open (my $fh, ">", $filepath) or die "Could not open $filepath for writing: $!";
-say {$fh} "\\newcommand{\\CoreArgLysRatio}{$core_ratio}";
-say {$fh} "\\newcommand{\\LinkerArgLysRatio}{$linker_ratio}";
+say {$fh} MyLib::latex_newcommand ("CoreArgLysRatio", $core_ratio);
+say {$fh} MyLib::latex_newcommand ("LinkerArgLysRatio", $linker_ratio);
 close($fh) or die "Couldn't close $filepath after writing: $!";
 
 

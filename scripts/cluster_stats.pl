@@ -123,15 +123,13 @@ foreach my $cluster (keys %canon) {
   $canon{$cluster}{'coding'} //= 0;
   $canon{$cluster}{'pseudo'} //= 0;
 
-  ## latex commands can't have numbers so we must replace them by english
-  my $number_en = MyLib::num2en ($cluster);
   ## use SI suffix for length
   my $length = MyLib::pretty_length ($canon{$cluster}{"length"});
 
-  say {$stats} "\\newcommand{\\CodingGenesIn$number_en}{$canon{$cluster}{'total'}}";
-  say {$stats} "\\newcommand{\\PseudoGenesIn$number_en}{$canon{$cluster}{'pseudo'}}";
-  say {$stats} "\\newcommand{\\TotalGenesIn$number_en}{$canon{$cluster}{'coding'}}";
-  say {$stats} "\\newcommand{\\${number_en}Span}{$length}";
+  say {$stats} MyLib::latex_newcommand ("CodingGenesIn$cluster", $canon{$cluster}{'coding'});
+  say {$stats} MyLib::latex_newcommand ("PseudoGenesIn$cluster", $canon{$cluster}{'pseudo'});
+  say {$stats} MyLib::latex_newcommand ("TotalGenesIn$cluster", $canon{$cluster}{'total'});
+  say {$stats} MyLib::latex_newcommand ($cluster."Span", $length);
 }
 
 close ($stats) or die "Couldn't close $stats_path after writing: $!";

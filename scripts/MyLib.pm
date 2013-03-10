@@ -141,6 +141,14 @@ sub latex_string {
   return $fixed;
 }
 
+## gets a string that should be printed to define a new latex command
+sub latex_newcommand {
+  my $command = latex_string (num2en ($_[0]));
+  my $value   = $_[1];
+  return "\\newcommand{\\$command}{$value}";
+}
+
+
 ## Replaces numbers in a string by their english word, and capitalizes the
 ## first character. This is not meant to be correct, there's perl modules for
 ## that (Lingua::EN::Nums2Words, Lingua::EN::Numbers or Number::Spell). We

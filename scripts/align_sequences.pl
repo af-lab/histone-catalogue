@@ -194,8 +194,7 @@ foreach my $histone (keys %aligned) {
       $common = $_;            # most frequent protein sequence thus far
     }
   }
-  my $tex_histone = MyLib::num2en ($histone);
-  say {$var_file} "\\newcommand{\\Total". $tex_histone ."}{". (scalar keys %seqs) ."}";
+  say {$var_file} MyLib::latex_newcommand ("Total$histone" , scalar keys %seqs);
 
   ## Print LaTeX table
 
