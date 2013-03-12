@@ -90,15 +90,23 @@ sub load_H1 {
   return @h1;
 }
 
-## loads a sequence file for protein, returning a Bio::Seq object with the
-## first amino acid cleaved off, as it is typical for histones
-sub load_protein {
-  my ($path, $access) = @_;
-  $path = File::Spec->catdir($path, "proteins", "$access.gb");
-  ## we make no next_seq loop because we know there's only one sequence in those genbank files
+## loads a sequence file returning a Bio::Seq object
+sub load_seq {
+  my ($type, $access, $path) = @_;
+  given ($type) {
+    when (/^gene/)       {$type = "genes";}
+    when (/^transcrip/)  {$type = "transcripts";}
+    when (/^protein/)    {$type = "proteins";}
+  }
+  $path = File::Spec->catdir($path, $type, "$access.gb");
+  ## we make no next_seq loop because we know there's only one sequence in
+  ## those genbank files
   my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
-  ## we remove the first amino acid since in histones is cleaved off
-  return $seq->trunc(2, $seq->length);
+  if ($type eq "protein") {
+    ## we remove the first amino acid since in histones it's cleaved off
+    $seq = $seq->trunc(2, $seq->length);
+  }
+  return $seq;
 }
 
 ## turn a distance in base pairs (a positive integer) into a string appropriate

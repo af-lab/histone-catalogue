@@ -113,7 +113,7 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
   next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
   my $histone = $2;
   $pacc2gsym{$access} = $symbol;
-  my $seq = MyLib::load_protein($path{sequences}, $access);
+  my $seq = MyLib::load_seq("protein", $access, $path{sequences});
   push (@{$multi_seq{$histone}}, $seq);
 }
 

@@ -255,7 +255,7 @@ foreach my $gene (@data) {
     push (@{$changes{coding}}, $symbol);
   } elsif (exists $$gene{'protein accession'} && exists $reference{$symbol}) {
     ## compare the sequence
-    my $seq = MyLib::load_protein($path{sequences}, $$gene{'protein accession'});
+    my $seq = MyLib::load_seq("protein", $$gene{'protein accession'}, $path{sequences});
     if ($seq->seq ne $reference{$symbol}) {
       ## sequence has changed
       push (@{$changes{sequence}}, $symbol);
