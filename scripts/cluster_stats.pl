@@ -69,6 +69,17 @@ foreach my $gene (@data) {
     $canon{$cluster}{$histone}{"coding"}++;
   }
 
+  ## get the locus. It is not possible to get it from genomic coordinates (it should
+  ## be possible to make bp_genbank_ref_extractor do it though) but we can get it
+  ## from the features of the transcript source. Because of that, it only works for
+  ## coding genes
+  if ($$gene{"transcript accession"}) {
+    my  $seq      = MyLib::load_seq("transcript", $$gene{"transcript accession"}, $path{sequences});
+    my ($feature) = $seq->get_SeqFeatures("source");
+    my ($locus)   = $feature->get_tag_values("map");
+    push (@{$canon{$cluster}{'locus'}}, $locus);
+  }
+
   ## it's a pain to create a good data structure here and then open it up again
   ## later. Specially considering there's genes with multiple transcripts,
   ## pseudo-genes, and non-coding transcripts. We could create a nice class for
@@ -85,15 +96,17 @@ foreach my $gene (@data) {
   push (@{$id_tables{$histone}{$symbol}{"accessions"}}, $accession);
 }
 
-## Make a LaTeX table with all canonical histones (one per type)
-foreach my $histone (keys %id_tables) {
-  my $ids_path = File::Spec->catdir($path{results}, "table-$histone-ids.tex");
-  open (my $table, ">", $ids_path) or die "Could not open $ids_path for writing: $!";
+## Make a LaTeX table with all canonical histones
+my $table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
+open (my $table, ">", $table_path) or die "Could not open $table_path for writing: $!";
 
-  say {$table} "\\begin{ctabular}{l l l l}";
-  say {$table} "  \\toprule";
-  say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
-  say {$table} "  \\midrule";
+say {$table} "\\begin{ctabular}{l l l l}";
+say {$table} "  \\toprule";
+say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+say {$table} "  \\midrule";
+foreach my $histone (keys %id_tables) {
+  my $spaced = 1; # have we left a space yet?
+  print {$table} "  \\addlinespace\n" unless $spaced;
   foreach my $symbol (sort keys %{$id_tables{$histone}}) {
     print {$table} "  $id_tables{$histone}{$symbol}{'name'} & $id_tables{$histone}{$symbol}{'uid'} & ";
     ## in case of multiple transcripts and proteins, the first two columns are
@@ -101,35 +114,48 @@ foreach my $histone (keys %id_tables) {
     my @accessions = sort @{$id_tables{$histone}{$symbol}{'accessions'}};
     print {$table} (shift (@accessions)) . " \\\\\n";
     foreach (@accessions) {
-      say {$table} " & & $_ \\\\";
+      say {$table} "      & & $_ \\\\";
     }
   }
-  say {$table} "  \\bottomrule";
-  say {$table} "\\end{ctabular}";
-  close($table) or die "Couldn't close $ids_path after writing: $!";
+  $spaced = 0;
 }
+say {$table} "  \\bottomrule";
+say {$table} "\\end{ctabular}";
+close($table) or die "Couldn't close $table_path after writing: $!";
 
 ## Write down results
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
 
 foreach my $cluster (keys %canon) {
-  $canon{$cluster}{"start"}  = List::Util::min (@{$canon{$cluster}{"coordinates"}});
-  $canon{$cluster}{"end"}    = List::Util::max (@{$canon{$cluster}{"coordinates"}});
-  $canon{$cluster}{"length"} = abs ($canon{$cluster}{'start'} - $canon{$cluster}{'end'});
+  my $coord_start  = List::Util::min (@{$canon{$cluster}{"coordinates"}});
+  my $coord_end    = List::Util::max (@{$canon{$cluster}{"coordinates"}});
+  my $coord_length = MyLib::pretty_length (abs ($coord_start - $coord_end));
+
+  say {$stats} MyLib::latex_newcommand ($cluster."Span", $coord_length);
+
+  ## some genes do not have the locus well defined (will have 1q21 instead of 1q21.2)
+  ## so we filter the ones without enough precision or
+  @{$canon{$cluster}{"locus"}} = grep (m/\./, @{$canon{$cluster}{"locus"}});
+  my $locus_start = List::Util::minstr (@{$canon{$cluster}{"locus"}});
+  my $locus_end   = List::Util::maxstr (@{$canon{$cluster}{"locus"}});
+  my $locus;
+  if ($locus_start eq $locus_end) {
+    $locus = $locus_start;
+  } else {
+    $locus = "$locus_start--$locus_end";
+  }
+  say {$stats} MyLib::latex_newcommand ($cluster."Locus", $locus);
 
   ## because some clusters may not have coding or pseudo genes in which case
   ## these were never initialized
   $canon{$cluster}{'coding'} //= 0;
   $canon{$cluster}{'pseudo'} //= 0;
 
-  ## use SI suffix for length
-  my $length = MyLib::pretty_length ($canon{$cluster}{"length"});
 
   say {$stats} MyLib::latex_newcommand ("CodingGenesIn$cluster", $canon{$cluster}{'coding'});
   say {$stats} MyLib::latex_newcommand ("PseudoGenesIn$cluster", $canon{$cluster}{'pseudo'});
-  say {$stats} MyLib::latex_newcommand ("TotalGenesIn$cluster", $canon{$cluster}{'total'});
-  say {$stats} MyLib::latex_newcommand ($cluster."Span", $length);
+  say {$stats} MyLib::latex_newcommand ("TotalGenesIn$cluster",  $canon{$cluster}{'total'});
 }
 
 close ($stats) or die "Couldn't close $stats_path after writing: $!";

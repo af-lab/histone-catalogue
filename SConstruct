@@ -114,8 +114,8 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
     align_targets.append(os.path.join(results_dir, "aligned_%s.fasta" % histone))
     align_targets.append(os.path.join(results_dir, "table-%s-align.tex" % histone))
     align_targets.append(os.path.join(figures_dir, "seqlogo_%s.eps" % histone))
-    clust_targets.append(os.path.join(results_dir, "table-%s-ids.tex" % histone))
 
+clust_targets.append(os.path.join(results_dir, "table-histone_catalogue.tex"))
 clust_targets.append(os.path.join(results_dir, "variables-cluster_stats.tex"))
 prote_targets.append(os.path.join(results_dir, "variables-protein_stats.tex"))
 compr_targets.append(os.path.join(results_dir, "table-reference_comparison.tex"))
