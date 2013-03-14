@@ -276,8 +276,9 @@
 
       All H1 genes are in HIST1.
 
-      %% FIXME: need to access "Human histone genes are interspersed with members of the Alu
-      %%        family and with other transcribed sequences" (1982) by Sierra, others, and Stein
+      \todo[inline]{need to access ``Human histone genes are interspersed with members
+                    of the Alu family and with other transcribed sequences'' (1982) by
+                    Sierra, others, and Stein}
 
       The location 1q21.1 near HIST2 has been associated with deletion
       \citep{HISTTwo-prone-deletion-discovery}, and since then has been reported to be prone
@@ -302,8 +303,6 @@
       \end{figure*}
 
     \subsection{Histone gene nomenclature}
-      %% explain the current nomenclature for genes and proteins as approved by the HGNC
-
       Histone genes have a specific nomenclature that encodes the cluster number and its
       position relative to the other histones \citep{Marzluff02}. An histone gene
       symbol, HIST1H3B for example, is divided into 3 parts: the cluster (HIST1),
@@ -352,10 +351,20 @@
       identified as an histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
 
     \subsection{Gene promoters}
+      \todo[inline]{We already have the 500 bp upstream of the TSS, check how the seqlogo
+                    looks like. And then fix the annotation of the genes to include these
+                    promoter elements}
+
+      Because histone genes have been so well conserved throughout the evolution, they make
+      excellent models to study computational methods, even for promoters
+      \citep{histone-promoter-modeling}.
 
       HIST1 is actually split into 2 parts, and different promoters have been reported for each
       part \citep{HISTOne-different-transcripts}.
 
+      Automatic analysis of the genome after training with histone genes, identifies
+      several other genes that are involved in the cell replication with points
+      towards a common regulation method. They still lack the stem-loop though.
 
   \section{The transcripts}
 
@@ -378,6 +387,9 @@
 
       RI histone genes have expression dependent on their needs (testis specific, DNA damage, etc).
 
+      mention chicken histone genes, we can remove half of the set, and the other rise in expression to compensate.
+
+
     \subsection{Stem-loop}
       Unlike all the other human genes, RD histone genes lack a poly-A tail for the 3' mRNA processing.
       Instead, they encode a stem-loop followed by a purine-rich Histone Downstream Element (HDE)
@@ -399,15 +411,35 @@
       However, some of the variants do have introns.
 
   \section{The proteins}
-    %% Consensus for each of them, table with their differences (there's at least 1 error on the Marzulff tables)
-    %% table with all gene ids, acession number, official symbols etc
-    While some of the histone genes encode the same protein, this is not always the case. On the case of H4 and H3 \todo{are H3 and H4
-    maybe more important for the nucleosome structure} the number of unique proteins are low, 3 for H3 and 2 for H4. For H2A and H2B
-    this number is much higher.\todo{should I get a table for the number of unique proteins? The more complex table with the mutatinos
-    is more complex but says the same}
+    While some of the histone genes encode the same protein, this is not always the
+    case. On the case of H3 and H4 the number of unique proteins are low, \TotalHThree{}
+    and \TotalHFour{} respectively. For H2A and H2B this number is much higher, \TotalHTwoA{}
+    and \TotalHTwoB{}.
 
-    The numbering of these proteins amino acids also has a catch. The first methionine is cleaved after expression and as such, it is
-    never counter when numbering them.
+    The numbering of these proteins amino acids also has a catch. The first methionine
+    is cleaved after expression and as such, it is never counter when numbering them.
+
+    Most of the PTM are in the histone tails but a few are within the histone fold (H3 T45 for example)
+
+    \subsection{Histone Fold Domain}
+      \todo[inline]{Is histone protein structure too much off topic?}
+
+      All histone proteins have a common motif named the Histone Fold Domain (HFD).
+      It is composed of a long $\alpha$ helix and two loops on its side that fold
+      back two other shorter $\alpha$ helices. This structure allows the histones
+      to dimerize with their pair (H3--H4 and H2A--H2B) and form the histone
+      octamer. The central $\alpha$ helix of each dimer pair fits in the gap between
+      the $\alpha$1 and $\alpha$2 helices crossing the pair $\alpha$2 helix. In
+      addition to these, H3 and H2B display a short $\alpha$N and $\alpha$C helix
+      on their terminals.
+
+      The HFD is common to all histone and shared with other
+      proteins such as the CENP--TWSC and NF--Y complexes. All of these are nuclear
+      proteins that interact with DNA. In the case of NF--Y, these even replace
+      the H2A--H2b histones during active conditions.
+
+      Whether these proteins actually ever happen to duplicate the nucleosome functions...
+
 
     \subsection{H2A}
       \begin{TableAndFigure*}
@@ -508,13 +540,10 @@
 
     and when appropriate we contributed to the upstream projects.
 
-    genes may not change a lot but this a good framework to still study the promotor
+%    genes may not change a lot but this a good framework to still study the promotor
 
 
-
-    %% FIXME
-    %% how can we mention the issue of having been refused certain changes?
-
+    \todo[inline]{some of our proposed annotations and gene status changes were refused}
 
   \section{Reproducible research}
   \label{sec:reproducible}
