@@ -44,3 +44,6 @@ config.log
 ## do not commit any of the results and figures
 results/*
 figs/*
+
+## because Andrew uses Mac...
+.DS_Store
