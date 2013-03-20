@@ -1,0 +1,121 @@
+\section{Introduction}
+  %% Flow of introduction: histones are big part of the chromatin, the building unit.
+  %% Then first division, split by type. When we know the type, we can explain
+  %% nucleosome structure, which leads to core vs linker division. Then more history,
+  %% we found variants. New division of classes, canonical vs variant. Explain the
+  %% mess of variants, with all the names used for each division, and sometimes
+  %% clashing nomenclature. Finalize with what this paper is about.
+
+  Histones are among the most abundant proteins in eukaryotic cells and contribute up
+  to half the mass of chromatin. They define the structure and accessibility of the
+  nucleosome as the fundamental repeating unit of genome organisation around which
+  the DNA is wrapped upon. In addition, the reactive
+  side chains of histones are post-translationally modified as a nexus for signalling
+  and potentially for heritable epigenetics.
+
+  Histones have been studied for many decades as abundant proteins which were readily
+  isolated due to their highly basic chemical character. Successive improvements in
+  fractionation revealed 5 main histone types under a nomenclature as H1, H2A, H2B, H3
+  and H4 \citep{nomenclature}. An additional histone H5 related to H1 is found in
+  nucleus--containing avian erythrocytes and has been of research interest due to its
+  elevated binding stability \citep{HFive-review}.
+  Since the ratio of arginine/lysine is \LinkerArgLysRatio{}
+  for H1 these became known as ``lysine-rich'', whereas the remaining 4 histones with
+  ratios \CoreArgLysRatio{} are ``arginine-rich'' \todo{give ranges of values, by
+  calculating this for each of the histone types}.
+
+  The demonstration of the nucleosome as the fundamental repeating unit of chromatin revealed
+  that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
+  nucleosome core particle, so they are referred to as ``core histones''. H1 and H5
+  associate with the linker DNA between nucleosome core particles and are referred to
+  as ``linker histones''.
+
+  Extracting histones from cells and separating them by polyacrylamide gel electrophoresis
+  (PAGE) using the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral
+  buffers gives single bands for each histone type. However, PAGE with acetic acid in gels
+  containing the non-ionic detergent Triton X--100 and uncharged urea as denaturants
+  (TAU or AUT) allows the separation of histones into multiple species due to both
+  post-translational modifications and variations in sequence within types \citep{PAGEND}.
+
+  There are two recognised classes of histone protein sequence variation as summarised
+  in \tref{tab:typical-histone-differences}. ``Canonical'' histones contribute to the
+  bulk structure and generic function of the nucleosome. They are mainly expressed
+  during S~phase to provide chromatin packaging after after DNA replication,
+  and are referred as ``replication dependent''. In contrast, ``variant'' histones
+  have lower aggregate abundance and show less identity in alignments. They play
+  functionally distinctive roles, are mostly expressed outside S~phase of the cell
+  cycle and are referred as ``replacement'' or ``replication independent'' histones.
+
+  \begin{table*}
+    \caption{General properties of canonical and variant histone proteins.}
+    \label{tab:typical-histone-differences}
+    \centering
+    \begin{tabular}{l l l}
+      \toprule
+      \null                     & Canonical             & Variants \\
+      \midrule
+      Expression timing         & Replication dependent & Replication independent \\
+      Sequence identity         & High                  & Low \\
+      Functional relationships  & Isoforms              & Distinct specialised functions \\
+      Transcript stabilisation  & Stem--loop in 3' UTR  & poly--A tail \\
+      Gene distribution         & Clusters              & Scattered \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+
+  The term ``variant histones'' has come to imply canonical histones are homogeneous
+  and masks their heterogenity. Each variant, such as H2A.Z, H2Abbd, and H3.3,
+  is encoded by a gene, with its own sequence and name,
+  whereas canonicals are encoded by multiple genes with less varying sequence.
+  Because their resulting protein isoforms differ at only a few sites, they are often
+  referred to as ``wild type'' sequences.
+  When their multiple isoforms are not treated as a single protein, they are divided
+  into``sub-types'' such as H2A.1 and H2A.2 but this division has no functional or sequence
+  interpretation. To increase the confusion, sub-types such as H2A.2, are also sometimes incorrectly
+  referred to as ``variants''\addref{}.
+
+  The genes encoding canonical histone isoforms are typically found in clusters in most eukaryotic
+  genomes, possibly for regulatory efficiency and to facilitate their sequence conservation. In
+  contrast, most variant histones are encoded as single genes outside of the histone clusters.
+  This distinction led to yet another distinct name, allelic and non-allelic variants for
+  canonical isoforms and variant histones, respectively\addref{}.
+
+  The canonical and variant classes of histones are also distinguished by their regulation in humans and other
+  metazoans. Like other genes transcribed by RNA polymerase II,  histone variant transcripts
+  are 3' polyadenylated. Canonical histones in higher eukaryotes are among the very few known transcripts
+  that are not polyadenylated, and instead terminate in a highly conserved stem-loop that
+  provides them with an independent basis for regulation of turnover.
+
+  \todo[inline]{discuss in 1-2 sentences for lower eukaryotes. eg fungi.
+                  In general, canonical histone transcripts are not thought to be
+                  polyadenylated except in \textit{S. cerevisiae}.}
+
+  Despite the importance of histones to the organisation of chromatin, and extensive interest
+  in their role in epigenetics and regulation, the curation and classification of human histone
+  gene and protein sequences has not been revisited for a decade \citep{Marzluff02}. In this time
+  the draft human genome has been finalised and rich annotations continue to propagate through
+  gene and protein sequence databases.
+
+  Any equivalent normal approach will also become progressively more outdated from the
+  time of writing. Instead, we have developed...
+
+  We have also scanned the popular RefSeq
+  database to curate and report a number of oversights in untranslated regions, transcripts and
+  classification of pseudo genes. A list of all the changes since \cite{Marzluff02} is 
+  displayed on \tref{tab:difference-from-Marzluff02} \todo{make this a supplementary table}.
+
+  \begin{table*}
+    \caption{Changes between the current status and the last published reference \citep{Marzluff02}.}
+    \label{tab:difference-from-Marzluff02}
+    \centering
+    \input{results/table-reference_comparison}
+  \end{table*}
+
+  In this paper we provide a comprehensive overview of the nomenclature and distribution
+  of canonical and variant histone genes. Furthermore, since curation and annotation are
+  dynamic processes, we have implemented an accompanying resource that automatically generates
+  the tables and figures presented in the submitted manuscript based
+  on the most current data from the NCBI RefSeq database.
+
+  \todo[inline]{We could shadow all the values and tables whose values are generated
+                automatically, so that readers can really an idea of how far this goes}

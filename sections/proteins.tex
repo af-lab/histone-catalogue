@@ -1,0 +1,82 @@
+\section{The proteins}
+  While some of the histone genes encode the same protein, this is not always the
+  case. On the case of H3 and H4 the number of unique proteins are low, \TotalHThree{}
+  and \TotalHFour{} respectively. For H2A and H2B this number is much higher, \TotalHTwoA{}
+  and \TotalHTwoB{}.
+
+  The numbering of these proteins amino acids also has a catch. The first methionine
+  is cleaved after expression and as such, it is never counter when numbering them.
+
+  Most of the PTM are in the histone tails but a few are within the histone fold (H3 T45 for example)
+
+  \subsection{Histone Fold Domain}
+    \todo[inline]{Is histone protein structure too much off topic?}
+
+    All histone proteins have a common motif named the Histone Fold Domain (HFD).
+    It is composed of a long $\alpha$ helix and two loops on its side that fold
+    back two other shorter $\alpha$ helices. This structure allows the histones
+    to dimerize with their pair (H3--H4 and H2A--H2B) and form the histone
+    octamer. The central $\alpha$ helix of each dimer pair fits in the gap between
+    the $\alpha$1 and $\alpha$2 helices crossing the pair $\alpha$2 helix. In
+    addition to these, H3 and H2B display a short $\alpha$N and $\alpha$C helix
+    on their terminals.
+
+    The HFD is common to all histone and shared with other
+    proteins such as the CENP--TWSC and NF--Y complexes. All of these are nuclear
+    proteins that interact with DNA. In the case of NF--Y, these even replace
+    the H2A--H2b histones during active conditions.
+
+    Whether these proteins actually ever happen to duplicate the nucleosome functions...
+
+
+  \subsection{H2A}
+    \begin{TableAndFigure*}
+      \captionof{table}{histone H2A protein consensus}
+      \label{tab:H2A-consensus}
+      \input{results/table-H2A-align}
+
+      \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
+      \captionof{figure}{WebLogo of all H2A sequences. The bottom line are the amino acids
+                         of H2AFJ whose sequence is different from any of the H2A proteins}
+      \label{fig:H2A-weblogo}
+    \end{TableAndFigure*}
+
+    \todo[inline]{comment on H2AFJ}
+
+  \subsection{H2B}
+    \begin{TableAndFigure*}
+      \captionof{table}{histone H2B protein consensus}
+      \label{tab:H2B-consensus}
+      \input{results/table-H2B-align}
+
+      \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
+      \captionof{figure}{WebLogo of all H2B sequences.}
+      \label{fig:H2B-weblogo}
+    \end{TableAndFigure*}
+
+  \subsection{H3}
+    \begin{TableAndFigure*}
+      \captionof{table}{histone H3 protein consensus}
+      \label{tab:H3-consensus}
+      \input{results/table-H3-align}
+
+      \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
+      \captionof{figure}{WebLogo of all H3 sequences.}
+      \label{fig:H3-weblogo}
+    \end{TableAndFigure*}
+
+  \subsection{H4}
+    %% these should all be the same but they are not. And there's an H4 in HIST4
+    %% which is also present in mouse, which means has been conserved  in evolution
+    With the exception of HIST1H4G, all H4 genes seem to encode the same protein. Even HIST4H4 which is the
+    only gene on that ``cluster''.
+    \begin{TableAndFigure*}
+      \captionof{table}{histone H4 protein consensus}
+      \label{tab:H4-consensus}
+      \input{results/table-H4-align}
+
+      \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
+      \captionof{figure}{WebLogo of all H4 sequences.}
+      \label{fig:H4-weblogo}
+    \end{TableAndFigure*}
+

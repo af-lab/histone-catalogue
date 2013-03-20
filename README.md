@@ -19,10 +19,10 @@ of the directories that start with some files will fill up after running scons.
 
 
 * figs/ - figures
-* results/ - data after processing (all generated automatically so should be empty)
+* results/ - data after processing including LaTeX tables
   * results/sequences/ - automatically downloaded sequences
 * scripts/ - directory for scripts that will analyse the data
-* tables/ - LaTeX tables which will be generated automatically
+* sections/ - directory whith the source for the paper
 * histone_catalog.tex - LaTeX source for the paper
 * README.md - this file, in Markdown syntax
 * references.bib - BibTeX database for the references in the paper

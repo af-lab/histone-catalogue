@@ -1,0 +1,170 @@
+\section{Histone genes}
+  %% section flow: we start describing the organization very broadly. Then we actually get a
+  %% clusters subsection, comparing between other organisms, and the distribution of genes
+  %% in each one. Only after this is known, can we explain gene nomenclature.
+
+  The genes encoding canonical histone isoforms are typically found in clusters in most
+  eukaryotic genomes, possibly for regulatory and expression functions and to facilitate
+  sequence conservation. Indeed, histone transcripts require specialized machinery for
+  their processing, which aggregate at the histone cluster locations during S~phase as
+  histone locus bodies (HLB) \citep{human-first-HLB-report, human-HLB-report-GhuleEtAl2008}.
+  These organelles are related to Cajal bodies, from whom they used to be indistinct, and
+  whose division is still disputed \citep{CB-HLB-review}.
+
+  \subsection{Histone gene clusters}
+    In humans, there are 4 histone gene clusters, named histone cluster 1 to 4 (HIST1 to HIST4)
+    by increasing order of their length. The major and secondary histone gene clusters,
+    HIST1 and HIST2 on chromosomes~\HISTOneLocus{} and \HISTTwoLocus{} respectively,
+    contain contiguous high density arrays of histone genes. On the other hand, the minor
+    cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of them, while HIST4
+    on \HISTFourLocus{} can barely be considered a cluster with its single gene
+    (\tref{tab:histone-gene-count}).
+
+    \begin{table*}
+      %% FIXME maybe we should generate the table automatically, instead of
+      %%        generating all this variables. Or we could do the operations
+      %%        in LaTeX with fp package:
+      %%        \FPeval{result}{clip(\var1{}+\var2{})} \result
+      \caption{Count of expected coding and pseudo histone genes.}
+      \label{tab:histone-gene-count}
+      \centering
+      \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
+        \toprule
+        \null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
+                & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
+                & \multicolumn{2}{c}{Total} \\
+        \midrule
+        HIST1   & \HISTOneHTwoACoding{}     & \HISTOneHTwoAPseudo{}
+                & \HISTOneHTwoBCoding{}     & \HISTOneHTwoBPseudo{}
+                & \HISTOneHThreeCoding{}    & \HISTOneHThreePseudo{}
+                & \HISTOneHFourCoding{}     & \HISTOneHFourPseudo{}
+                & \CodingGenesInHISTOne{}   & \PseudoGenesInHISTOne{} \\
+        HIST2   & \HISTTwoHTwoACoding{}     & \HISTTwoHTwoAPseudo{}
+                & \HISTTwoHTwoBCoding{}     & \HISTTwoHTwoBPseudo{}
+                & \HISTTwoHThreeCoding{}    & \HISTTwoHThreePseudo{}
+                & \HISTTwoHFourCoding{}     & \HISTTwoHFourPseudo{}
+                & \CodingGenesInHISTTwo{}   & \PseudoGenesInHISTTwo{} \\
+        HIST3   & \HISTThreeHTwoACoding{}   & \HISTThreeHTwoAPseudo{}
+                & \HISTThreeHTwoBCoding{}   & \HISTThreeHTwoBPseudo{}
+                & \HISTThreeHThreeCoding{}  & \HISTThreeHThreePseudo{}
+                & \HISTThreeHFourCoding{}   & \HISTThreeHFourPseudo{}
+                & \CodingGenesInHISTThree{} & \PseudoGenesInHISTThree{} \\
+        HIST4   & \HISTFourHTwoACoding{}    & \HISTFourHTwoAPseudo{}
+                & \HISTFourHTwoBCoding{}    & \HISTFourHTwoBPseudo{}
+                & \HISTFourHThreeCoding{}   & \HISTFourHThreePseudo{}
+                & \HISTFourHFourCoding{}    & \HISTFourHFourPseudo{}
+                & \CodingGenesInHISTFour{}  & \PseudoGenesInHISTFour{} \\
+        \addlinespace
+        Total   & \TotalCodingHTwoA{}       & \TotalPseudoHTwoA{}
+                & \TotalCodingHTwoB{}       & \TotalPseudoHTwoB{}
+                & \TotalCodingHThree{}      & \TotalPseudoHThree{}
+                & \TotalCodingHFour{}       & \TotalPseudoHFour{} \\
+        \bottomrule
+      \end{tabular}
+    \end{table*}
+
+    HIST1 encodes \CodingGenesInHISTOne{}~functional genes over a span of \HISTOneSpan{}
+    and is the second most gene dense region on the megabase scale of the the
+    genome \citep{MHC-III-analysis}. It is located at the distal end of the major
+    histocompatibility complex (MHC) in the extended class~I region at chromosome 6p21.31
+    \citep{MHC-I-transcript, MHC-complete-sequencing-1999}. Whether the proximity to this
+    highly polymorphic region has any effect on the recombination of HIST1 genes has not
+    been studied yet. However, it has been suggested that proximity to HIST1 suppresses
+    recombinations on HLA-A, a gene from the MHC Class~I region \citep{MHC-repressed-by-HIST}.
+
+    All H1 genes are in HIST1.
+
+    \todo[inline]{need to access ``Human histone genes are interspersed with members
+                  of the Alu family and with other transcribed sequences'' (1982) by
+                  Sierra, others, and Stein}
+
+    The location 1q21.1 near HIST2 has been associated with deletion
+    \citep{HISTTwo-prone-deletion-discovery}, and since then has been reported to be prone
+    to recurrent rearrangement \citep{HISTTwo-prone-deletion-focus}. HIST2 is actually
+    2 sub-clusters. Interestingly, seems that that the one closer to 1q21.1 is the one
+    full of pseudogenes.
+
+    Aside some sub-clustering \fref{fig:cluster-organization}), it appears that
+    there is no apparent organization
+    of the histones genes through the histone clusters, of vertebrates and
+    lower eukaryotes. The clusters of invertebrates however, display tens to hundreds
+    of tandem repeats of units, each with one copy of the five histones. This is the
+    case of sea urchin and drosophila melanogaster. The dispersive organization
+    in vertebrates suggests that histones expression is regulated by close elements
+    \citep{close-regulators}.
+
+    \begin{figure*}
+      \centering
+      \missingfigure{diagram of histones organization on clusters}
+      \caption{Histone gene distribution on the histone clusters}
+      \label{fig:cluster-organization}
+    \end{figure*}
+
+  \subsection{Histone gene nomenclature}
+    Histone genes have a specific nomenclature that encodes the cluster number and its
+    position relative to the other histones \citep{Marzluff02}. An histone gene
+    symbol, HIST1H3B for example, is divided into 3 parts: the cluster (HIST1),
+    the histone type (H3), and its position (B). The position letter is interpreted as
+    its position relative to the other histones of the same type, in the same cluster.
+    Since the start of the cluster is defined as the side closer to the centromere, the
+    example HIST1H3B translates to the second H3 of the histone cluster, the
+    second closest to the centromere (\fref{fig:nomenclature}).
+
+    \begin{figure*}
+      \centering
+      \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
+      %% FIXME need to make this subcaptions
+      \caption{Histone gene nomenclature. a) canonical histone gene encode their position
+               on the genome on their symbol. b) variant histone symbols are disperse through
+               the genome and cannot be placed in relation to the others so their member
+               letters derive from historical reasons.}
+      \label{fig:nomenclature}
+    \end{figure*}
+
+    Two exceptions were made to this rule: 1) A missing position letter on the symbol indicates
+    no other histones of the same type on the cluster. This is the case of HIST3H2A, the
+    single H2A gene in HIST3. 2) There is no human HIST1H2AF. It exists an Hist1h2af mouse
+    histone though, and this exception is likely to have been a compromise to accommodate
+    matching the human symbols to the mouse orthologs, and ease the cross of data between the
+    two model organisms.
+
+    This was the original nomenclature as approved by the HUGO Gene Nomenclature Committee (HGNC)
+    when the human genome was being finalized. However, new histones have since been
+    reported (\tref{tab:difference-from-Marzluff02}) which forced new exceptions on the
+    nomenclature to keep its apparent organization. For example, HIST2H2AA was renamed
+    HIST2H2AA3 and a new HIST2H2AA4 has been added. Formerly, there was no distinction
+    between the symbols of pseudo and coding genes, but new pseudo genes are suffixed with
+    PS\# by order of discovery. But the ``old'' pseudo genes retain their original symbols
+    so the lack of suffix does not indicate a coding protein.
+
+    The symbols for variant histones are much different and simpler. Due to their dispersion
+    through the genome, no attempt was made to encode relative information on their name. In
+    a similar fashion to H2AFX, symbols of histone variants are reduced to their histone type,
+    followed by the letter F (standing for Family), and a set of characters that identified
+    the variant, usually with historical or functional interpretation. For example, H2AFX and
+    H2AFZ are named accordingly to their migration order in acetic acid-urea gels
+    \citep{HTwoA-first-variants}.
+    The only exception to this is the H3 variant CENP--A, since it is also the component A
+    of the CENtromeric Protein, initially reported by \cite{CENPA-first-report} before being
+    identified as an histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
+
+  \subsection{Gene promoters}
+    \todo[inline]{We already have the 500 bp upstream of the TSS, check how the seqlogo
+                  looks like. And then fix the annotation of the genes to include these
+                  promoter elements}
+
+    Because histone genes have been so well conserved throughout the evolution, they make
+    excellent models to study computational methods, even for promoters
+    \citep{histone-promoter-modeling}.
+
+    HIST1 is actually split into 2 parts, and different promoters have been reported for each
+    part \citep{HISTOne-different-transcripts}.
+
+    Automatic analysis of the genome after training with histone genes, identifies
+    several other genes that are involved in the cell replication with points
+    towards a common regulation method. They still lack the stem-loop though.
+
+  \subsection{Introns}
+    Histone genes have no introns on their genes, probably to circumvent the
+    requirement for primary transcript processing when histones must be rapidly
+    produced at S~phase. Some variant histones have introns.

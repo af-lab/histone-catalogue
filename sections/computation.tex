@@ -1,0 +1,40 @@
+\section{Sequence extractor}
+  To obtain the sequences for the alignment, curation, and IDs for the tables, a perl program using the
+  BioPerl modules was written. This program performs a search for genes on entrez, retrieves
+  their sequences from the reference assembly, mRNAs and proteins. The sequences are saved in separate files whose
+  names are either the gene/transcript/protein name or id.
+
+  The program (bp\_genbank\_ref\_extractor) was released under GPLv3 and is distributed with
+  the Bio-EUtilities distribution (part of the BioPerl project) since version 1.73.
+  \todo{actually, it's in the development version, next version might be 1.73 or 2.0 or whatever}
+
+  \todo[inline]{the name bp\_genbank\_ref\_extractor is quite bad. We are still on time to change
+                it for something nicer before the release}
+
+  and when appropriate we contributed to the upstream projects.
+
+%    genes may not change a lot but this a good framework to still study the promotor
+
+
+  \todo[inline]{some of our proposed annotations and gene status changes were refused}
+
+\section{Reproducible research}
+\label{sec:reproducible}
+  While writing this document, we attempted to follow the principles of reproducible research
+  \citep{reproducible-research-bioinformatics, reproducible-research-law}.
+  We are also aware of the continuous development of databases and genetic knowledge. As such,
+  the source code to replicate the tables and figures shown in this document are freely accessible
+  online at \url{https://github.com/af-lab/histone-catalog}. We hope that in the future, it can
+  be used to create up to date information
+  that reflects the current knowledge on the human histone genes.
+
+  The choice of RefSeq through Entrez over HAVANA through Ensembl was mainly based in one reason --- the ease
+  to automate the gene search and retrieve their IDs. Entrez has made available E-utilities with a SOAP interface
+  that is already part of the bioperl project. This allowed us to retrieve the search results very easily.
+  However, the Ensembl search is done by a Lucene server which is not publicly accessible. Setting up our own
+  Lucene instance to provide SOAP services from it was not straightforward for us. The Ensembl perl API is
+  also not part of the bioperl project, needing to be installed separately, and is dependent on a very
+  out of date version of Bioperl, further complicating its installation. All this would make reproducibility
+  of our data a much more difficult process by other researchers.
+
+%    We reason that the use of mature software development tools, could be used in other quantitative biology.
