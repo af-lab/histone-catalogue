@@ -19,8 +19,6 @@ package MyVar;
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use File::Spec;                 # Perform operation on file names
-use FindBin;                    # Locate directory of original perl script
 
 ## histones that we care about (in case one day we start caring about H1)
 our @histones       = qw(H2A H2B H3 H4);

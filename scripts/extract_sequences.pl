@@ -23,24 +23,14 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
-use Getopt::Long;               # Parse program arguments
-use Email::Valid;               # Validate e-mail address
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
+use MyLib;                      # Load functions
 
-## check the e-mail is valid to avoid problems with NCBI
-my $email;
-GetOptions(
-            'email=s'  => sub {
-                                $email = Email::Valid->address($_[1])
-                                  or die "Invalid e-mail adress $_[1]: $Email::Valid::Details";
-                              },
-          ) or die "Error processing options";
-die "No email specified. Use the --email option." unless $email;
-
-my $sequences_dir = $ARGV[0]; # path to save sequences
+my %opts = MyLib::input_check ("email");  # check email to avoid problems with NCBI
+my $seq_dir = $ARGV[0];             # path to save sequences
 
 ## remove old files to avoid problems with previous results
 File::Path::remove_tree($sequences_dir, {verbose => 1});
@@ -55,21 +45,21 @@ $search   .= 'CENPA[gene name]';                                              # 
 $search   .= ')';
 
 ## run sequence extractor
-my @extractor_args = (
-                      '--assembly',     'primary assembly',
-                      '--genes',        'uid',
-                      '--pseudo',
-                      '--non-coding',
-                      '--upstream',     '0',
-                      '--downstream',   '0',
-                      '--transcripts',  'accession',
-                      '--proteins',     'accession',
-                      '--limit',        '300',
-                      '--format',       'genbank',
-                      '--save',         $sequences_dir,
-                      '--save-data',    'csv',
-                      '--email',        $email,
-                      );
-unshift (@extractor_args, $MyVar::seq_extractor);
-push    (@extractor_args, $search);
-system  (@extractor_args) == 0 or die "Running @extractor_args failed: $?";
+my @args = (
+  '--assembly',     'primary assembly',
+  '--genes',        'uid',
+  '--pseudo',
+  '--non-coding',
+  '--upstream',     '0',
+  '--downstream',   '0',
+  '--transcripts',  'accession',
+  '--proteins',     'accession',
+  '--limit',        '300',
+  '--format',       'genbank',
+  '--save',         $seq_dir,
+  '--save-data',    'csv',
+  '--email',        $opts{'email'},
+);
+unshift (@args, $MyVar::seq_extractor);
+push    (@args, $search);
+system  (@args) == 0 or die "Running @args failed: $?";

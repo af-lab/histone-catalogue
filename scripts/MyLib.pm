@@ -17,14 +17,42 @@ package MyLib;
 use 5.010;                                  # use Perl 5.10
 use strict;                                 # enforce some good programming rules
 use warnings;                               # replacement for the -w flag, but lexically scoped
-use Carp;                                   # alternative warn and die for modules
+use File::Spec;                             # Perform operation on file names
 use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all)
 use POSIX;                                  # Perl interface to IEEE Std 1003.1
 use Bio::SeqIO;                             # Handler for SeqIO formats
+use Getopt::Long;                           # Parse program arguments
+use Email::Valid;                           # Validate e-mail address
 
 use FindBin;                                # Locate directory of original perl script
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
 use MyVar;                                  # Load variables
+
+## performs input check. Takes an array with the name of the required options
+sub input_check {
+  my %opts = (
+    "sequences" => "",
+    "figures"   => "",
+    "results"   => "",
+    "email"     => "",
+  );
+  GetOptions (
+    "sequences=s" => \$opts{sequences},
+    "figures=s"   => \$opts{figures},
+    "results=s"   => \$opts{results},
+    "email=s"     => sub {
+      $opts{email} = Email::Valid->address($_[1])
+        or die "Invalid e-mail adress $_[1]: $Email::Valid::Details";
+    },
+  ) or die "Error processing options. Paths must be strings";
+
+  my %args;
+  foreach (@_) {
+    die "No value for $_ specified. Use the --$_ option." unless $opts{$_};
+    $args{$_} = $opts{$_};
+  }
+  return %args;
+}
 
 ## load the gene information from all genes found
 sub load_csv {
@@ -36,56 +64,74 @@ sub load_csv {
                               }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
   open (my $file, "<", $data_path) or die "Could not open $data_path for reading: $!";
 
-  $csv->column_names ($csv->getline ($file));   # read first line and sets it as the column name
-
-  ## note that get_line_hr_all was only implemented on 1.21. If using 1.18, would
-  ## need a while loop and use get_line_hr
-  my $data_ref = $csv->getline_hr_all ($file);  # reads all lines of file into an array of hashes (returns ref to array)
+  $csv->column_names ($csv->getline ($file)); # read first line and sets it as the column name
+  my $data = $csv->getline_hr_all ($file);    # reads all lines of file into an array of hashes (returns ref to array)
   close $file;                                  # close file
-  return @$data_ref;                            # dereference the array and return it
+
+  my %genes;
+  foreach my $entry (@$data) {
+    my $uid = $$entry{'gene UID'};
+    ## skip genes without genomic information
+    if (! $$entry{'chromosome accession'}) {
+      warn ("Gene with UID '$uid' has no genomic information. Skipping it!");
+      next;
+    }
+    ## having a field for UID is not duplicating data because later we will
+    ## use this to make sets of each entry, and won't have access to the key
+    $genes{$uid}{'symbol'}  //= $uid;
+    $genes{$uid}{'symbol'}  //= $$entry{'gene symbol'};
+    $genes{$uid}{'desc'}    //= $$entry{'gene name'};
+    $genes{$uid}{'species'} //= $$entry{'species'};
+    $genes{$uid}{'pseudo'}  //= $$entry{'pseudo'};
+    $genes{$uid}{'ensembl'} //= $$entry{'EnsEMBL ID'};
+    $genes{$uid}{'chr_acc'} //= $$entry{'chromosome accession'};
+    $genes{$uid}{'start'}   //= $$entry{'chromosome start coordinates'};
+    $genes{$uid}{'end'}     //= $$entry{'chromosome stop coordinates'};
+    unless ($genes{$uid}{'pseudo'}) {
+      $genes{$uid}{'transcripts'}{$$entry{'transcript accession'}} = $$entry{'protein accession'};
+      $genes{$uid}{'proteins'   }{$$entry{'protein accession'   }} = $$entry{'transcript accession'};
+    }
+  }
+  return %genes;
 }
 
 ## rather than load information from all genes found and extracted, get only
 ## the canonical histones
 sub load_canonical {
-  my @data = load_csv (@_);
+  my %genes = load_csv (@_);
   my @canon;
-  foreach my $gene (@data) {
-      my $symbol = $$gene{'gene symbol'};
+  foreach my $uid (keys %genes) {
+    my $symbol = $genes{$uid}{'symbol'};
 
-      ## skip genes that don't look canonical and get cluster number
-      next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
+    ## skip genes that don't look canonical and get cluster number
+    next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
 
-      ## warn if a gene is found whose nomeclature mentions an unknown cluster
-      if ($1 > $MyVar::cluster_number) {
-        warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
-      }
+    $genes{$uid}{'cluster'} = $1;
+    $genes{$uid}{'histone'} = $2;
 
-      ## skip genes without genomic information
-      if ( !$$gene{'chromosome accession'}) {
-        warn ("Gene '$symbol' has no genomic information. Skipping it!");
-        next;
-      }
-
-    push (@canon, $gene);
+    ## warn if a gene is found whose nomeclature mentions an unknown cluster
+    if ($genes{$uid}{'cluster'} > $MyVar::cluster_number) {
+      warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
+    }
+    push (@canon, \$genes{$uid});
   }
   return @canon;
 }
 
 ## load csv but return only the H1 genes
 sub load_H1 {
-  my @data = load_csv (@_);
+  my %genes = load_csv (@_);
   my @h1;
-  foreach my $gene (@data) {
-      my $symbol = $$gene{'gene symbol'};
-      ## skip genes that don't look canonical and get cluster number
-      next unless $symbol =~ m/^HIST\dH1/;
-      ## skip genes without genomic information
-      if ( !$$gene{'chromosome accession'}) {
-        warn ("Gene '$symbol' has no genomic information. Skipping it!");
-        next;
-      }
-    push (@h1, $gene);
+  foreach my $uid (keys %genes) {
+    my $symbol = $genes{$uid}{'symbol'};
+
+    next unless $symbol =~ m/^HIST\dH1/;
+    ## skip genes without genomic information
+    if (! $genes{$uid}{'chr_acc'}) {
+      warn ("Gene '$symbol' has no genomic information. Skipping it!");
+      next;
+    }
+    push (@h1, \$genes{$uid});
   }
   return @h1;
 }
@@ -114,7 +160,7 @@ sub load_seq {
 ## precision is defined in MyVar.pm
 sub pretty_length {
   my $length   = $_[0];
-  ## (ceil() +1 ) because when /3, if it's 3, floor will give 1 when we want 0
+  ## (ceil() -1 ) because when /3, if it's 3, floor will give 1 when we want 0
   my $power    = ( ceil(length($length) / 3) -1) * 3;
   my $dec_case = 0;
   my $number   = sprintf("%1.${dec_case}f", $length / (10 ** $power) );

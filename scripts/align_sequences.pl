@@ -77,19 +77,7 @@ use MyLib;                      # Load functions
 ##    5 - compare each protein to the most common sequence, listing each difference
 ##    6 - make pretty LaTeX table to display it
 
-## Check input options
-my %path = ("sequences" => "",
-            "figures"   => "",
-            "results"   => "");
-GetOptions(
-            "sequences=s" => \$path{sequences},
-            "figures=s"   => \$path{figures},
-            "results=s"   => \$path{results},
-          ) or die "Error processing options. Paths must be strings";
-for (keys %path) {
-  die "No path for $_ specified. Use the --$_ option." unless $path{$_};
-}
-
+my %path = MyLib::input_check ("sequences", "figures", "results");
 
 my @weblogo_params = ("--units",          "probability",
                       "--format",         "eps",
