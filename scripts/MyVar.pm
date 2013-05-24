@@ -31,5 +31,11 @@ our $cluster_number = 4;
 our $size_precision = 2;
 ## LaTeX code to mark genes as pseudo on tables
 our $pseudo_mark    = '($\psi$)';
+## max distance since end of CDS and start of stem-loop
+our $stlp_dist      = 70;
+## length of stem loop
+our $stlp_length    = 16;
+## regexp for stem loop (according to PMID:17531405)
+our $stlp_seq       = 'GG[CT][CT]CTT[CT]T[CTA]AG[GA]GCC';
 
 1; # a package must return true

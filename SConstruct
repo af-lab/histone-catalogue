@@ -110,6 +110,7 @@ align_targets = list()
 clust_targets = list()
 prote_targets = list()
 compr_targets = list()
+check_targets = list()
 for histone in ["H2A", "H2B", "H3", "H4"]:
     align_targets.append(os.path.join(results_dir, "aligned_%s.fasta" % histone))
     align_targets.append(os.path.join(results_dir, "table-%s-align.tex" % histone))
@@ -119,6 +120,7 @@ clust_targets.append(os.path.join(results_dir, "table-histone_catalogue.tex"))
 clust_targets.append(os.path.join(results_dir, "variables-cluster_stats.tex"))
 prote_targets.append(os.path.join(results_dir, "variables-protein_stats.tex"))
 compr_targets.append(os.path.join(results_dir, "table-reference_comparison.tex"))
+
 
 align_sequences = env.Command(target = align_targets,
                               source = os.path.join(scripts_dir, "align_sequences.pl"),
@@ -132,7 +134,11 @@ protein_stats   = env.Command(target = prote_targets,
 compare_ref     = env.Command(target = compr_targets,
                               source = os.path.join(scripts_dir, "reference_comparison.pl"),
                               action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
-env.Alias("analysis", [align_sequences, cluster_stats, protein_stats, compare_ref])
+sanity_checks   = env.Command(target = check_targets,
+                              source = os.path.join(scripts_dir, "histone_sanity_checks.pl"),
+                              action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
+
+env.Alias("analysis", [align_sequences, cluster_stats, protein_stats, compare_ref, sanity_checks])
 env.Depends("analysis", [os.path.join(scripts_dir, "MyLib.pm"),
                          os.path.join(scripts_dir, "MyVar.pm")])
 
