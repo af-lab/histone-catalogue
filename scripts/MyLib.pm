@@ -78,7 +78,7 @@ sub load_csv {
     }
     ## having a field for UID is not duplicating data because later we will
     ## use this to make sets of each entry, and won't have access to the key
-    $genes{$uid}{'symbol'}  //= $uid;
+    $genes{$uid}{'uid'}     //= $uid;
     $genes{$uid}{'symbol'}  //= $$entry{'gene symbol'};
     $genes{$uid}{'desc'}    //= $$entry{'gene name'};
     $genes{$uid}{'species'} //= $$entry{'species'};
@@ -91,6 +91,11 @@ sub load_csv {
       $genes{$uid}{'transcripts'}{$$entry{'transcript accession'}} = $$entry{'protein accession'};
       $genes{$uid}{'proteins'   }{$$entry{'protein accession'   }} = $$entry{'transcript accession'};
     }
+    ## if they are pseudo genes, we create an empty hash. If we don't
+    ## then this would not exist and we'd have to keep cheking if it's
+    ## a pseudo gene
+    $genes{$uid}{'transcripts'} //= {};
+    $genes{$uid}{'proteins'   } //= {};
   }
   return %genes;
 }
@@ -113,7 +118,7 @@ sub load_canonical {
     if ($genes{$uid}{'cluster'} > $MyVar::cluster_number) {
       warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
     }
-    push (@canon, \$genes{$uid});
+    push (@canon, $genes{$uid}); # pushing references to that struct into an array
   }
   return @canon;
 }
@@ -123,15 +128,8 @@ sub load_H1 {
   my %genes = load_csv (@_);
   my @h1;
   foreach my $uid (keys %genes) {
-    my $symbol = $genes{$uid}{'symbol'};
-
-    next unless $symbol =~ m/^HIST\dH1/;
-    ## skip genes without genomic information
-    if (! $genes{$uid}{'chr_acc'}) {
-      warn ("Gene '$symbol' has no genomic information. Skipping it!");
-      next;
-    }
-    push (@h1, \$genes{$uid});
+    next unless $genes{$uid}{'symbol'} =~ m/^HIST\dH1/;
+    push (@h1, $genes{$uid});
   }
   return @h1;
 }
