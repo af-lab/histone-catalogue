@@ -23,17 +23,26 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
+use Email::Valid;               # Check validity of Internet email addresses
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
-my %opts = MyLib::input_check ("email");  # check email to avoid problems with NCBI
-my $seq_dir = $ARGV[0];             # path to save sequences
+## Make sure the email is valid. It is important that the email is correct
+## since this script allows one to abuse (even if by accident), the NCBI
+## servers who may block access. With an email address they will contact
+## the user first.
+my %opts = MyLib::parse_argv ("email");
+$opts{email} = Email::Valid->address($opts{email})
+  or die "Invalid e-mail adress $opts{email}: $Email::Valid::Details";
+
+## Path to save the donwloaded sequences
+my $seq_dir = $ARGV[0];
 
 ## remove old files to avoid problems with previous results
-File::Path::remove_tree($sequences_dir, {verbose => 1});
+File::Path::remove_tree($seq_dir, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
@@ -60,6 +69,5 @@ my @args = (
   '--save-data',    'csv',
   '--email',        $opts{'email'},
 );
-unshift (@args, $MyVar::seq_extractor);
-push    (@args, $search);
-system  (@args) == 0 or die "Running @args failed: $?";
+my @call = ($MyVar::seq_extractor, @args, $search);
+system (@call) == 0 or die "Running @call failed: $?";
