@@ -22,39 +22,67 @@ use Text::CSV 1.21;                         # Comma-separated values manipulator
 use POSIX;                                  # Perl interface to IEEE Std 1003.1
 use Bio::SeqIO;                             # Handler for SeqIO formats
 use Getopt::Long;                           # Parse program arguments
-use Email::Valid;                           # Validate e-mail address
 
 use FindBin;                                # Locate directory of original perl script
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
 use MyVar;                                  # Load variables
 
-## performs input check. Takes an array with the name of the required options
-sub input_check {
-  my %opts = (
-    "sequences" => "",
-    "figures"   => "",
-    "results"   => "",
-    "email"     => "",
-  );
-  GetOptions (
-    "sequences=s" => \$opts{sequences},
-    "figures=s"   => \$opts{figures},
-    "results=s"   => \$opts{results},
-    "email=s"     => sub {
-      $opts{email} = Email::Valid->address($_[1])
-        or die "Invalid e-mail adress $_[1]: $Email::Valid::Details";
-    },
-  ) or die "Error processing options. Paths must be strings";
+## This function will parse the arguments used to call the script. It
+## takes an array with the name of the required options, take them
+## out from the caller $ARGV, and return the leftovers. It
+## will give an error if any of the requested options is missing.
+##
+## NOTE: this function will access and modify @ARGV on the caller.
+sub parse_argv {
+  ## List of all possible options accross all our scripts. Any function
+  ## trying to look for an option not listed here will cause an error.
+  my @possible_opt = qw(sequences figures results email);
 
-  my %args;
-  foreach (@_) {
-    die "No value for $_ specified. Use the --$_ option." unless $opts{$_};
-    $args{$_} = $opts{$_};
+  ## Initialize the hash options for all requested options
+  my %req_opt = map { $_ => "" } @_;
+
+  ## Build the parsing instructions for GetOptions
+  my @parsing;
+  foreach my $opt (@_) {
+    if (! grep {$_ eq $opt} @possible_opt) {
+      die "Unrecognized option to parse $_";
+    }
+    ## We don't bother doing checking of the values. That will be
+    ## up to the caller.
+    push (@parsing, "$opt=s" => \$req_opt{$opt});
   }
-  return %args;
+  GetOptions (@parsing) or die "Error processing options. Paths must be strings";
+
+  ## Make sure we have values for all the requested options
+  foreach (keys (%req_opt)) {
+    if (! $req_opt{$_}) {
+      die "No value for $_ specified. Use the --$_ option.";
+    }
+  }
+  return %req_opt;
 }
 
-## load the gene information from all genes found
+## Load the gene information from all genes found
+## Returns an hash with UID values as keys. Each of the values is an hash ref
+## with the following keys:
+##    uid           -> UID of the gene
+##    symbol        -> official gene symbol (short name)
+##    desc          -> gene description (long name)
+##    species       -> species name
+##    pseudo        -> true if a pseudo gene, false otherwise
+##    ensembl       -> EnsEMBL ID
+##    chr_acc       -> chromosome accession number
+##    start         -> chromosome start coordinates
+##    end           -> chromosome end coordinates
+##    transcripts   -> hash with accession number for transcripts as keys and
+##                     its products (proteins) accession numbers as value.
+##    proteins      -> hash with accession number for proteins as keys and
+##                     its origins (transcripts) accession numbers as value.
+##
+## Why do we return an hash of hash refs rather than some class to identify
+## a gene? Because we don't want to edit its values. We really only want to
+## access the values after reading the file, so anything other than this is
+## overkill.
 sub load_csv {
   my $data_path = File::Spec->catdir($_[0], 'data.csv');
   ## To cover the widest range of parsing options, you will always want to set binary
@@ -101,7 +129,10 @@ sub load_csv {
 }
 
 ## rather than load information from all genes found and extracted, get only
-## the canonical histones
+## the canonical histones. Check load_csv() for the fieldnames. In addition
+## the following two fieldnames are added:
+##    cluster   -> cluster number (only the number. Does NOT include HIST)
+##    histone   -> histone type (H2A, H2B, H3, H4)
 sub load_canonical {
   my %genes = load_csv (@_);
   my @canon;
@@ -134,7 +165,10 @@ sub load_H1 {
   return @h1;
 }
 
-## loads a sequence file returning a Bio::Seq object
+## loads a sequence file returning a Bio::Seq object. First argument
+## must be the type (gene, transcript, or protein), second argument
+## its access number, and third argument the directory where to look
+## for it
 sub load_seq {
   my ($type, $access, $path) = @_;
   given ($type) {
@@ -199,7 +233,6 @@ sub latex_newcommand {
   my $value   = $_[1];
   return "\\newcommand{\\$command}{$value}";
 }
-
 
 ## Replaces numbers in a string by their english word, and capitalizes the
 ## first character. This is not meant to be correct, there's perl modules for
