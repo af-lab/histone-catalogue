@@ -19,7 +19,6 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
-use Getopt::Long;               # Parse program arguments
 use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCoffee
 
 use FindBin;                    # Locate directory of original perl script
@@ -29,7 +28,17 @@ use MyLib;                      # Load functions
 
 ## This script will get the downloaded sequences from all canonical histones, align
 ## them, use the alignment to create a sequence logo and create a LaTeX table with
-## the differences between each histone. Usage is:
+## the differences between each histone.
+##
+## It will create the following files:
+##    * aligned_H2A.fasta (one for each histone)
+##    * seqlogo_H2A.eps (one for each histone)
+##    * table-H2A-align.tex (one per histone, with the differences between
+##      the different histone proteins in tabular form)
+##    * variables-align_results.tex (LaTeX variables for the numbers of unique
+##      histone proteins)
+##
+## Usage is:
 ##
 ## align_sequences --sequences path/for/sequences --results path/for/results --figures path/for/figures
 ##
@@ -69,40 +78,50 @@ use MyLib;                      # Load functions
 ##
 ## Flow of this script:
 ##    1 - read in all protein sequences of all canonical histone, creating a Bio::Seq
-## object for each of them
+##        object for each of them
 ##    2 - multiple sequence alignment for each
 ##    3 - use weblogo to create a sequence logo for each
 ##    4 - modify the sequence logo postscript to leave in dark only the positions
-## where the sequence differs
+##        where the sequence differs
 ##    5 - compare each protein to the most common sequence, listing each difference
 ##    6 - make pretty LaTeX table to display it
 
-my %path = MyLib::input_check ("sequences", "figures", "results");
+my %path = MyLib::parse_argv("sequences", "figures", "results");
 
-my @weblogo_params = ("--units",          "probability",
-                      "--format",         "eps",
-                      "--show-yaxis",     "no",
-                      "--stacks-per-line", 50,
-                      ## bug on weblogo 3.3. We can't set datatype but default is good, as long as we
-                      ## have correct file extension. See http://code.google.com/p/weblogo/issues/detail?id=32
-#                      "--datatype",       "fasta",
-                      "--sequence-type",  "protein",
-                      "--fineprint",      "",   # empty fineprint
-                      "--errorbars",      "no",
-                      "--color-scheme",   "monochrome",);
+my @weblogo_params = (
+  "--units",          "probability",
+  "--format",         "eps",
+  "--show-yaxis",     "no",
+  "--stacks-per-line", 50,
+  ## bug on weblogo 3.3. We can't set datatype but default is good, as long as we
+  ## have correct file extension. See http://code.google.com/p/weblogo/issues/detail?id=32
+#  "--datatype",       "fasta",
+  "--sequence-type",  "protein",
+  "--fineprint",      "",   # empty fineprint
+  "--errorbars",      "no",
+  "--color-scheme",   "monochrome",
+);
 
-my %multi_seq; # an hash of arrays of Bio::Seq objects, one for each histone
-my %pacc2gsym; # maps each protein accession number to a gene symbol
+my %multi_seq; # an hash of arrays of Bio::Seq objects, one for each histone type
+my %pacc2gsym; # a map of each protein accession number to a gene symbol
 
 foreach my $gene (MyLib::load_canonical ($path{sequences})) {
-  my $symbol = $$gene{'gene symbol'};
-  my $access = $$gene{'protein accession'};
+  my $symbol = $$gene{'symbol'};
+
+  ## Get protein accessions
+  my @access = keys $$gene{'proteins'};
+  my $access = $access[0];
+  if (@access > 1) {
+    ## Thank the Flying Spaghetti Monster we are working with canonical histones
+    ## where each gene should have only one transcript and one protein.
+    warn ("Gene $symbol has more than one protein. Will use the first one ($access) only!");
+  }
   next unless $access; # skip entries with no protein acession such as pseudogenes
-  next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
-  my $histone = $2;
+
   $pacc2gsym{$access} = $symbol;
-  my $seq = MyLib::load_seq("protein", $access, $path{sequences});
-  push (@{$multi_seq{$histone}}, $seq);
+  ## Add the protein Bio::Seq to the array of histone proteins of that type
+  push (@{$multi_seq{$$gene{'histone'}}},
+        MyLib::load_seq("protein", $access, $path{sequences}));
 }
 
 ## this works but goes against the documentation. We can't fix the problem upstream because
@@ -110,27 +129,32 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
 ## code? If the later ever happens, we will need to fix ours.
 ## See https://redmine.open-bio.org/issues/3406
 my $tcoffee = Bio::Tools::Run::Alignment::TCoffee->new(
-                                                        'aformat' => 'fasta',
-                                                        'output'  => 'fasta', # do not be fooled by documentation
-                                                        'quiet'   => 1,       # do not be fooled by documentation
-                                                        );
+  'aformat' => 'fasta',
+  'output'  => 'fasta', # do not be fooled by documentation
+  'quiet'   => 1,       # do not be fooled by documentation
+);
 
-my %aligned; # an hash of hashs, of aligned sequences (justs strings)
 
+## Align all sequences with TCoffee, saving the alignment as a fasta file.
+## Then use that file to create a logo (with WebLogo) as an eps file. The
+## aligned sequences are also stored for analysis later.
+
+my %aligned; # an hash of hashs, of aligned sequences (just strings)
 foreach my $histone (keys %multi_seq) {
   my $align_path = File::Spec->catdir($path{results}, "aligned_$histone.fasta");
   my $slogo_path = File::Spec->catdir($path{figures}, "seqlogo_$histone.eps");
   $tcoffee->outfile($align_path);
   my $align = $tcoffee->align(\@{$multi_seq{$histone}});
-  system ('weblogo', @weblogo_params,
-          "--fin",   $align_path,
-          "--fout",  $slogo_path,
-          ) == 0 or die "Call to weblogo failed: $?";
+  system (
+    "weblogo", @weblogo_params,
+    "--fin",   $align_path,
+    "--fout",  $slogo_path,
+  ) == 0 or die "Call to weblogo failed: $?";
   mod_weblogo_eps ($slogo_path);
 
   ## we use display_id to get the accession number. The accession_number method
   ## is not working, and this is likely a bug on the TCoffee method which is not
-  ## crateing the Bio::Seq object properly for the alignment
+  ## creating the Bio::Seq object properly for the alignment.
   $aligned{$histone}{$pacc2gsym{$_->display_id}} = $_->seq foreach ($align->each_seq);
 }
 
@@ -161,7 +185,7 @@ foreach my $histone (keys %multi_seq) {
 ##
 ## Anyway, the consensus can still lead to a new sequence, one that is different from all
 ## the sequences used in the alignment and I'm surprised that he did not. What we actually
-## want to use in the tables describing the variants, is the most common sequence, not the
+## want to use in the tables describing the variants is the most common sequence, not the
 ## consensus.
 
 ## Write down results
@@ -182,7 +206,7 @@ foreach my $histone (keys %aligned) {
       $common = $_;            # most frequent protein sequence thus far
     }
   }
-  say {$var_file} MyLib::latex_newcommand ("Total$histone" , scalar keys %seqs);
+  say {$var_file} MyLib::latex_newcommand ($histone."UniqueProteins" , scalar keys %seqs);
 
   ## Print LaTeX table
 
@@ -195,10 +219,8 @@ foreach my $histone (keys %aligned) {
   say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
   say {$table} "  \\toprule";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
-                length ($common_seq) .
-                " amino acids" .
-                most_common_str ($histone, @{$seqs{$common}}) .
-                ")}\\\\";
+                length ($common_seq) . " amino acids" .
+                most_common_str ($histone, @{$seqs{$common}}) . ")}\\\\";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$common_seq}}} \\\\";
   say {$table} "  \\midrule";
 
@@ -214,7 +236,6 @@ foreach my $histone (keys %aligned) {
     say {$table} "  $_ & $muts{$_} \\\\";
   }
 
-  ## close table
   say {$table} "  \\bottomrule";
   say {$table} "\\end{tabular}";
   close($table) or die "Couldn't close $filepath after writing: $!";
@@ -241,7 +262,7 @@ sub mod_weblogo_eps {
   ## it's time for us to update this.
   ##
   ## FIXME: in the case of amino acids that are only present in some of the proteins, their height
-  ## will be the height of the stack so not in black. We might want to highlight those.
+  ## will be the height of the stack so not in black. We probably should highlight those as well.
 
   open (my $read, "<", $_[0]) or die "Couldn't open $_[0] for reading: $!\n";
   my @weblogo = <$read>;
