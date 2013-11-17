@@ -18,7 +18,6 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
-use Getopt::Long;               # Parse program arguments
 use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
@@ -26,37 +25,34 @@ use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
-## Check input options
-my %path = ("sequences" => "",
-            "figures"   => "",
-            "results"   => "");
-GetOptions(
-            "sequences=s" => \$path{sequences},
-            "figures=s"   => \$path{figures},
-            "results=s"   => \$path{results},
-          ) or die "Error processing options. Paths must be strings";
-for (keys %path) {
-  die "No path for $_ specified. Use the --$_ option." unless $path{$_};
-}
+## This script will calculate stats for each of the histone clusters. It will
+## create the following files:
+##    * table-histone_catalogue.tex (a very long LaTeX table with all canonical
+##      histones, their UIDs, and transcript and protein accession numbers)
+##    * variables-cluster_stats.tex (LaTeX variables with the number of histones
+##      in each cluster, how many are pseudo and coding, the length of each
+##      each cluster, and the location in the genome of each cluster)
+##
+## Usage is:
+##
+## cluster_stats.pl --sequences path/for/sequences --results path/for/results
 
+## Check input options
+my %path = MyLib::parse_argv("sequences", "results");
 
 ## Read the data and create a data structure for the analysis
-my %canon;          # will store the gene info
-my %id_tables;      # will store data for the ID tables
+my %canon;   # organized by cluster, with counts of histones and other info
+my %types;   # histone types as keys for arrays of histones of that type
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
-  my $symbol = $$gene{'gene symbol'};
-
-  my $cluster = $1 if $symbol =~ m/^(HIST\d+)/;
-  die "Unable to identify cluster of $symbol" unless defined $cluster;
-  my $histone = $1 if $symbol =~ m/^${cluster}($MyVar::histone_regexp)/;
-  die "Unable to identify histone type of $symbol" unless defined $histone;
+  my $symbol  = $$gene{'symbol'};
+  my $cluster = $$gene{'cluster'};
+  my $histone = $$gene{'histone'};
+  push (@{$types{$histone}}, $gene);
 
   ## to find the start and end of each cluster, we just list all the start and
   ## end coordinates. At the end, we get the min and max of them.
-  push (@{$canon{$cluster}{"coordinates"}},
-        $$gene{'chromosome start coordinates'},
-        $$gene{'chromosome stop coordinates'});
+  push (@{$canon{$cluster}{"coordinates"}}, $$gene{'start'}, $$gene{'end'});
 
   ## count histones (by cluster, type and coding/pseudo)
   $canon{$cluster}{"total"}++;
@@ -69,34 +65,26 @@ foreach my $gene (@data) {
     $canon{$cluster}{$histone}{"coding"}++;
   }
 
-  ## get the locus. It is not possible to get it from genomic coordinates (it should
-  ## be possible to make bp_genbank_ref_extractor do it though) but we can get it
-  ## from the features of the transcript source. Because of that, it only works for
-  ## coding genes
-  if ($$gene{"transcript accession"}) {
-    my  $seq      = MyLib::load_seq("transcript", $$gene{"transcript accession"}, $path{sequences});
+  ## Get the locus.
+  ## It is not possible to calculate it from the genomic coordinates (but
+  ## should be possible to make bp_genbank_ref_extractor do it). However, we
+  ## can find the value in the features of the transcripts files. Because of
+  ## that, this only works on coding genes.
+  my @transcripts = keys $$gene{"transcripts"};
+  if (@transcripts) {
+    my  $seq      = MyLib::load_seq("transcript", $transcripts[0], $path{sequences});
     my ($feature) = $seq->get_SeqFeatures("source");
     my ($locus)   = $feature->get_tag_values("map");
-    push (@{$canon{$cluster}{'locus'}}, $locus);
+    if ($locus =~ m/[\d]+[qp][\d\.]+/) {
+      push (@{$canon{$cluster}{'locus'}}, $locus);
+    } else {
+      warn ("Could not find locus for $symbol in $transcripts[0]");
+    }
   }
-
-  ## it's a pain to create a good data structure here and then open it up again
-  ## later. Specially considering there's genes with multiple transcripts,
-  ## pseudo-genes, and non-coding transcripts. We could create a nice class for
-  ## it, like we did for bp_genbank_ref_extractor, but that's overkill. Instead,
-  ## we prepare the latex text in advance
-  if (! exists $id_tables{$histone}{$symbol}{"name"}) {
-    $id_tables{$histone}{$symbol}{"name"}  = $symbol;
-    $id_tables{$histone}{$symbol}{"name"} .= " $MyVar::pseudo_mark" if $$gene{'pseudo'};
-    $id_tables{$histone}{$symbol}{"uid"}   = $$gene{'gene UID'};
-  }
-  my $accession .= MyLib::latex_string ($$gene{"transcript accession"} || "n/a");
-     $accession .= " & ";
-     $accession .= MyLib::latex_string ($$gene{"protein accession"} || "n/a");
-  push (@{$id_tables{$histone}{$symbol}{"accessions"}}, $accession);
 }
 
-## Make a LaTeX table with all canonical histones
+## Make a LaTeX table with all of the canonical histones, their gene symbols,
+## UIDs, and protein and transcript accession numbers
 my $table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
 open (my $table, ">", $table_path) or die "Could not open $table_path for writing: $!";
 
@@ -104,58 +92,96 @@ say {$table} "\\begin{ctabular}{l l l l}";
 say {$table} "  \\toprule";
 say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
 say {$table} "  \\midrule";
-foreach my $histone (keys %id_tables) {
-  my $spaced = 1; # have we left a space yet?
-  print {$table} "  \\addlinespace\n" unless $spaced;
-  foreach my $symbol (sort keys %{$id_tables{$histone}}) {
-    print {$table} "  $id_tables{$histone}{$symbol}{'name'} & $id_tables{$histone}{$symbol}{'uid'} & ";
-    ## in case of multiple transcripts and proteins, the first two columns are
-    ## empty for the other rows
-    my @accessions = sort @{$id_tables{$histone}{$symbol}{'accessions'}};
-    print {$table} (shift (@accessions)) . " \\\\\n";
-    foreach (@accessions) {
-      say {$table} "      & & $_ \\\\";
+
+## Sort the histone by types, then sort them by their symbol, then
+## fill in the table
+foreach my $histone (keys %types) {
+  @{$types{$histone}} = sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}};
+  foreach my $gene (@{$types{$histone}}) {
+    print {$table} "  $$gene{'symbol'} & $$gene{'uid'} & ";
+    if ($$gene{'pseudo'}) {
+      print {$table} "n/a & n/a \\\\\n";
+    } else {
+      ## In the case of a gene with multiple transcripts, each will have
+      ## its line on the table but the first two columns will be empty
+      my $first = 1;
+      foreach my $acc (sort keys $$gene{'transcripts'}) {
+        if (! $first) {
+          print {$table} "      & & ";
+        }
+        print {$table} MyLib::latex_string ($acc || "n/a") . " & " .
+                       MyLib::latex_string ($$gene{"transcripts"}{$acc} || "n/a") .
+                       "\\\\\n";
+        $first = 0;
+      }
     }
   }
-  $spaced = 0;
 }
 say {$table} "  \\bottomrule";
 say {$table} "\\end{ctabular}";
 close($table) or die "Couldn't close $table_path after writing: $!";
 
-## Write down results
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
 
-foreach my $cluster (keys %canon) {
-  my $coord_start  = List::Util::min (@{$canon{$cluster}{"coordinates"}});
-  my $coord_end    = List::Util::max (@{$canon{$cluster}{"coordinates"}});
+## Get the counts and stats for each of the clusters
+foreach my $cluster_k (keys %canon) {
+  my $cluster = $canon{$cluster_k};
+  ## Calculate the length (in bp) of each cluster
+  my $coord_start  = List::Util::min (@{$$cluster{'coordinates'}});
+  my $coord_end    = List::Util::max (@{$$cluster{'coordinates'}});
   my $coord_length = MyLib::pretty_length (abs ($coord_start - $coord_end));
+  say {$stats} MyLib::latex_newcommand ($cluster_k."Span", $coord_length);
 
-  say {$stats} MyLib::latex_newcommand ($cluster."Span", $coord_length);
-
-  ## some genes do not have the locus well defined (will have 1q21 instead of 1q21.2)
-  ## so we filter the ones without enough precision or
-  @{$canon{$cluster}{"locus"}} = grep (m/\./, @{$canon{$cluster}{"locus"}});
-  my $locus_start = List::Util::minstr (@{$canon{$cluster}{"locus"}});
-  my $locus_end   = List::Util::maxstr (@{$canon{$cluster}{"locus"}});
-  my $locus;
-  if ($locus_start eq $locus_end) {
-    $locus = $locus_start;
+  ## Get a nice LaTeX string showing the range of locus for each cluster,
+  ## e.g, 6p21.3--6p22.2. The problem is that some locus have less precision
+  ## than others. For example, 1q21 does not mean 1q21.0, it only means
+  ## somewhere in 1q21. While it is tempting to just ignore it, it is not
+  ## correct, we should use the one with lowest precision. Luckily, sorting
+  ## seems to already do that for us. We are left with the problems of
+  ## having some genes in the short and long arm of a chromosome but a cluster
+  ## should not be spanning the two arms.
+  my @locus = @{$$cluster{'locus'}};
+  if (@locus == 0) {
+    warn ("No locus information for cluster $cluster_k.");
   } else {
-    $locus = "$locus_start--$locus_end";
+    my $locus_start = List::Util::minstr (@locus);
+    my $locus_end   = List::Util::maxstr (@locus);
+    my $locus = $locus_start eq $locus_end ?
+                $locus_start : "$locus_start--$locus_end";
+    say {$stats} MyLib::latex_newcommand ($cluster_k."Locus", $locus);
   }
-  say {$stats} MyLib::latex_newcommand ($cluster."Locus", $locus);
 
-  ## because some clusters may not have coding or pseudo genes in which case
-  ## these were never initialized
-  $canon{$cluster}{'coding'} //= 0;
-  $canon{$cluster}{'pseudo'} //= 0;
+  ## Some clusters may not have any coding or pseudo gene in which case
+  ## these values were never initialized.
+  $$cluster{'coding'} //= 0;
+  $$cluster{'pseudo'} //= 0;
 
+  say {$stats} MyLib::latex_newcommand ("CodingIn$cluster_k", $$cluster{'coding'});
+  say {$stats} MyLib::latex_newcommand ("PseudoIn$cluster_k", $$cluster{'pseudo'});
+  say {$stats} MyLib::latex_newcommand ("TotalIn$cluster_k",  $$cluster{'total'});
 
-  say {$stats} MyLib::latex_newcommand ("CodingGenesIn$cluster", $canon{$cluster}{'coding'});
-  say {$stats} MyLib::latex_newcommand ("PseudoGenesIn$cluster", $canon{$cluster}{'pseudo'});
-  say {$stats} MyLib::latex_newcommand ("TotalGenesIn$cluster",  $canon{$cluster}{'total'});
+  foreach my $histone (@MyVar::histones) {
+    $$cluster{$histone}{"pseudo"} //= 0;
+    $$cluster{$histone}{"coding"} //= 0;
+    $$cluster{$histone}{"total"}  //= 0;
+    say {$stats} MyLib::latex_newcommand ($histone."CodingIn$cluster_k", $$cluster{$histone}{'coding'});
+    say {$stats} MyLib::latex_newcommand ($histone."PseudoIn$cluster_k", $$cluster{$histone}{'pseudo'});
+    say {$stats} MyLib::latex_newcommand ($histone."TotalIn$cluster_k",  $$cluster{$histone}{'total'});
+  }
+}
+
+## Get the counts and stats for each of the histone types
+foreach my $histone (@MyVar::histones) {
+  my $coding = 0;
+  my $pseudo = 0;
+  foreach my $cluster(values %canon) {
+    $coding += $$cluster{$histone}{"coding"};
+    $pseudo += $$cluster{$histone}{"pseudo"};
+  }
+  say {$stats} MyLib::latex_newcommand ($histone."Coding", $coding);
+  say {$stats} MyLib::latex_newcommand ($histone."Pseudo", $pseudo);
+  say {$stats} MyLib::latex_newcommand ($histone."Total", $coding + $pseudo);
 }
 
 close ($stats) or die "Couldn't close $stats_path after writing: $!";
