@@ -17,30 +17,54 @@
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
+use POSIX ();                   # We want to use strftime
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyVar;                      # Load variables
 use MyLib;                      # Load functions
 
-## this script performs a list of tests on the sequences, on what we expect
-## from an histone gene, and give warnings about weird things
-my %path = MyLib::input_check ("sequences", "results");
+## This script performs a list of tests on the sequences, on what we expect
+## from an histone gene, and give warnings about weird things. It will write
+## about weird things it finds to:
+##    * sanity_checks.log
+##
+## Usage is:
+##
+## histone_sanity_checks.pl --sequences path/for/sequences --results path/for/log_file
+
+my %path = MyLib::parse_argv ("sequences", "results");
+
+my $log_path = File::Spec->catdir($path{results}, "sanity_checks.log");
+open (my $log, ">", $log_path) or die "Could not open $log_path for writing: $!";
+
+## Get the first line of the extractor log which is the date when the
+## sequences were actually retrieved
+my $data_log_path = File::Spec->catdir($path{sequences}, "extractor.log");
+open (my $data_log, "<", $data_log_path) or die "Could not open $data_log_path for reading: $!";
+chomp (my $data_header = <$data_log>); # read the first line only
+close $data_log;
+
+my $time = POSIX::strftime ("%F %T", localtime $^T);
+say {$log} <<"END_HEADER";
+Running histone_sanity_checks on $time using data from:
+$data_header
+--------------------------------------------------------------------------------
+END_HEADER
 
 my @data = MyLib::load_canonical ($path{sequences});
-
 foreach my $gene (@data) {
   my $symbol = $gene->{'symbol'};
 
   ## check if gene has multiple products
   my $nP = keys ($gene->{'transcripts'});
   if (! $gene->{'pseudo'} && $nP != 1) {
-    say "Gene $symbol has $nP transcripts.";
+    say {$log} "Gene $symbol has $nP transcripts.";
   }
 
   ## check if we have possibly discovered a new cluster
   if ($gene->{'cluster'} > $MyVar::cluster_number) {
-    say "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
+    say {$log} "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
   }
 
   foreach my $acc (keys $gene->{'transcripts'}) {
@@ -60,34 +84,38 @@ foreach my $gene (@data) {
       $cds       = $feat if $tag eq "CDS";
     }
 
-    if ($exon_count != 1) {
-      say "Gene $symbol has $exon_count exons on transcript $acc.";
-    }
-    if ($polyA_tail) {
-      say "Gene $symbol has a polyA signal on transcript $acc.";
-    }
+    ## Canonical histone genes should have only 1 exon
+    say {$log} "Gene $symbol has $exon_count exons on transcript $acc."
+      if ($exon_count != 1);
+    ## Canonical histone genes should not have polyA tails
+    say {$log} "Gene $symbol has a polyA signal on transcript $acc."
+      if ($polyA_tail);
+
+    ## Canonical histone genes should have a stem loop
     if (! $stem_loop) {
-      say "Gene $symbol has no annotated stem-loop on transcript $acc.";
+      say {$log} "Gene $symbol has no annotated stem-loop on transcript $acc.";
       ## it's not annotated, but can we find it somewhere?
       my $str = $seq->seq;
       if ($str =~ m/($MyVar::stlp_seq)/gi) {
         my $start = pos ($str) - length ($1) +1; # start of *last* match
-        say "Gene $symbol has possible stem loop starting at position $start";
+        say {$log} "Gene $symbol has possible stem loop starting at position $start";
       }
+    ## Confirm that the annotated stem-loop is correct
     } else {
       ## the stem-loop is never too far away from the stop codon
       my $dist = $stem_loop->start - $cds->end;
       if ($dist > $MyVar::stlp_dist) {
-        say "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
+        say {$log} "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
       }
       ## has a specific length
       if ($stem_loop->length != $MyVar::stlp_length) {
-        say "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
+        say {$log} "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
       }
       ## and a specific sequence
       if ($stem_loop->seq->seq !~ m/^$MyVar::stlp_seq$/i) {
-        say "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
+        say {$log} "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
       }
     }
   }
 }
+close ($log) or die "Couldn't close $log_path after writing: $!";
