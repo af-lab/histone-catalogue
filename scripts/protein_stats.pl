@@ -61,6 +61,10 @@ sub arg_lys_ratio {
     $arg++ while $seq =~ m/R/ig;
     $lys++ while $seq =~ m/K/ig;
   }
+  if ($arg == 0 || $lys == 0) {
+    die "Found 0 arginine or lysine while calculating arg/lys ratio";
+  }
+
   ## the actual fractions we get will be a bit unwildy (827/977) and can't be
   ## reduced or we would use Math::BigRat->new("$arg/$lys")->bnorm;
   return sprintf ("%.2f", $arg/$lys);
