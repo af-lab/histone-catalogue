@@ -242,7 +242,7 @@ foreach my $histone (keys %multi_seq) {
     ## in a single row could be handy (easy to see the groups) but it would
     ## look horrible. Just image: the first column taking 70% of the table
     ## width because one of the different sequences has 5 gene names on it.
-    say {$table} "  $symbol & $description{$symbol} \\\\";
+    say {$table} "  $symbol & " . MyLib::latex_string ($description{$symbol}) ." \\\\";
   }
 
   say {$table} "  \\bottomrule";
