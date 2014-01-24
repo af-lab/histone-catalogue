@@ -7,9 +7,11 @@ and what it means to its nomenclature.
 
 This paper is generated automatically. The concept is that when the databases
 are updated, this paper updates itself automatically. There is no actual data on
-this repository (data used for the paper version is on a separate branch. See
-below for details), only code that automates the downloading and analysis of
-current data, the generation of figures and tables, and building of a PDF.
+this repository, only the reference data which is used for comparison. All the
+code required to build a recent version of the paper is available as well as
+build instructions which have been set with SCons. There are targets for
+automatic download and analysis of current data, generation of figures and
+tables, and building of a ready-to-publish paper.
 
 Directory structure
 -------------------
@@ -18,6 +20,8 @@ Note that most of the directories *should* be empty before the build. Even some
 of the directories that start with some files will fill up after running scons.
 
 
+* data/ - data that is not automatically generated (data from the Marzluff 2002
+paper which we use as reference for comparison)
 * figs/ - figures
 * results/ - data after processing including LaTeX tables
   * results/sequences/ - automatically downloaded sequences
@@ -45,7 +49,7 @@ Not specifying any target, calling `scons` on its own, is equivalent to
 selecting all of them. That means, if all dependencies are installed, the
 following command will take care of everything:
 
-    scons --email example@domain.com
+    scons --email=example@domain.com
 
 Note than in order to prevent overload of the NCBI servers, a valid email is
 required to connect to the Entrez Gene database using E-utilities. Other

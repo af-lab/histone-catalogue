@@ -83,11 +83,11 @@ TARGETS
 """)
 
 ## Defining paths
-scripts_dir = os.path.join("scripts")
-results_dir = os.path.join("results")
-data_dir    = os.path.join(results_dir, "sequences")
-figures_dir = os.path.join("figs")
-
+scripts_dir   = os.path.join("scripts")
+results_dir   = os.path.join("results")
+data_dir      = os.path.join(results_dir, "sequences")
+figures_dir   = os.path.join("figs")
+reference_dir =  os.path.join("data", "reference-Marzluff_2002")
 
 ## TARGET data
 ##
@@ -116,6 +116,7 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
     align_targets.append(os.path.join(results_dir, "table-%s-align.tex" % histone))
     align_targets.append(os.path.join(figures_dir, "seqlogo_%s.eps" % histone))
 
+align_targets.append(os.path.join(results_dir, "variables-align_results.tex"))
 clust_targets.append(os.path.join(results_dir, "table-histone_catalogue.tex"))
 clust_targets.append(os.path.join(results_dir, "variables-cluster_stats.tex"))
 prote_targets.append(os.path.join(results_dir, "variables-protein_stats.tex"))
@@ -127,13 +128,13 @@ align_sequences = env.Command(target = align_targets,
                               action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
 cluster_stats   = env.Command(target = clust_targets,
                               source = os.path.join(scripts_dir, "cluster_stats.pl"),
-                              action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
+                              action = "$SOURCE --sequences %s -results %s" % (data_dir, results_dir))
 protein_stats   = env.Command(target = prote_targets,
                               source = os.path.join(scripts_dir, "protein_stats.pl"),
                               action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
 compare_ref     = env.Command(target = compr_targets,
                               source = os.path.join(scripts_dir, "reference_comparison.pl"),
-                              action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
+                              action = "$SOURCE --sequences %s --results %s --reference %s" % (data_dir, results_dir, reference_dir))
 sanity_checks   = env.Command(target = check_targets,
                               source = os.path.join(scripts_dir, "histone_sanity_checks.pl"),
                               action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
