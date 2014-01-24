@@ -46,7 +46,7 @@ my %types;   # histone types as keys for arrays of histones of that type
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
   my $symbol  = $$gene{'symbol'};
-  my $cluster = $$gene{'cluster'};
+  my $cluster = "HIST" . $$gene{'cluster'};
   my $histone = $$gene{'histone'};
   push (@{$types{$histone}}, $gene);
 
@@ -157,9 +157,9 @@ foreach my $cluster_k (keys %canon) {
   $$cluster{'coding'} //= 0;
   $$cluster{'pseudo'} //= 0;
 
-  say {$stats} MyLib::latex_newcommand ("CodingIn$cluster_k", $$cluster{'coding'});
-  say {$stats} MyLib::latex_newcommand ("PseudoIn$cluster_k", $$cluster{'pseudo'});
-  say {$stats} MyLib::latex_newcommand ("TotalIn$cluster_k",  $$cluster{'total'});
+  say {$stats} MyLib::latex_newcommand ("CodingGenesIn$cluster_k", $$cluster{'coding'});
+  say {$stats} MyLib::latex_newcommand ("PseudoGenesIn$cluster_k", $$cluster{'pseudo'});
+  say {$stats} MyLib::latex_newcommand ("TotalGenesIn$cluster_k",  $$cluster{'total'});
 
   foreach my $histone (@MyVar::histones) {
     $$cluster{$histone}{"pseudo"} //= 0;
@@ -179,9 +179,9 @@ foreach my $histone (@MyVar::histones) {
     $coding += $$cluster{$histone}{"coding"};
     $pseudo += $$cluster{$histone}{"pseudo"};
   }
-  say {$stats} MyLib::latex_newcommand ($histone."Coding", $coding);
-  say {$stats} MyLib::latex_newcommand ($histone."Pseudo", $pseudo);
-  say {$stats} MyLib::latex_newcommand ($histone."Total", $coding + $pseudo);
+  say {$stats} MyLib::latex_newcommand ($histone."CodingGenes", $coding);
+  say {$stats} MyLib::latex_newcommand ($histone."PseudoGenes", $pseudo);
+  say {$stats} MyLib::latex_newcommand ($histone."TotalGenes", $coding + $pseudo);
 }
 
 close ($stats) or die "Couldn't close $stats_path after writing: $!";
