@@ -52,6 +52,7 @@ $data_header
 --------------------------------------------------------------------------------
 END_HEADER
 
+my $weird = 0;
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
   my $symbol = $gene->{'symbol'};
@@ -60,11 +61,13 @@ foreach my $gene (@data) {
   my $nP = keys ($gene->{'transcripts'});
   if (! $gene->{'pseudo'} && $nP != 1) {
     say {$log} "Gene $symbol has $nP transcripts.";
+    $weird++;
   }
 
   ## check if we have possibly discovered a new cluster
   if ($gene->{'cluster'} > $MyVar::cluster_number) {
     say {$log} "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
+    $weird++;
   }
 
   foreach my $acc (keys $gene->{'transcripts'}) {
@@ -85,15 +88,20 @@ foreach my $gene (@data) {
     }
 
     ## Canonical histone genes should have only 1 exon
-    say {$log} "Gene $symbol has $exon_count exons on transcript $acc."
-      if ($exon_count != 1);
+    if ($exon_count != 1) {
+      say {$log} "Gene $symbol has $exon_count exons on transcript $acc.";
+      $weird++;
+    }
     ## Canonical histone genes should not have polyA tails
-    say {$log} "Gene $symbol has a polyA signal on transcript $acc."
-      if ($polyA_tail);
+    if ($polyA_tail) {
+      say {$log} "Gene $symbol has a polyA signal on transcript $acc."
+      $weird++;
+    }
 
     ## Canonical histone genes should have a stem loop
     if (! $stem_loop) {
       say {$log} "Gene $symbol has no annotated stem-loop on transcript $acc.";
+      $weird++;
       ## it's not annotated, but can we find it somewhere?
       my $str = $seq->seq;
       if ($str =~ m/($MyVar::stlp_seq)/gi) {
@@ -106,16 +114,21 @@ foreach my $gene (@data) {
       my $dist = $stem_loop->start - $cds->end;
       if ($dist > $MyVar::stlp_dist) {
         say {$log} "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
+        $weird++;
       }
       ## has a specific length
       if ($stem_loop->length != $MyVar::stlp_length) {
         say {$log} "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
+        $weird++;
       }
       ## and a specific sequence
       if ($stem_loop->seq->seq !~ m/^$MyVar::stlp_seq$/i) {
         say {$log} "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
+        $weird++;
       }
     }
   }
 }
 close ($log) or die "Couldn't close $log_path after writing: $!";
+say ("Check the histone sanity log, I found $weird things.");
+
