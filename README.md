@@ -36,13 +36,12 @@ Building instructions
 ---------------------
 
 By default, SCons will download new data from the Entrez Gene database, analyse
-it, and prepare PDF's of both the short report and published paper. Each of
+it, and prepare a ready to publish PDF of the paper. Each of
 these is a different target and SCons can be used to process only part of them.
 The different target names are:
 
     data        - download new data (requires email)
     analysis    - analyse data
-    report      - prepare PDF of short report of the analysis
     publication - prepare PDF of the published paper
 
 Not specifying any target, calling `scons` on its own, is equivalent to

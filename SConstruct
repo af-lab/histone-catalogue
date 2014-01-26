@@ -70,11 +70,7 @@ TARGETS
         Run all the scripts to analyse the data such as: sequence alignments,
         search for anomalies on the sequence annotations, LaTeX tables listing
         all genes and proteins, sequence differences between isoforms. The
-        analysis results are required for the report and publication.
-    
-    report
-    
-        Build short PDF with the tables and figures generated from analysis.
+        analysis results are required for the publication.
     
     publication
     
@@ -87,7 +83,7 @@ scripts_dir   = os.path.join("scripts")
 results_dir   = os.path.join("results")
 data_dir      = os.path.join(results_dir, "sequences")
 figures_dir   = os.path.join("figs")
-reference_dir =  os.path.join("data", "reference-Marzluff_2002")
+reference_dir = os.path.join("data", "reference-Marzluff_2002")
 
 ## TARGET data
 ##
@@ -139,24 +135,21 @@ sanity_checks   = env.Command(target = check_targets,
                               source = os.path.join(scripts_dir, "histone_sanity_checks.pl"),
                               action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
 
-env.Alias("analysis", [align_sequences, cluster_stats, protein_stats, compare_ref, sanity_checks])
-env.Depends("analysis", [os.path.join(scripts_dir, "MyLib.pm"),
-                         os.path.join(scripts_dir, "MyVar.pm")])
+analysis = [align_sequences, cluster_stats, protein_stats, compare_ref, sanity_checks]
+env.Alias("analysis", analysis)
+env.Depends(analysis, [data,
+                       os.path.join(scripts_dir, "MyLib.pm"),
+                       os.path.join(scripts_dir, "MyVar.pm")])
 
-## TARGET report and publication
+## TARGET publication
 ##
 ## Both are dependent on the figures being converted into PDF.
 figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
 
-report = env.PDF(target = "report.pdf",
-                 source = "report.tex")
-env.Alias("report", report)
-Depends(report, figures)
-
 publication = env.PDF(target = "histone_catalog.pdf",
                       source = "histone_catalog.tex")
 env.Alias("publication", publication)
-Depends(publication, figures)
+Depends(publication, [figures, analysis])
 
 
 ## Build configuration (check if everything is installed)
@@ -239,7 +232,7 @@ DEPENDENCIES
               * Bio::Tools::Run::Alignment::TCoffee
               * Text::CSV
     
-    for REPORT and PUBLICATION
+    for PUBLICATION
         * LaTeX document class memoir
         * the following LaTeX packages:
               * url
@@ -280,7 +273,7 @@ if "analysis" in map (str, BUILD_TARGETS):
             print "Unable to find perl module %s." % module
             Exit(1)
 
-if ("publication" or "report") in map (str, BUILD_TARGETS):
+if ("publication") in map (str, BUILD_TARGETS):
     if not conf.CheckLaTeXClass("memoir"):
         print "Unable to find the LaTeX document class memoir."
         Exit(1)
