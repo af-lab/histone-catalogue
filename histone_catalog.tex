@@ -97,13 +97,23 @@
   \bibliographystyle{plainnat}
   \bibliography{references}
 
+  %% Supplementary tables and figures
+  \onecolumn
+
+  \newpage
+  \captionof{table}{Changes between the current status and the last published reference \citep{Marzluff02}.}
+  \label{tab:difference-from-Marzluff02}
+  \input{results/table-reference_comparison}
+
   %% this is a very long table (ctabular) that does not play nice with two columns
   %% so we place it at the end. See why it was a problem at
   %% http://tex.stackexchange.com/questions/101791/float-a-wide-ctabular-in-two-columns
   %% We could split the table in two parts in which case we could use begin{table*}
-  \onecolumn
+  \newpage
   \captionof{table}{Human canonical histone genes, transcripts and protein}
   \label{tab:histone-catalogue}
   \input{results/table-histone_catalogue}
+
+
 
 \end{document}

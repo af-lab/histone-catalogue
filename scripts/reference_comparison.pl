@@ -102,7 +102,7 @@ foreach (keys %pairs) {
   if (@{$pairs{$_}}) {
     say {$tab_fh} "  \\addlinespace" unless $space;
     say {$tab_fh} "  $_: \\\\";
-    say {$tab_fh} "  " . join (", ", @{$pairs{$_}}) . "\\\\";
+    say {$tab_fh} "  " . join (", ", sort (@{$pairs{$_}})) . "\\\\";
     $space = 0;
   } else {
     $space = 1;
