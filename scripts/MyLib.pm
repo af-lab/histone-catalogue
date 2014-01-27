@@ -187,37 +187,6 @@ sub load_seq {
   return $seq;
 }
 
-## turn a distance in base pairs (a positive integer) into a string appropriate
-## for text (in LaTeX format), e.g. 1000000 -> 1\,Mbp; 1540 -> 1.54\,kbp (the
-## precision is defined in MyVar.pm
-sub pretty_length {
-  my $length   = $_[0];
-  ## (ceil() -1 ) because when /3, if it's 3, floor will give 1 when we want 0
-  my $power    = ( ceil(length($length) / 3) -1) * 3;
-  my $dec_case = 0;
-  my $number   = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
-  if ( length($length) < $MyVar::size_precision) {
-    ## nothing, no decimal cases at all in these cases
-  } elsif (length($number) < $MyVar::size_precision) {
-    my $dec_case = $MyVar::size_precision - length ($number);
-    $number      = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
-  }
-  my $prefix;
-  given ($power) {
-    when  (0) { $prefix = ''  }
-    when  (3) { $prefix = 'k' }
-    when  (6) { $prefix = 'M' }
-    when  (9) { $prefix = 'G' }
-    when (12) { $prefix = 'T' }
-    when (15) { $prefix = 'P' }
-    when (18) { $prefix = 'E' }
-    when (21) { $prefix = 'Z' }
-    when (24) { $prefix = 'Y' }
-    default   { $power -= 24; $prefix = "e+${power}Y" }
-  }
-  return "$number\\,${prefix}bp";
-}
-
 ## escape necessary characters for latex (we will have really basic needs,
 ## probably only the underscore)
 sub latex_string {

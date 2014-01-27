@@ -19,6 +19,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use List::Util;                 # Includes min and max
+use Number::Format;             # pretty format of long numbers with SI prefix and precision
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -125,12 +126,16 @@ my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
 
 ## Get the counts and stats for each of the clusters
+my $formatter = Number::Format->new(-decimal_digits => $MyVar::size_precision);
 foreach my $cluster_k (keys %canon) {
   my $cluster = $canon{$cluster_k};
   ## Calculate the length (in bp) of each cluster
   my $coord_start  = List::Util::min (@{$$cluster{'coordinates'}});
   my $coord_end    = List::Util::max (@{$$cluster{'coordinates'}});
-  my $coord_length = MyLib::pretty_length (abs ($coord_start - $coord_end));
+
+  my $coord_length = $formatter->format_bytes (abs ($coord_start - $coord_end),
+    base => 1000
+  ) . "bp";
   say {$stats} MyLib::latex_newcommand ($cluster_k."Span", $coord_length);
 
   ## Get a nice LaTeX string showing the range of locus for each cluster,
