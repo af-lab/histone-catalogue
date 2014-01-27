@@ -150,6 +150,10 @@ foreach my $histone (keys %multi_seq) {
   my $slogo_path = File::Spec->catdir($path{figures}, "seqlogo_$histone.eps");
   $tcoffee->outfile($align_path);
   my $align = $tcoffee->align(\@{$multi_seq{$histone}});
+
+  say {$var_file} MyLib::latex_newcommand ($histone."PID" ,
+     sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
+
   system (
     "weblogo", @weblogo_params,
     "--fin",   $align_path,
