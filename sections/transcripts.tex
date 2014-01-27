@@ -9,13 +9,19 @@
   histones is the stem-loop, a specialized mRNA secondary.
 
   \subsection{Stem-loop}
-    The stem-loop is encoded shortly after the stop codon, between xxx and yyy base
-    pairs, much earlier than the typical polyadenylation signal. The stem-loop sequence
-    has been extremely well conserved throughout evolution but it appears that the
+    The stem-loop is encoded shortly after the stop codon, between \StemLoopStart{} and
+    \StemLoopStart{} base pairs after the stop codon, much earlier than the typical
+    polyadenylation signal. The stem-loop sequence has been extremely well conserved
+    throughout evolution (\fref{fig:stem-loop-seqlogo}) but it appears that the
     sequence itself is not so important for its function as its actual structure
     \citep{stem-loop-structure}.
 
-    \missingfigure{consensus of human stem-loop.}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth]{seqlogo_stem_loops.pdf}
+      \captionof{figure}{seqlogo of human stem-loop}
+      \label{fig:stem-loop-seqlogo}
+    \end{figure}
 
     The stem-loop is followed by a purine-rich Histone Downstream Element (HDE)
     downstream of the stop codon. The stem-loop interacts with the Stem-Loop
