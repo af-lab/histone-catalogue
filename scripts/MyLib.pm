@@ -173,7 +173,7 @@ sub load_seq {
   my ($type, $access, $path) = @_;
   given ($type) {
     when (/^gene/)       {$type = "genes";}
-    when (/^transcrip/)  {$type = "transcripts";}
+    when (/^transcript/) {$type = "transcripts";}
     when (/^protein/)    {$type = "proteins";}
   }
   $path = File::Spec->catdir($path, $type, "$access.gb");

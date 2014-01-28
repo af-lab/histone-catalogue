@@ -18,6 +18,7 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
+use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -36,13 +37,27 @@ my %path = MyLib::parse_argv ("sequences", "results");
 my $stats_path = File::Spec->catdir($path{results}, "variables-protein_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
 
-my @data = MyLib::load_canonical ($path{sequences});
+my @core = grep {! $$_{'pseudo'}} MyLib::load_canonical ($path{sequences});
 
 ## Measure the arginine by lysine ratio in both the core and linker histones
-my $core_ratio   = arg_lys_ratio(@data);
+my $core_ratio   = arg_lys_ratio(@core);
 my $linker_ratio = arg_lys_ratio(MyLib::load_H1 ($path{sequences}));
 say {$stats} MyLib::latex_newcommand ("CoreArgLysRatio", $core_ratio);
 say {$stats} MyLib::latex_newcommand ("LinkerArgLysRatio", $linker_ratio);
+
+my @core_ratios;    ## to calculate range of values in the core
+my %seqs;           ## and the ratio for each histone type
+foreach my $gene (@core) {
+  push (@core_ratios, arg_lys_ratio($gene));
+  push (@{$seqs{$$gene{'histone'}}}, $gene);
+}
+
+say {$stats} MyLib::latex_newcommand ("MinCoreArgLysRatio", List::Util::min (@core_ratios));
+say {$stats} MyLib::latex_newcommand ("MaxCoreArgLysRatio", List::Util::max (@core_ratios));
+foreach my $histone (keys %seqs) {
+  my $hist_ratio = arg_lys_ratio (@{$seqs{$histone}});
+  say {$stats} MyLib::latex_newcommand ("${histone}ArgLysRatio", $hist_ratio);
+}
 
 close($stats) or die "Couldn't close $stats_path after writing: $!";
 
