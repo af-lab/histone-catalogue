@@ -13,6 +13,15 @@ build instructions which have been set with SCons. There are targets for
 automatic download and analysis of current data, generation of figures and
 tables, and building of a ready-to-publish paper.
 
+Patches are welcome
+-------------------
+
+Please send us improvements to our text and code. We see this as a live
+publication, both data, analysis, and text should change with time. And if
+changes belong to upstream projects, so be it. Please give it back to the
+community.
+
+
 Directory structure
 -------------------
 
