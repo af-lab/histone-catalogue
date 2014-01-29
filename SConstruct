@@ -294,8 +294,8 @@ if ("publication") in map (str, BUILD_TARGETS):
                          "palatino",
                          "seqsplit",
                          "eqparbox",
-                         "fmtcount",
                          "capt-of",
+                         "hyperref",
                           ]
     for package in required_packages:
         if not conf.CheckLaTeXPackage(package):
