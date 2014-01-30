@@ -106,7 +106,27 @@ foreach my $gene (@data) {
       my $str = $seq->seq;
       if ($str =~ m/($MyVar::stlp_seq)/gi) {
         my $start = pos ($str) - length ($1) +1; # start of *last* match
-        say {$log} "Gene $symbol has possible stem loop starting at position $start";
+        say {$log} "Gene $symbol has possible stem loop starting at position $start of $acc";
+      } else {
+        ## if we can't find it the stem-loop on the transcript, could it
+        ## be that it's actually on the genome, but whoever made the curation
+        ## thinks it's good to remove it?
+        my $gseq = MyLib::load_seq ("gene", $gene->{'uid'}, $path{sequences});
+        ## find the CDS for this specific gene
+        foreach my $feat ($gseq->get_SeqFeatures) {
+          next unless $feat->primary_tag eq "CDS";
+          next unless scalar (grep {$_ eq $symbol} $feat->get_tag_values("gene"));
+          my $start = $feat->end;
+          my $end   = $start + $MyVar::stlp_dist + $MyVar::stlp_length;
+          if ($end > $seq->length) {
+            $end = $gseq->length ;
+          }
+          my $subseq = $gseq->subseq($start, $end);
+          if ($subseq =~ m/($MyVar::stlp_seq)/gi) {
+            my $sl = pos ($subseq) - length ($1) +1; # start of *last* match
+            say {$log} "Gene $symbol has possible stem loop in genomic starting at $sl bp from the end of its CDS";
+          }
+        }
       }
     ## Confirm that the annotated stem-loop is correct
     } else {
