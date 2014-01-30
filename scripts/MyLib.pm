@@ -225,7 +225,9 @@ sub latex_string {
 sub latex_newcommand {
   my $command = latex_string (num2en ($_[0]));
   my $value   = $_[1];
-  return "\\newcommand{\\$command}{\\colorbox[gray]{0.8}{$value}}";
+  ## we need to set the height of the color box manually otherwise \colorbox
+  ## will change the height of the line
+  return "\\newcommand{\\$command}{\\setlength{\\fboxsep}{2pt}\\colorbox[gray]{0.8}{$value}}";
 }
 
 ## Replaces numbers in a string by their english word, and capitalizes the
