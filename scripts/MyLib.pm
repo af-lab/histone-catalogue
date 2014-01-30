@@ -273,14 +273,10 @@ sub make_catalogue {
     } else {
       ## In the case of a gene with multiple transcripts, each will have
       ## its line on the table but the first two columns will be empty
-      my $first = 1;
-      foreach my $acc (sort keys $$gene{'transcripts'}) {
-        print {$table} "      & & " unless $first;
-        print {$table} MyLib::latex_string ($acc || "n/a") . " & " .
-                       MyLib::latex_string ($$gene{"transcripts"}{$acc} || "n/a") .
-                       "\\\\\n";
-        $first = 0;
-      }
+      my @acc_cols = map {
+        MyLib::latex_string ($_ || "n/a") . " & " . MyLib::latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
+      } (sort keys $$gene{'transcripts'});
+      print {$table} join ("      & & ", @acc_cols);
     }
   }
 
