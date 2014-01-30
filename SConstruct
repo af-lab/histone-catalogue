@@ -121,6 +121,8 @@ clust_targets.append(os.path.join(results_dir, "variables-cluster_stats.tex"))
 prote_targets.append(os.path.join(results_dir, "variables-protein_stats.tex"))
 compr_targets.append(os.path.join(results_dir, "table-reference_comparison.tex"))
 
+check_targets.append(os.path.join(results_dir, "sanity_checks.log"))
+
 utr_targets.append(os.path.join(results_dir, "variables-utr.tex"))
 utr_targets.append(os.path.join(figures_dir, "seqlogo_stem_loops.eps"))
 

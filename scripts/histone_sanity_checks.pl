@@ -94,7 +94,7 @@ foreach my $gene (@data) {
     }
     ## Canonical histone genes should not have polyA tails
     if ($polyA_tail) {
-      say {$log} "Gene $symbol has a polyA signal on transcript $acc."
+      say {$log} "Gene $symbol has a polyA signal on transcript $acc.";
       $weird++;
     }
 
