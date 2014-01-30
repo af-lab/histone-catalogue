@@ -108,6 +108,7 @@ prote_targets = list()
 compr_targets = list()
 check_targets = list()
 utr_targets   = list()
+var_targets   = list()
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
     align_targets.append(os.path.join(results_dir, "aligned_%s.fasta" % histone))
@@ -122,6 +123,8 @@ compr_targets.append(os.path.join(results_dir, "table-reference_comparison.tex")
 
 utr_targets.append(os.path.join(results_dir, "variables-utr.tex"))
 utr_targets.append(os.path.join(figures_dir, "seqlogo_stem_loops.eps"))
+
+var_targets.append(os.path.join(results_dir, "table-variant_catalogue.tex"))
 
 align_sequences = env.Command(target = align_targets,
                               source = os.path.join(scripts_dir, "align_sequences.pl"),
@@ -141,8 +144,11 @@ sanity_checks   = env.Command(target = check_targets,
 utr_stats       = env.Command(target = utr_targets,
                               source = os.path.join(scripts_dir, "utr_analysis.pl"),
                               action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir))
+var_catalogue   = env.Command(target = var_targets,
+                              source = os.path.join(scripts_dir, "variants.pl"),
+                              action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir))
 
-analysis = [align_sequences, cluster_stats, protein_stats, compare_ref, sanity_checks, utr_stats]
+analysis = [align_sequences, cluster_stats, protein_stats, compare_ref, sanity_checks, utr_stats, var_catalogue]
 env.Alias("analysis", analysis)
 env.Depends(analysis, [data,
                        os.path.join(scripts_dir, "MyLib.pm"),

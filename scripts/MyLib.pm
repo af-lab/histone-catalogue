@@ -1,5 +1,5 @@
 package MyLib;
-## Copyright (C) 2011 Carnë Draug <carandraug+dev@gmail.com>
+## Copyright (C) 2011-2014 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -165,6 +165,31 @@ sub load_H1 {
   return @h1;
 }
 
+sub load_variants {
+  my %genes = load_csv (@_);
+  my @variants;
+  foreach my $uid (keys %genes) {
+    my $symbol = $genes{$uid}{'symbol'};
+
+    ## skip genes that don't look canonical and get cluster number
+    next unless $symbol =~ m/^(($MyVar::histone_regexp)F|CENPA)/;
+
+    ## $2 will be the histone if followed by F. If it's empty, then $1 will
+    ## be CENPA which is a H3 variant
+    if ($2) {
+      $genes{$uid}{'histone'} = $2;
+    } elsif ($1 eq "CENPA") {
+      $genes{$uid}{'histone'} = "H3";
+    } else {
+      warn ("Regexp to guess histone variant type needs fixing");
+      next;
+    }
+
+    push @variants, $genes{$uid};
+  }
+  return @variants;
+}
+
 ## loads a sequence file returning a Bio::Seq object. First argument
 ## must be the type (gene, transcript, or protein), second argument
 ## its access number, and third argument the directory where to look
@@ -224,6 +249,43 @@ sub num2en {
   my $keys = join ('', keys %trans);
   $string =~ s/([$keys])/$trans{$1}/g;
   return $string;
+}
+
+## fill the catalogue. First argument is the file path for the
+## table, while the rest is an array of genes
+## fill_catalogue ($path, @genes)
+sub make_catalogue {
+  my $path = shift;
+  open (my $table, ">", $path)
+    or die "Could not open $path for writing: $!";
+
+  say {$table} "\\begin{ctabular}{l l l l}";
+  say {$table} "  \\toprule";
+  say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+  say {$table} "  \\midrule";
+
+  foreach my $gene (@_) {
+    print {$table} "  $$gene{'symbol'} & $$gene{'uid'} & ";
+    if ($$gene{'pseudo'}) {
+      print {$table} "n/a & n/a \\\\\n";
+    } else {
+      ## In the case of a gene with multiple transcripts, each will have
+      ## its line on the table but the first two columns will be empty
+      my $first = 1;
+      foreach my $acc (sort keys $$gene{'transcripts'}) {
+        print {$table} "      & & " unless $first;
+        print {$table} MyLib::latex_string ($acc || "n/a") . " & " .
+                       MyLib::latex_string ($$gene{"transcripts"}{$acc} || "n/a") .
+                       "\\\\\n";
+        $first = 0;
+      }
+    }
+  }
+
+  say {$table} "  \\bottomrule";
+  say {$table} "\\end{ctabular}";
+  close ($table)
+    or die "Couldn't close $path after writing: $!";
 }
 
 1; # a package must return true

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-## Copyright (C) 2011 Carnë Draug <carandraug+dev@gmail.com>
+## Copyright (C) 2011-2014 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -84,43 +84,16 @@ foreach my $gene (@data) {
   }
 }
 
-## Make a LaTeX table with all of the canonical histones, their gene symbols,
+## Sort the histone by types, then sort them by their symbol, to
+## make the table with all of the canonical histones, their gene symbols,
 ## UIDs, and protein and transcript accession numbers
-my $table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
-open (my $table, ">", $table_path) or die "Could not open $table_path for writing: $!";
-
-say {$table} "\\begin{ctabular}{l l l l}";
-say {$table} "  \\toprule";
-say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
-say {$table} "  \\midrule";
-
-## Sort the histone by types, then sort them by their symbol, then
-## fill in the table
+my @sorted;
 foreach my $histone (keys %types) {
-  @{$types{$histone}} = sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}};
-  foreach my $gene (@{$types{$histone}}) {
-    print {$table} "  $$gene{'symbol'} & $$gene{'uid'} & ";
-    if ($$gene{'pseudo'}) {
-      print {$table} "n/a & n/a \\\\\n";
-    } else {
-      ## In the case of a gene with multiple transcripts, each will have
-      ## its line on the table but the first two columns will be empty
-      my $first = 1;
-      foreach my $acc (sort keys $$gene{'transcripts'}) {
-        if (! $first) {
-          print {$table} "      & & ";
-        }
-        print {$table} MyLib::latex_string ($acc || "n/a") . " & " .
-                       MyLib::latex_string ($$gene{"transcripts"}{$acc} || "n/a") .
-                       "\\\\\n";
-        $first = 0;
-      }
-    }
-  }
+  push (@sorted, sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}});
 }
-say {$table} "  \\bottomrule";
-say {$table} "\\end{ctabular}";
-close($table) or die "Couldn't close $table_path after writing: $!";
+my $table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
+MyLib::make_catalogue ($table_path, @sorted);
+
 
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
