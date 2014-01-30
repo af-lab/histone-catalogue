@@ -238,6 +238,7 @@ DEPENDENCIES
               * Bio::SeqIO
               * Bio::Tools::Run::Alignment::TCoffee
               * Text::CSV
+              * Statistics::Basic
     
     for PUBLICATION
         * LaTeX document class memoir
@@ -274,6 +275,7 @@ if "analysis" in map (str, BUILD_TARGETS):
                         "Bio::SeqIO",
                         "Bio::Tools::Run::Alignment::TCoffee",
                         "Text::CSV",
+                        "Statistics::Basic"
                         ]
     for module in required_modules:
         if not conf.CheckPerlModule(module):
