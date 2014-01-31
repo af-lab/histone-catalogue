@@ -45,7 +45,7 @@
   and are referred as ``replication dependent''. In contrast, ``variant'' histones
   have lower aggregate abundance and show less identity in alignments. They play
   functionally distinctive roles, are mostly expressed outside S~phase of the cell
-  cycle and are referred as ``replacement'' or ``replication independent'' histones.
+  cycle and are also referred as ``replacement'' or ``replication independent'' histones.
 
   \begin{table*}
     \caption{General properties of canonical and variant histone proteins.}
@@ -67,7 +67,8 @@
   The term ``variant histones'' has come to imply canonical histones are homogeneous
   and masks their heterogenity. Each variant, such as H2A.Z, H2Abbd, and H3.3,
   is encoded by a gene, with its own sequence and name,
-  whereas canonicals are encoded by multiple genes with less varying sequence.
+  whereas each of the canonical histones are encoded by multiple genes
+  with less varying sequence.
   Because their resulting protein isoforms differ at only a few sites, they are often
   referred to as ``wild type'' sequences.
   When their multiple isoforms are not treated as a single protein, they are divided
@@ -91,24 +92,91 @@
                   In general, canonical histone transcripts are not thought to be
                   polyadenylated except in \textit{S. cerevisiae}.}
 
+  As these are only different levels of variance, the terms used to refer to
+  different groups are no more than synonymous of each other. Because of this,
+  they can be easily misused without a deeper knowledge of all histone variance,
+  although the correct meaning can be usually infered from the context. We
+  have compiled the different terms in \tref{tab:histone-divisions}
+
+  %% papers where H2A.2/1 are referred as variants if we want references where the
+  %% the mistake is made. But really, should we be pointing the finger to them?
+  %%
+  %% * Galasinski, Scott C., et al. "Global regulation of post-translational
+  %%   modifications on core histones." Journal of Biological Chemistry 277.4 (2002): 2579-2588.
+  %% * Kimura, Hiroshi. "Histone dynamics in living cells revealed by
+  %%   photobleaching." DNA repair 4.8 (2005): 939-950.
+  %% * Ishibashi, Toyotaka, et al. "Acetylation of vertebrate H2A. Z and its
+  %%   effect on the structure of the nucleosome." Biochemistry 48.22 (2009): 5007-5017.
+  %% * Alatzas, Anastasios, and Athina Foundouli. "Alterations in core histone
+  %%    variant ratios during maize root differentiation, callus formation and in
+  %%    response to plant hormone treatment." Biol Res 42 (2009): 445-460.
+
+  \begin{table*}
+    %% guess this could also be done in a description environment but...
+    \caption{Typical sub-divisions of histones.}
+    \label{tab:histone-divisions}
+    \centering
+    \begin{tabular}{F p{\dimexpr(\textwidth-\eqboxwidth{firstentry}-4\tabcolsep)}}
+      \toprule
+      Allelic variant & Same as canonical isoform. \\
+      Canonical &   All of the histones listed in \tref{tab:histone-catalogue}.
+                    Their main distinct features is a peak of expression during
+                    S--phase and are usually regarded as without special
+                    features. \\
+      \addlinespace
+      Isoform   &   Often used incorrectly to mean a variant, it should be
+                    used to mean an alternate form of the same histone type
+                    either within the canonical or the same variant. \\
+      \addlinespace
+      Non-allelic variant & Same as variant. \\
+      \addlinespace
+      Replacement & Same as variant. \\
+      \addlinespace
+      Replication-dependent & Same as canonical. \\
+      \addlinespace
+      Replication-independent & Same as variant. \\
+      \addlinespace
+      Sub-type  &   H2A and H3 histones are sometimes further divided in the
+                    subtypes H2A.1, H2A.2, H3.1, and H3.2. This division should
+                    be avoided since it has no interpretation. Note that H3.3
+                    is an histone variant, not a sub-type. \\
+      \addlinespace
+      Type      &   One of the 5 histone types, H1, H2A, H2B, H3, or H4.\\
+      \addlinespace
+      Variant   &   All of the histones listed in \tref{tab:variant-catalogue},
+                    any histone that is not a canonical. Their main distinct
+                    features is an expression independent of the cell cycle as
+                    opposed to canonical histones. Sometimes, also incorrectly
+                    named histone isoforms. \\
+      \addlinespace
+      Wild type &   Usually meaning the same as canonical or sub-type 1. This
+                    naming is just wrong, since it suggests that variants are
+                    not natural. \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+
   Despite the importance of histones to the organisation of chromatin, and extensive interest
   in their role in epigenetics and regulation, the curation and classification of human histone
   gene and protein sequences has not been revisited for a decade \citep{Marzluff02}. In this time
   the draft human genome has been finalised and rich annotations continue to propagate through
-  gene and protein sequence databases.
+  gene and protein sequence databases (\tref{tab:difference-from-Marzluff02}).
 
   Any equivalent normal approach will also become progressively more outdated from the
-  time of writing. Instead, we have developed...
+  time of writing. Instead, we have written this article under the concept of a live
+  object, one that can be reconstructed at any time using the most up to date information
+  available online.
 
   We have also scanned the popular RefSeq
   database to curate and report a number of oversights in untranslated regions, transcripts and
-  classification of pseudo genes. A list of all the changes since \cite{Marzluff02} is 
-  displayed on \tref{tab:difference-from-Marzluff02}.
+  classification of pseudo genes. Indeed, this article has been constantly
+  rebuilt since 2010 as we, and others, contributed to the curation of histone
+  genes.  To show the extent of this process,
+  automatically generated values are displayed with a light gray background.
 
   In this paper we provide a comprehensive overview of the nomenclature and distribution
   of canonical and variant histone genes. Furthermore, since curation and annotation are
   dynamic processes, we have implemented an accompanying resource that automatically generates
   the tables and figures presented in the submitted manuscript based
-  on the most current data from the NCBI RefSeq database. To show the extent of this
-  automation process, automatically generated values have a light gray background.
+  on the most current data from the NCBI RefSeq database.
 
