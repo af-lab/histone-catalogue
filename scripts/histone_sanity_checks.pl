@@ -27,7 +27,7 @@ use MyLib;                      # Load functions
 ## This script performs a list of tests on the sequences, on what we expect
 ## from an histone gene, and give warnings about weird things. It will write
 ## about weird things it finds to:
-##    * sanity_checks.log
+##    * histone_insanities.tex
 ##
 ## Usage is:
 ##
@@ -35,24 +35,8 @@ use MyLib;                      # Load functions
 
 my %path = MyLib::parse_argv ("sequences", "results");
 
-my $log_path = File::Spec->catdir($path{results}, "sanity_checks.log");
-open (my $log, ">", $log_path) or die "Could not open $log_path for writing: $!";
 
-## Get the first line of the extractor log which is the date when the
-## sequences were actually retrieved
-my $data_log_path = File::Spec->catdir($path{sequences}, "extractor.log");
-open (my $data_log, "<", $data_log_path) or die "Could not open $data_log_path for reading: $!";
-chomp (my $data_header = <$data_log>); # read the first line only
-close $data_log;
-
-my $time = POSIX::strftime ("%F %T", localtime $^T);
-say {$log} <<"END_HEADER";
-Running histone_sanity_checks on $time using data from:
-$data_header
---------------------------------------------------------------------------------
-END_HEADER
-
-my $weird = 0;
+my @weirds;
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
   my $symbol = $gene->{'symbol'};
@@ -60,14 +44,12 @@ foreach my $gene (@data) {
   ## check if gene has multiple products
   my $nP = keys ($gene->{'transcripts'});
   if (! $gene->{'pseudo'} && $nP != 1) {
-    say {$log} "Gene $symbol has $nP transcripts.";
-    $weird++;
+    push @weirds, "Gene $symbol has $nP transcripts.";
   }
 
   ## check if we have possibly discovered a new cluster
   if ($gene->{'cluster'} > $MyVar::cluster_number) {
-    say {$log} "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
-    $weird++;
+    push @weirds, "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
   }
 
   foreach my $acc (keys $gene->{'transcripts'}) {
@@ -89,24 +71,22 @@ foreach my $gene (@data) {
 
     ## Canonical histone genes should have only 1 exon
     if ($exon_count != 1) {
-      say {$log} "Gene $symbol has $exon_count exons on transcript $acc.";
-      $weird++;
+      push @weirds, "Gene $symbol has $exon_count exons on transcript $acc.";
     }
     ## Canonical histone genes should not have polyA tails
     if ($polyA_tail) {
-      say {$log} "Gene $symbol has a polyA signal on transcript $acc.";
-      $weird++;
+      push @weirds, "Gene $symbol has a polyA signal on transcript $acc.";
     }
 
     ## Canonical histone genes should have a stem loop
     if (! $stem_loop) {
-      say {$log} "Gene $symbol has no annotated stem-loop on transcript $acc.";
-      $weird++;
+      push @weirds, "Gene $symbol has no annotated stem-loop on transcript $acc.";
+
       ## it's not annotated, but can we find it somewhere?
       my $str = $seq->seq;
       if ($str =~ m/($MyVar::stlp_seq)/gi) {
         my $start = pos ($str) - length ($1) +1; # start of *last* match
-        say {$log} "Gene $symbol has possible stem loop starting at position $start of $acc";
+        push @weirds, "Gene $symbol has possible stem loop starting at position $start of $acc";
       } else {
         ## if we can't find it the stem-loop on the transcript, could it
         ## be that it's actually on the genome, but whoever made the curation
@@ -124,7 +104,7 @@ foreach my $gene (@data) {
           my $subseq = $gseq->subseq($start, $end);
           if ($subseq =~ m/($MyVar::stlp_seq)/gi) {
             my $sl = pos ($subseq) - length ($1) +1; # start of *last* match
-            say {$log} "Gene $symbol has possible stem loop in genomic starting at $sl bp from the end of its CDS";
+            push @weirds, "Gene $symbol has possible stem loop in genomic starting at $sl bp from the end of its CDS";
           }
         }
       }
@@ -133,22 +113,38 @@ foreach my $gene (@data) {
       ## the stem-loop is never too far away from the stop codon
       my $dist = $stem_loop->start - $cds->end;
       if ($dist > $MyVar::stlp_dist) {
-        say {$log} "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
-        $weird++;
+        push @weirds, "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
       }
       ## has a specific length
       if ($stem_loop->length != $MyVar::stlp_length) {
-        say {$log} "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
-        $weird++;
+        push @weirds, "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
       }
       ## and a specific sequence
       if ($stem_loop->seq->seq !~ m/^$MyVar::stlp_seq$/i) {
-        say {$log} "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
-        $weird++;
+        push @weirds, "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
       }
     }
   }
 }
+
+## Get the first line of the extractor log with the date for the sequences
+my $data_log_path = File::Spec->catdir($path{sequences}, "extractor.log");
+open (my $data_log, "<", $data_log_path)
+  or die "Could not open $data_log_path for reading: $!";
+my $data_header = <$data_log>; # read the first line only
+close $data_log;
+
+$data_header =~ m/(?<=\[)([\d\-: ]+)(?=\])/;
+my $date = $1;
+
+my $log_path = File::Spec->catdir($path{results}, "histone_insanities.tex");
+open (my $log, ">", $log_path)
+  or die "Could not open $log_path for writing: $!";
+
+say {$log} "Analyzing histone sequences retrieved at ". MyLib::latex_string ($date);
+say {$log} "\\begin{itemize}";
+say {$log} "  \\item ". MyLib::latex_string ($_) foreach (@weirds);
+say {$log} "\\end{itemize}";
+
 close ($log) or die "Couldn't close $log_path after writing: $!";
-say ("Check the histone sanity log, I found $weird things.");
 
