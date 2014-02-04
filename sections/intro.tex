@@ -65,7 +65,7 @@
   \end{table*}
 
   The term ``variant histones'' has come to imply canonical histones are homogeneous
-  and masks their heterogenity. Each variant, such as H2A.Z, H2Abbd, and H3.3,
+  and masks their heterogeneity. Each variant, such as H2A.Z, H2Abbd, and H3.3,
   is encoded by a gene, with its own sequence and name,
   whereas each of the canonical histones are encoded by multiple genes
   with less varying sequence.
@@ -82,11 +82,38 @@
   This distinction led to yet another distinct name, allelic and non-allelic variants for
   canonical isoforms and variant histones, respectively.
 
+  %% on the choice of words of "protein coding transcripts":
+  %%    things such a non-coding RNA are also transcripts and don't have a poly-A
+  %%    tail. We could say that there are few transcripts without poly-A tail but
+  %%    that would leave people wondering what are the other other proteins whose
+  %%    transcripts do not have it.
   The canonical and variant classes of histones are also distinguished by their regulation in humans and other
-  metazoans. Like other genes transcribed by RNA polymerase II,  histone variant transcripts
-  are 3' polyadenylated. Canonical histones in higher eukaryotes are among the very few known transcripts
-  that are not polyadenylated, and instead terminate in a highly conserved stem-loop that
+  metazoans. Like other protein coding transcripts, histone variants
+  are 3' polyadenylated. On the other hand, canonical histones are the only transcripts
+  known to be non polyadenylated, and instead terminate in a highly conserved stem-loop that
   provides them with an independent basis for regulation of turnover.
+
+  This alternative unique system seems to be limited to metazoans, with exceptions
+  in the multicellular differentiated alga \textit{Volvox carteri} \citep{volvox-h2a-h2b-report}
+  and the unicellular \textit{Chlamydomonas reinhardtii} \citep{chlamydomonas-histones}.
+  Both are green algae from the order Chlamydomonadales, which is placed at an early
+  ancestor of the higher plants.
+  Other organisms such as ciliate, fungi, and higher plants, exhibit typical
+  polyadenylated canonical histones transcripts.
+
+  %% About Volvox carteri (from volvox-h2a-h2b-report)
+  %% Although rRNA sequence comparisons suggest that
+  %% V. carteri is phylogenetically more closely linked to higher
+  %% plants than to animals (Rausch et al., 1989), the ontogenesis
+  %% of this simple green alga exhibits remarkable analogies to
+  %% early stages of animal embryogenesis, including a gastrulation-like
+  %% inversion process (reviewed by Kirk and Harper,
+  %% 1986; Kirk, 1988).
+
+  In metazoans, the stem-loop mechanism extends to the H1 histone with an exception
+  in the nematodes \textit{Caenorhabditis briggsae} and \textit{Caenorhabditis elegans}.
+  However, the H1 histone in these organism already displays other diverging
+  features; they are not located in histone clusters and have introns\citep{caenorhabditis-stem-loop}.
 
   As these are only different levels of variance, the terms used to refer to
   different groups are no more than synonymous of each other. Because of this,
@@ -120,6 +147,10 @@
                     S--phase and are usually regarded as without special
                     features. \\
       \addlinespace
+      Heteromorphous & Same as variant. \\
+      \addlinespace
+      Homomorphous & Same as sub-type. \\
+      \addlinespace
       Isoform   &   Often used incorrectly to mean a variant, it should be
                     used to mean an alternate form of the same histone type
                     either within the canonical or the same variant. \\
@@ -152,11 +183,6 @@
     \end{tabular}
   \end{table*}
 
-  \todo[inline]{discuss in 1-2 sentences for lower eukaryotes. eg fungi.
-                  In general, canonical histone transcripts are not thought to be
-                  polyadenylated except in \textit{S. cerevisiae}.}
-
-
   Despite the importance of histones to the organisation of chromatin, and extensive interest
   in their role in epigenetics and regulation, the curation and classification of human histone
   gene and protein sequences has not been revisited for a decade \citep{Marzluff02}. In this time
@@ -173,10 +199,15 @@
   classification of pseudo genes. Indeed, this article has been constantly
   rebuilt since 2010 as we, and others, contributed to the curation of histone
   genes.  To show the extent of this process,
-  automatically generated values are displayed with a light gray background.
+  automatically generated values are displayed with a light grey background.
+
+  A discussion about the function of each histones variants will not be presented
+  as these are periodically published.
 
   In this paper we provide a comprehensive overview of the nomenclature and distribution
-  of canonical and variant histone genes. Furthermore, since curation and annotation are
+  of canonical and variant histone genes. We do not present a discussion on the
+  function of the multiple variants as excellent reviews for each of them are
+  periodically published. Furthermore, since curation and annotation are
   dynamic processes, we have implemented an accompanying resource that automatically generates
   the tables and figures presented in the submitted manuscript based
   on the most current data from the NCBI RefSeq database.
