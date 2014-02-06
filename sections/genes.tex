@@ -12,8 +12,13 @@
   whose division is still disputed \citep{CB-HLB-review}.
 
   \subsection{Histone gene clusters}
+    %% Clusters are numbered by their number of histones, not on their length.
+    %% HIST1 is much shorter than HIST2 but still is number 1. And HIST2 is
+    %% longer despite having less histones because it has a very long stretch
+    %% of DNA in its middle without any histone genes.
     In humans, there are 4 histone gene clusters, named histone cluster 1 to 4 (HIST1 to HIST4)
-    by increasing order of their length. The major and secondary histone gene clusters,
+    by increasing order of their number of histone genes.
+    The major and secondary histone gene clusters,
     HIST1 and HIST2 on chromosomes~\HISTOneLocus{} and \HISTTwoLocus{} respectively,
     contain contiguous high density arrays of histone genes. On the other hand, the minor
     cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of them, while HIST4
@@ -21,11 +26,14 @@
     (\tref{tab:histone-gene-count}).
 
     \begin{table*}
-      %% FIXME maybe we should generate the table automatically, instead of
-      %%        generating all this variables. Or we could do the operations
+      %%        maybe we should generate the table automatically, instead of
+      %%        generating all this variables? Or we could do the operations
       %%        in LaTeX with fp package:
       %%        \FPeval{result}{clip(\var1{}+\var2{})} \result
-      \caption{Count of expected coding and pseudo histone genes.}
+      \caption{Count of expected coding and pseudo core histone genes,
+               divided by histone cluster and histone type. The right-hand
+               operand (marked with $\psi$) of each column corresponds to the
+               number of pseudo genes.}
       \label{tab:histone-gene-count}
       \centering
       \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
@@ -63,7 +71,8 @@
       \end{tabular}
     \end{table*}
 
-    HIST1 encodes \CodingGenesInHISTOne{}~functional genes over a span of \HISTOneSpan{}
+    HIST1 has by far the most histone genes, encoding \CodingGenesInHISTOne{}~functional
+    core histone genes plus all of the H  1 histones. It spans \HISTOneSpan{}
     and is the second most gene dense region on the megabase scale of the the
     genome \citep{MHC-III-analysis}. It is located at the distal end of the major
     histocompatibility complex (MHC) in the extended class~I region at chromosome 6p21.31
@@ -72,24 +81,82 @@
     been studied yet. However, it has been suggested that proximity to HIST1 suppresses
     recombinations on HLA-A, a gene from the MHC Class~I region \citep{MHC-repressed-by-HIST}.
 
-    All H1 genes are in HIST1.
+    %% Thing about HIST2:
+    %%    there's one pseudo gene (HIST2H2BA with UID 337875) that is really
+    %%    really far away from everything else (28Mbp from the center of the
+    %%    cluster center, and gives it most of its length). While it is listed
+    %%    in the Marzluff 2002 paper, it seems they didn't count it to measure
+    %%    the cluster length and also didn't include it on the cluster figure.
+    %%    Then there's two other pseudo genes (HIST2H2BB and HIST2H3PS2 with
+    %%    UIDs 338391 and 440686) that are also a bit away from the rest of
+    %%    the cluster (around 0.5Mbp)  These are likely the pair of genes that
+    %%    appear away from the rest of the cluster in Marluff's figure of
+    %%    HIST2. Also, the scale he has on Figure 2 is wrong. It says 200K but
+    %%    should be 50K (like in Figure 1) so the distance between the two
+    %%    sub clusters is 0.5M and not 2M
 
-    \todo[inline]{need to access ``Human histone genes are interspersed with members
-                  of the Alu family and with other transcribed sequences'' (1982) by
-                  Sierra, others, and Stein}
+    HIST2 is much longer than HIST1 stretching over \HISTTwoSpan{} but with
+    only \CodingGenesInHISTTwo{}~coding genes. This is not due to an higher
+    number of pseudo genes or longer spacing between genes, but to the their
+    distribution over two sub-clusters plus an extremely distant pseudogene
+    that is not even located in the same chromosome arm.
 
-    The location 1q21.1 near HIST2 has been associated with deletion
-    \citep{HISTTwo-prone-deletion-discovery}, and since then has been reported to be prone
-    to recurrent rearrangement \citep{HISTTwo-prone-deletion-focus}. HIST2 is actually
-    2 sub-clusters. Interestingly, seems that that the one closer to 1q21.1 is the one
-    full of pseudogenes.
+    Without an exact
+    definition of ``cluster'' to follow, it is difficult to argue whether this
+    should had been separate clusters. Nonetheless, either through requiring
+    a minimum distance, or a minimum number of histones, HIST3 and HIST4 stand in
+    favour of it. Both are considered separate cluster despite
+    the first being is located on the same chromosome arm as HIST2, and the
+    later having only one histone gene.
 
-    Aside some sub-clustering \fref{fig:cluster-organization}), it appears that
+    %% The deletion and duplication regions are marked on the region
+    %% between 144 and 146 Mb (see figure 1 of "Recurrent reciprocal 1q21. 1
+    %% deletions and duplications associated with microcephaly or macrocephaly
+    %% and developmental and behavioral abnormalities"). All of the HIST2
+    %% histone genes are located at coordinates 149Mb (with exception of
+    %% HIST2H2BA which is located on region 120Mb on the other arm of the
+    %% chromosome). The two pseudogenes that are 50Kb from the center of
+    %% HIST2 are the ones closer to this region but the scale of it, places
+    %% their distance to it on the same scale as the rest of HIST2
+
+    With the exception of the distant pseudogene, all of HIST2 genes are located
+    at the 1q21.1. This location has been associated with deletion
+    \citep{HISTTwo-prone-deletion-discovery}, and since then, also reported to be prone
+    to recurrent rearrangement \citep{HISTTwo-prone-deletion-focus}.
+
+    %%speak on nature of multiple clusters and alu elements, etc
+
+    %% wildly guessed... No one ever used the DNA sequence for each of the
+    %% histones and got a tree about which evolved from which?
+    The distribution of histones genes throughout the genomes is an interesting
+    subject that could hint at how they have evolved. It is interesting to
+    notice how HIST1 has a smaller ratio of pseudogenes than HIST2 and HIST3
+    which makes attractive the idea that it was the original from which
+    the others were duplication.
+
+    %% About the Alu elements stuff, Alu elements are supposed to have
+    %% appeared with primates. However, mice already have the 4 histones
+    %% clusters like humans do, with easily identified orthologs. So Alu
+    %% elements can't be the cause for creating HIST2 by duplication of HIST1.
+    %%
+    %% Possible mistake on the paper about Alu members: on Figure 1 there are
+    %% only displayed 24 regions with Alu elements. However, looking at the
+    %% figure 4, it would seem they missed 1 in clone 22 which shows 5 bands.
+
+    It was reported that histones genes are interspersed with Alu
+    elements \citep{histone-alu}, transposable elements associated with gene
+    duplication. At the time, it could not be appreciated that the clones
+    being used were indeed from canonical histones since each clone captured
+    more than one histone gene. It is still not possible to map it a specific
+    cluster but since each displayed both H3 and H4 genes, must be either
+    HIST1 or HIST2.
+
+    Aside some sub-clustering, it appears that
     there is no apparent organization
     of the histones genes through the histone clusters, of vertebrates and
     lower eukaryotes. The clusters of invertebrates however, display tens to hundreds
     of tandem repeats of units, each with one copy of the five histones. This is the
-    case of sea urchin and drosophila melanogaster. The dispersive organization
+    case of sea urchin and \textit{Drosophila melanogaster}. The dispersive organization
     in vertebrates suggests that histones expression is regulated by close elements
     \citep{close-regulators}.
 
@@ -106,7 +173,6 @@
     \begin{figure*}
       \centering
       \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
-      %% FIXME need to make this subcaptions
       \caption{Histone gene nomenclature. a) canonical histone gene encode their position
                on the genome on their symbol. b) variant histone symbols are disperse through
                the genome and cannot be placed in relation to the others so their member
@@ -116,7 +182,7 @@
 
     Two exceptions were made to this rule: 1) A missing position letter on the symbol indicates
     no other histones of the same type on the cluster. This is the case of HIST3H2A, the
-    single H2A gene in HIST3. 2) There is no human HIST1H2AF. It exists an Hist1h2af mouse
+    single H2A gene in HIST3. 2) There was no human HIST1H2AF. It exists an Hist1h2af mouse
     histone though, and this exception is likely to have been a compromise to accommodate
     matching the human symbols to the mouse orthologs, and ease the cross of data between the
     two model organisms.
@@ -129,6 +195,8 @@
     between the symbols of pseudo and coding genes, but new pseudo genes are suffixed with
     PS\# by order of discovery. But the ``old'' pseudo genes retain their original symbols
     so the lack of suffix does not indicate a coding protein.
+    The end result of this nomenclature is that to avoid changing previously
+    assigned gene symbols, the nomenclature lost its meaning. 
 
     The symbols for variant histones are much different and simpler. Due to their dispersion
     through the genome, no attempt was made to encode relative information on their name. In
@@ -142,9 +210,8 @@
     identified as an histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
 
   \subsection{Gene promoters}
-    \todo[inline]{We already have the 500 bp upstream of the TSS, check how the seqlogo
-                  looks like. And then fix the annotation of the genes to include these
-                  promoter elements}
+    \todo[inline]{We already have the 500 bp upstream of the TSS... we should
+                do something with this data}
 
     Because histone genes have been so well conserved throughout the evolution, they make
     excellent models to study computational methods, even for promoters
@@ -157,7 +224,10 @@
     several other genes that are involved in the cell replication with points
     towards a common regulation method. They still lack the stem-loop though.
 
-  \subsection{Introns}
-    Histone genes have no introns on their genes, probably to circumvent the
-    requirement for primary transcript processing when histones must be rapidly
-    produced at S~phase. Some variant histones have introns.
+%% We don't really have anything to say about introns. Canonical histones
+%% don't have them while variants might. We already said it on the introduction
+%  \subsection{Introns}
+%    Histone genes have no introns on their genes, probably to circumvent the
+%    requirement for primary transcript processing when histones must be rapidly
+%    produced at S~phase. Some variant histones have introns.
+
