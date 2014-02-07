@@ -205,10 +205,15 @@ sub load_seq {
   ## we make no next_seq loop because we know there's only one sequence in
   ## those genbank files
   my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
-  if ($type eq "protein") {
-    ## we remove the first amino acid since in histones it's cleaved off
-    $seq = $seq->trunc(2, $seq->length);
-  }
+  ## XXX  it is standard to remove the initial methionine when dealing
+  ##      with histone proteins (it does not even count when giving position
+  ##      in the protein). However, this is really really not advisable,
+  ##      so we are not skipping it. The following can be uncommented
+  ##      to skip it.
+#  if ($type eq "proteins") {
+#    ## we remove the first amino acid since in histones it's cleaved off
+#    $seq = $seq->trunc(2, $seq->length);
+#  }
   return $seq;
 }
 
