@@ -1,12 +1,23 @@
 \section{The transcripts}
-  %% we must say mRNA instead of genes because: 1) we can't defined gene (Pearson.
-  %% Genetics: what is a gene?. Nature (2006) vol. 441 http://dx.doi.org/10.1038/441398a )
-  %% and 2) it's only for genes transcribed by pol II (the onf for mRNAs)
-  Unlike all other eukaryotic mRNAs, histone transcripts are not polyadenylated at
+  %% Histones stem loop are still the unique alternative for coding
+  %% transcripts. However, Marzluff has already suggested there may
+  %% be some with a new triple-helical structure which until now has
+  %% only been seen in long noncoding RNA. See Marzluff, William F.
+  %% "Novel 3′ ends that support translation." Genes & development 26,
+  %% no. 22 (2012): 2457-2460.
+
+  Unlike all other protein coding genes, histone transcripts are not polyadenylated at
   their 3' end. This process consists in the cleaving of pre-mRNA, and addition of a
   poly(A) tail which promotes the mRNA stability and is involved in its transport
   into the citoplasm \citep{mRNA-end-processing}. The alternative method used by
-  histones is the stem-loop, a specialized mRNA secondary.
+  histones makes use of a stem-loop in its mRNA secondary structure, in conjunction
+  with specialized machinery unique to the histone transcription.
+
+  %% Cool fact: SLBP seem to exist only in organisms that also have histones
+  %%            with stem loops. While it doesn't mean that no other genes
+  %%            is making use of them, histones are likely to have been the first ones.
+  %%            Lopez MD, Samuelsson T. 2008.
+  %%            Early evolution of histone mRNA 3′ end processing. RNA 14: 1-10
 
   \subsection{Stem-loop}
     The stem-loop is encoded shortly after the stop codon, between \StemLoopStart{} and
@@ -26,20 +37,33 @@
     The stem-loop is followed by a purine-rich Histone Downstream Element (HDE)
     downstream of the stop codon. The stem-loop interacts with the Stem-Loop
     Binding Protein (SLBP) to stabilise the mRNA in S~phase \citep{SLBP-regulation}
-    while the HDE interacts with U7 snRNA to direct efficient 3 end processing
-    \citep{HDE-sequence}.
+    while the HDE interacts with U7 snRNA to direct efficient 3' end processing
+    \citep{HDE-sequence}. The SLBP is a large part of the histone increase on
+    during the S~phase since its translation is also regulated
+    by the cell-cycle, increasing 10 to 20 fold at the G1 to S~phase
+    interface \citep{SLBP-regulation}.
 
+    This mechanism is a well studied trait of canonical histones and one of
+    their most identifying characteristcs. However, a minority of H2B histone
+    genes is generating two transcripts, one using the histone standard
+    stem-loop, and another with a poly(A) tail (list in supplementary data).
+    The histone variant H2AX has an equivalent system, but is a variant whose
+    specialized function may be required outside the S~phase. This poly(A)
+    H2B could exist to pair with H2A variants.
 
-    This specific machinery for mRNA processing is a large part of increase on
-    transcription during the S~phase since their expression is also regulated
-    by the cell-cycle \addref and allow for the histone mRNA stability \addref.
+    %% An alternative is that these were automatic annotations. General
+    %% programs can't be expected to account for all exceptions, and could
+    %% try to force a poly-A tail on histone genes, just because they were
+    %% programmed to do so. However, these have been manually curated by
+    %% NCBI staff as having the two transcripts. Always check the comment
+    %% section when inspecting the genbank file
 
-    Still, we found some canonical histones with annotated poly(A) tails. These annotations
-    are likely to have been done automatically. However, we were also able to identify
-    some of them on EST libraries which would suggest that they do exist. Since
-    this libraries are performed using oligo-dTs, the histone genes are highly
-    expressed, and there's only a few occurrences of them, points that this is
-    the exception rather than the rule.
+    Another alternative is that these transcripts happen by chance, an artifact
+    of the methodology. cDNA libraries are mostly generated using oligo-dT
+    and will therefore be biased against anything that is using an alternative
+    system. Because of this, and to the high number of histone transcripts,
+    even if polyadenylation of histones is a rare anomaly, the library will
+    be enriched for it.
 
     Variant histones on the other side all have a poly(A) tail with notable
     pseudo-exception of H2AFX which has both a stem-loop and a poly(A) tail,
@@ -48,6 +72,9 @@
     In general, metazoan canonical histones
     are not thought to be polyadenylated, although \textit{S.\ cerevisiae} histone transcript stability
     appears to be regulated by polyadenylation instead of RNA structures.
+
+
+
 
   \subsection{mRNA expression levels}
     %% levels of mRNA of each histone gene in 2-3 different human cell lines (at least one primary cell line)
