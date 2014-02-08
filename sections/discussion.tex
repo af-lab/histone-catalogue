@@ -3,9 +3,6 @@
   %% that some canonical may have special functions which no one bothered to check
   %% variants with extra special nomenclature are outside the histone clusters and have poly-A tails (sometimes)
   %% Complain about the lack of information on the different isoforms
-  \todo[inline]{Rules and exceptions to definition of canonical and variants. Also point
-              that the word canonical suggest antecedence which is not necessarily true (ref to our
-              paper and Henikoff's)}
 
   %% Should we be pointing the finger to bad examples? That's really bad form.
   %% We could show examples where H2AX is called histone isoform, or even
@@ -40,22 +37,28 @@
   %% probably be interpretting it wrong.
 
   The main distinction between the two groups is related to its dependence on
-  cell cycle. Canonical histones are mainly expressed during S--phase due to
-  its mRNA 3' processing via its unique stem-loop mechanism. This has been used
+  cell cycle. Canonical histones are mainly expressed during S~phase due to
+  its mRNA 3' processing via the stem-loop mechanism. This has been used
   as the single deciding characteristic used to name H2AFJ as an histone variant,
   despite no knowledge of specialized function\citep{h2afj-report}. In the study,
   it is shown that H2AFJ has a poly-A tail instead and not a stem-loop, and that
   its expression levels do not increase during S--phase.
 
-  %% TODO the sanity check log should be made  atable and included in the paper
-  %% so we can refer to them to show these weird things.
+  However, it is now also argueed that some canonical H2B histones genes, encode
+  two transcripts, with a stem-loop and with a poly(A) tail. This suggest
+  that not all of the canonical histones are completely replication dependent.
+  An equivalent system is used by the variant H2AX which is usually regarded
+  as replication independent.
+
+  %% TODO the sanity check list at the end of the paper, should be made into a
+  %%      a table, or something else that can be referenced, so we can use it
+  %%      in the text
 
   In addition, the variant vs.~canonical separation suggests that there's no variance inside
   the canonicals which is false. There's several unique protein sequences for each
   `canonical' protein. And even the sometimes named H2A.2 and H3.2 variants are actually
   canonical histone proteins, with no more sequence variance than the other canonical
   isoforms.
-
 
   Finally, the word ``canonical'' is suggests precedence, the original histones
   from which variants diverged. We have suggested, as others did, that this
@@ -76,9 +79,20 @@
   is encoded by a gene, with its own sequence and name,
   but canonicals are encoded by multiple genes with less varying sequence.
 
+  It is often said in software development, that no documentation is better
+  than incorrect documentation. We stand by this opinion and arguee that
+  a nomenclature that is sometimes incorrect does more wrong than right.
+  Incorrect documentation of software
+  is usually the result of evolving code whose documentation is left behind,
+  not of documentation incorrectly written at the start.
+  This is the same with histone gene nomenclature. It correctly delivered
+  the, now outdated, information about them. However, as the knowledge of
+  these genes increased,
+  their symbols simply become misleading and a source of wrong assumptions.
 
   A list of all the changes since \cite{Marzluff02} is 
   displayed on \tref{tab:difference-from-Marzluff02}.
+
 
   With this article being closer to a software release than a paper publication,
   patches are welcome.
