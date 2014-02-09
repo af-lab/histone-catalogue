@@ -1,18 +1,32 @@
 \section{The proteins}
 
-  Not all genes of the same histone type encode the same protein.
+  The most common misconception about canonical histones is that canonical
+  histones are only 4 proteins. As previosly discussed, this masks the true
+  diversity of histone, and while some genes do encode the same protein, the
+  opposite is far more common with \HTwoAUniqueProteins{} H2A,
+  \HTwoBUniqueProteins{} H2B, \HThreeUniqueProteins{} H3, and
+  \HFourUniqueProteins{} H4 unique protein sequences.
 
-  While some of the histone genes encode the same protein, this is not always the
-  case. On the case of H3 and H4 the number of unique proteins are low, \HThreeUniqueProteins{}
-  and \HFourUniqueProteins{} respectively. For H2A and H2B this number is much higher, \HTwoAUniqueProteins{}
-  and \HTwoBUniqueProteins{}.
+  Studies that only make reference to the histone type,
+  are incomplete on their description. To make matters worse, the existence
+  of sub-types, such as H2A.1 and H2A.2, is even more misleading since those
+  who might be aware of canonical variance may mistake them for true
+  representatives of it while in truth they are of no meaning.
+
+  We have collected all the proteins for all canonical core histones, aligned
+  them, and created a sequence logos for each of them (\fref{fig:H2A-weblogo},
+  \ref{fig:H2B-weblogo}, \ref{fig:H3-weblogo}, and \ref{fig:H4-weblogo}) which
+  gives a compact overview where variation within closely related multiple
+  sequences occur. In addition, we also have described each of the isoforms
+  using as reference the most common sequence (\tref{tab:H2A-consensus},
+  \ref{tab:H3-consensus}, \ref{tab:H3-consensus}, and \ref{tab:H4-consensus}).
+  As with all values in this paper, both the tables and figures are generated
+  automatically from the sequences available online as reference.
+
 
   The logica is that variance between canonical isoforms is too small to have a likely
   different function. However, the variable H3.3 is only slightly different from the
   canonical H3 and seems to be special.
-
-  The numbering of these proteins amino acids also has a catch. The first methionine
-  is cleaved after expression and as such, it is never counter when numbering them.
 
 
   It is an attractive idea that H3 and H4, which are at the core of the core,
@@ -20,6 +34,28 @@
   while H2A, and H2B don't have to suffer such constraint.
 
   Most of the PTM are in the histone tails but a few are within the histone fold (H3 T45 for example)
+
+  \subsection{Sequence}
+    When dealing with sequence of histone proteins, it is standard practice to
+    ignore the start methionine as this is likely to be cleaved. The end
+    result is that typical reference to specific amino acids, such as H2AX~S139
+    or H3~K4, are actually referent to the amino acids at position 140 and 5.
+
+    %% if we want to change our stance in this, we only need to uncomment
+    %% 3 lines in MyLib.pm, in the routine that reads the sequence files
+    It is a standard guideline to use the primary translation product when
+    refering to protein locations, not a mature protein after
+    post-translation modifications \citep{desc-seq-variant}.
+    This prevents confusions, specially for anyone less
+    used to this histone divergence from common standards.
+    \todo{andrew said that because in H2B, the first 4 aa (MPEP) can be cleaved
+          so the location is actually off by 4 but I can't see a paper with it.
+          If we can find one reference of it, we could make a better case of how
+          ridiculous this situation is}.
+    Because of this, we are counting every single amino acid of the translated
+    product, and thus depart from the ``histone specific'' counting in all
+    analysis that follow.
+
 
   \subsection{Histone Fold Domain}
     \todo[inline]{Is histone protein structure too much off topic?}
@@ -39,25 +75,6 @@
     the H2A--H2b histones during active conditions.
 
     Whether these proteins actually ever happen to duplicate the nucleosome functions...
-
-  \subsection{Sequence}
-    Scientists always think that the proteins they study are more special than
-    the others. After all, if they were't, they would be studying other proteins.
-    And special things are allowed to special rules, so in the end they don't
-    respect the rules.
-
-    The problem with histone protein sequences is that no one respects the very
-    basic rule of using the primary translation product when refering to protein
-    locations. Mostly this means that the initial Methionine is not counted because
-    it must be cleaved off due to its the charge and the amino acid that follows.
-    This is so common, that anyone trying to follow the rules is likely to be corrected.
-    Ever heard of H2AX's S139 ? Yeah, it should had been S140! Why! Oh, why?
-    And if that's not bad enough, some people even remove the PEP at the initial
-    of H2B.
-
-    Someone needs to start doing it right so the sequences here. Follow the right
-    rules. And those are ``protein reference sequence should represent the primary
-    translation product, not a processed mature protein''\citep{desc-seq-variant}.
 
   \subsection{H2A}
     \begin{TableAndFigure*}
