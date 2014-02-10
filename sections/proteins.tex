@@ -1,11 +1,69 @@
 \section{The proteins}
 
   The most common misconception about canonical histones is that canonical
-  histones are only 4 proteins. As previosly discussed, this masks the true
+  histones are only 4 proteins. As previously discussed, this masks the true
   diversity of histone, and while some genes do encode the same protein, the
   opposite is far more common with \HTwoAUniqueProteins{} H2A,
   \HTwoBUniqueProteins{} H2B, \HThreeUniqueProteins{} H3, and
   \HFourUniqueProteins{} H4 unique protein sequences.
+
+  \begin{TableAndFigure*}
+    \captionof{table}{Description of all H2A isoforms relative to the most
+                      common protein sequence. Description of isoforms
+                      follows the latest recommendations from the Human
+                      Genome Variation Society \citep{desc-seq-variant}.}
+    \label{tab:H2A-consensus}
+    \input{results/table-H2A-align}
+
+    \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
+    \captionof{figure}{Probability sequence logo with all H2A sequences. The
+                       sequence logo was generated using \citep{weblogo} after
+                       alignment with T--Coffee \citep{tcoffee2000}. To ease
+                       the identification of variantion, locations where
+                       none occurs was greyd out.}
+    \label{fig:H2A-weblogo}
+  \end{TableAndFigure*}
+
+  \begin{TableAndFigure*}
+    \captionof{table}{Description of all H2B isoforms relative to the most
+                      common protein sequence. See caption of
+                      \tref{tab:H2A-consensus} for details.}
+    \label{tab:H2B-consensus}
+    \input{results/table-H2B-align}
+
+    \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
+    \captionof{figure}{Probability sequence logo with all H2B sequences.
+                       See the caption of \tref{fig:H2A-weblogo} for details.}
+    \label{fig:H2B-weblogo}
+  \end{TableAndFigure*}
+
+
+
+  \begin{TableAndFigure*}
+    \captionof{table}{Description of all H3 isoforms relative to the most
+                      common protein sequence. See caption of
+                      \tref{tab:H2A-consensus} for details.}
+    \label{tab:H3-consensus}
+    \input{results/table-H3-align}
+
+    \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
+    \captionof{figure}{Probability sequence logo with all H3 sequences.
+                       See the caption of \tref{fig:H2A-weblogo} for details.}
+    \label{fig:H3-weblogo}
+  \end{TableAndFigure*}
+
+  \begin{TableAndFigure*}
+    \captionof{table}{Description of all H4 isoforms relative to the most
+                      common protein sequence. See caption of
+                      \tref{tab:H2A-consensus} for details.}
+    \label{tab:H4-consensus}
+    \input{results/table-H4-align}
+
+    \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
+    \captionof{figure}{Probability sequence logo with all H4 sequences.
+                       See the caption of \tref{fig:H2A-weblogo} for details.}
+    \label{fig:H4-weblogo}
+  \end{TableAndFigure*}
 
   Studies that only make reference to the histone type,
   are incomplete on their description. To make matters worse, the existence
@@ -24,17 +82,6 @@
   automatically from the sequences available online as reference.
 
 
-  The logica is that variance between canonical isoforms is too small to have a likely
-  different function. However, the variable H3.3 is only slightly different from the
-  canonical H3 and seems to be special.
-
-
-  It is an attractive idea that H3 and H4, which are at the core of the core,
-  have less variance on their sequence as result of optimized sequence for stability
-  while H2A, and H2B don't have to suffer such constraint.
-
-  Most of the PTM are in the histone tails but a few are within the histone fold (H3 T45 for example)
-
   \subsection{Sequence}
     When dealing with sequence of histone proteins, it is standard practice to
     ignore the start methionine as this is likely to be cleaved. The end
@@ -42,9 +89,9 @@
     or H3~K4, are actually referent to the amino acids at position 140 and 5.
 
     %% if we want to change our stance in this, we only need to uncomment
-    %% 3 lines in MyLib.pm, in the routine that reads the sequence files
+    %% 3 lines in MyLib.pm, in the routine that reads the sequence files.
     It is a standard guideline to use the primary translation product when
-    refering to protein locations, not a mature protein after
+    referring to protein locations, not a mature protein after
     post-translation modifications \citep{desc-seq-variant}.
     This prevents confusions, specially for anyone less
     used to this histone divergence from common standards.
@@ -76,59 +123,75 @@
 
     Whether these proteins actually ever happen to duplicate the nucleosome functions...
 
-  \subsection{H2A}
-    \begin{TableAndFigure*}
-      \captionof{table}{histone H2A protein consensus}
-      \label{tab:H2A-consensus}
-      \input{results/table-H2A-align}
+  \subsection{Canonical variance}
+    %% Rather than having a subsection for each histone type (I don't
+    %% think we have that much to say about them anyway), we get them
+    %% all together, discuss the variance within them, and if necessary
+    %% create a subsubsection
 
-      \includegraphics[width=\textwidth]{seqlogo_H2A.pdf}
-      \captionof{figure}{WebLogo of all H2A sequences. The bottom line are the amino acids
-                         of H2AFJ whose sequence is different from any of the H2A proteins}
-      \label{fig:H2A-weblogo}
-    \end{TableAndFigure*}
+    Current view on canonical histone is that the difference within themselves
+    is likely to be too small to be of any importance. We are not aware of any
+    study on functional differences between them, and very little on
+    expression differences. However, histones that are currently perceived as
+    variants, such as H2AFJ and H3.3 have no more differences to the most
+    common canonical sequence than some canonical isoforms.
 
-    \todo[inline]{comment on H2AFJ}
+    Histones proteins are among the most well conserved sequences throughout
+    evolution which is usually seen as result of an high selection pressure.
+    An overview on the histone variance could then be a pointer for locations
+    with less structural importance. On the other hand, a difference in
+    sequence that is present in several isoforms or conserved in other
+    organisms can be a pointer for a variant within the canonical.
 
-  \subsection{H2B}
-    \begin{TableAndFigure*}
-      \captionof{table}{histone H2B protein consensus}
-      \label{tab:H2B-consensus}
-      \input{results/table-H2B-align}
+    This can be appreciated by the difference in variation within H3 and H4,
+    against H2A and H2B. The H3 and H4 histones display much less variation
+    which may be related to being at the center of the nucleosome core and greater
+    requirements in stability, while the H2A/H2B dimer, with an higher exchange
+    rate, is allowed more flexibility, speciality at the tails.
 
-      \includegraphics[width=\textwidth]{seqlogo_H2B.pdf}
-      \captionof{figure}{WebLogo of all H2B sequences.}
-      \label{fig:H2B-weblogo}
-    \end{TableAndFigure*}
+    %% TODO: all the things we have to say here
+    %%
+    %%        * alignment of H3.3 to most common H3. It's pretty similar. Same
+    %%          for H2AFJ
+    %%        * H3.3 is a real variant. H3.1 and H3.2 are not.
+    %%        * H3.1 comes from HIST1 and HIST3 while H3.2 is from HIST3
+    %%        * H2A.1 and H2A.2 do not map to histone clusters
 
-  \subsection{H3}
+    \subsubsection{Histone subtypes}
+      \todo[inline]{this is really short because it has mostly been said
+                    in the introduction when explaining the nomenclature
+                    and at the start of this section when bitching again
+                    about it again. Should we spread the leftovers among
+                    those 2 places, or reduce the details there to
+                    increase it here? Just loose sentences of what's left
+                    to say, until we know what do about it.}
 
-    All H3.1 are in the histone clusters 1 and 3. All the H3.2 are in cluster 2.
-    The variant H3.3 is not in clusters.
+    The distinction between H2A.1 and H2A.2 is on a single amino acid, the
+    change L52M. This is despite other changes within the H2A.2 itself,
+    including deletion of 4 amino acids in the tail of HIST2H2AC (this is
+    one of the H2A.2). The H2A.1 sub-types are all of the histones in cluster
+    1, and 3, and some in cluster 2. The H2A.2 are some of histones in
+    cluster 2 (but not all). Really, the distinction between this two
+    sub-types should be avoided.
 
+    The H3.1 and H3.2 are different by change in C97S. At least for this case,
+    the H3.1 appear in cluster 1, while all the H3.2 appear in cluster 2.
+    Weird thing is, the only H3 in cluster 3, is also an H3.1 despite its
+    many differences. So many differences really, that it is a surprise it
+    is a coding protein. Even more weird, is that in mice, the C97S change
+    is the most common sequence and happens in all cluster 2 and half of
+    cluster 1 (not published, I saw this on the mice branch).
 
-    \begin{TableAndFigure*}
-      \captionof{table}{histone H3 protein consensus}
-      \label{tab:H3-consensus}
-      \input{results/table-H3-align}
+    \subsubsection{H4}
+      %% these should all be the same but they are not. And there's an H4 in HIST4
+      %% which is also present in mouse, which means has been conserved  in evolution
+      With the exception of HIST1H4G, all H4 genes encode the same protein.
+      Even HIST4H4 which is the only gene on that ``cluster''. And definitely
+      the histone on that cluster is expressed.
 
-      \includegraphics[width=\textwidth]{seqlogo_H3.pdf}
-      \captionof{figure}{WebLogo of all H3 sequences.}
-      \label{fig:H3-weblogo}
-    \end{TableAndFigure*}
-
-  \subsection{H4}
-    %% these should all be the same but they are not. And there's an H4 in HIST4
-    %% which is also present in mouse, which means has been conserved  in evolution
-    With the exception of HIST1H4G, all H4 genes seem to encode the same protein. Even HIST4H4 which is the
-    only gene on that ``cluster''.
-    \begin{TableAndFigure*}
-      \captionof{table}{histone H4 protein consensus}
-      \label{tab:H4-consensus}
-      \input{results/table-H4-align}
-
-      \includegraphics[width=\textwidth]{seqlogo_H4.pdf}
-      \captionof{figure}{WebLogo of all H4 sequences.}
-      \label{fig:H4-weblogo}
-    \end{TableAndFigure*}
+    \subsubsection{H2AFJ}
+      This is also definitely expressed \citep{h2afj-report} and with a
+      poly(A) tail. It is not that much different from the canonical
+      H2A, and quite close to the cluster 4 (the one with a single
+      canonical H4 histone.
 
