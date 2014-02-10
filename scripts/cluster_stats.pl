@@ -76,7 +76,7 @@ foreach my $gene (@data) {
     my  $seq      = MyLib::load_seq("transcript", $transcripts[0], $path{sequences});
     my ($feature) = $seq->get_SeqFeatures("source");
     my ($locus)   = $feature->get_tag_values("map");
-    if ($locus =~ m/[\d]+[qp][\d\.]+/) {
+    if ($locus) {
       push (@{$canon{$cluster}{'locus'}}, $locus);
     } else {
       warn ("Could not find locus for $symbol in $transcripts[0]");

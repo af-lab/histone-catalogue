@@ -46,7 +46,7 @@ File::Path::remove_tree($seq_dir, {verbose => 1});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
-my $search = '"homo sapiens"[organism] ';
+my $search = '"mus musculus"[organism] ';
 $search   .= '(';
 $search   .= "$_*[gene name] OR " for (@MyVar::histones, "H1");               # get all variants
 $search   .= "HIST$_*[gene name] OR " for (1 .. $MyVar::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
@@ -55,7 +55,7 @@ $search   .= ')';
 
 ## run sequence extractor
 my @args = (
-  '--assembly',     'primary assembly',
+  '--assembly',     'Reference GRCm',
   '--genes',        'uid',
   '--pseudo',
   '--non-coding',
