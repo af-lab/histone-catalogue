@@ -124,6 +124,13 @@ sub load_csv {
     } else {
       warn ("Coding gene $uid named $genes{$uid}{'symbol'} has no protein and mRNA accession number")
         unless $genes{$uid}{'pseudo'};
+      ## FIXME  we are doing this for mus musculus only so it works. The problem
+      ##        is that curation is not complete and some coding genes don't
+      ##        yet have sequences, or only have model sequences that need
+      ##        approval. The following line should be removed once curation
+      ##        is better and the code will fail properly. This line will
+      ##        mess up the count of coding and pseudo genes
+      $genes{$uid}{'pseudo'} = 1;
 
       ## if they are pseudo genes, we create an empty hash. If we don't
       ## then this would not exist and we'd have to keep cheking if it's
