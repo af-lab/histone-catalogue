@@ -107,7 +107,7 @@ sub load_csv {
     ## having a field for UID is not duplicating data because later we will
     ## use this to make sets of each entry, and won't have access to the key
     $genes{$uid}{'uid'}     //= $uid;
-    $genes{$uid}{'symbol'}  //= $$entry{'gene symbol'};
+    $genes{$uid}{'symbol'}  //= uc ($$entry{'gene symbol'});
     $genes{$uid}{'desc'}    //= $$entry{'gene name'};
     $genes{$uid}{'species'} //= $$entry{'species'};
     $genes{$uid}{'pseudo'}  //= $$entry{'pseudo'};
@@ -115,15 +115,22 @@ sub load_csv {
     $genes{$uid}{'chr_acc'} //= $$entry{'chromosome accession'};
     $genes{$uid}{'start'}   //= $$entry{'chromosome start coordinates'};
     $genes{$uid}{'end'}     //= $$entry{'chromosome stop coordinates'};
-    unless ($genes{$uid}{'pseudo'}) {
+
+    my $nm_acc = $$entry{'transcript accession'};
+    my $np_acc = $$entry{'protein accession'};
+    if ($nm_acc && $np_acc) {
       $genes{$uid}{'transcripts'}{$$entry{'transcript accession'}} = $$entry{'protein accession'};
       $genes{$uid}{'proteins'   }{$$entry{'protein accession'   }} = $$entry{'transcript accession'};
+    } else {
+      warn ("Coding gene $uid named $genes{$uid}{'symbol'} has no protein and mRNA accession number")
+        unless $genes{$uid}{'pseudo'};
+
+      ## if they are pseudo genes, we create an empty hash. If we don't
+      ## then this would not exist and we'd have to keep cheking if it's
+      ## a pseudo gene
+      $genes{$uid}{'transcripts'} //= {};
+      $genes{$uid}{'proteins'   } //= {};
     }
-    ## if they are pseudo genes, we create an empty hash. If we don't
-    ## then this would not exist and we'd have to keep cheking if it's
-    ## a pseudo gene
-    $genes{$uid}{'transcripts'} //= {};
-    $genes{$uid}{'proteins'   } //= {};
   }
   return %genes;
 }
@@ -140,7 +147,7 @@ sub load_canonical {
     my $symbol = $genes{$uid}{'symbol'};
 
     ## skip genes that don't look canonical and get cluster number
-    next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/;
+    next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/i;
 
     $genes{$uid}{'cluster'} = $1;
     $genes{$uid}{'histone'} = $2;
@@ -159,7 +166,7 @@ sub load_H1 {
   my %genes = load_csv (@_);
   my @h1;
   foreach my $uid (keys %genes) {
-    next unless $genes{$uid}{'symbol'} =~ m/^HIST\dH1/;
+    next unless $genes{$uid}{'symbol'} =~ m/^HIST\dH1/i;
     push (@h1, $genes{$uid});
   }
   return @h1;
@@ -172,7 +179,7 @@ sub load_variants {
     my $symbol = $genes{$uid}{'symbol'};
 
     ## skip genes that don't look canonical and get cluster number
-    next unless $symbol =~ m/^(($MyVar::histone_regexp)F|CENPA)/;
+    next unless $symbol =~ m/^(($MyVar::histone_regexp)F|CENPA)/i;
 
     ## $2 will be the histone if followed by F. If it's empty, then $1 will
     ## be CENPA which is a H3 variant
