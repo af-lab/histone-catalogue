@@ -55,7 +55,7 @@ $search   .= ')';
 
 ## run sequence extractor
 my @args = (
-  '--assembly',     'primary assembly',
+  '--assembly',     'Reference GRCh',
   '--genes',        'uid',
   '--pseudo',
   '--non-coding',
