@@ -141,7 +141,7 @@ sub load_marzluff {
   close $file;
 
   my @reference = map {{
-    'symbol'   =>  $$_{'gene symbol'},
+    'symbol'   =>  uc ($$_{'gene symbol'}),
     'pseudo'   =>  $$_{'pseudo'},
     'proteins' => {$$_{'gene symbol'} => ''},
   }} @$data;
