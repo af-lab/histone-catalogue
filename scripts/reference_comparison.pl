@@ -96,18 +96,12 @@ my %pairs = (
              "Now identified as pseudo genes", => \@{$changes{pseudo}},
              "Now identified as coding genes", => \@{$changes{coding}},
              );
-
-my $space = 1; # have we left a space yet?
+my @blocks;
 foreach (keys %pairs) {
-  if (@{$pairs{$_}}) {
-    say {$tab_fh} "  \\addlinespace" unless $space;
-    say {$tab_fh} "  $_: \\\\";
-    say {$tab_fh} "  " . join (", ", sort (@{$pairs{$_}})) . "\\\\";
-    $space = 0;
-  } else {
-    $space = 1;
-  }
+  push (@blocks, "  $_: \\\\\n  " . join (", ", sort (@{$pairs{$_}})) . "\\\\")
+    if (@{$pairs{$_}});
 }
+say {$tab_fh} join ("\n  \\addlinespace\n", @blocks);
 
 say {$tab_fh} "  \\bottomrule";
 say {$tab_fh} "\\end{tabular}";
