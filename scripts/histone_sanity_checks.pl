@@ -95,7 +95,7 @@ foreach my $gene (@data) {
         ## find the CDS for this specific gene
         foreach my $feat ($gseq->get_SeqFeatures) {
           next unless $feat->primary_tag eq "CDS";
-          next unless scalar (grep {$_ eq $symbol} $feat->get_tag_values("gene"));
+          next unless scalar (grep {lc ($_) eq lc ($symbol)} $feat->get_tag_values("gene"));
           my $start = $feat->end;
           my $end   = $start + $MyVar::stlp_dist + $MyVar::stlp_length;
           if ($end > $seq->length) {
