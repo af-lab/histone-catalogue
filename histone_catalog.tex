@@ -56,26 +56,23 @@
   \maketitle
 
   \begin{abstract}
-    The core histone proteins are encoded by a large family of genes distributed in clusters across the
-    genome. It is often overlooked that the canonical histone genes display variation within
-    themselves, encoding \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B,
-    \HThreeUniqueProteins{} H3, and \HFourUniqueProteins{} H4
-    unique protein sequences. This canonical histone isoforms diversity exists
-    in addition to the more divergent histone variants that perform specific chromatin roles.
-
-    These variants have received little attention and no specialized function
-    or expression profile is known about them, despite some of them displaying
-    more variance than the ``real'' variants.
-    For the human histones, the percentage identity of the protein sequence are
-    approximately, \HTwoAPID{}, \HTwoBPID{}, \HThreePID{}, and \HFourPID{}\%, for
-    the canonical H2A, H2B, H3, and H4 respectively.
-
-    Annotation of the human genome is in flux and is constantly being updated and enriched in reference
-    databases such as RefSeq. To avoid the obsolescence of manual surveys but maintain the readability
-    of scientific literature, we have developed a novel software framework that dynamically generates
-    an up-to-date canonical histone catalogue based on human genome annotations and inserts the
-    information into this paper format. We show how this can be readily adapted to histones of other
-    organisms and applied to other gene families.
+    Core histone proteins are encoded by a large family of genes distributed in \todo{total histone clusters} clusters across the human genome.
+	In total there are \todo{total histone genes} canonical core histone genes, of which \HTwoACodingGenes{} encode H2A, \HTwoBCodingGenes{} H2B,
+	\HThreeCodingGenes{} H3 and \HFourCodingGenes{} H4 along with a further \todo{total histone pseudogenes} pseudogenes.
+	The histone genes display coding variation that gives rise to \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B, 
+	\HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} unique protein isoforms.
+	This represents a surprising and seldom recognised variation in amino acid identity 
+	\HTwoAPID{}\%, \HTwoBPID{}\%, \HThreePID{}\% and \HFourPID{}\% for canonincal H2A, H2B, H3 and H4 respectively 
+	that exists in parallel to the well-known divergence and specialisation of variant histones.
+	Common canonical core histone designations such as H2A.1 and H3.1 also encompass this protein sequnece heterogeneity. 
+	Isoform sequence variation has received little attention. As a first step to clarifying whether specialised functions 
+	or expression profiles exist, we have curated and catalogued the human canonical core histone genes.
+	During this work we and other have contributed multiple corrections to human histone annotations, 
+	reflecting the constant flux of the human genome bieng constantly being updated and enriched in reference databases. 
+	To avoid the obsolescence of this catalogue but maintain readability of scientific literature, we have developed 
+	a novel software framework that dynamically generates an up-to-date canonical histone catalogue based on genome annotations 
+	and inserts the information into this manuscript format. 
+	We show that it can be readily adapted to histones of other organisms and applied to other gene families.
   \end{abstract}
 
   \input{sections/intro.tex}
