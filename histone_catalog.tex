@@ -40,6 +40,17 @@
 \input{results/variables-utr}
 \input{data/variables-Marzluff-stats}
 
+%% We define a style here which will be used around all the values found
+%% by the scripts. The idea is to place them in a grey box so that people
+%% reading the paper can really get the idea that the values in the text
+%% are automatically generated. The problem is that the variables are not
+%% simple numbers or text, and we want to make operations with them here
+%% in LaTeX. So we get an handy trick, and redefine FPeval.
+%% See http://tex.stackexchange.com/questions/159155 for details
+\newcommand{\ScriptValue}[1]{\setlength{\fboxsep}{2pt}\colorbox[gray]{0.8}{#1}}
+\let\OldFPeval\FPeval
+\def\FPeval{\renewcommand{\ScriptValue}[1]{##1}\OldFPeval}
+
 \author{David Miguel Susano Pinto and Andrew Flaus}
 \title{The canonical core histone catalogue}
 
