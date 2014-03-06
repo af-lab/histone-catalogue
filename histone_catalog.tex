@@ -40,6 +40,17 @@
 \input{results/variables-utr}
 \input{data/variables-Marzluff-stats}
 
+%% We define a style here which will be used around all the values found
+%% by the scripts. The idea is to place them in a grey box so that people
+%% reading the paper can really get the idea that the values in the text
+%% are automatically generated. The problem is that the variables are not
+%% simple numbers or text, and we want to make operations with them here
+%% in LaTeX. So we get an handy trick, and redefine FPeval.
+%% See http://tex.stackexchange.com/questions/159155 for details
+\newcommand{\ScriptValue}[1]{\setlength{\fboxsep}{2pt}\colorbox[gray]{0.8}{#1}}
+\let\OldFPeval\FPeval
+\def\FPeval{\renewcommand{\ScriptValue}[1]{##1}\OldFPeval}
+
 \author{David Miguel Susano Pinto and Andrew Flaus}
 \title{The canonical core histone catalogue}
 
@@ -56,11 +67,23 @@
   \maketitle
 
   \begin{abstract}
+<<<<<<< HEAD
     Core histone proteins are encoded by a large family of genes distributed in \todo{total histone clusters} clusters across the human genome.
 	In total there are \todo{total histone genes} canonical core histone genes, including \HTwoACodingGenes{} for H2A, \HTwoBCodingGenes{} for H2B,
 	\HThreeCodingGenes{} for H3 and \HFourCodingGenes{} for H4, along with at least \todo{total histone pseudogenes} total pseudogenes.
 	The histone genes display coding variation that gives rise to \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B, 
 	\HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} H4 unique protein isoforms.
+=======
+    Core histone proteins are encoded by a large family of genes distributed
+    in \todo{total histone clusters} clusters across the human genome.
+	In total there are \TotalGenes{} canonical core histone genes, including
+	\HTwoACodingGenes{} for H2A, \HTwoBCodingGenes{} for H2B,
+	\HThreeCodingGenes{} for H3 and \HFourCodingGenes{} for H4, along with
+	over \TotalPseudoGenes{} total pseudogenes.
+	The histone genes display coding variation that gives rise to
+	\HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B, 
+	\HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} unique protein isoforms.
+>>>>>>> d49e0e0a292d22b6c067e4fc9ae72f422a66440c
 	This represents a surprising and seldom recognised variation ranging 
 	from \todo{lowest identity}\% amino acid identity in \todo{lowest identity histone type}
 	to \todo{highest identity}\% amino acid identity in \todo{highest identity histone type}. 

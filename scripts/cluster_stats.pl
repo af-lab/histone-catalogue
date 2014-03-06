@@ -100,6 +100,7 @@ open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writin
 
 ## Get the counts and stats for each of the clusters
 my $formatter = Number::Format->new(-decimal_digits => $MyVar::size_precision);
+my %totals;
 foreach my $cluster_k (keys %canon) {
   my $cluster = $canon{$cluster_k};
   ## Calculate the length (in bp) of each cluster
@@ -146,8 +147,15 @@ foreach my $cluster_k (keys %canon) {
     say {$stats} MyLib::latex_newcommand ($histone."CodingIn$cluster_k", $$cluster{$histone}{'coding'});
     say {$stats} MyLib::latex_newcommand ($histone."PseudoIn$cluster_k", $$cluster{$histone}{'pseudo'});
     say {$stats} MyLib::latex_newcommand ($histone."TotalIn$cluster_k",  $$cluster{$histone}{'total'});
+    $totals{pseudo} += $$cluster{$histone}{pseudo};
+    $totals{coding} += $$cluster{$histone}{coding};
+    $totals{total}  += $$cluster{$histone}{total};
   }
 }
+
+say {$stats} MyLib::latex_newcommand ("TotalGenes",       $totals{total});
+say {$stats} MyLib::latex_newcommand ("TotalCodingGenes", $totals{coding});
+say {$stats} MyLib::latex_newcommand ("TotalPseudoGenes", $totals{pseudo});
 
 ## Get the counts and stats for each of the histone types
 foreach my $histone (@MyVar::histones) {

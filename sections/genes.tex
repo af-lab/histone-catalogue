@@ -115,10 +115,6 @@
 %    produced at S~phase. Some variant histones have introns.
 
     \begin{table*}
-      %%        maybe we should generate the table automatically, instead of
-      %%        generating all this variables? Or we could do the operations
-      %%        in LaTeX with fp package:
-      %%        \FPeval{result}{clip(\var1{}+\var2{})} \result
       \caption{Count of expected coding and pseudo core histone genes,
                divided by histone cluster and histone type. The right-hand
                operand (marked with $\psi$) of each column corresponds to the
@@ -131,21 +127,21 @@
                 & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
                 & \multicolumn{2}{c}{Total} \\
         \midrule
-        HIST1   & \HTwoACodingInHISTOne{}   & \HTwoAPseudoInHISTOne{}
+        HIST1   & \HTwoACodingInHISTOne{}     & \HTwoAPseudoInHISTOne{}
                 & \HTwoBCodingInHISTOne{}     & \HTwoBPseudoInHISTOne{}
                 & \HThreeCodingInHISTOne{}    & \HThreePseudoInHISTOne{}
                 & \HFourCodingInHISTOne{}     & \HFourPseudoInHISTOne{}
-                & \CodingGenesInHISTOne{}   & \PseudoGenesInHISTOne{} \\
+                & \CodingGenesInHISTOne{}     & \PseudoGenesInHISTOne{} \\
         HIST2   & \HTwoACodingInHISTTwo{}     & \HTwoAPseudoInHISTTwo{}
                 & \HTwoBCodingInHISTTwo{}     & \HTwoBPseudoInHISTTwo{}
                 & \HThreeCodingInHISTTwo{}    & \HThreePseudoInHISTTwo{}
                 & \HFourCodingInHISTTwo{}     & \HFourPseudoInHISTTwo{}
-                & \CodingGenesInHISTTwo{}   & \PseudoGenesInHISTTwo{} \\
+                & \CodingGenesInHISTTwo{}     & \PseudoGenesInHISTTwo{} \\
         HIST3   & \HTwoACodingInHISTThree{}   & \HTwoAPseudoInHISTThree{}
                 & \HTwoBCodingInHISTThree{}   & \HTwoBPseudoInHISTThree{}
                 & \HThreeCodingInHISTThree{}  & \HThreePseudoInHISTThree{}
                 & \HFourCodingInHISTThree{}   & \HFourPseudoInHISTThree{}
-                & \CodingGenesInHISTThree{} & \PseudoGenesInHISTThree{} \\
+                & \CodingGenesInHISTThree{}   & \PseudoGenesInHISTThree{} \\
         HIST4   & \HTwoACodingInHISTFour{}    & \HTwoAPseudoInHISTFour{}
                 & \HTwoBCodingInHISTFour{}    & \HTwoBPseudoInHISTFour{}
                 & \HThreeCodingInHISTFour{}   & \HThreePseudoInHISTFour{}
@@ -156,7 +152,7 @@
                 & \HTwoBCodingGenes{}       & \HTwoBPseudoGenes{}
                 & \HThreeCodingGenes{}      & \HThreePseudoGenes{}
                 & \HFourCodingGenes{}       & \HFourPseudoGenes{}
-				& \todo{Total histone genes}  & \todo{Total histone pseudogenes} \\
+                & \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
         \bottomrule
       \end{tabular}
     \end{table*}

@@ -239,7 +239,7 @@ sub latex_newcommand {
   my $value   = $_[1];
   ## we need to set the height of the color box manually otherwise \colorbox
   ## will change the height of the line
-  return "\\newcommand{\\$command}{\\setlength{\\fboxsep}{2pt}\\colorbox[gray]{0.8}{$value}}";
+  return "\\newcommand{\\$command}{\\ScriptValue{$value}}";
 }
 
 ## Replaces numbers in a string by their english word, and capitalizes the
