@@ -3,7 +3,7 @@
   %% clusters subsection, comparing between other organisms, and the distribution of genes
   %% in each one. Only after this is known, can we explain gene nomenclature.
 
-  The genes encoding canonical histone isoforms are typically found in clusters in most metazoan genomes, 
+  The genes encoding canonical histone isoforms are found in clusters in most metazoan genomes, 
   possibly for regulatory functions and to facilitate sequence conservation.
   %% Removed HLB in interests of focus and length
 
@@ -11,45 +11,41 @@
     The human genome contains \todo{total histone clusters} histone gene clusters 
 	named as HIST1 to HIST\todo{total histone clusters} in order of decreasing histone gene count.
     The major and secondary histone gene clusters,
-    HIST1 and HIST2 on chromosomes~\HISTOneLocus{} and \HISTTwoLocus{} respectively,
-    contain contiguous high density arrays of histone genes. On the other hand, the minor
-    cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of them, while HIST4
-    on \HISTFourLocus{} can barely be considered a cluster with its single gene
+    HIST1 on chromosome~\HISTOneLocus{} and HIST2 on chromosome~\HISTTwoLocus{},
+    contain contiguous high density arrays of histone genes.
+	The minor cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of genes.
     (\tref{tab:histone-gene-count}).
 
     HIST1 contains \todo{percent genes in HIST1}\% of all histone genes, 
 	encoding \CodingGenesInHISTOne{}~functional core histone genes plus all H1 histones. 
-	It spans \HISTOneSpan{} and is the second most gene dense region at megabase scale in the genome \citep{MHC-III-analysis}. 
-	The HIST1 location on chromosome~\HISTOneLocus{}
-	is at the distal end of the major histocompatibility complex (MHC) in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
+	It spans \HISTOneSpan{} and is the second most gene dense region in the genome at megabase scale \citep{MHC-III-analysis}. 
+	The location of HIST1 on chromosome~\HISTOneLocus{}
+	puts it at the distal end of the major histocompatibility complex (MHC) in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
 	and it has been suggested that proximity to HIST1 can suppress recombinations in the MHC Class~I region \citep{MHC-repressed-by-HIST}.
 
     Although HIST2 contains only \CodingGenesInHISTTwo{}~coding genes it spans \HISTTwoSpan{} centred at \HISTTwoLocus{}.
-	The genes are grouped in two sub-clusters with an extremely distant single pseudogene 
-	and the coding gene density within the sub-culsters is comparable to HIST1. ???
+	The histone genes in HIST2 are grouped in two sub-clusters 
+	within which the coding gene density is comparable to HIST1.
 	%% Is the sub-cluster density a correct statement?
-    HIST2 at \HISTTwoLocus{} is prone to deletion and recurrent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}
+    HIST2 is prone to deletion and recurrent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}
 
 	%% Removed HIST3 and HIST4 stuff because it doesn't say much
 	%% Removed birth and death because it is not directly relevant to this data
 	%% Removed Alu stuff because it has no biological implications
 	%% Definitely need to keep these observation, maybe put in thesis discussion?
-
-	%% By sea urchin do you mean L variegatus?
-	Invertebrates histones such as \textit{Lytechinus variegatus} and \textit{Drosophila melanogaster} 
-	occur in tens to hundreds of tandem repeats of units with one copy of the five histones.
-	However, there is no apparent repetitive organisation of histones genes in the human genome 
+	There is no apparent repetitive organisation of histones genes in the human genome 
 	and the dispersive organisation suggests that histones expression is regulated by local elements \citep{close-regulators}.
+	%% By sea urchin do you mean L variegatus?
+	In contrast, invertebrates histones such as \textit{Lytechinus variegatus} and \textit{Drosophila melanogaster} 
+	occur in tens to hundreds of tandem repeating units comprising a copy of each of the five histones.
 
   \subsection{Histone gene nomenclature}
-    Histone genes have a specific nomenclature that encodes the cluster number and its
-    position relative to the other histones \citep{Marzluff02}. An histone gene
-    symbol, HIST1H3B for example, is divided into 3 parts: the cluster (HIST1),
-    the histone type (H3), and its position (B). The position letter is interpreted as
-    its position relative to the other histones of the same type, in the same cluster.
-    Since the start of the cluster is defined as the side closer to the centromere, the
-    example HIST1H3B translates to the second H3 of the histone cluster, the
-    second closest to the centromere (\fref{fig:nomenclature}).
+    Histone genes have a HUGO Gene Nomenclature Committee (HGNC) nomenclature 
+	that encodes the cluster number and its position relative to the other histones \citep{Marzluff02}.
+	A gene symbol is divided into 3 parts: the cluster, the histone type, and its positional order.
+	The position letter is relative to the other histones of the same type, in the same cluster.
+    The orientation of the cluster is defined from the centromeric side, 
+	so HIST1H3B is the second closest H3 gene to teh ecntromere in the HIST1 cluster (\fref{fig:nomenclature}).
 
     \begin{figure*}
       \centering
@@ -61,36 +57,36 @@
       \label{fig:nomenclature}
     \end{figure*}
 
-    Two exceptions were made to this rule: 1) A missing position letter on the symbol indicates
-    no other histones of the same type on the cluster. This is the case of HIST3H2A, the
-    single H2A gene in HIST3. 2) There was no human HIST1H2AF. It exists an Hist1h2af mouse
-    histone though, and this exception is likely to have been a compromise to accommodate
-    matching the human symbols to the mouse orthologs, and ease the cross of data between the
-    two model organisms.
+    Two exceptions were originally applied to these simple rules: 
+	1) A missing position letter on the symbol indicates no other histones of the same type on the cluster. 
+	This is the case of HIST3H2A, the single H2A gene in HIST3. 
+	2) There was no human HIST1H2AF although Hist1h2af exists in mouse. This exception maintains synteny so that
+    human and mouse orthologs have equivalnet symbols to ease comparisons.
 
-    This was the original nomenclature as approved by the HUGO Gene Nomenclature Committee (HGNC)
-    when the human genome was being finalized. However, new histones have since been
-    reported (\tref{tab:difference-from-Marzluff02}) which forced new exceptions on the
-    nomenclature to keep its apparent organization. For example, HIST2H2AA was renamed
-    HIST2H2AA3 and a new HIST2H2AA4 has been added. Formerly, there was no distinction
-    between the symbols of pseudo and coding genes, but new pseudo genes are suffixed with
-    PS\# by order of discovery. But the ``old'' pseudo genes retain their original symbols
-    so the lack of suffix does not indicate a coding protein.
-    The end result of this nomenclature is that to avoid changing previously
-    assigned gene symbols, the nomenclature lost its meaning. 
+	Unfortunatley the uncovering of new histone genes since the original naming (\tref{tab:difference-from-Marzluff02}) 
+	has forced additional nomenclature exceptions to maintain the apparent organization.
+	For example, HIST2H2AA was renamed HIST2H2AA3 and a new HIST2H2AA4 has been added.
+	%% What are HIST2H2AA1 and HIST2H2AA2?
+	
+	In addition there was no distinction between the symbols of pseudo and coding genes, 
+	but new pseudo genes have since been suffixed with PS\# by order of discovery. 
+	Nevertheless the ``old'' pseudo genes retain their original symbols 
+	so the lack of suffix does not indicate a coding protein.
 
-    The symbols for variant histones are much different and simpler. Due to their dispersion
-    through the genome, no attempt was made to encode relative information on their name. In
-    a similar fashion to H2AFX, symbols of histone variants are reduced to their histone type,
-    followed by the letter F (standing for Family), and a set of characters that identified
-    the variant, usually with historical or functional interpretation. For example, H2AFX and
-    H2AFZ are named accordingly to their migration order in acetic acid-urea gels
+    Although gene names have been maintained, these complex exceptions have caused the nomenclature 
+	to lose much of its location meaning. 
+
+    The gene symbols for variant histones are different and simpler. 
+	Since they are disributed through the genome without clustering, 
+	no attempt was made to encode positional information on their name.
+	Histone variant gene nomenclature is based on the histone type,
+    followed by the letter F (standing for Family), 
+	and a set of characters that identify the variant on historical or functional grounds. 
+	For example, H2AFX and H2AFZ are named accordingly to their migration in acetic acid-urea gels
     \citep{HTwoA-first-variants}.
-    The only exception to this is the H3 variant CENP--A, since it is also the component A
-    of the CENtromeric Protein, initially reported by \cite{CENPA-first-report} before being
-    identified as an histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
-
-
+    The only exception to this is the H3 variant CENP--A, 
+	because it is also the component A of the CENtromeric Proteins
+	 \cite{CENPA-first-report} and was only later identified as a histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
 
   \subsection{Gene promoters}
     \todo[inline]{We already have the 500 bp upstream of the TSS... we should
