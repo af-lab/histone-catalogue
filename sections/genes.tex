@@ -27,26 +27,38 @@
 	The histone genes in HIST2 are grouped in two sub-clusters 
 	within which the coding gene density is comparable to HIST1.
 	%% Is the sub-cluster density a correct statement?
-    HIST2 is prone to deletion and recurrent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}
+	An additional pseudogene is located far distant from the cluster.
+	%% I do want to mention this point but not get into detail nor commit a distance statement that could vary in future. Should we name the pseudogene?
+    HIST2 is reported to be prone to deletions and recurrent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}.
+	%% Recurrent means coming around over and over again, regularly in same way. Is 'frequent' a better word because it implies less regularity?
 
 	%% Removed HIST3 and HIST4 stuff because it doesn't say much
 	%% Removed birth and death because it is not directly relevant to this data
 	%% Removed Alu stuff because it has no biological implications
 	%% Definitely need to keep these observation, maybe put in thesis discussion?
-	There is no apparent repetitive organisation of histones genes in the human genome 
-	and the dispersive organisation suggests that histones expression is regulated by local elements \citep{close-regulators}.
-	%% By sea urchin do you mean L variegatus?
+	Although the histone genes are tightly clustered in HIST1 and HIST2 there is no obvious repetitive organisation 
+	and the dispersive organisation has been suggested to imply that their expression is regulated by local elements \citep{close-regulators}.
 	In contrast, invertebrates histones such as \textit{Lytechinus variegatus} and \textit{Drosophila melanogaster} 
-	occur in tens to hundreds of tandem repeating units comprising a copy of each of the five histones.
+	occur in tens to hundreds of tandem repeats of the five histones.
 
   \subsection{Histone gene nomenclature}
-    Histone genes have a HUGO Gene Nomenclature Committee (HGNC) nomenclature 
-	that encodes the cluster number and its position relative to the other histones \citep{Marzluff02}.
-	A gene symbol is divided into 3 parts: the cluster, the histone type, and its positional order.
-	The position letter is relative to the other histones of the same type, in the same cluster.
-    The orientation of the cluster is defined from the centromeric side, 
-	so HIST1H3B is the second closest H3 gene to teh ecntromere in the HIST1 cluster (\fref{fig:nomenclature}).
-
+    Histone genes have a Human Genome Organisation (HUGO) Gene Nomenclature Committee (HGNC) naming system 
+	based on encoding the cluster number and position relative to other histones \citep{Marzluff02}.
+	%% Should we try putting a url reference into the manuscript?
+	%% http://www.genenames.org/genefamilies/histones
+	The official gene symbol is divided into 3 parts: the cluster, the histone type, and its positional order (\fref{fig:nomenclature}).
+	The position letter is relative to the other histones of the same type in the same cluster, 
+	and the orientation of the cluster is defined from the centromeric side. 
+	For example, HIST1H2BD is the fourth closest H2B gene to the centromere in the HIST1 cluster.
+	%% Changed example to match figure!
+	
+	In contrast histone variant genes are present in only one or two copies 
+	that are dispersed across the genome outside clusters 
+	so their nomenclature comprises the 3 parts: histone type, F for family, and an arbitrary historical identifier.
+	For example, H2AFX is the gene name for H2AX.
+	Where two isoforms exist the second has a number associated, 
+	such as H2AY and H2AY2 for the two genes encoding isoforms of macroH2A.
+	
     \begin{figure*}
       \centering
       \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
@@ -57,59 +69,39 @@
       \label{fig:nomenclature}
     \end{figure*}
 
-    Two exceptions were originally applied to these simple rules: 
-	1) A missing position letter on the symbol indicates no other histones of the same type on the cluster. 
-	This is the case of HIST3H2A, the single H2A gene in HIST3. 
-	2) There was no human HIST1H2AF although Hist1h2af exists in mouse. This exception maintains synteny so that
-    human and mouse orthologs have equivalnet symbols to ease comparisons.
+    Two exceptions were originally applied to these simple rules \citep{Marzluff02}: 
+	Firstly, the position letter is omitted if there are no other histones of the same type in the cluster, 
+	such as for HIST3H2A which is the sole H2A gene in HIST3. 
+	Secondly, the human and mouse histone clusters are largely syntenic 
+	so positional identifiers were skipped where one genome lacked a particular isoform 
+	in order to maintain the equivalence of identifiers. 
+	Thus there was no human HIST1H2AF but Hist1h2af exists in mouse.
 
-	Unfortunatley the uncovering of new histone genes since the original naming (\tref{tab:difference-from-Marzluff02}) 
-	has forced additional nomenclature exceptions to maintain the apparent organization.
+	Unfortunately several new histone genes have been uncovered since the original naming (\tref{tab:difference-from-Marzluff02}). 
+	This has forced additional nomenclature exceptions to maintain the apparent organization.
 	For example, HIST2H2AA was renamed HIST2H2AA3 and a new HIST2H2AA4 has been added.
 	%% What are HIST2H2AA1 and HIST2H2AA2?
 	
-	In addition there was no distinction between the symbols of pseudo and coding genes, 
-	but new pseudo genes have since been suffixed with PS\# by order of discovery. 
-	Nevertheless the ``old'' pseudo genes retain their original symbols 
-	so the lack of suffix does not indicate a coding protein.
+	The use of a numerical identifier for the H3.3 variant causes an exception 
+	where isoforms take on a distinguishing letter instead of a number, 
+	thus producing H3F3A, H3F3B and H3F3C.
+	
+	For historical reasons, the H3 variant CENP--A takes its name as 
+	component A of the CENtromeric Proteins \cite{CENPA-first-report} 
+	and was only later identified as a histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
+	
+	Furthermore, there was no distinction originally made between pseudogenes and functional coding genes, 
+	so ??? is a pseudogene whereas its neighbour ??? is a coding gene.
+	%% Give an example of adjacent genes where one is pseudo and one is functional
+	Newly uncovered pseudogenes have since been suffixed with PS\# in order of discovery, such as HIST1H2APS2. 
+	The ``original'' pseudogenes retain their symbols, so the lack of suffix does not indicate a functional gene.
+	Furthermore, histone variant pseudogenes are suffixed instead with P\#, yielding symbols such as H2AFXP and H2AFZP5.
 
-    Although gene names have been maintained, these complex exceptions have caused the nomenclature 
-	to lose much of its location meaning. 
+    These complex exceptions have caused the originally informative nomenclature to lose much of its meaning. 
 
-    The gene symbols for variant histones are different and simpler. 
-	Since they are disributed through the genome without clustering, 
-	no attempt was made to encode positional information on their name.
-	Histone variant gene nomenclature is based on the histone type,
-    followed by the letter F (standing for Family), 
-	and a set of characters that identify the variant on historical or functional grounds. 
-	For example, H2AFX and H2AFZ are named accordingly to their migration in acetic acid-urea gels
-    \citep{HTwoA-first-variants}.
-    The only exception to this is the H3 variant CENP--A, 
-	because it is also the component A of the CENtromeric Proteins
-	 \cite{CENPA-first-report} and was only later identified as a histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
+%% Let's leave the promoters and introns because we don't have anything to say
 
-  \subsection{Gene promoters}
-    \todo[inline]{We already have the 500 bp upstream of the TSS... we should
-                do something with this data}
-
-    Because histone genes have been so well conserved throughout the evolution, they make
-    excellent models to study computational methods, even for promoters
-    \citep{histone-promoter-modeling}.
-
-    HIST1 is actually split into 2 parts, and different promoters have been reported for each
-    part \citep{HISTOne-different-transcripts}.
-
-    Automatic analysis of the genome after training with histone genes, identifies
-    several other genes that are involved in the cell replication with points
-    towards a common regulation method. They still lack the stem-loop though.
-
-%% We don't really have anything to say about introns. Canonical histones
-%% don't have them while variants might. We already said it on the introduction
-%  \subsection{Introns}
-%    Histone genes have no introns on their genes, probably to circumvent the
-%    requirement for primary transcript processing when histones must be rapidly
-%    produced at S~phase. Some variant histones have introns.
-
+%% This is arguably the most important table. We should cite it early and often!
     \begin{table*}
       \caption{Count of expected coding and pseudo core histone genes,
                divided by histone cluster and histone type. The right-hand
