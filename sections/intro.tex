@@ -1,81 +1,157 @@
 \section{Introduction}
-  %% Flow of introduction: histones are big part of the chromatin, the building unit.
-  %% Then first division, split by type. When we know the type, we can explain
-  %% nucleosome structure, which leads to core vs linker division. Then more history,
-  %% we found variants. New division of classes, canonical vs variant. Explain the
-  %% mess of variants, with all the names used for each division, and sometimes
-  %% clashing nomenclature. Finalize with what this paper is about.
 
   Histones are among the most abundant proteins in eukaryotic cells and contribute up to half the mass of chromatin. 
   They define the structure and accessibility of the nucleosome as the fundamental repeating unit of genome organisation 
   around which the DNA is wrapped \addref{Luger1997 Nature}.
-  In addition, the reactive side chains of histones are post-translationally modified 
+  In addition, the many chemically reactve sidechains of histones are post-translationally modified 
   as a nexus for signalling and heritable epigenetics. 
 
   Relationships within the histone family are described using a variety of terminologies
   reflecting various biochemical, functional and genomic distinctions (\tref{tab:histone-divisions})
   
   From a biochemical perspective, histones are abundant proteins 
-  that are readily isolated using their highly basic chemical character. 
+  that are readily isolated via their highly basic chemical character. 
   Successive improvements in fractionation ultimately revealed 5 main histone types 
-  with a nomenclature H1, H2A, H2B, H3 and H4 \citep{nomenclature}.
+  with nomenclature H1, H2A, H2B, H3 and H4 \citep{nomenclature}.
   An additional H1--related histone H5 is recognised in avian erythrocytes \citep{HFive-review}.
 
   Arginine and lysine content was used as an early distinction between the histones. 
   H1 has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as ``lysine-rich'' 
   whereas the remaining 4 histones are ``arginine-rich'' with highest ratios in isoforms of 
-  \HTwoAArgLysRatio{},  \HTwoBArgLysRatio{}, \HThreeArgLysRatio{} and \HFourArgLysRatio{}
+  \HTwoAArgLysRatio{}, \HTwoBArgLysRatio{}, \HThreeArgLysRatio{} and \HFourArgLysRatio{}
   for H2A, H2B, H3 and H4 respectively.
 
   The demonstration of the nucleosome as the fundamental repeating unit of chromatin \addref{Kornberg} 
   revealed that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
   nucleosome core particle, so they are referred to as ``core histones''. 
-  H1 associates with the linker DNA between nucleosome core particles and is referred to as a ``linker histone''.
+  
+  H1 associates with the linker DNA between nucleosome core particles and is referred to as a ``linker histone''. 
+  The 5 human somatic H1 isoforms and 6 tissue-specific variants 
+  have been described and catalogued in \addref{HarshmanFreitas2013}.
 
   Extracting histones and separating them by polyacrylamide gel electrophoresis (PAGE) 
-  using the strongly anionic detergent sodium dodecyl sulphate (SDS) and neutral buffers 
+  using the strongly anionic detergent sodium dodecyl sulphate (SDS PAGE) and neutral buffers 
   gives single bands for each histone type. 
   However, PAGE with non-ionic detergent Triton X--100 and uncharged urea as denaturants
-  in acetic acid buffer (TAU or AUT) allows the separation of histones into multiple species 
+  in acetic acid buffer (TAU or AUT PAGE) allows the separation of histones into multiple species 
   due to post-translational modifications and primary sequence variations within types \citep{PAGEND}. 
   These separations are the basis of subtype designations including H2A.1, H2A.2, H3.1, H3.2 and H3.3, 
-  althought even these designations include isoform heterogeneity \addref{}..
+  although some of these still include considerable isoform heterogeneity \addref{}..
 
   From a functional perspective, two classes of histone can be delineated 
   within each of the 4 core histone types (\tref{tab:typical-histone-differences}). 
   ``Canonical'' histones contribute to the bulk structure and generic function of chromatin. 
   Their expression is significantly elevated during S~phase to provide chromatin packaging 
   for DNA duplicated during replication. This led to their description as ``replication dependent'', 
-  although a supply of canonical histones is required throughout the cell cycle. 
-  In contrast, ``variant'' histones such as H2A.Z, TH2B and H3.3 
-  have less sequence identity in alignments and lower aggregate abundance. 
-  They play functionally distinct roles and are mostly expressed outside S~phase, 
+  even though a supply of canonical histones is required throughout the cell cycle. 
+  In contrast, ``variant'' histones such as H2A.Z, TH2B and H3.3 have less sequence identity and lower abundance. 
+  They play functionally specific roles and are mostly expressed outside S~phase, 
   so are labelled as ``replication independent''. 
-  Since nucleosomes containing variant histones are seen to be introduced in place of the canonical nucleosome, 
-  the variants are also referred as ``replacement'' histones.
+  Since nucleosomes containing histone variants are seen to be introduced in place of the canonical nucleosome, 
+  the are also referred as ``replacement'' histones.
   
   From a genomic perspective the canonical histone genes are typically found in \todo{total histone clusters} clusters, 
   possibly for regulatory efficiency and to facilitate their sequence conservation. 
-  These are somewhat confusingly referred to as ``allellic'' 
-  and the histone gene product isoforms are often referred to as ``wild type'' 
-  although their equivalence has not been tested.
+  These genes are somewhat confusingly referred to as ``allellic'' 
+  and the resulting protein isoforms are often referred to as ``wild type'' 
+  although they encompass variation in sequence and relative abundance, 
+  and their functional equivalence has not been tested.
   
   Metazoan canonical histone genes are distinctive in lacking introns, 
   and giving rise to non-polyadenylated proten coding transcripts 
   where turnover is independently regulated via a highly conserved 3' stem-loop. 
-  Most non-metazoan eukaryotes such as ciliate, fungi, and higher plants 
-  all exhibit typical polyadenylated canonical histones transcripts \addref{}.
+  However, most non-metazoan eukaryotes such as ciliate, fungi, and higher plants 
+  exhibit typical polyadenylated canonical histones transcripts \addref{}.
 
-  %% I moderated the point about people mis-understanding H2A.2 etc
-  
   Almost all variant histones are encode by single genes dispersed in the genome 
-  with typical properties including introns, alternative splicing and polyadenylated transcripts, 
-  so to contrast them with canonical histone genes they are referred to as ``non-allelic''
+  with typical properties including introns, alternative splicing and polyadenylated transcripts.
   
   %% I don't know enough to say there are no other non-polyadenylated protein transcripts so I washed this out
   %% I think the 3' stem loop is interesting but it is a distraction so let's leave it out
   %% Let's stay away from H1 because the danger is that we get sucked into including it too ...
 
+  Despite the importance of histones for chromatin organisation and extensive interest
+  in their role in epigenetics and regulation, the systematic curation and classification of human histone
+  gene and protein sequences has not been revisited recently \citep{Marzluff02}.
+  In the last decade the draft human genome has been finalised 
+  and rich annotations continue to propagate into reference gene and protein sequence databases (\tref{tab:difference-from-Marzluff02}).
+
+  %% This is primarily about canonical histones, not variants?
+
+  In this manuscript we provide a comprehensive catalogue of the nomenclature and distribution 
+  of canonical histone genes, proteins and pseudogenes. 
+  Since curation and annotation are dynamic and evolving, we have implemented an accompanying resource 
+  that can automatically regenerate this manuscript based on the most current data from the NCBI RefSeq database 
+  in order to retain its value as a reference source in an accessible format.
+  All automatically generated values are displayed with a light grey background.
+  This manuscript generation has remained stable in our laboratory for several years
+  and represents an example of ``reproducible research'' \addref{SchwabKarrenbachClaerbout2000?}
+  that could be adapted for other gene families.
+
+
+  \begin{table*}
+    \caption{Terminology describing histone variation}
+    \label{tab:histone-divisions}
+    \centering
+    \begin{tabular}{F p{\dimexpr(\textwidth-\eqboxwidth{firstentry}-4\tabcolsep)}}
+      \toprule
+	  Allelic variants &
+	  Copies of a canonical histone gene type.
+	  Not alleles by genetic definition. 
+	  Not histone variants by usual definition (see below). \\
+      \addlinespace
+	  Canonical histones &
+	  Core histones with properties described in \tref{tab:typical-histone-differences} 
+	  contributing the majority of protein mass in chromosome structure. 
+	  Includes multiple isoforms.
+	  \\
+      \addlinespace
+	  Heteromorphous variants &
+	  Histone variants, 
+	  with distinct function and localisation that are readily separated. \\
+      \addlinespace
+	  Homomorphous variants &
+	  Canonical histone subtypes,
+	  with relatively minor sequence differences requiring high resolution separation methods. \\
+      \addlinespace
+	  Families &
+	  Histone types. \\
+      \addlinespace
+	  Isoforms &
+	  Canonical histones or histone variants with similar sequence and function. \\
+      \addlinespace
+	  Non-allelic variants &
+	  Histone variants.
+	  Not alleles by genetic definition. \\
+      \addlinespace
+      Replacement histones &
+	  Histone variants. \\
+      \addlinespace
+	  Replication-dependent histones &
+	  Canonical histones. \\
+      \addlinespace
+	  Replication-independent histones &
+	  Histone variants. \\
+      \addlinespace
+	  Subtypes &
+	  Canonical histones separable by acetic acid-urea-triton (TAU) gel electrophoresis. 
+	  Nomenclature with number suffix includes H2A.1, H2A.2, H3.1 and H3.2. 
+	  Some subtypes encompass multiple isoforms and H3.3 is a histone variant. \\
+      \addlinespace
+	  Types &
+	  H1, H2A, H2B, H3 and H4 classes of histones
+	  related in sequence within each class and readily separable by SDS PAGE. 
+	  Types include both canonical histones and histone variants. \\
+      \addlinespace
+	  Variants &
+	  Core histones with properties described in \tref{tab:typical-histone-differences} 
+	  performing specialised functions and contributing limited amounts of total histone mass. \\
+      \addlinespace
+	  Wild type histones &
+	  Canonical histones. \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
 
   \begin{table*}
     \caption{General properties of canonical and variant histone proteins.}
@@ -94,67 +170,3 @@
     \end{tabular}
   \end{table*}
 
-
-  \begin{table*}
-    %% guess this could also be done in a description environment but...
-    \caption{Typical sub-divisions of histones.}
-    \label{tab:histone-divisions}
-    \centering
-    \begin{tabular}{F p{\dimexpr(\textwidth-\eqboxwidth{firstentry}-4\tabcolsep)}}
-      \toprule
-      Allelic variant & Same as canonical isoform. \\
-      Canonical &   All of the histones listed in \tref{tab:histone-catalogue}.
-                    Their main distinct features is a peak of expression during
-                    S--phase and are usually regarded as without special
-                    features. \\
-      \addlinespace
-      Heteromorphous & Same as variant. \\
-      \addlinespace
-      Homomorphous & Same as sub-type. \\
-      \addlinespace
-      Isoform   &   Often used incorrectly to mean a variant, it should be
-                    used to mean an alternate form of the same histone type
-                    either within the canonical or the same variant. \\
-      \addlinespace
-      Non-allelic variant & Same as variant. \\
-      \addlinespace
-      Replacement & Same as variant. \\
-      \addlinespace
-      Replication-dependent & Same as canonical. \\
-      \addlinespace
-      Replication-independent & Same as variant. \\
-      \addlinespace
-      Sub-type  &   H2A and H3 histones are sometimes further divided in the
-                    subtypes H2A.1, H2A.2, H3.1, and H3.2. This division should
-                    be avoided since it has no interpretation. Note that H3.3
-                    is an histone variant, not a sub-type. \\
-      \addlinespace
-      Type      &   One of the 5 histone types, H1, H2A, H2B, H3, or H4.\\
-      \addlinespace
-      Variant   &   All of the histones listed in \tref{tab:variant-catalogue},
-                    any histone that is not a canonical. Their main distinct
-                    features is an expression independent of the cell cycle as
-                    opposed to canonical histones. Sometimes, also incorrectly
-                    named histone isoforms. \\
-      \addlinespace
-      Wild type &   Usually meaning the same as canonical or sub-type 1. This
-                    naming is just wrong, since it suggests that variants are
-                    not natural. \\
-      \bottomrule
-    \end{tabular}
-  \end{table*}
-
-  Despite the importance of histones for chromatin organisation and extensive interest
-  in their role in epigenetics and regulation, the systematic curation and classification of human histone
-  gene and protein sequences has not been revisited recently \citep{Marzluff02}.
-  In the last decade the draft human genome has been finalised 
-  and rich annotations continue to propagate into reference gene and protein sequence databases (\tref{tab:difference-from-Marzluff02}).
-
-  %% This is primarily about canonical histones, not variants?
-
-  In this paper we provide a comprehensive catalogue of the nomenclature and distribution 
-  of canonical histone genes, proteins and pseudogenes. 
-  Since curation and annotation are dynamic and evolving, we have implemented an accompanying resource 
-  that can automatically regenerate this manuscript based on the most current data from the NCBI RefSeq database 
-  in order to retain its value as a reference source in a scientifically accessible format.
-  All automatically generated values are displayed with a light grey background.
