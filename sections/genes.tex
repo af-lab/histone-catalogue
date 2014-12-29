@@ -1,45 +1,35 @@
 \section{Histone genes}
-  %% section flow: we start describing the organization very broadly. Then we actually get a
-  %% clusters subsection, comparing between other organisms, and the distribution of genes
-  %% in each one. Only after this is known, can we explain gene nomenclature.
-
-  The genes encoding canonical histone isoforms are found in clusters in most metazoan genomes, 
-  possibly for regulatory functions and to facilitate sequence conservation.
-  %% Removed HLB in interests of focus and length
 
   \subsection{Histone gene clusters}
-    The human genome contains \todo{total histone clusters} histone gene clusters 
-	named as HIST1 to HIST\todo{total histone clusters} in order of decreasing histone gene count.
-    The major and secondary histone gene clusters,
-    HIST1 on chromosome~\HISTOneLocus{} and HIST2 on chromosome~\HISTTwoLocus{},
-    contain contiguous high density arrays of histone genes.
-	The minor cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of genes.
-    (\tref{tab:histone-gene-count}).
+	%% For simplicity, decided to list HIST4 explicitly for rather than allow it to come in by a variable
+    The human genome contains histone gene clusters HIST1 to HIST4 named in order of decreasing histone gene count.
+	The major and secondary histone gene clusters, 
+	HIST1 on chromosome~\HISTOneLocus{} and HIST2 on chromosome~\HISTTwoLocus{},
+	contain contiguous high density arrays of histone genes 
+	whereas the minor cluster HIST3 on chromosome~\HISTThreeLocus{} has only a handful of genes (\tref{tab:histone-gene-count}).
 
     HIST1 contains \todo{percent genes in HIST1}\% of all histone genes, 
 	encoding \CodingGenesInHISTOne{}~functional core histone genes plus all H1 histones. 
-	It spans \HISTOneSpan{} and is the second most gene dense region in the genome at megabase scale \citep{MHC-III-analysis}. 
-	The location of HIST1 on chromosome~\HISTOneLocus{}
-	puts it at the distal end of the major histocompatibility complex (MHC) in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
+	It spans \HISTOneSpan{} \todo{need psece between number and unit}
+	and is the second most gene dense region in the genome at megabase scale \citep{MHC-III-analysis}. 
+	At \HISTOneLocus{}, HIST1 is located the distal end of the major histocompatibility complex (MHC) 
+	in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
 	and it has been suggested that proximity to HIST1 can suppress recombinations in the MHC Class~I region \citep{MHC-repressed-by-HIST}.
 
-    Although HIST2 contains only \CodingGenesInHISTTwo{}~coding genes it spans \HISTTwoSpan{} centred at \HISTTwoLocus{}.
-	The histone genes in HIST2 are grouped in two sub-clusters 
-	within which the coding gene density is comparable to HIST1.
-	%% Is the sub-cluster density a correct statement?
-	An additional pseudogene is located far distant from the cluster.
-	%% I do want to mention this point but not get into detail nor commit a distance statement that could vary in future. Should we name the pseudogene?
-    HIST2 is reported to be prone to deletions and recurrent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}.
-	%% Recurrent means coming around over and over again, regularly in same way. Is 'frequent' a better word because it implies less regularity?
+    HIST2 contains only \CodingGenesInHISTTwo{}~coding genes 
+	and is nominally less gene dense, spanning \HISTTwoSpan{} across \HISTTwoLocus{}.
+	However, the histone genes in HIST2 coding functional proteins
+	are grouped in two sub-clusters each of which has gene density is comparable to HIST1.
+	A pseudogene idistant from the coding genes also inflates the apparent cluster span.
+    HIST2 is reported to be prone to deletions and frequent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}.
 
-	%% Removed HIST3 and HIST4 stuff because it doesn't say much
+	HIST3 and HIST4 contain only \CodingGenesInHISTThree{} and \CodingGenesInHISTFour{}~coding genes respectively. 
+	Although the histone genes are tightly clustered in HIST1 and HIST2 there is no obvious repetitive organisation 
+	and the dispersive organisation has been suggested to imply that their expression is regulated by local elements \citep{close-regulators}.
+
 	%% Removed birth and death because it is not directly relevant to this data
 	%% Removed Alu stuff because it has no biological implications
 	%% Definitely need to keep these observation, maybe put in thesis discussion?
-	Although the histone genes are tightly clustered in HIST1 and HIST2 there is no obvious repetitive organisation 
-	and the dispersive organisation has been suggested to imply that their expression is regulated by local elements \citep{close-regulators}.
-	In contrast, invertebrates histones such as \textit{Lytechinus variegatus} and \textit{Drosophila melanogaster} 
-	occur in tens to hundreds of tandem repeats of the five histones.
 
   \subsection{Histone gene nomenclature}
     Histone genes have a Human Genome Organisation (HUGO) Gene Nomenclature Committee (HGNC) naming system 
