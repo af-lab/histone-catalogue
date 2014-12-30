@@ -2,33 +2,31 @@
 
   \subsection{Histone gene clusters}
 	%% For simplicity, decided to list HIST4 explicitly for rather than allow it to come in by a variable
-    The human genome contains histone gene clusters HIST1 to HIST4 
+    The human canonical histone genes are located in clusters HIST1 to HIST4, 
 	named in order of decreasing histone gene count (\tref{tab:histone-gene-count}).
-	The major histone gene cluster HIST1 at chromosome~\HISTOneLocus{}, 
+	The major histone gene cluster HIST1 at chromosome~\HISTOneLocus{} and 
 	contains \todo{percent genes in HIST1}\% of all histone genes 
-	including \CodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones. 
-	HIST2 at chromosome~\HISTTwoLocus{} contains \CodingGenesInHISTTwo{}~coding genes 
-	and is also highly gene dense, spanning \HISTTwoSpan{} across \HISTTwoLocus{}. 
+	comprising \CodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones. 
+	HIST2 at chromosome~\HISTTwoLocus{} contains \CodingGenesInHISTTwo{}~coding genes. 
 	HIST3 at \HISTThreeLocus{} and HIST4 at \HISTTFourLocus{} 
 	contain only \CodingGenesInHISTThree{} and \CodingGenesInHISTFour{}~coding genes respectively. 
 	Histone variants are dispersed across the genome outside the clusters, 
 	so for example the three H3.3 encoding genes are located on chromosomes 1, 12 and 17 
-	each removed from any other histone genes.
+	each far removed from other histone genes.
 
-	HIST1 and HIST2 both contain contiguous high density arrays of histone genes. 
+	HIST1 and HIST2 are both contiguous high density arrays of histone genes. 
 	HIST1 spans \HISTOneSpan{} \todo{need space between number and unit}
-	and is the second most gene dense region in the genome at megabase scale \citep{MHC-III-analysis}.
+	and is the second most gene dense region in the human genome at megabase scale \citep{MHC-III-analysis}.
 	If \textit{HIST1H2AA} and \textit{HIST1H2BA} are excluded (see below), 
-	the only non-histone protein encoded within HIST1 is the hemochromatosis gene \textit{HFE} 
-	and there are no non-histone proteins at all within the HIST2 or HIST3 clusters. 
+	the hemochromatosis protein encoding gene \textit{HFE} is the sole non-histone gene within HIST1. 
+	There are no non-histone proteins within the HIST2 or HIST3 clusters. 
 
-	HIST1 at \HISTOneLocus{} is located towards the distal end of the major histocompatibility complex (MHC) 
-	in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999}. 
-	It has been suggested that proximity to HIST1 can suppress recombination in the MHC Class~I region \citep{MHC-repressed-by-HIST}, 
-	and it has also been reported that HIST2 is prone to deletions and frequent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}. 
-
-	The implications of this tight exclusive clustering is not well understood, 
-	although the dispersive organisation has been suggested to imply that expression is regulated by local elements \citep{close-regulators}. 
+	The implications of this tight and exclusive clustering is not well understood. 
+	The dispersive organisation has been suggested to imply that expression is regulated by local elements \citep{close-regulators}, 
+	and it is also possible that clustering influences histone gene sequence conservation. 
+	HIST1 is located towards the distal end of the major histocompatibility complex (MHC) in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
+	and it has been suggested that proximity to HIST1 suppresses recombination in the MHC Class~I region \citep{MHC-repressed-by-HIST}. 
+	It has also been reported that HIST2 is prone to deletions and frequent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}. 
 
 	%% Removed birth and death because it is not directly relevant to this data
 	%% Removed Alu stuff because it has no biological implications
@@ -37,68 +35,66 @@
   \subsection{Histone gene nomenclature}
     Canonical histone gene names adhere to a Human Genome Organisation (HUGO) Gene Nomenclature Committee (HGNC) 
 	endorsed system derived from the cluster number and position relative to other histones \citep{Marzluff02}.
-
 	%% Should we try putting a url reference into the manuscript?
 	%% http://www.genenames.org/genefamilies/histones
-	The canonical histone gene symbol is divided into 3 parts: 
-	HIST cluster, histone type, and positional identifier letter
+
+	The human canonical histone gene symbols are divided into 3 parts: 
+	HIST cluster, histone type, and identifier letter
 	for the order relative to other histone genes of the same type in the cluster (\fref{fig:nomenclature}A).
 	For example, \textit{HIST1H2BD} is the fourth H2B gene in the HIST1 cluster.
+	%% Changed example to match figure!
 	The direction of the cluster order varies, so HIST1 is ordered from the centromeric side 
 	whereas HIST2 and HIST3 are ordered from the telomeric side.
-	%% Changed example to match figure!
+	%% Think this is correct from viewing the genome
 	
     Two exceptions were originally applied to this simple gene naming rule \citep{Marzluff02}. 
-	Firstly, the position letter is omitted if there are no other histones of the same type in the cluster, 
+	Firstly, the position identifier is omitted if there are no other histones of the same type in the cluster, 
 	so \textit{HIST3H2A} is the sole H2A gene in HIST3. 
 	Secondly, the human and mouse histone clusters are largely syntenic 
-	so positional identifier letters were skipped to maintain the equivalence of gene symbols 
-	in genomes missing a particular expevcted orthologue.
+	so positional identifiers for missing orthologues were skipped to maintain the equivalence of gene symbols.
 	This means there is no human \textit{HIST1H2AF} although \textit{Hist1h2af} exists in mouse.
 
-	Unfortunately several new histone genes have been uncovered since the original naming (\tref{tab:difference-from-Marzluff02}). 
-	and this has forced additional nomenclature exceptions to maintain the original organisation.
-	For example, \textit{HIST2H2AA} was renamed \textit{HIST2H2AA3} and a new \textit{HIST2H2AA4} was added
-	because there are no human orthologues of mouse \textit{Hist2h2aa1} and \textit{Hist2h2aa2}.
+	Several new histone genes have been uncovered since the original naming (\tref{tab:difference-from-Marzluff02}) 
+	and this required additional nomenclature exceptions.
+	For example, new H2A encoding genes identified in the human and mouse HIST2 cluster after \textit{HIST2H2AA} 
+	obliged renaming of \textit{HIST2H2AA} to \textit{HIST2H2AA3} and the addition of the new gene as \textit{HIST2H2AA4}. 
+	There are no human orthologues of mouse \textit{Hist2h2aa1} and \textit{Hist2h2aa2}.
 	
 	Furthermore, no distinction was originally made between pseudogenes and functional coding genes, 
 	so \textit{HIST3H2AA} is a pseudogene whereas its neighbour \textit{HIST3H2AB} is a coding gene.
-	Newly uncovered pseudogenes have since been suffixed with PS\# in order of discovery, such as \textit{HIST1H2APS2}. 
-	The ``original'' pseudogenes retain their symbols, so the absence of a PS suffix does not indicate a functional gene.
+	Newly uncovered pseudogenes are now suffixed with PS and a number in order of discovery 
+	instead of a positional identifier, such as \textit{HIST1H2APS5} 
+	However, the ``original'' pseudogenes retain their symbols without PS. 
+	This means that the absence of a PS suffix does not indicate a functional gene, 
+	and that there is no positional information in the gene symbols of new pseudogenes.
 
-	There remains the possibility of further change 
-	through increased understanding of functional roles for specific canonical histone genes. 
+	The flux in genome sequencing and increasing interest in histone genes 
+	leaves open the possibility of further change. 
 	For example, \textit{HIST1H2BA} is now recognised as testes-specific TH2 \addref{Horokoshi ACTA Cryst 2014?} 
-	and has the most divergent sequence of current canonical H2B proteins.
-	It is adjacent from the divergently transcribed \textit{HIST1H2AA} gene 
-	that is itself the most unique canonical H2A protein sequence, 
-	although there is little evidence yet for a specific function. 
-	The \textit{HIST1H2AA} and \textit{HIST1H2BA} gene pair 
-	is located ~300 kbp upstream of the other HIST1 cluster members 
+	and has the most divergent sequence of current canonical H2B proteins 
+	and is ~300 kbp upstream of the rest of the HIST1 cluster 
 	separated by a number of unrelated non-histone genes. 
-	It is conceivable that these two canonical histone genese
-	could be removed from the HIST1 cluster list and reclassified as variant histones.
+	\textit{HIST1H2BA} and the adjacent divergent \textit{HIST1H2AA} therefore share some features with variant histones.
 	
-	In contrast with the human canonical core histone genes, 
-	all recognised histone variant gene familes comprise only one or a few copies 
+	All recognised histone variant gene familes comprise only one or a few copies 
 	dispersed across the genome outside clusters.
-	These histone variant genes are identifed by a separate 3 part nomenclature 
+	The histone variant gene symbols have a separate 3 part nomenclature 
 	consisting of labels for histone type, F for family, 
 	and an identifier letter based on discovery order (\fref{fig:nomenclature}B).
-	Where two isoforms exist the copies can also have a numerical suffix, 
+	Where two or more isoforms exist the copies gain a numerical suffix, 
 	although this is sometimes omitted for the first copy. 
 	For example, \textit{H2AY} and \textit{H2AY2} encode the human macroH2As, 
 	with \textit{H2AY} giving rise to alternative transcripts encoding macroH2A1.1 and macroH2A1.2 protein isoforms 
 	whereas \textit{H2AY2} encodes macroH2A2.
-	The variant histone gene family naming (\tref{tab:histone-variant-families}) also includes exceptions. 
+	The variant histone gene symbols (\tref{tab:histone-variant-families}) also contain exceptions. 
 	For example, the three gene copies encoding the H3.3 variant 
-	take on a distinguishing letters \textit{H3F3A}, \textit{H3F3B} and \textit{H3F3C} instead of numbers 
-	and the H3 variant gene CENPA  was named as the first identified centromeric protein \cite{CENPA-first-report} 
+	take on distinguishing letters \textit{H3F3A}, \textit{H3F3B} and \textit{H3F3C} instead of numbers 
+	and the H3 variant gene CENPA was named as the first identified centromeric protein \cite{CENPA-first-report} 
 	before it was realised to be a histone protein \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}. 
 	Histone variant pseudogenes are suffixed with P to yield symbols such as \textit{H2AFXP} and \textit{H2AFZP5}.
-	Histone variants have become of increasing functional interest \addref{Maze Allis NRG 2014}
-	but their nomenclature have suffered imprecise usage and conflicts between species, 
-	so guidelines have been proposed to improve consistency \addref{Talbert Epigen Chrom 2012}.
+	The increasing interest in histone variant function \addref{Maze Allis NRG 2014}
+	but imprecise usage and conflicts between species, 
+	has led to guidelines for improved consistency \addref{Talbert Epigen Chrom 2012}.
 
     \begin{figure*}
       \centering
