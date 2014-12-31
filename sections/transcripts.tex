@@ -6,31 +6,32 @@
   
   %% General description of histone transcripts
   %% Enhancers (refer only), promoter, mRNA capping? (refer), no introns, no polyA tails (refer), cell cycle regulation (refer)
-  Histone genes are transcribed by RNA polymerase II 
-  Unlike all other protein coding genes, histone transcripts are not polyadenylated at
-  their 3' end. This process consists in the cleaving of pre-mRNA, and addition of a
-  poly(A) tail which promotes the mRNA stability and is involved in its transport
-  into the citoplasm \citep{mRNA-end-processing}. The alternative method used by
-  histones makes use of a stem-loop in its mRNA secondary structure, in conjunction
-  with specialized machinery unique to the histone transcription.
+	Canonical core histone genes are transcribed by RNA polymerase II 
+	and have a methyl guanosine cap \addref{Marzluff NatRevGen 2008}
+	but, unlike almost all other protein coding genes including histone variants, 
+	they do not have introns (\tref{tab:typical-histone-differences}) 
+	and only 1-5\% of canonical histone transcripts are 3' polyadenylated \addref{YangChen GenomeBiol 2011}
 
-  %% Cool fact: SLBP seem to exist only in organisms that also have histones
-  %%            with stem loops. While it doesn't mean that no other genes
-  %%            is making use of them, histones are likely to have been the first ones.
-  %%            Lopez MD, Samuelsson T. 2008.
-  %%            Early evolution of histone mRNA 3′ end processing. RNA 14: 1-10
-  \subsection{Histone promoters}
+	Instead, canonical histone transcripts contain a 3' stem-loop in their mRNA secondary structure 
+	that is recognised by specialised RNA processing and stabilisation complexes.
+	The stem-loop is encoded \StemLoopStart{} to \StemLoopEnd{} base pairs after the stop codon 
+	and has a highly conserved sequence and structure (\fref{fig:stem-loop-seqlogo}) \citep{stem-loop-structure}.
+	The stem-loop interacts with the Stem-Loop Binding Protein (SLBP) 
+	which is up-regulated 10-20 fold during S~phase to stabilise the histone mRNA \citep{SLBP-regulation}, 
+	in order to lengthen the canonical histone mRNA half lives 
+	to assist the increased histone protein requirement for packaging the newly duplicated genome.
+	This is followed by a purine-rich Histone Downstream Element (HDE) 
+	that interacts with U7 snRNA to direct efficient 3' end processing \citep{HDE-sequence}.
 
-  %% Need to align upstream regions of genes and comment on patterns
-  %% Probably should subdivide by histone or try clustering?
-  
-  \subsection{Stem-loop sequences}
-    The stem-loop is encoded shortly after the stop codon, between \StemLoopStart{} and
-    \StemLoopEnd{} base pairs after the stop codon, much earlier than the typical
-    polyadenylation signal. The stem-loop sequence has been extremely well conserved
-    throughout evolution (\fref{fig:stem-loop-seqlogo}) but it appears that the
-    sequence itself is not so important for its function as its actual structure
-    \citep{stem-loop-structure}.
+	The histone variant H2AX is unusual in having 3' transcript properties reflecting
+	both canonical and variant histone features \citep{HTwoAX-transcripts}, including a canonical histone stem-loop. 
+
+	Overall there is estimated to be a 35 fold increase in mammalian canonical histone transcripts in S phase,
+	principally as a result of a 10 fold increase in mRNA stabilisation via stem-loop dependent mechanisms 
+	and a 3-5 fold up-regulation in canonical histone gene transcription \addref{Marzluff NatRevGen 2008}. 
+	This transcription is regulated by cell-cycle dependent phosphorylation of the histone-specific NPAT coactivator 
+	and interaction with the accessory protein FLASH, 
+	resulting in assembly of histone locus bodies localising factors responsible for canonical histone transcription and processing.
 
     \begin{figure*}
       \centering
@@ -38,64 +39,3 @@
       \captionof{figure}{seqlogo of human stem-loop}
       \label{fig:stem-loop-seqlogo}
     \end{figure*}
-
-    The stem-loop is followed by a purine-rich Histone Downstream Element (HDE)
-    downstream of the stop codon. The stem-loop interacts with the Stem-Loop
-    Binding Protein (SLBP) to stabilise the mRNA in S~phase \citep{SLBP-regulation}
-    while the HDE interacts with U7 snRNA to direct efficient 3' end processing
-    \citep{HDE-sequence}. The SLBP is a large part of the histone increase on
-    during the S~phase since its translation is also regulated
-    by the cell-cycle, increasing 10 to 20 fold at the G1 to S~phase
-    interface \citep{SLBP-regulation}.
-
-    This stem-loop is one of canonical histones most distinguishing features, from which
-    stems its replication dependency, this distinguishing them from the variants.
-    However, a minority of H2B histone
-    genes is generating two transcripts, one using the histone standard
-    stem-loop, and another with a poly(A) tail (list in supplementary data).
-    The histone variant H2AX has an equivalent system \citep{HTwoAX-transcripts},
-    but is a variant whose
-    specialized function may be required outside the S~phase. This poly(A)
-    H2B could exist to pair with H2A variants, which could make sense since
-    H2A and H2B are present in dimers, and its the 2A-H2B dimers which are
-    used for replacement. But following this, the same would be required
-    for H4, since there is also exists H3 variant that would need H4 outside
-    S~phase for pairing.
-
-    %% An alternative is that these were automatic annotations. General
-    %% programs can't be expected to account for all exceptions, and could
-    %% try to force a poly-A tail on histone genes, just because they were
-    %% programmed to do so. However, these have been manually curated by
-    %% NCBI staff as having the two transcripts. Always check the comment
-    %% section when inspecting the genbank file
-
-    Another alternative is that these transcripts happen by chance, an artifact
-    of the methodology. cDNA libraries are mostly generated using oligo-dT
-    and will therefore be biased against anything that is using an alternative
-    system. Because of this, and to the high number of histone transcripts,
-    even if polyadenylation of histones is a rare anomaly, the library will
-    be enriched for it.
-    These poly(A) signal could be evolutionary leftovers from before the
-    stem-loop has appeared in metazoans, or even from UTR duplication of
-    other non-histone genes which are also present on the histone clusters
-    there are other copies of genes.
-
-
-  \subsection{mRNA expression levels}
-    Expression of the canonical histone genes is highly regulated by
-    the cell cycle (hence the RD name). Probably due
-    to the cell high demand for histone proteins during DNA replication, their expression levels rise dramatically
-    during this phase of the cell cycle. During the rest of the cell cycle, histone genes are still transcribed
-    but with much lower levels.
-
-    However, there is only a 5-fold increase in their transcription rate at S~phase, compared to the other phases
-    of cell cycle so regulation acts strongly at the post-transcriptional level\addref.
-
-    To note however, that each gene seems to have different levels of increased transcription, even between genes in the
-    same cluster.
-
-    RI histone genes have expression dependent on their needs (testis specific, DNA damage, etc).
-
-    mention chicken histone genes, we can remove half of the set, and the other rise in expression to compensate.
-
-
