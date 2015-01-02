@@ -21,16 +21,12 @@
 	the hemochromatosis protein encoding gene \textit{HFE} is the sole non-histone gene within HIST1. 
 	There are no non-histone proteins within the HIST2 or HIST3 clusters. 
 
-	The implications of this tight and exclusive clustering is not well understood. 
+	The implications of this tight and exclusive clustering is not well understood \addref{Eirin-Lopez EvBiolCh8 2009}. 
 	The dispersive organisation has been suggested to imply that expression is regulated by local elements \citep{close-regulators}, 
 	and it is also possible that clustering influences histone gene sequence conservation. 
 	HIST1 is located towards the distal end of the major histocompatibility complex (MHC) in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999} 
 	and it has been suggested that proximity to HIST1 suppresses recombination in the MHC Class~I region \citep{MHC-repressed-by-HIST}. 
 	It has also been reported that HIST2 is prone to deletions and frequent rearrangements \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}. 
-
-	%% Removed birth and death because it is not directly relevant to this data
-	%% Removed Alu stuff because it has no biological implications
-	%% Definitely need to keep these observation, maybe put in thesis discussion?
 
   \subsection{Histone gene nomenclature}
     Canonical histone gene names adhere to a Human Genome Organisation (HUGO) Gene Nomenclature Committee (HGNC) 
@@ -70,11 +66,12 @@
 
 	The flux in genome sequencing and increasing interest in histone genes 
 	leaves open the possibility of further change. 
-	For example, \textit{HIST1H2BA} is now recognised as testes-specific TH2 \addref{Horokoshi ACTA Cryst 2014?} 
-	and has the most divergent sequence of current canonical H2B proteins 
+	For example, \textit{HIST1H2BA} is now recognised as testes-specific TH2 \addref{Horokoshi ACTA Cryst 2014?}, 
+	has the most divergent sequence of canonical H2B proteins, 
 	and is ~300 kbp upstream of the rest of the HIST1 cluster 
 	separated by a number of unrelated non-histone genes. 
-	\textit{HIST1H2BA} and the adjacent divergent \textit{HIST1H2AA} therefore share some features with variant histones.
+	\textit{HIST1H2BA} is adjacent to \textit{HIST1H2AA} 
+	which encodes a similarly divergent protein compared the most common canonical H2A isoform.
 	
 	All recognised histone variant gene familes comprise only one or a few copies 
 	dispersed across the genome outside clusters.
@@ -96,15 +93,27 @@
 	but imprecise usage and conflicts between species, 
 	has led to guidelines for improved consistency \addref{Talbert Epigen Chrom 2012}.
 
+  \subsection{Histone gene sequences}
+
+	The alignment of coding regions for functional canonical histone genes 
+	demonstrates considerable sequence variation at teh DNA level (\fref{fig:histone-gene-variation}). 
+	This relatively high sequence variation in human canonical histone genes 
+	is consistent with observations across eukaryotes 
+	that histone gene sequences are much less conserved than the proteins they encode 
+	and that synonymous codon divergence exceeds non-synonymous variation \addref{Piontkivska MolBiolEvol 2000} \addref{Rooney MolBiolEvol 2002}. 
+	Together this is taken as evidence that histone protein sequence conservation 
+	results from strong selective pressure at teh protein level 
+	and not from a homogenisation mechanism at the gene level based on clustering \addref{NeiRooney AnnRevGen 2005}.
+
     \begin{figure*}
       \centering
       \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
       \caption{Histone gene nomenclature. 
-	  a) Canonical histone gene names encode their relative genomic order by cluster. 
-	  b) Variant histone symbols are identified with F then a family identifier letter
+	  A. Canonical histone gene names encode their relative genomic order by cluster. 
+	  B. Variant histone symbols are identified with F then a family identifier letter
 	  and numbered by discovery, except 1 is omitted for the founder member. 
 	  H3.3 genes conversely use numbers and letters for family and member.
-	  c) Canonical seudogenes identified since 2002 are named by cluster with PS identifier numbered by discovery. 
+	  C. Canonical seudogenes identified since 2002 are named by cluster with PS identifier numbered by discovery. 
 	  Previously canonical pseudogenes were named like functional histone genes.}
       \label{fig:nomenclature}
 	  \todo{Parts A and B need labels. Name text need to be italics!}
@@ -112,30 +121,28 @@
 	  \todo{Include part C using HIST1H2APS2 as example of PS pseudogene nomenclature}
     \end{figure*}
 
-%% Let's leave the promoters and introns because we don't have anything to say
-
   \begin{table*}
     \caption{HGNC recognised histone variant family stem names, commonly used protein names 
-	and protein names for improved consistency proposed by Talbert et al (2012). 
+	and names for improved consistency based on proposal by Talbert et al (2012). 
 	HIST1H2BA is nominally not a variant but is included for completeness.}
     \label{tab:histone-variant-families}
     \centering
     \begin{tabular}{l l l}
       \toprule
-      \Family & Protein name & Talbert et al & Notes \\
+      \Family & Protein name & Talbert et al name & Notes \\
       \midrule
 	  H2AFB & H2A.Bbd & H2A.B & equivalent to H2A.L \\
-	  H2AFJ & H2A.J & ? & ? \\
+	  H2AFJ & H2A.J & H2A.J & at HIST4 locus \\
 	  H2AFV & H2A.Z-2 & H2A.Z.1 & - \\
-	  H2AFX & H2AX & H2A.X & DNA damage related \\
+	  H2AFX & H2AX & H2A.X & - \\
 	  H2AFY & macroH2A/mH2A & macroH2A & - \\
 	  H2AFZ & H2A.Z & H2A.Z.1 & - \\
-	  H2BFM & ? & ? & - \\
+	  H2BFM & ? & H2B.M & homologous to H2B.W, X-linked\\
 	  H2BFS & - & - & pseudogene \\
-	  H2BFWT & ? & H2B.W & testes specific \\
+	  H2BFWT & ? & H2B.W & testes specific, X-linked \\
 	  H2BFX & - & - & pseudogene \\
 	  HIST1H2BA & TH2B/TSH2B & H2B.1 & testes specific \\
-	  H3F3 & H3.3 & H3.3 & - \\
+	  H3F3 & H3.3 & H3.3 & euchromatin related \\
 	  CENPA & CENP-A & ? & centromere-specific \\
 	\bottomrule
     \end{tabular}
@@ -184,3 +191,10 @@
       \end{tabular}
     \end{table*}
 
+    \begin{figure*}
+      \centering
+      \includegraphics[width=\textwidth]{seqlogo_canonical-coding-genes.pdf}
+      \captionof{figure}{Sequence logos for canonical coding histone genes listed in table XX. 
+	  Coding regions of A. H2A, B. H2B, C. H3 and D. H4.}
+      \label{fig:histone-gene-variation}
+    \end{figure*}
