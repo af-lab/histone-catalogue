@@ -44,6 +44,8 @@ my %path = MyLib::parse_argv("sequences", "results");
 my @variants = sort {$$a{'symbol'} cmp $$b{'symbol'}}
   MyLib::load_variants ($path{sequences});
 
-my $table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.tex");
-MyLib::make_catalogue ($table_path, @variants);
+my $tex_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.tex");
+my $csv_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.csv");
+MyLib::make_tex_catalogue ($tex_table_path, @variants);
+MyLib::make_csv_catalogue ($csv_table_path, @variants);
 
