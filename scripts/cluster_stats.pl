@@ -71,7 +71,7 @@ foreach my $gene (@data) {
   ## should be possible to make bp_genbank_ref_extractor do it). However, we
   ## can find the value in the features of the transcripts files. Because of
   ## that, this only works on coding genes.
-  my @transcripts = keys $$gene{"transcripts"};
+  my @transcripts = keys %{$$gene{"transcripts"}};
   if (@transcripts) {
     my  $seq      = MyLib::load_seq("transcript", $transcripts[0], $path{sequences});
     my ($feature) = $seq->get_SeqFeatures("source");
@@ -88,7 +88,7 @@ foreach my $gene (@data) {
 ## make the table with all of the canonical histones, their gene symbols,
 ## UIDs, and protein and transcript accession numbers
 my @sorted;
-foreach my $histone (keys %types) {
+foreach my $histone (sort keys %types) {
   push (@sorted, sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}});
 }
 my $tex_table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");

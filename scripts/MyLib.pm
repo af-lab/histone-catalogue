@@ -276,9 +276,15 @@ sub make_tex_catalogue {
   say {$table} "\\begin{ctabular}{l l l l}";
   say {$table} "  \\toprule";
   say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
-  say {$table} "  \\midrule";
 
+  my $type = "";
   foreach my $gene (@_) {
+
+    if ($type ne $$gene{histone}) {
+      $type = $$gene{histone};
+      say {$table} "  \\midrule";
+    }
+
     print {$table} "  $$gene{'symbol'} & $$gene{'uid'} & ";
     if ($$gene{'pseudo'}) {
       print {$table} "n/a & n/a \\\\\n";
@@ -287,7 +293,7 @@ sub make_tex_catalogue {
       ## its line on the table but the first two columns will be empty
       my @acc_cols = map {
         MyLib::latex_string ($_ || "n/a") . " & " . MyLib::latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
-      } (sort keys $$gene{'transcripts'});
+      } (sort keys %{$$gene{'transcripts'}});
       print {$table} join ("      & & ", @acc_cols);
     }
   }
@@ -311,10 +317,10 @@ sub make_csv_catalogue {
   $csv->print ($fh, ["Gene name", "Gene UID", "Transcript accession", "Protein accession"]);
   foreach my $gene (@_) {
     if ($$gene{'pseudo'}) {
-      $csv->print ($fh, [$$gene{'symbol'}, $$gene{'uid'}, 'n/a', 'n/a']);
+      $csv->print ($fh, [$$gene{'histone'}, $$gene{'symbol'}, $$gene{'uid'}, 'n/a', 'n/a']);
     } else {
       while (my ($mrna, $prot) = each %{$$gene{"transcripts"}}) {
-        $csv->print ($fh, [$$gene{'symbol'}, $$gene{'uid'}, $mrna, $prot]);
+        $csv->print ($fh, [$$gene{'histone'}, $$gene{'symbol'}, $$gene{'uid'}, $mrna, $prot]);
       }
     }
   }
