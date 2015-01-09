@@ -93,9 +93,7 @@ my @weblogo_params = (
   "--format",         "eps",
   "--show-yaxis",     "no",
   "--stacks-per-line", 50,
-  ## bug on weblogo 3.3. We can't set datatype but default is good, as long as we
-  ## have correct file extension. See http://code.google.com/p/weblogo/issues/detail?id=32
-#  "--datatype",       "fasta",
+  "--datatype",       "fasta",
   "--sequence-type",  "protein",
   "--fineprint",      "",   # empty fineprint
   "--errorbars",      "no",
