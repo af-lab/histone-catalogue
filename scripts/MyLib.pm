@@ -273,19 +273,14 @@ sub make_tex_catalogue {
   open (my $table, ">", $path)
     or die "Could not open $path for writing: $!";
 
-  say {$table} "\\begin{ctabular}{l l l l}";
+  say {$table} "\\begin{ctabular}{l l l l l}";
   say {$table} "  \\toprule";
-  say {$table} "  Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+  say {$table} "  Type & Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+  say {$table} "  \\midrule";
 
-  my $type = "";
   foreach my $gene (@_) {
 
-    if ($type ne $$gene{histone}) {
-      $type = $$gene{histone};
-      say {$table} "  \\midrule";
-    }
-
-    print {$table} "  $$gene{'symbol'} & $$gene{'uid'} & ";
+    print {$table} "  $$gene{'histone'} & $$gene{'symbol'} & $$gene{'uid'} & ";
     if ($$gene{'pseudo'}) {
       print {$table} "n/a & n/a \\\\\n";
     } else {
@@ -294,7 +289,7 @@ sub make_tex_catalogue {
       my @acc_cols = map {
         MyLib::latex_string ($_ || "n/a") . " & " . MyLib::latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
       } (sort keys %{$$gene{'transcripts'}});
-      print {$table} join ("      & & ", @acc_cols);
+      print {$table} join ("      & & &", @acc_cols);
     }
   }
 
