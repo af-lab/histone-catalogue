@@ -203,10 +203,10 @@ sub load_variants {
 ## for it
 sub load_seq {
   my ($type, $access, $path) = @_;
-  given ($type) {
-    when (/^gene/)       {$type = "genes";}
-    when (/^transcript/) {$type = "transcripts";}
-    when (/^protein/)    {$type = "proteins";}
+  for ($type) {
+    if    (/^gene/)       {$type = "genes";}
+    elsif (/^transcript/) {$type = "transcripts";}
+    elsif (/^protein/)    {$type = "proteins";}
   }
   $path = File::Spec->catdir($path, $type, "$access.gb");
   ## we make no next_seq loop because we know there's only one sequence in
