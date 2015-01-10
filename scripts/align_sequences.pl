@@ -31,9 +31,11 @@ use MyLib;                      # Load functions
 ## the differences between each histone.
 ##
 ## It will create the following files:
-##    * results/aligned_H2A.fasta (one for each histone)
-##    * figs/seqlogo_H2A.eps (one for each histone)
-##    * results/table-H2A-align.tex (one per histone, with the differences
+##    * results/aligned_H2A_proteins.fasta (one for each histone)
+##    * results/aligned_H2A_cds.fasta (one for each histone)
+##    * figs/seqlogo_H2A_proteins.eps (one for each histone)
+##    * figs/seqlogo_H2A_cds.eps (one for each histone)
+##    * results/table-H2A-proteins-align.tex (one per histone, with the differences
 ##      between the different histone proteins in tabular form)
 ##    * results/variables-align_results.tex (LaTeX variables for the numbers
 ##      of unique histone proteins)
@@ -88,29 +90,20 @@ use MyLib;                      # Load functions
 
 my %path = MyLib::parse_argv("sequences", "figures", "results");
 
-my @weblogo_params = (
-  "--units",          "probability",
-  "--format",         "eps",
-  "--show-yaxis",     "no",
-  "--stacks-per-line", 50,
-  "--datatype",       "fasta",
-  "--sequence-type",  "protein",
-  "--fineprint",      "",   # empty fineprint
-  "--errorbars",      "no",
-  "--color-scheme",   "monochrome",
-);
+## Two hashes whose keys are the histone types (H2A, H2B, etc), and values
+## are Bio::Seq objects of:
+my %proteins;
+my %cds;
 
-my %multi_seq; # an hash for arrays of Bio::Seq objects, one for each histone type
-
-my %pacc2gsym; # maps protein accession number to a gene symbol (because the
-               # sequence we get from the alignment only has the accession
-               # number and we want to use the gene symbol for the tables
+## maps protein accession number to a gene symbol (because the
+## sequence we get from the alignment only has the accession
+## number and we want to use the gene symbol for the tables
+my %pacc2gsym; # Protein ACCession 2 Gene SYMbol
 
 foreach my $gene (MyLib::load_canonical ($path{sequences})) {
   my $symbol = $$gene{'symbol'};
 
-  ## Get protein accessions
-  my @access = keys $$gene{'proteins'};
+  my @access = keys %{$$gene{proteins}};
   my $access = $access[0];
   next unless $access; # skip entries with no protein acession such as pseudogenes
   if (@access > 1) {
@@ -121,137 +114,75 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
   }
 
   $pacc2gsym{$access} = $symbol;
-  ## Add the protein Bio::Seq to the array of histone proteins of that type
-  push (@{$multi_seq{$$gene{'histone'}}},
+  push (@{$proteins{$$gene{histone}}},
         MyLib::load_seq("protein", $access, $path{sequences}));
+
+  my $mrna = MyLib::load_seq ("transcript", $$gene{proteins}{$access}, $path{sequences});
+  my $cds = ($mrna->get_SeqFeatures ("CDS"))[0];
+  if (! $cds) {
+    warn ("Unable to find CDS for $symbol");
+    next;
+  }
+  push (@{$cds{$$gene{histone}}}, $cds->seq ());
 }
-
-## this works but goes against the documentation. We can't fix the problem upstream because
-## we don't know what's really wrong. Should we fix the documentation or should we fix the
-## code? If the later ever happens, we will need to fix ours.
-## See https://redmine.open-bio.org/issues/3406
-my $tcoffee = Bio::Tools::Run::Alignment::TCoffee->new(
-  'aformat' => 'fasta',
-  'output'  => 'fasta', # do not be fooled by documentation
-  'quiet'   => 1,       # do not be fooled by documentation
-);
-
-## Align all sequences with TCoffee, saving the alignment as a fasta file.
-## Then use that file to create a logo (with WebLogo) as an eps file.
 
 my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex");
 open (my $var_file, ">", $var_path) or die "Could not open $var_path for writing: $!";
 
-my %aligned; # an hash of hashs, of aligned sequences (just strings)
-foreach my $histone (keys %multi_seq) {
-  my $align_path = File::Spec->catdir($path{results}, "aligned_$histone.fasta");
-  my $slogo_path = File::Spec->catdir($path{figures}, "seqlogo_$histone.eps");
-  $tcoffee->outfile($align_path);
-  my $align = $tcoffee->align(\@{$multi_seq{$histone}});
+foreach my $histone (keys %proteins) {
+  my $cds_align = align_and_weblogo (
+    File::Spec->catdir($path{results}, "aligned_${histone}_cds.fasta"),
+    File::Spec->catdir($path{figures}, "seqlogo_${histone}_cds.eps"),
+    @{$cds{$histone}}
+  );
 
-  say {$var_file} MyLib::latex_newcommand ($histone."PID" ,
-     sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
+  my $protein_align = align_and_weblogo (
+    File::Spec->catdir($path{results}, "aligned_${histone}_proteins.fasta"),
+    File::Spec->catdir($path{figures}, "seqlogo_${histone}_proteins.eps"),
+    @{$proteins{$histone}}
+  );
+  tex_compare_histone_proteins ($var_file, $histone, $protein_align);
 
-  system (
-    "weblogo", @weblogo_params,
-    "--fin",   $align_path,
-    "--fout",  $slogo_path,
-  ) == 0 or die "Call to weblogo failed: $?";
-  mod_weblogo_eps ($slogo_path);
-
-  ## Why we do not get the consensus sequence from the align object, why is it wrong to use
-  ## the consensus sequence, and what did Marzluff used on the paper then?
-  ##
-  ## A consensus sequence is the most frequent residue at _each_ position, not the most
-  ## frequent sequence. So, how should we act with respect to insertions and deletions?
-  ## The aligned sequences will have "-" (nothing) at such locations, which means that
-  ## even if only one of the proteins has a residue at a certain location, the consensus
-  ## sequence will keep it. For example:
-  ##
-  ## SIHK----K
-  ## SKHKAKGLK <-- the only that is different
-  ## SIHK----K
-  ## SIHK----K
-  ## SIHK----K
-  ##
-  ## SIHKAKGLK <-- consensus sequence (different from all of them)
-  ##
-  ## In this case, the consensus sequence does not actually exist. Even considering the
-  ## empty positions (-) if it was a residue and count it on the frequency. To work around
-  ## this cases, programs to define a consensus sequence often have tuning parameters such
-  ## as threshold. Marzluff's paper, says that the consensus sequence was calculated with
-  ## the PRETTYBOX program, part of the GCG package http://www.csd.hku.hk/bruhk/gcgdoc/prettybox.html
-  ## which indeed does have such paremeters. He does not mention what parameteres were used
-  ## but should be safe to assume he used the default values.
-  ##
-  ## Anyway, the consensus can still lead to a new sequence, one that is different from all
-  ## the sequences used in the alignment and I'm surprised that he did not. What we actually
-  ## want to use in the tables describing the variants is the most common sequence, not the
-  ## consensus.
-
-
-  ## Getting the value of $max here, even though the values for each key is
-  ## already the number of times for each sequence, saves us having to loop
-  ## through the values later to find it.
-  my $max = 0;
-  my %seqs; # keys will be aligned sequences
-  foreach ($align->each_seq) {
-    ## increment the value in the hash everytime and also increment the
-    ## value of $max if we go above it
-    $max++ if (++$seqs{$_->seq} > $max);
-  }
-  my @common = grep ($seqs{$_} == $max, keys %seqs);
-  if (@common > 1) {
-    my $n = @common;
-    warn ("Found $n `most common' sequences for $histone. Only the first will be used.");
-  }
-  my $most_common = $common[0];
-
-  say {$var_file} MyLib::latex_newcommand ($histone."UniqueProteins" , scalar keys %seqs);
-
-  ## Get a list of the genes whose sequence is equal to the most common,
-  ## and the text describing the difference against it for the others.
-  my @eq2common;
-  my %description;
-  foreach my $seq ($align->each_seq) {
-    ## FIXME we use display_id to get the accession number. The accession_number
-    ## method is not working, and this is likely a bug on the TCoffee method
-    ## which is not creating the Bio::Seq object properly for the alignment.
-    my $symbol = $pacc2gsym{$seq->display_id};
-    if ($seq->seq ne $most_common) {
-      $description{$symbol} = seq_diff_str (\$most_common, \$seq->seq);
-    } else {
-      push @eq2common, $symbol;
-    }
-  }
-
-  $most_common =~ tr/-//d; # remove the gaps from the alignment
-
-  ## Print LaTeX table
-  my $filepath = File::Spec->catdir($path{results}, "table-$histone-align.tex");
-  open (my $table, ">", $filepath) or die "Couldn't open $filepath for writing: $!";
-
-  say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
-  say {$table} "  \\toprule";
-  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
-                length ($most_common) . " amino acids" .
-                names_for_most_common ($histone, @eq2common) . ")}\\\\";
-  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common}}} \\\\";
-  say {$table} "  \\midrule";
-
-  foreach my $symbol (sort keys %description) {
-    ## Having each equal proteins that are different from the most common
-    ## in a single row could be handy (easy to see the groups) but it would
-    ## look horrible. Just image: the first column taking 70% of the table
-    ## width because one of the different sequences has 5 gene names on it.
-    say {$table} "  $symbol & " . MyLib::latex_string ($description{$symbol}) ." \\\\";
-  }
-
-  say {$table} "  \\bottomrule";
-  say {$table} "\\end{tabular}";
-  close($table) or die "Couldn't close $filepath after writing: $!";
 }
 close ($var_file) or die "Couldn't close $var_path after writing: $!";
+
+
+## Align all sequences with TCoffee, saving the alignment as a fasta file.
+## Then use that file to create a logo (with WebLogo) as an eps file.
+sub align_and_weblogo {
+  my $align_path  = shift;
+  my $logo_path   = shift;
+
+  ## this works but goes against the documentation. We can't fix the problem upstream because
+  ## we don't know what's really wrong. Should we fix the documentation or should we fix the
+  ## code? If the later ever happens, we will need to fix ours.
+  ## See https://redmine.open-bio.org/issues/3406
+  my $tcoffee = Bio::Tools::Run::Alignment::TCoffee->new(
+    'aformat' => 'fasta',
+    'output'  => 'fasta', # do not be fooled by documentation
+    'quiet'   => 1,       # do not be fooled by documentation
+  );
+
+  $tcoffee->outfile($align_path);
+  my $align = $tcoffee->align(\@_);
+
+  system (
+    "weblogo",
+    "--units",          "probability",
+    "--format",         "eps",
+    "--show-yaxis",     "no",
+    "--stacks-per-line", 50,
+    "--datatype",       "fasta",
+    "--fineprint",      "",   # empty fineprint
+    "--errorbars",      "no",
+    "--color-scheme",   "monochrome",
+    "--fin",   $align_path,
+    "--fout",  $logo_path,
+  ) == 0 or die "Call to weblogo failed: $?";
+  mod_weblogo_eps ($logo_path);
+
+  return $align;
+}
 
 ## function that will modify the weblogo eps file
 ##    usage: mod_weblogo_eps (path_to_eps_file)
@@ -296,6 +227,106 @@ sub mod_weblogo_eps {
     print {$save} $_;
   }
   close($save) or die "Couldn't close $_[0] after writing: $!";
+}
+
+sub tex_compare_histone_proteins {
+  my $var_file  = shift;
+  my $histone   = shift;
+  my $align     = shift;
+
+  say {$var_file} MyLib::latex_newcommand ($histone."PID" ,
+     sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
+
+  ## Why we do not get the consensus sequence from the align object, why is it wrong to use
+  ## the consensus sequence, and what did Marzluff used on the paper then?
+  ##
+  ## A consensus sequence is the most frequent residue at _each_ position, not the most
+  ## frequent sequence. So, how should we act with respect to insertions and deletions?
+  ## The aligned sequences will have "-" (nothing) at such locations, which means that
+  ## even if only one of the proteins has a residue at a certain location, the consensus
+  ## sequence will keep it. For example:
+  ##
+  ## SIHK----K
+  ## SKHKAKGLK <-- the only that is different
+  ## SIHK----K
+  ## SIHK----K
+  ## SIHK----K
+  ##
+  ## SIHKAKGLK <-- consensus sequence (different from all of them)
+  ##
+  ## In this case, the consensus sequence does not actually exist. Even considering the
+  ## empty positions (-) if it was a residue and count it on the frequency. To work around
+  ## this cases, programs to define a consensus sequence often have tuning parameters such
+  ## as threshold. Marzluff's paper, says that the consensus sequence was calculated with
+  ## the PRETTYBOX program, part of the GCG package http://www.csd.hku.hk/bruhk/gcgdoc/prettybox.html
+  ## which indeed does have such paremeters. He does not mention what parameteres were used
+  ## but should be safe to assume he used the default values.
+  ##
+  ## Anyway, the consensus can still lead to a new sequence, one that is different from all
+  ## the sequences used in the alignment and I'm surprised that he did not. What we actually
+  ## want to use in the tables describing the variants is the most common sequence, not the
+  ## consensus.
+
+  ## Getting the value of $max here, even though the values for each key is
+  ## already the number of times for each sequence, saves us having to loop
+  ## through the values later to find it.
+  my $max = 0;
+  my %seqs; # keys will be aligned sequences
+  foreach ($align->each_seq) {
+    ## increment the value in the hash everytime and also increment the
+    ## value of $max if we go above it
+    $max++ if (++$seqs{$_->seq} > $max);
+  }
+  my @common = grep ($seqs{$_} == $max, keys %seqs);
+  if (@common > 1) {
+    my $n = @common;
+    warn ("Found $n `most common' sequences for $histone. Only the first will be used.");
+  }
+  my $most_common = $common[0];
+
+  say {$var_file} MyLib::latex_newcommand ($histone."UniqueProteins" , scalar keys %seqs);
+
+  ## Get a list of the genes whose sequence is equal to the most common,
+  ## and the text describing the difference against it for the others.
+  my @eq2common;
+  my %description;
+  foreach my $seq ($align->each_seq) {
+    ## FIXME we use display_id to get the accession number. The accession_number
+    ## method is not working, and this is likely a bug on the TCoffee method
+    ## which is not creating the Bio::Seq object properly for the alignment.
+    my $symbol = $pacc2gsym{$seq->display_id};
+    if ($seq->seq ne $most_common) {
+      $description{$symbol} = seq_diff_str (\$most_common, \$seq->seq);
+    } else {
+      push @eq2common, $symbol;
+    }
+  }
+
+  $most_common =~ tr/-//d; # remove the gaps from the alignment
+
+  my $filepath = File::Spec->catdir($path{results}, "table-${histone}-proteins-align.tex");
+  open (my $table, ">", $filepath)
+    or die "Couldn't open $filepath for writing: $!";
+
+  say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
+  say {$table} "  \\toprule";
+  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
+                length ($most_common) . " amino acids" .
+                names_for_most_common ($histone, @eq2common) . ")}\\\\";
+  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common}}} \\\\";
+  say {$table} "  \\midrule";
+
+  foreach my $symbol (sort keys %description) {
+    ## Having each equal proteins that are different from the most common
+    ## in a single row could be handy (easy to see the groups) but it would
+    ## look horrible. Just image: the first column taking 70% of the table
+    ## width because one of the different sequences has 5 gene names on it.
+    say {$table} "  $symbol & " . MyLib::latex_string ($description{$symbol}) ." \\\\";
+  }
+
+  say {$table} "  \\bottomrule";
+  say {$table} "\\end{tabular}";
+  close($table) or die "Couldn't close $filepath after writing: $!";
 }
 
 ## Create string with sequence difference according to nomenclature set by HGVS

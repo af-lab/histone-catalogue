@@ -113,7 +113,8 @@ var_targets   = list()
 for histone in ["H2A", "H2B", "H3", "H4"]:
     align_targets.append(os.path.join(results_dir, "aligned_%s.fasta" % histone))
     align_targets.append(os.path.join(results_dir, "table-%s-align.tex" % histone))
-    align_targets.append(os.path.join(figures_dir, "seqlogo_%s.eps" % histone))
+    align_targets.append(os.path.join(figures_dir, "seqlogo_%s_proteins.eps" % histone))
+    align_targets.append(os.path.join(figures_dir, "seqlogo_%s_cds.eps" % histone))
 
 align_targets.append(os.path.join(results_dir, "variables-align_results.tex"))
 clust_targets.append(os.path.join(results_dir, "table-histone_catalogue.tex"))
