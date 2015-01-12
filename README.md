@@ -41,42 +41,16 @@ paper which we use as reference for comparison)
 * references.bib - BibTeX database for the references in the paper
 * SConstruct - build instructions for SCons
 
-Building instructions
----------------------
 
-By default, SCons will download new data from the Entrez Gene database, analyse
-it, and prepare a ready to publish PDF of the paper. Each of
-these is a different target and SCons can be used to process only part of them.
-The different target names are:
+Build instructions
+------------------
 
-    data        - download new data (requires email)
-    analysis    - analyse data
-    publication - prepare PDF of the published paper
+In the spirit of treating this publication as like a piece of software,
+we are using [SCons](www.scons.org), a software build system, to create
+new builds of this paper.
 
-Not specifying any target, calling `scons` on its own, is equivalent to
-selecting all of them. That means, if all dependencies are installed, the
-following command will take care of everything:
+Run `scons -h` for details on the available targets and options.
 
-    scons --email=example@domain.com
-
-Note than in order to prevent overload of the NCBI servers, a valid email is
-required to connect to the Entrez Gene database using E-utilities. Other
-limitations may be in place. See section *"Usage guidelines and requirements"*,
-on [A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books/NBK25497/).
-
-> In order not to overload the E-utility servers, NCBI recommends that users
-> post no more than three URL requests per second and limit large jobs to either
-> weekends or between 9:00 PM and 5:00 AM Eastern time during weekdays. Failure
-> to comply with this policy may result in an IP address being blocked from
-> accessing NCBI.
->
-> ...
->
-> The value of email will be used only to contact developers if NCBI observes
-> requests that violate our policies, and we will attempt such contact prior to
-> blocking access.
-
-Run `scons -h` for more details on the building targets and options.
 
 Dependencies
 ------------
