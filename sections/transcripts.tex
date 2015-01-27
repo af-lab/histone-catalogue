@@ -9,31 +9,36 @@
 	Canonical core histone genes are transcribed by RNA polymerase II 
 	and have a methyl guanosine cap \addref{Marzluff NatRevGen 2008}
 	but, unlike almost all other protein coding genes including histone variants, 
-	they do not have introns (\tref{tab:typical-histone-differences}) 
-	and only 1-5\% of canonical histone transcripts are 3' polyadenylated \addref{YangChen GenomeBiol 2011}
+	they do not have introns and are not polyadenylated (\tref{tab:typical-histone-differences}).
 
-	Instead, canonical histone transcripts contain a 3' stem-loop in their mRNA secondary structure 
-	that is recognised by specialised RNA processing and stabilisation complexes.
-	The stem-loop is encoded \StemLoopStart{} to \StemLoopEnd{} base pairs after the stop codon 
-	and has a highly conserved sequence and structure (\fref{fig:stem-loop-seqlogo}) \citep{stem-loop-structure}.
-	The stem-loop interacts with the Stem-Loop Binding Protein (SLBP) 
-	which is up-regulated 10-20 fold during S~phase to stabilise the histone mRNA \citep{SLBP-regulation}, 
-	in order to lengthen the canonical histone mRNA half lives 
-	to assist the increased histone protein requirement for packaging the newly duplicated genome.
-	This is followed by a purine-rich Histone Downstream Element (HDE) 
-	that interacts with U7 snRNA to direct efficient 3' end processing \citep{HDE-sequence}.
-
-	The histone variant H2AX is unusual in having 3' transcript properties reflecting
-	both canonical and variant histone features \citep{HTwoAX-transcripts}, including a canonical histone stem-loop. 
-	There are also some canonical histone gene copies that are annotated with two transcripts 
-	differing in whether they have stem-loop or polyadenylation signals (\tref{tab:histone-catalogue}). 
-
+	Canonical histone gene transcription is regulated 
+	by cell-cycle dependent phosphorylation of the histone-specific NPAT coactivator 
+	and interaction with the accessory protein FLASH, 
+	resulting in assembly of histone locus bodies 
+	coordinating factors responsible for canonical histone transcription and processing \addref{Marzluff NatRevGen2008}.
 	Overall there is estimated to be a 35 fold increase in mammalian canonical histone transcripts in S phase,
 	principally as a result of a 10 fold increase in mRNA stabilisation via stem-loop dependent mechanisms 
-	and a 3-5 fold up-regulation in canonical histone gene transcription \addref{Marzluff NatRevGen 2008}. 
-	This transcription is regulated by cell-cycle dependent phosphorylation of the histone-specific NPAT coactivator 
-	and interaction with the accessory protein FLASH, 
-	resulting in assembly of histone locus bodies localising factors responsible for canonical histone transcription and processing.
+	and a 3-5 fold up-regulation in canonical histone gene transcription. 
+
+	This post-translation regulation of canonical histone transcripts 
+	is achieved by a stem-loop encoded in their mRNA 3' untranslated region 
+	that is recognised by specialised RNA processing and stabilisation complexes.
+	The stem-loop is encoded from \StemLoopStart{} to \StemLoopEnd{} base pairs after the stop codon 
+	and has a highly conserved sequence and structure (\fref{fig:stem-loop-seqlogo}) \citep{stem-loop-structure}).
+	This RNA structure is bound by the Stem-Loop Binding Protein (SLBP) 
+	which is up-regulated 10-20 fold during S~phase to stabilise histone mRNAs \citep{SLBP-regulation}. 
+	Stabilisation lengthens canonical histone mRNA half lives 
+	to provide for increased histone translation capacity to package the newly duplicated genome.
+	Immediatley downstream of the stem-loop a purine-rich Histone Downstream Element (HDE) 
+	that interacts with U7 snRNA to direct efficient 3' end processing \citep{HDE-sequence}.
+
+	Although the vast bulk of canonical histone transcripts appear to depend on this mechanism, 
+	1-5\% of canonical histone transcripts are 3' polyadenylated \addref{YangChen GenomeBiol 2011} 
+	and some genes have annotations indicating two transcripts 
+	differing in whether they have stem-loop or polyadenylation signals (\tref{tab:histone-catalogue}). 
+	Almost all histone variant transcripts lack the stem-loop and are polyadenylated. 
+	However, the H2AX variant is unique in having transcripts with 3' properties alternatively displaying
+	variant or canonical features including a canonical histone stem-loop \citep{HTwoAX-transcripts}. 
 
     \begin{figure*}
       \centering
