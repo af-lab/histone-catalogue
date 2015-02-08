@@ -102,7 +102,7 @@ TARGETS
 scripts_dir   = "scripts"
 results_dir   = "results"
 figures_dir   = "figs"
-data_dir      = os.path.join (results_dir, "sequences")
+seq_dir       = os.path.join (results_dir, "sequences")
 reference_dir = os.path.join ("data", "reference-Marzluff_2002")
 
 def path4script (name):
@@ -111,19 +111,21 @@ def path4result (name):
   return os.path.join (results_dir, name)
 def path4figure (name):
   return os.path.join (figures_dir, name)
+def path4seq (name):
+  return os.path.join (seq_dir, name)
 
 ## TARGET data
 ##
 ## SCons does not like it when the target is a directory and will always
 ## consider it up to date, even if the source changes.  Because of this,
-## we set data.csv file as target
+## we set the data.csv and data.asn1 files as target
 data = env.Command (
-  target = os.path.join (data_dir, "data.csv"),
+  target = [path4seq ("data.csv"), path4seq ("data.asn1")],
   source = path4script ("extract_sequences.pl"),
-  action = "$SOURCE --email %s %s" % (env.GetOption ("email"), data_dir)
+  action = "$SOURCE --email %s %s" % (env.GetOption ("email"), seq_dir)
 )
 env.Alias("data", data)
-env.Clean(data, data_dir)
+env.Clean(data, seq_dir)
 
 
 ## TARGET analysis
@@ -177,37 +179,37 @@ analysis = [
   env.Command (
     target = align_targets,
     source = path4script ("align_sequences.pl"),
-    action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir)
+    action = "$SOURCE --sequences %s --figures %s --results %s" % (seq_dir, figures_dir, results_dir)
   ),
   env.Command (
     target = clust_targets,
     source = path4script ("cluster_stats.pl"),
-    action = "$SOURCE --sequences %s -results %s" % (data_dir, results_dir)
+    action = "$SOURCE --sequences %s -results %s" % (seq_dir, results_dir)
   ),
   env.Command (
     target = prot_targets,
     source = path4script ("protein_stats.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir)
+    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
   ),
   env.Command (
     target = refer_targets,
     source = path4script ("reference_comparison.pl"),
-    action = "$SOURCE --sequences %s --results %s --reference %s" % (data_dir, results_dir, reference_dir)
+    action = "$SOURCE --sequences %s --results %s --reference %s" % (seq_dir, results_dir, reference_dir)
   ),
   env.Command (
     target = check_targets,
     source = path4script ("histone_sanity_checks.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir)
+    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
   ),
   env.Command (
     target = utr_targets,
     source = path4script ("utr_analysis.pl"),
-    action = "$SOURCE --sequences %s --figures %s --results %s" % (data_dir, figures_dir, results_dir)
+    action = "$SOURCE --sequences %s --figures %s --results %s" % (seq_dir, figures_dir, results_dir)
   ),
   env.Command (
     target = var_targets,
     source = path4script ("variants.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (data_dir, results_dir)
+    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
   ),
 ]
 
