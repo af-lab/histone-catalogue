@@ -169,6 +169,8 @@ utr_targets += [
   path4result ("variables-utr.tex"),
   path4result ("aligned_stem_loops.fasta"),
   path4figure ("seqlogo_stem_loops.eps"),
+  path4result ("aligned_HDEs.fasta"),
+  path4figure ("seqlogo_HDEs.eps"),
 ]
 
 var_targets += [path4result ("table-variant_catalogue.tex")]
