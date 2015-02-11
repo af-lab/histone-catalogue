@@ -282,7 +282,7 @@ sub make_tex_catalogue {
 
     print {$table} "  $$gene{'histone'} & $$gene{'symbol'} & $$gene{'uid'} & ";
     if ($$gene{'pseudo'}) {
-      print {$table} "n/a & n/a \\\\\n";
+      print {$table} "pseudogene & pseudogene \\\\\n";
     } else {
       ## In the case of a gene with multiple transcripts, each will have
       ## its line on the table but the first two columns will be empty
