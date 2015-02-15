@@ -42,7 +42,7 @@ my %path = MyLib::parse_argv("sequences", "results");
 
 ## Get the variant genes and order them by gene symbol
 my @variants = sort {$$a{histone} cmp $$b{histone} || $$a{symbol} cmp $$b{symbol}}
-  MyLib::load_variants ($path{sequences});
+  MyLib::load_variant ($path{sequences});
 
 my $tex_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.tex");
 my $csv_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.csv");

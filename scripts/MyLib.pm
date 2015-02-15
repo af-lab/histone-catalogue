@@ -22,6 +22,7 @@ use Text::CSV 1.21;                         # Comma-separated values manipulator
 use POSIX;                                  # Perl interface to IEEE Std 1003.1
 use Bio::SeqIO;                             # Handler for SeqIO formats
 use Getopt::Long;                           # Parse program arguments
+use Storable;                               # persistence for Perl data structures
 
 use FindBin;                                # Locate directory of original perl script
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
@@ -84,7 +85,7 @@ sub parse_argv {
 ## access the values after reading the file, so anything other than this is
 ## overkill.
 sub load_csv {
-  my $data_path = File::Spec->catdir($_[0], 'data.csv');
+  my $data_path = shift;
   ## To cover the widest range of parsing options, you will always want to set binary
   my $csv = Text::CSV->new ({
                               binary => 1,
@@ -135,13 +136,9 @@ sub load_csv {
   return %genes;
 }
 
-## rather than load information from all genes found and extracted, get only
-## the canonical histones. Check load_csv() for the fieldnames. In addition
-## the following two fieldnames are added:
-##    cluster   -> cluster number (only the number. Does NOT include HIST)
-##    histone   -> histone type (H2A, H2B, H3, H4)
-sub load_canonical {
-  my %genes = load_csv (@_);
+sub select_canonical {
+  my %genes = @_;
+
   my @canon;
   foreach my $uid (keys %genes) {
     my $symbol = $genes{$uid}{'symbol'};
@@ -161,19 +158,38 @@ sub load_canonical {
   return @canon;
 }
 
-## load csv but return only the H1 genes
-sub load_H1 {
-  my %genes = load_csv (@_);
+## rather than load information from all genes found and extracted, get only
+## the canonical histones. Check load_csv() for the fieldnames. In addition
+## the following two fieldnames are added:
+##    cluster   -> cluster number (only the number. Does NOT include HIST)
+##    histone   -> histone type (H2A, H2B, H3, H4)
+sub load_canonical {
+  my $fpath = File::Spec->catdir (shift, "canonical.store");
+  my $canon_ref = Storable::retrieve ($fpath);
+  return @$canon_ref;
+}
+
+sub select_H1 {
+  my %genes = @_;
   my @h1;
   foreach my $uid (keys %genes) {
-    next unless $genes{$uid}{'symbol'} =~ m/^HIST\dH1/i;
+    next unless $genes{$uid}{'symbol'} =~ m/^HIST(\d+)H1/i;
+    $genes{$uid}{'cluster'} = $1;
+    $genes{$uid}{'histone'} = "H1";
     push (@h1, $genes{$uid});
   }
   return @h1;
 }
 
-sub load_variants {
-  my %genes = load_csv (@_);
+## load csv but return only the H1 genes
+sub load_H1 {
+  my $fpath = File::Spec->catdir (shift, "h1.store");
+  my $h1_ref = Storable::retrieve ($fpath);
+  return @$h1_ref;
+}
+
+sub select_variant {
+  my %genes = @_;
   my @variants;
   foreach my $uid (keys %genes) {
     my $symbol = $genes{$uid}{'symbol'};
@@ -195,6 +211,12 @@ sub load_variants {
     push @variants, $genes{$uid};
   }
   return @variants;
+}
+
+sub load_variant {
+  my $fpath = File::Spec->catdir (shift, "variant.store");
+  my $variant_ref = Storable::retrieve ($fpath);
+  return @$variant_ref;
 }
 
 ## loads a sequence file returning a Bio::Seq object. First argument

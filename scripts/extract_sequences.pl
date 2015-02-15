@@ -14,8 +14,15 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-## all this script does is run bp_genbank_ref_extractor (now part of bioperl) and
-## save the sequences in the sequences directory. Usage is:
+## This script runs bp_genbank_ref_extractor (now part of bioperl), saves
+## the sequences in the sequences directory, as well as CSV files for
+## some sets.  It will generate the following files:
+##
+##    * canonical.csv
+##    * variant.csv
+##    * h1.csv
+##
+## Usage is:
 ##
 ## extract_sequences --email you@there.eu path_to_save_sequences
 
@@ -23,7 +30,10 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
+use File::Spec;                 # Perform operation on file names
 use Email::Valid;               # Check validity of Internet email addresses
+use Text::CSV 1.21;             # Comma-separated values manipulator
+use Storable;                   # persistence for Perl data structures
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -71,3 +81,45 @@ my @args = (
 );
 my @call = ($MyVar::seq_extractor, @args, $search);
 system (@call) == 0 or die "Running @call failed: $?";
+
+my %genes = MyLib::load_csv (File::Spec->catdir ($seq_dir, "data.csv"));
+my @canon = MyLib::select_canonical (%genes);
+my @variants = MyLib::select_variant (%genes);
+my @h1 = MyLib::select_H1 (%genes);
+
+## I wish there was a file format for gene information but there is not.
+## Because histones are simple, we can get away with a CSV file.
+sub gene2csv {
+  my $fpath = shift;
+  my $csv = Text::CSV->new ({
+    binary => 1,
+    eol    => $/,
+  }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
+  open (my $fh, ">:encoding(utf8)", $fpath)
+    or die "Could not open $fpath for writing: $!";
+
+  $csv->print ($fh, ["Histone type", "Symbol", "NCBI UID", "EnsEMBL ID",
+                     "chr_acc", "chr_start", "chr_end",
+                     "Transcript accession", "Protein accession"]);
+
+  foreach my $gene (@_) {
+    my @line = ($gene->{histone}, $gene->{symbol}, $gene->{uid},
+                $gene->{chr_acc}, $gene->{start}, $gene->{end},
+                "", "");
+    if ($gene->{pseudo}) {
+      $csv->print ($fh, \@line);
+    } else {
+      while (my ($mrna, $prot) = each %{$gene->{transcripts}}) {
+        @line[-2,-1] = ($mrna, $prot);
+        $csv->print ($fh, \@line);
+      }
+    }
+  }
+  close $fh or die "Could not close $fpath after writing: $!";
+}
+
+for ((["canonical", \@canon], ["variant", \@variants], ["h1", \@h1])) {
+  gene2csv (File::Spec->catdir ($seq_dir, $_->[0] . ".csv"), @{$_->[1]});
+  Storable::store ($_->[1], File::Spec->catdir ($seq_dir, $_->[0] . ".store"));
+}
+

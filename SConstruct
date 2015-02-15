@@ -120,7 +120,10 @@ def path4seq (name):
 ## consider it up to date, even if the source changes.  Because of this,
 ## we set the data.csv and data.asn1 files as target
 data = env.Command (
-  target = [path4seq ("data.csv"), path4seq ("data.asn1")],
+  target = [path4seq ("data.csv"),
+            path4seq ("canonical.csv"), path4seq ("canonical.store"),
+            path4seq ("variant.csv"), path4seq ("variant.store"),
+            path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
   action = "$SOURCE --email %s %s" % (env.GetOption ("email"), seq_dir)
 )
