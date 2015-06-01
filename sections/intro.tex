@@ -7,7 +7,7 @@
   as a nexus for signalling and heritable epigenetics. 
 
   Relationships within the histone family have been described using a variety of terminologies
-  reflecting various biochemical, functional and genomic distinctions summarised below (\tref{tab:histone-divisions}).
+  reflecting biochemical, functional and genomic distinctions summarised below (\tref{tab:histone-divisions}).
   
   From a biochemical perspective, histones are abundant proteins 
   that are readily isolated due to their highly basic chemical character. 
@@ -17,38 +17,41 @@
 
   The demonstration of the nucleosome as the fundamental repeating unit of chromatin \addref{Kornberg} 
   revealed that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
-  nucleosome core particle. These four histones are referred to as ``core histones''. 
-  In contrast, H1 and relted H5 associate with the linker DNA between nucleosome core particles 
-  and are referred to as ``linker histones''. 
+  nucleosome core particle. These four histones are referred to as core histones. 
+  In contrast, H1 associates with the linker DNA between nucleosome core particles 
+  and is referred to as a linker histone. 
   The 5 human somatic H1 isoforms and 6 tissue-specific variants have been described and catalogued in \addref{HarshmanFreitas2013}.
 
   Arginine and lysine content was used as an early distinction between the histones. 
-  The H1 linker histone has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as ``lysine-rich'' 
-  whereas the remaining 4 core histones are ``arginine-rich'' 
+  The H1 linker histone has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as lysine-rich 
+  whereas the remaining 4 core histones are arginine-rich 
   with highest ratios of \HTwoAArgLysRatio{} in H2A,  \HTwoBArgLysRatio{} in H2B, 
   \HThreeArgLysRatio{} in H3 and \HFourArgLysRatio{} in H4 type isoforms.
+  Nevertheless, the core histones have many lysines particularly in their N-terminal tails.
 
   Extracting histones and separating them by polyacrylamide gel electrophoresis 
   using the strongly anionic detergent sodium dodecyl sulphate (SDS PAGE) and neutral buffers 
   gives single bands for each histone type. 
   However, PAGE with non-ionic detergent Triton X--100 and uncharged urea as denaturants
   in acetic acid buffer (TAU or AUT PAGE) allows the separation of histone types into multiple bands 
-  due to post-translational modifications and primary sequence variations \citep{PAGEND}. 
+  due to post-translational modifications and certain primary sequence variations \citep{PAGEND}. 
   These separations are reflected in subtype designations including H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
   Some TAU PAGE bands still encompass considerable protein isoform heterogeneity \addref{}.
 
-  From a functional perspective, two classes of histone can be delineated within the core histones (\tref{tab:typical-histone-differences}). 
-  ``Canonical'' histones contribute to the bulk structure and generic function of chromatin. 
+  From a functional perspective, two classes of histone can be delineated 
+  within the core histone types (\tref{tab:typical-histone-differences}). 
+  Canonical histones contribute to the bulk structure and generic function of chromatin. 
   Their expression is significantly elevated during S~phase to provide chromatin packaging 
   for DNA duplicated during replication. This led to their description as ``replication dependent'', 
   even though a supply of canonical histones is required throughout the cell cycle. 
   Human and other metazoan canonical histone genes are distinctive 
   because they lack introns and give rise to non-polyadenylated proten coding transcripts 
-  where turnover is independently regulated via a highly conserved 3' stem-loop
+  where turnover is independently regulated via a highly conserved 3' stem-loop.
   
-  In contrast, ``variant'' histones such as H2A.Z, TH2B and H3.3 have less sequence identity and lower abundance. 
+  In contrast, variant histones such as H2A.Z, TH2B and H3.3 have 
+  less sequence identity and lower abundance (\tref{tab:typical-histone-differences}). 
   They play functionally specific roles and are mostly expressed outside S~phase, 
-  so are labelled as ``replication independent''. 
+  so are decribed as replication independent. 
   Since histone variants are interpreted as taking the place of equivalent canonical histone types, 
   the variant histones are also referred to as ``replacement'' histones.
   
@@ -74,7 +77,7 @@
   All automatically generated values are displayed with a light grey background.
   This manuscript generation has remained stable in our laboratory for several years
   and represents an example of ``reproducible research'' \addref{SchwabKarrenbachClaerbout2000?}
-  that could be applied to other gene families.
+  that provides a model for curating gene families.
 
   \begin{table*}
     \caption{Terminology describing histone variation}
@@ -87,8 +90,14 @@
 	  \\
       \addlinespace
 	  Canonical histones &
-	  Core histones with properties described in \tref{tab:typical-histone-differences} contributing the majority of histones in chromatin. 
+	  Core histones with properties described in \tref{tab:typical-histone-differences} 
+	  contributing the majority of histones in chromatin.
 	  Encompasses multiple isoforms.
+	  \\
+      \addlinespace
+	  Core histones &
+	  Histones forming part of the nucleosome core particle wrapping 147 bp of DNA.
+	  The 4 core histone types are H2A, H2B, H3 and H4.
 	  \\
       \addlinespace
 	  Heteromorphous variants &
@@ -96,7 +105,8 @@
 	  \\
       \addlinespace
 	  Homomorphous variants &
-	  Canonical histone subtypes with isoform variation requiring high resolution separation methods (e.g. TAU PAGE).
+	  Canonical histone subtypes with isoform variation 
+	  requiring high resolution separation methods (e.g. TAU PAGE).
 	  \\
       \addlinespace
 	  Families &
@@ -104,7 +114,13 @@
 	  \\
       \addlinespace
 	  Isoforms &
-	  Proteins with high sequence identity and equivalent function. Functional equivalece has not been demonstrated for canonical histone isoforms.
+	  Proteins with high sequence identity and assumed equivalent function. 
+	  Functional equivalence has not been demonstrated for canonical histone isoforms.
+	  \\
+      \addlinespace
+	  Linker histones &
+	  Histones binding to linker DNA adjacent to the nucleosome core particle.
+	  The two linker histone types are H1 and H5.
 	  \\
       \addlinespace
 	  Non-allelic variants &
@@ -120,11 +136,13 @@
 	  Histone variants. Expressed at specific times during cell cycle outside S phase. \\
       \addlinespace
 	  Subtypes &
-	  Canonical histone type isoforms separable by TAU PAGE. 
+	  Canonical histone type isoforms separable by TAU PAGE 
+	  (e.g. H2A.1, H2A.2)
 	  \\
       \addlinespace
 	  Types &
-	  Histone sequences able to participate in specific combinations that define nucleosome structure. Related in protein sequence.
+	  Histone sequences able to participate in specific combinations 
+	  that define the repeating nucleosome structure. 
 	  The 5 histone types are H1, H2A, H2B, H3 and H4.
 	  \\
       \addlinespace
