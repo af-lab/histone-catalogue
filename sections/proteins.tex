@@ -1,8 +1,9 @@
 \section{Histone proteins}
 
 	Implicit in many depictions of chromatin is that 
-	canonical histone protein isoforms of each type behave as a single protein, 
-	sometimes referred to as ``wild type''. 
+	canonical histone protein types behave as a single protein, 
+	sometimes referred to as ``wild type'', 
+	despite isoform variation. 
 	This assumption may result from the relatively high identity of histone sequences between species 
 	and the focus on functional distinctions of histone variants. 
 	However, the strong selection pressure on histone amino acid sequence conservation \addref{NeiRooney AnnRevGen 2005}
@@ -10,16 +11,17 @@
 	suggests that even minor variations in canonical histone proteins could have functional implications.
 	
 	Isoform variation in canonical histone types H2A and H2B is most pronounced, 
-	with \HTwoAUniqueProteins{} H2A and \HTwoBUniqueProteins{} H2B proteins respectively. 
+	with potentially \HTwoAUniqueProteins{} different H2A 
+	and \HTwoBUniqueProteins{} different H2B proteins respectively. 
 	In contrast only \HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} H4 proteins 
-	are encoded by their canonical genes. 
+	are encoded for these canonical histone types. 
 	There is also some variation in canonical histone length for isoforms 
-	with insertions and deletions of 1-2 amino acids 
-	in H2A \tref{tab:H2A-consensus}, H2B \tref{tab:H2B-consensus} and H4 \tref{tab:H2A-consensus} but not in H3.
+	with insertions and deletions in H2A , H2B and H4 but not in H3.
 
 	Typically, human canonical histone polypeptides are numbered omitting the N-terminal methionine 
-	which is likely to be removed since most sequences have a small hydrophilic amino acid as the following residue \addref{XiaoPeiBiochemistry2010}. 
-	For this reason the N-terminal methionine is removed from sequences shown in figures.
+	which is likely to be removed since most sequences have 
+	a small hydrophilic amino acid as the following residue \addref{XiaoPeiBiochemistry2010} 
+	and has been ommitted here for consistency with residue numbering in the literature.
 	\todo{We should change ths script here because it will confuse people that H3K4 is at position 5 ...}
     %% if we want to change our stance in this, we only need to uncomment
     %% 3 lines in MyLib.pm, in the routine that reads the sequence files.
@@ -27,71 +29,69 @@
 
   \subsection{Canonical H2A isoforms}
 	
-	The canonical H2A protein isoforms are separable on TAU PAGE into two bands labelled as H2A.1 and H2A.2. 
-	This separation distingushes between leucine or methionine residue 52 \addref{???}, 
-	menaing there are up to 8 different protein sequences in H2A.1 and 2 in H2A.2. 
+	Canonical H2A genes encode \HTwoAUniqueProteins{} different H2A isoforms.
+	This set of proteins is separable by TAU PAGE into two bands identified as H2A.1 and H2A.2. 
+	The separation distingushes leucine or methionine residue 52 \addref{???}, 
+	implying there are up to 8 different protein sequences in H2A.1 and 2 in H2A.2. 
 	There is no concordance between H2A.1 and H2A.2 
-	and the location of isoform encoding genes in histone gene clusters. 
+	and the location of isoform-encoding genes in histone clusters. 
 	HIST2 contains genes encoding isoforms with both Leu52 and Met52, 
-	and clusters HIST1, HIST2 and HIST3 all encode canonical H2A isoforms with Leu52. 
-	There is also no known functional distinction between H2A.1 and H2A.2.
+	and HIST1, HIST2 and HIST3 all contain genes encoding H2A isoforms with Leu52. 
+	There is no clear functional distinction between H2A.1 and H2A.2.
 
 	Figure \ref{fig:H2A-weblogo} shows that the major sites of difference in canonical H2A are 
 	serine or threonine at residue 17, 
 	alanine or serine at residue 41, 
 	lysine or arginine at residue 100, 
-	and the C-terminal residues from residue 125. 
+	and the C-terminus residues from residue 125 onwards. 
 	All sites are have implications for post-translational modifications. 
-	Additional sites differ in the H2A isoform encoded by \textit{HIST1H2AA} (see above).
 	
   \subsection{Canonical H2B isoforms}
 
-	H2B is sometimes referred to as being less variable in sequence than H2A and H4. 
-	Although there are very few H2B histone variants, this histone has the most canonical isoforms (\tref{tab:histone-divisions}).
+	H2B is sometimes referred to as being less variable in sequence than H2A and H3 
+	because of the lesser number of variants.
+	However, this histone actually has the most canonical isoforms (\tref{tab:histone-divisions}) 
+	but none of the \HTwoBUniqueProteins{} unique isoforms appear to be separable by TAU PAGE. 
 
 	As discussed above, the \textit{HIST1H2AA} and \textit{HIST1H2BA} genes 
-	are the most divergent of all canonical isoforms.
-	They are located together close to, but not strictly within, the HIST1 cluster. 
-	HIST1H2BA is known to be testes specific TSH2B and is structurally distinctive \addref{UruharaKurumizakaACTAcrystF2014}. 
-	It has been proposed to label this histone isoform as H2B.1 \addref{Talbert EpigeChrom 2012}. 
-	although it is unclear whether this isoform separable by TAU PAGE like the other subtype nomenclatures.
-
-	In fact, none of the canonical H2B appear to be separable by TAU PAGE 
-	despite this band encompassing up to \HTwoBUniqueProteins{} unique isoforms. 
+	are the most divergent of all canonical isoforms 
+	and are located together close to, but not strictly within, the HIST1 cluster. 
+	HIST1H2BA is known to be testes specific TSH2B 
+	and is structurally distinctive \addref{UruharaKurumizakaACTAcrystF2014} 
+	so it has been proposed to label this histone isoform as H2B.1 \addref{Talbert EpigeChrom 2012} 
+	although it is unclear whether this isoform is separable by TAU PAGE.
+	
 	There is significant variability between isoforms in the N-terminus, 
 	especially at residue 3 which can be aspartic or glutamic acid, 
 	and at residue 5 which can be alanine, serine, threonine or valine depending on the isoform. 
-	This region is also one of the most variable between canonical core histones of different species. 
-	%% I fudged the preceding sentence to avoid having to discuss the PEP thing, since we are only concenrned with human histones
+	This N-terminal region is also one of the most variable between canonical core histones of different species,
+	Human canonical histones include a unique and distinctive N-terminal proline-acidic-proline motif. 
+
 	Although the physicochemical distinction between valine or isoleucine at residue 40 is small, 
 	isoform differences of glycine or serine at residue 76 
-	and serine or alanine at 125 could again impact on post-translational modification pootential.
+	and serine or alanine at 125 could again impact on post-translational modification potential.
 	
   \subsection{Canonical H3 isoforms}
 	
-	Although H3 histone variants are of considerable interest (\tref{tab:histone-variant-families}), 
-	there are only \HThreeUniqueProteins{} different canonical H3 isoforms. 
-	The majority of H3 genes are in the HIST1 cluster 
-	and encode a single polypeptide sequence. 
-	In contrast, the three canonical H3 genes in HIST2 encode an isoform 
-	with the sole but interesting difference of serine rather that cysteine at residue 97.
-	These two isoforms can also be separated by TAU PAGE based on residue 97. 
-	Therefore, H3.2 isoforms are unique and are encoded in the HIST2 cluster, 
-	whereas H3.1 isoforms are likely to be almost entirely unique and encoded in the HIST1. 
-	The sole complication is that HIST3 encodes a single canonical H3 isoform 
-	with four amino acid differences.
+	Canonical H3 genes encode only \HThreeUniqueProteins{} different canonical isoforms. 
+	The majority of H3 genes are in the HIST1 cluster and encode a single polypeptide sequence. 
+	The three canonical H3 genes in HIST2 encode a different isoform 
+	with the interesting difference of serine rather that cysteine at residue 97 
+	that is separable by TAU PAGE.
+	By coincidence the HIST1-encoded canonical H3 isoform copies are labelled as H3.1 
+	and the HIST2-encoded copies are labelled H3.2.
+	HIST3 encodes a single canonical H3 isoform with four amino acid differences. 
+	It has a serine at residue 97 so is predicted to migrate with H3.1 in TAU PAGE.
 	
   \subsection{Canonical H4 isoforms}
 	H4 is the most homegenous of all canonical core histones, 
 	with all but one of the \HFourCodingGenes{} genes encoding identical proteins. 
 	These genes are located across HIST1, HIST2 
 	and the isolated canonical H4 gene known as HIST4.
-	However, the \textit{HIST1H4G} gene in the middle of the HIST1 cluster 
-	encodes a significantly divergent H4 isoform 
-	with lo less than 15 amino acid differences and a deletion of the C-terminal 5 residues. 
+	The divergent \textit{HIST1H4G} gene in the middle of the HIST1 cluster 
+	encodes an isoform with 15 amino acid differences and a deletion of the C-terminal 5 residues. 
 	This gene is annotated as being transcribed \todo{which tissues?}
-	so could be of considerable interest for further investigation 
-	since no H4 histone variants have been recognised.
+	so could be of considerable interest for further investigation.
 
 \todo{The table of differences and logo need to be combined as parts A and B of single figures for each histone type}
 \todo{Alignments are not handling insertions in an ideal way? We need to omit single insertions eg HIST1H2BA.}
