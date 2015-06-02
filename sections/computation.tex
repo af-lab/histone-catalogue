@@ -1,98 +1,53 @@
 \section{Reproducible research}
 \label{sec:reproducible}
 
-	Curation of genomes is an ongoing process, 
-	with sequence gaps being completed or corrected,  
-	and with annotations being added or updated continuously \addref{some generic curation overview paper}.
+	A considerable number of builds and updates of the human genome sequence have been made 
+	since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}.
+	This has resulted in 
+	\todo{number of sequences added} canonical histone genes being added, 
+	\todo{number of sequences removed} being removed, 
+	and \todo{number of sequences changed} sequences updated (\tref{tab:difference-from-Marzluff02}).
 
-	A considerable number of builds and updates of the human genome sequence have been made since 2002 
-	so it is unsurprising that 
-	\todo{number of sequences added} genes added, 
-	\todo{number of sequences removed} removed, 
-	and \todo{number of sequences changed} sequences changed  \tref{tab:difference-from-Marzluff02}
-	since the last major survey of human canonical histone genes \citep{Marzluff02}.
+	These changes reflect the ongoing nature of genome curation and annotation \addref{some generic curation overview paper}.
+	It is important for communities of researchers 
+	to contribute to this curation and feed back information. 
+	and we have submitted a number of proposals 
+	for incorrect, inconsistent or missing annotations
+	to genome sequence maintainers
+	such as \todo{need a brief example}. 
 
-	Resequencing efforts such as the 1000 genomes initiative have likely  most coding regions have stabilised and 
+	The human canonical histone gene complement is relatively mature and is unlikely to undergo rapid change.
+	Nevertheless, it is inevitable that sequences and annotatations will be revised over time.
+	We have attempted to address the challenges of the underlying dynamic nature of 
+	gene family curation with a novel dynamic manuscript format.
 
-	In addition to maintaining a current reference, 
-	it is also necessary for communities of researchers to feed back information 
-	to ensure that reference databases are rich and accurate. 
-	In the course of our analyses we have submitted a number of proposals 
-	for incorrect, inconsistent or missing annotations of coanonical histone genes. 
-	For example, \todo{need a brief example}.
-	
-	One  process of he continuous curation of genomic databases and it was this
-  that led us to publish an updated catalogue of the human histones. The data being
-  used in this publication is still being updated. Indeed, it will never stop being
-  updated. Since the goal of this publication is an up to date analysis of all histone
-  genes, it will become outdated or incorrect once published.
-  In addition,
-  we are also aware how even the same data can give different results if analysed
-  in different ways. For example, \fref{fig:H2A-weblogo} will be different based
-  on the alignment algorithm being used such as TCoffee\citep{tcoffee2000},
-  ClustalW\citep{clustalw2}, or MultAlin\citep{multalin1988}.
+	Manuscripts are the established and dominant method of scientific communication
+	because they provide comprehensibility, peer review and established methods for citation.
+	A self-updating format ensures researchers will have convenient access to a current information.
+	To circumvent the challenge of variation of data in the dynamic manuscript 
+	we recommend that publications reference a traditional static citation 
+	and mention of the data access date in their Materials and Methods.
 
-  Since the nature of this publication is a moving target, we have created a set of tools
-  to continuously update it based on the latest data that can be found online.
-  All sequences were obtained and analysed automatically via a collection of perl
-  programs, and we made extensive use of other perl modules, mainly BioPerl\citep{bioperl}.
-  When possible, we provided patches to our dependencies, avoiding the infamous
-  ``not invented here'' syndrome. This not only makes it easier for colleagues to
-  reuse it, whose work may have nothing to do with histones, but also to
-  increase its availability.
+	This manscript is generated directly from sequences and annotations in the canonical NCBI databases.
+	Since the processing system does not cache intermediate information 
+	the community of histone researchers can contribute changes to professional database maintainers 
+	and see this information directly and automatically reflected in the manuscript when refresh.
+	The long-term stability and transparency of NCBI means that sustainability is maximised.
+	In addition, dependencies on raw data source, alignment algorithms or display output libraries
+	could all be replaced by alternatives since the processing is automatic and script-based.
 
-  At the core of our work is a perl program (bp\_genbank\_ref\_extractor) which
-  we incorporated into the Bio-EUtilities distribution since version 1.73. This program
-  downloads all sequences --- genomic, transcript, and protein --- related to a search
-  result in Entrez gene. Several options have been implemented to select specific genome
-  builds, or regions of the genome through offsets from the search results. For example,
-  it is possible to download the 500bp upstream of all genes in a search result.
+	This is an example of ``reproducible research'' \citep{reproducible-research-bioinformatics, reproducible-research-law}
+	and addresses current difficulties of irreproducibility \addref{irreproducilbility Nature?}.
+	In addition to all data being sourced directly from public repositories, 
+	all scripts including instructions for automatic builds via SCons \citep{SCons2005}
+	are directly available in a github repository (\url{https://github.com/af-lab/histone-catalog}).
+	Core processing is based on a BioPerl script bp\_genbank\_ref\_extractor
+	that we contributed to the Bio-EUtilities distribution 
+	which has been publically available since version 1.73 in 2013.
 
-  %% genes may not change a lot but this a good framework to still study the promotor
-
-  For the specific case of human histones, we may have reached a point where the amount
-  of changes over time is too small to justify ths work. However, this project was
-  designed with reuse in mind, and a catalogue for other organisms can be done with a
-  one line change. We have already done this for \textit{Mus musculus} and
-  \textit{Gallus gallus} which are of importance in our institute.
-  We reckon that our code could also be reused for other families of genes, such as our
-  previous catalogue of Snf2 family members\citep{andrew-snf2-catalogue}.
-
-%    We reason that the use of mature software development tools, could be used in other quantitative biology.
-  Following the principles of reproducible research
-  \citep{reproducible-research-bioinformatics, reproducible-research-law}, we made
-  not only all of the source code freely accessible online, but also the instructions
-  for automatic builds with SCons\citep{SCons2005}
-  (see \url{https://github.com/af-lab/histone-catalog}). The use of such build systems is
-  standard practice in software development and is becoming more common in the field
-  of computer sciences. But we see this publication with the results in human readable
-  form as the goal, not its raw results. Therefore, the final target of our build system is
-  the PDF for this publication.
-
-  %% How can we talk about the idea at
-  %% http://juretriglav.si/how-scientific-figures-should-work-in-2014/
-  %% if we can't cite URL? A very cool idea was mentioned there and deserves
-  %% attribution:
-  %%
-  %%    A great example is a continuous stream of data from an OpenEHR API: why
-  %%    wouldn’t that retrospective study on pancreatic cancer survival using
-  %%    drug X be a living research object, updating itself as long as the data
-  %%    keeps coming?
-
-
-  Our interest in making this a live and reproducible publication was the basis of
-  our choice for the search and download of sequences. Sequences are download from
-  RefSeq through Entrez, instead of HAVANA through Ensembl, only because it is much
-  easier to make work in other systems. Entrez has made available E-utilities with
-  a SOAP interface which is already part of the Bioperl project.
-  On the other hand, the Ensembl search is done by a Lucene server which is not publicly
-  accessible. The set up of a Lucene instance in a local system is not a straightforward
-  solution.
-  In addition, the Ensembl perl API is also not part of the Bioperl project, and not
-  even available through CPAN. Its dependency on a severely outdated version of BioPerl
-  is also a further complication of its installation, to the point that distribution of
-  a virtual machine is recommended.
-  All this would make reproducibility
-  of our data a much more difficult process by other researchers.
-
+	Furthermore, we have written the core scripts to enable them to generate 
+	equivalent information for other organisms with a one line change 
+	and we have trialled this for \textit{M. musculus} and \textit{Gallus gallus}.
+	We plan in future to apply it to a larger and more diverse case such as
+	our previous cataloguing of the Snf2 family \citep{andrew-snf2-catalogue}.
 
