@@ -1,10 +1,58 @@
 \section{Introduction}
 
-  Histones are among the most abundant proteins in eukaryotic cells and contribute up to half the mass of chromatin. 
-  They define the structure and accessibility of the nucleosome as the fundamental repeating unit of genome organisation 
-  around which the DNA is wrapped \addref{Luger1997 Nature}.
-  In addition, the many chemically reactive sidechains of histones are post-translationally modified 
-  as a nexus for signalling and heritable epigenetics. 
+  Histones are among the most abundant proteins in eukaryotic cells 
+  and contribute up to half the mass of chromatin. 
+  The core histone types H2A, H2B, H3 and H4 
+  define the structure and accessibility of the nucleosome 
+  as the fundamental repeating unit of genome organisation 
+  around which the DNA is wrapped \citep{Luger1997structure}.
+  In addition, the many chemically reactive sidechains of histones 
+  are post-translationally modified 
+  as a nexus for signalling and heritable epigenetics.
+  Canonical histones provide the bulk structure and generic function of chromatin
+  and are encoded by \TotalGenes{} genes in 4 clusters in the human genome (\tref{tab:histone-gene-count}).
+
+    \begin{table*}
+      \caption{
+	  Count of human canonical histone coding and pseudogenes by histone cluster and type.
+	  The right-hand value in each cell marked with $\psi$ is the number of pseudo genes.}
+      \label{tab:histone-gene-count}
+      \centering
+      \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
+        \toprule
+        \null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
+                & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
+                & \multicolumn{2}{c}{Total} \\
+        \midrule
+        HIST1   & \HTwoACodingInHISTOne{}     & \HTwoAPseudoInHISTOne{}
+                & \HTwoBCodingInHISTOne{}     & \HTwoBPseudoInHISTOne{}
+                & \HThreeCodingInHISTOne{}    & \HThreePseudoInHISTOne{}
+                & \HFourCodingInHISTOne{}     & \HFourPseudoInHISTOne{}
+                & \CodingGenesInHISTOne{}     & \PseudoGenesInHISTOne{} \\
+        HIST2   & \HTwoACodingInHISTTwo{}     & \HTwoAPseudoInHISTTwo{}
+                & \HTwoBCodingInHISTTwo{}     & \HTwoBPseudoInHISTTwo{}
+                & \HThreeCodingInHISTTwo{}    & \HThreePseudoInHISTTwo{}
+                & \HFourCodingInHISTTwo{}     & \HFourPseudoInHISTTwo{}
+                & \CodingGenesInHISTTwo{}     & \PseudoGenesInHISTTwo{} \\
+        HIST3   & \HTwoACodingInHISTThree{}   & \HTwoAPseudoInHISTThree{}
+                & \HTwoBCodingInHISTThree{}   & \HTwoBPseudoInHISTThree{}
+                & \HThreeCodingInHISTThree{}  & \HThreePseudoInHISTThree{}
+                & \HFourCodingInHISTThree{}   & \HFourPseudoInHISTThree{}
+                & \CodingGenesInHISTThree{}   & \PseudoGenesInHISTThree{} \\
+        HIST4   & \HTwoACodingInHISTFour{}    & \HTwoAPseudoInHISTFour{}
+                & \HTwoBCodingInHISTFour{}    & \HTwoBPseudoInHISTFour{}
+                & \HThreeCodingInHISTFour{}   & \HThreePseudoInHISTFour{}
+                & \HFourCodingInHISTFour{}    & \HFourPseudoInHISTFour{}
+                & \CodingGenesInHISTFour{}  & \PseudoGenesInHISTFour{} \\
+        \addlinespace
+        Total   & \HTwoACodingGenes{}       & \HTwoAPseudoGenes{}
+                & \HTwoBCodingGenes{}       & \HTwoBPseudoGenes{}
+                & \HThreeCodingGenes{}      & \HThreePseudoGenes{}
+                & \HFourCodingGenes{}       & \HFourPseudoGenes{}
+                & \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
+        \bottomrule
+      \end{tabular}
+    \end{table*}
 
   Relationships within the histone family have been described using a variety of terminologies
   reflecting biochemical, functional and genomic distinctions summarised below (\tref{tab:histone-divisions}).
@@ -15,17 +63,18 @@
   with nomenclature H1, H2A, H2B, H3 and H4 \citep{nomenclature}.
   An additional H1--related histone H5 is recognised in avian erythrocytes \citep{HFive-review}.
 
-  The demonstration of the nucleosome as the fundamental repeating unit of chromatin \addref{Kornberg} 
+  The demonstration of the nucleosome as the fundamental repeating unit of chromatin \citep{Kornberg1974} 
   revealed that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
   nucleosome core particle. These four histones are referred to as core histones. 
   In contrast, H1 associates with the linker DNA between nucleosome core particles 
   and is referred to as a linker histone. 
-  The 5 human somatic H1 isoforms and 6 tissue-specific variants have been described and catalogued in \addref{HarshmanFreitas2013}.
+  The 5 human somatic H1 isoforms and 6 tissue-specific variants 
+  have been described and catalogued in \citep{HarshmanFreitas2013}.
 
   Arginine and lysine content was used as an early distinction between the histones. 
   The H1 linker histone has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as lysine-rich 
   whereas the remaining 4 core histones are arginine-rich 
-  with highest ratios of \HTwoAArgLysRatio{} in H2A,  \HTwoBArgLysRatio{} in H2B, 
+  with highest ratios of \HTwoAArgLysRatio{} in H2A, \HTwoBArgLysRatio{} in H2B, 
   \HThreeArgLysRatio{} in H3 and \HFourArgLysRatio{} in H4 type isoforms.
   Nevertheless, the core histones have many lysines particularly in their N-terminal tails.
 
@@ -35,13 +84,12 @@
   However, PAGE with non-ionic detergent Triton X--100 and uncharged urea as denaturants
   in acetic acid buffer (TAU or AUT PAGE) allows the separation of histone types into multiple bands 
   due to post-translational modifications and certain primary sequence variations \citep{PAGEND}. 
-  These separations are reflected in subtype designations including H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
-  Some TAU PAGE bands still encompass considerable protein isoform heterogeneity \addref{}.
+  These separations are reflected in subtype designations H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
 
-  From a functional perspective, two classes of histone can be delineated 
-  within the core histone types (\tref{tab:typical-histone-differences}). 
-  Canonical histones contribute to the bulk structure and generic function of chromatin. 
-  Their expression is significantly elevated during S~phase to provide chromatin packaging 
+  From a functional perspective, two classes of core histone 
+  are delineated within the core histone types (\tref{tab:typical-histone-differences}).
+  Canonical core histones contribute to bulk chromatin structure and 
+  their expression is significantly elevated during S~phase to provide chromatin packaging 
   for DNA duplicated during replication. This led to their description as ``replication dependent'', 
   even though a supply of canonical histones is required throughout the cell cycle. 
   Human and other metazoan canonical histone genes are distinctive 
@@ -69,14 +117,15 @@
   In the last decade the draft human genome has been finalised 
   and rich annotations continue to propagate into reference gene and protein sequence databases (\tref{tab:difference-from-Marzluff02}).
 
-  In this manuscript we provide a comprehensive catalogue of the nomenclature and distribution 
+  In this manuscript we provide a comprehensive catalogue
   of canonical histone genes, proteins and pseudogenes. 
-  Since curation and annotation are dynamic and evolving, we have implemented an accompanying resource 
-  that can update itself based on the most current data from the NCBI RefSeq database 
+  Since curation and annotation are dynamic and evolving, 
+  we have implemented athis manuscript so that it
+  can self-update based on the most current data from the NCBI RefSeq database 
   to retain its value as a reference source in an accessible format.
   All automatically generated values are displayed with a light grey background.
   This manuscript generation has remained stable in our laboratory for several years
-  and represents an example of ``reproducible research'' \addref{SchwabKarrenbachClaerbout2000?}
+  and represents an example of ``reproducible research'' \citep{Claerbout2000}
   that provides a model for curating gene families.
 
   \begin{table*}
