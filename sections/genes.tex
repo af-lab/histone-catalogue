@@ -21,7 +21,7 @@
 	However, progress in understanding histone gene function suggests 
 	that histone cluster interpretation may change. 
 	For example, although \textit{HIST1H2BA} is nominally a canonical histone 
-	it has recently been highlighted that this is testes-specific TH2 \addref{UruhamaKurumizakaACTAcrystF2014}.
+	it has recently been highlighted that this is testes-specific TH2 \citep{Urahama2014}.
 	This H2B gene encodes the most divergent canonical H2B protein 
 	and is located 300 kbp upstream of the rest of the HIST1 cluster 
 	separated by a number of non-histone genes. 
@@ -31,15 +31,15 @@
 	located adjacent to the HIST1 cluster that illustrate histone sub-functionalisation.
 
 	If \textit{HIST1H2AA} and \textit{HIST1H2BA} are excluded, 
-	the hemochromatosis protein encoding gene \textit{HFE} \addref{AlbigDoeneckeJCB1998} 
+	the hemochromatosis protein encoding gene \textit{HFE} \citep{AlbigDoenecke1998} 
 	is the sole non-histone protein coding gene located within any of the human histone gene clusters. 
 
 	The implications of this tight and exclusive histone gene clustering 
-	is not well characterised \addref{Eirin-Lopez EvBiolCh8 2009} 
+	is not well characterised \citep{Eirinlopez2009} 
 	but has been suggested to imply that expression is regulated by local elements \citep{close-regulators}.
 	
 	An alternative functional explanation for clustering as a mechanism for 
-	histone gene sequence conservation is disputed \addref{NeiRooneyARG2005}.
+	histone gene sequence conservation is disputed \citep{NeiRooney2005}.
 	HIST1 is located towards the distal end of the major histocompatibility complex (MHC) 
 	in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999}, 
 	and it has been suggested that proximity to HIST1 
@@ -104,9 +104,9 @@
 	before it was realised to be a histone \citep{CENPA-copurifies-histones, CENPA-sequence-analysis}.
 	
 	Histone variant pseudogenes are suffixed with P to yield symbols such as \textit{H2AFXP} and \textit{H2AFZP5}.
-	Increasing interest in histone variant function \addref{Maze Allis NRG 2014}
+	Increasing interest in histone variant function \citep{MazeAllis2014}
 	coupled with a variety of usages and conflicts between species 
-	has led to guidelines for improved consistency in variant histone nomenclature \addref{Talbert Epigen Chrom 2012}.
+	has led to guidelines for improved consistency in variant histone nomenclature \citep{Talbert2012}.
 
   \subsection{Histone gene sequences}
 
@@ -115,10 +115,10 @@
 	This relatively high sequence variation in human canonical histone genes 
 	is consistent with observations that 
 	synonymous codon divergence exceeds non-synonymous variation 
-	across eukaryotes \addref{Piontkivska MolBiolEvol 2000} \addref{Rooney MolBiolEvol 2002}. 
+	across eukaryotes \citep{Piontkivska2002} \citep{Rooney2002}. 
 	It supports the hypothesis that histone protein sequence conservation 
 	results from birth and death evolution through strong selective pressure at the protein level, 
-	and not from a homogenisation mechanism at the gene level based on clustering \addref{NeiRooney AnnRevGen 2005}.
+	and not from a homogenisation mechanism at the gene level based on clustering \citep{NeiRooney2005}.
 
     \begin{figure*}
       \centering
@@ -138,18 +138,18 @@
 
   \begin{table*}
     \caption{HGNC recognised histone variant family stem names, commonly used protein names 
-	and names for improved consistency based on proposal by Talbert et al (2012). 
+	and names for improved consistency based on proposal by Talbert et al \citep{Talbert2012}. 
 	HIST1H2BA is nominally not a variant but is included for completeness.}
     \label{tab:histone-variant-families}
     \centering
     \begin{tabular}{l l l l}
       \toprule
-      Family & Protein name & Talbert et al name & Notes \\
+      Family & Protein name & Talbert & Notes \\
       \midrule
 	  H2AFB & H2A.Bbd & H2A.B & equivalent to H2A.L \\
 	  H2AFJ & H2A.J & H2A.J & at HIST4 locus \\
 	  H2AFV & H2A.Z-2 & H2A.Z.1 & - \\
-	  H2AFX & H2AX & H2A.X & - \\
+	  H2AFX & H2AX/H2A.X & H2A.X & - \\
 	  H2AFY & macroH2A/mH2A & macroH2A & - \\
 	  H2AFZ & H2A.Z & H2A.Z.1 & - \\
 	  H2BFM & ? & H2B.M & homologous to H2B.W, X-linked\\
@@ -164,47 +164,6 @@
   \end{table*}
 
 %% This is arguably the most important table. We should cite it as early as possible
-    \begin{table*}
-      \caption{
-	  Count of human canonical histone coding and pseudogenes by histone cluster and type.
-	  The right-hand value in each cell marked with $\psi$ is the number of pseudo genes.}
-      \label{tab:histone-gene-count}
-      \centering
-      \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
-        \toprule
-        \null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
-                & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
-                & \multicolumn{2}{c}{Total} \\
-        \midrule
-        HIST1   & \HTwoACodingInHISTOne{}     & \HTwoAPseudoInHISTOne{}
-                & \HTwoBCodingInHISTOne{}     & \HTwoBPseudoInHISTOne{}
-                & \HThreeCodingInHISTOne{}    & \HThreePseudoInHISTOne{}
-                & \HFourCodingInHISTOne{}     & \HFourPseudoInHISTOne{}
-                & \CodingGenesInHISTOne{}     & \PseudoGenesInHISTOne{} \\
-        HIST2   & \HTwoACodingInHISTTwo{}     & \HTwoAPseudoInHISTTwo{}
-                & \HTwoBCodingInHISTTwo{}     & \HTwoBPseudoInHISTTwo{}
-                & \HThreeCodingInHISTTwo{}    & \HThreePseudoInHISTTwo{}
-                & \HFourCodingInHISTTwo{}     & \HFourPseudoInHISTTwo{}
-                & \CodingGenesInHISTTwo{}     & \PseudoGenesInHISTTwo{} \\
-        HIST3   & \HTwoACodingInHISTThree{}   & \HTwoAPseudoInHISTThree{}
-                & \HTwoBCodingInHISTThree{}   & \HTwoBPseudoInHISTThree{}
-                & \HThreeCodingInHISTThree{}  & \HThreePseudoInHISTThree{}
-                & \HFourCodingInHISTThree{}   & \HFourPseudoInHISTThree{}
-                & \CodingGenesInHISTThree{}   & \PseudoGenesInHISTThree{} \\
-        HIST4   & \HTwoACodingInHISTFour{}    & \HTwoAPseudoInHISTFour{}
-                & \HTwoBCodingInHISTFour{}    & \HTwoBPseudoInHISTFour{}
-                & \HThreeCodingInHISTFour{}   & \HThreePseudoInHISTFour{}
-                & \HFourCodingInHISTFour{}    & \HFourPseudoInHISTFour{}
-                & \CodingGenesInHISTFour{}  & \PseudoGenesInHISTFour{} \\
-        \addlinespace
-        Total   & \HTwoACodingGenes{}       & \HTwoAPseudoGenes{}
-                & \HTwoBCodingGenes{}       & \HTwoBPseudoGenes{}
-                & \HThreeCodingGenes{}      & \HThreePseudoGenes{}
-                & \HFourCodingGenes{}       & \HFourPseudoGenes{}
-                & \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
-        \bottomrule
-      \end{tabular}
-    \end{table*}
 
     \begin{figure*}
       \centering
