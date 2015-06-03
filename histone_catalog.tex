@@ -31,6 +31,14 @@
 
 \usepackage{natbib}
 
+%% Supplement function from http://bytesizebio.net/2013/03/11/adding-supplementary-tables-and-figures-in-latex/
+\newcommand{\beginsupplement}{%
+	\setcounter{table}{0}
+	\renewcommand{\thetable}{S\arabic{table}}%
+	\setcounter{figure}{0}
+	\renewcommand{\thefigure}{S\arabic{figure}}%
+	}
+
 %% to keep a pair of related table and figures, we set a new float and use it
 %%conjunction with the captionof command from capt-of
 \usepackage{capt-of}
@@ -54,7 +62,7 @@
 \def\FPeval{\renewcommand{\ScriptValue}[1]{##1}\OldFPeval}
 
 \author{David Miguel Susano Pinto and Andrew Flaus}
-\title{The canonical core histone catalogue}
+\title{The Human Canonical Core Histone Catalogue}
 
 \begin{document}
   %% Text flow: first introduction on what are histones and nucleosomes. Some history
@@ -107,6 +115,8 @@
 
   \bibliographystyle{nar}
   \bibliography{references}
+
+\beginsupplement
 
   %% Supplementary tables and figures
   \onecolumn
