@@ -9,13 +9,16 @@
   In addition, the many chemically reactive sidechains of histones 
   are post-translationally modified 
   as a nexus for signalling and heritable epigenetics.
+  
+  Histones are delineated as either canonical or variant based on 
+  their gene location, expression characteristics and functional roles.
   Canonical histones provide the bulk structure and generic function of chromatin
   and are encoded by \TotalGenes{} genes in 4 clusters in the human genome (\tref{tab:histone-gene-count}).
 
-    \begin{table*}
+    \begin{table*}[hp]
       \caption{
 	  Count of human canonical histone coding and pseudogenes by histone cluster and type.
-	  The right-hand value in each cell marked with $\psi$ is the number of pseudo genes.}
+	  $\psi$ indicates pseudo genes.}
       \label{tab:histone-gene-count}
       \centering
       \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
@@ -56,7 +59,7 @@
 
   Relationships within the histone family have been described using a variety of terminologies
   reflecting biochemical, functional and genomic distinctions summarised below (\tref{tab:histone-divisions}).
-  
+
   From a biochemical perspective, histones are abundant proteins 
   that are readily isolated due to their highly basic chemical character. 
   Successive improvements in fractionation ultimately revealed 5 main histone types 
@@ -86,49 +89,66 @@
   due to post-translational modifications and certain primary sequence variations \citep{PAGEND}. 
   These separations are reflected in subtype designations H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
 
-  From a functional perspective, two classes of core histone 
-  are delineated within the core histone types (\tref{tab:typical-histone-differences}).
-  Canonical core histones contribute to bulk chromatin structure and 
-  their expression is significantly elevated during S~phase to provide chromatin packaging 
-  for DNA duplicated during replication. This led to their description as ``replication dependent'', 
-  even though a supply of canonical histones is required throughout the cell cycle. 
+  From a functional perspective, canonical core histone expression
+  is significantly elevated during S~phase to provide chromatin packaging 
+  for DNA duplicated during replication.
+  This led to their description as ``replication dependent'', 
+  although a supply of canonical histones is required throughout the cell cycle. 
   Human and other metazoan canonical histone genes are distinctive 
   because they lack introns and give rise to non-polyadenylated proten coding transcripts 
-  where turnover is independently regulated via a highly conserved 3' stem-loop.
-  
+  where turnover is independently regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
+
+  \begin{table*}[hp]
+    \caption{General properties of canonical and variant histone proteins.}
+    \label{tab:typical-histone-differences}
+    \centering
+    \begin{tabular}{l l l}
+      \toprule
+      \null                     & Canonical             & Variants \\
+      \midrule
+      Expression timing         & Replication dependent & Replication independent \\
+      Sequence identity         & High                  & Low \\
+      Functional relationships  & Isoforms              & Distinct specialised functions \\
+      Transcript stabilisation  & Stem--loop in 3' UTR  & poly--A tail \\
+      Gene distribution         & Clusters              & Scattered \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+
   In contrast, variant histones such as H2A.Z, TH2B and H3.3 have 
   less sequence identity and lower abundance (\tref{tab:typical-histone-differences}). 
   They play functionally specific roles and are mostly expressed outside S~phase, 
   so are decribed as replication independent. 
   Since histone variants are interpreted as taking the place of equivalent canonical histone types, 
   the variant histones are also referred to as ``replacement'' histones.
-  
-  From a genomic perspective the canonical histone genes are found in four clusters, possibly for regulatory efficiency. 
-  The multiple gene copies in the clustered arrays are sometimes confusingly referred to as ``allellic'' 
+
+  From a genomic perspective the canonical histone genes are found in 4 clusters, 
+  possibly for regulatory efficiency. 
+  The multiple gene copies in these clustered arrays are sometimes confusingly referred to as ``allellic'' 
   and the resulting protein isoforms are often referred to as ``wild type'' 
   although both genes and protein products encompass distinctive variation in sequence and relative abundance, 
   and their functional equivalence has not been tested.
   In contrast, almost all variant histones are encoded by single genes dispersed in the genome 
   with typical properties including introns, alternative splicing and polyadenylated transcripts.
-  
+
   Despite the importance of histones for chromatin organisation and extensive interest
   in their role in epigenetics and regulation, the systematic curation and classification of human histone
-  gene and protein sequences has not been revisited for some time \citep{Marzluff02}.
-  In the last decade the draft human genome has been finalised 
-  and rich annotations continue to propagate into reference gene and protein sequence databases (\tref{tab:difference-from-Marzluff02}).
+  gene and protein sequences has not been revisited for some time \citep{Marzluff02}
+  and has accumulated \todo{TotalNumberDiiferences} differences (\tref{tab:difference-from-Marzluff02}).
+  as rich annotations continue to propagate into reference sequence databases .
 
   In this manuscript we provide a comprehensive catalogue
-  of canonical histone genes, proteins and pseudogenes. 
-  Since curation and annotation are dynamic and evolving, 
-  we have implemented athis manuscript so that it
-  can self-update based on the most current data from the NCBI RefSeq database 
-  to retain its value as a reference source in an accessible format.
+  of canonical histone genes, proteins and pseudogenes.
+  Since curation and annotation are dynamic and evolving,
+  we have implemented the manuscript so that it can 
+  self-update fromn the most current data in the NCBI RefSeq database 
+  to maintain its value as a reference source in an accessible format.
   All automatically generated values are displayed with a light grey background.
-  This manuscript generation has remained stable in our laboratory for several years
+  This manuscript generation process has remained stable in our laboratory for several years
   and represents an example of ``reproducible research'' \citep{Claerbout2000}
   that provides a model for curating gene families.
 
-  \begin{table*}
+  \begin{table*}[htp]
     \caption{Terminology describing histone variation}
     \label{tab:histone-divisions}
     \centering
@@ -204,21 +224,3 @@
       \bottomrule
     \end{tabular}
   \end{table*}
-
-  \begin{table*}
-    \caption{General properties of canonical and variant histone proteins.}
-    \label{tab:typical-histone-differences}
-    \centering
-    \begin{tabular}{l l l}
-      \toprule
-      \null                     & Canonical             & Variants \\
-      \midrule
-      Expression timing         & Replication dependent & Replication independent \\
-      Sequence identity         & High                  & Low \\
-      Functional relationships  & Isoforms              & Distinct specialised functions \\
-      Transcript stabilisation  & Stem--loop in 3' UTR  & poly--A tail \\
-      Gene distribution         & Clusters              & Scattered \\
-      \bottomrule
-    \end{tabular}
-  \end{table*}
-
