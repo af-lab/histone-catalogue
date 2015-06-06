@@ -1,158 +1,158 @@
 \section{Introduction}
 
-  Histones are among the most abundant proteins in eukaryotic cells 
-  and contribute up to half the mass of chromatin. 
-  The core histone types H2A, H2B, H3 and H4 
-  define the structure and accessibility of the nucleosome 
-  as the fundamental repeating unit of genome organisation 
-  around which the DNA is wrapped \citep{Luger1997structure}.
-  In addition, the many chemically reactive sidechains of histones 
-  are post-translationally modified 
-  as a nexus for signalling and heritable epigenetics.
+	Histones are among the most abundant proteins in eukaryotic cells 
+	and contribute up to half the mass of chromatin. 
+	The core histone types H2A, H2B, H3 and H4 
+	define the structure and accessibility of the nucleosome 
+	as the fundamental repeating unit of genome organisation 
+	around which the DNA is wrapped \citep{Luger1997structure}.
+	In addition, the many chemically reactive sidechains of histones 
+	are post-translationally modified 
+	as a nexus for signalling and heritable epigenetics.
 
-  Histones are delineated as either canonical or variant based on 
-  their gene location, expression characteristics and functional roles.
+	Canonical histones contribute the majority of proteins to 
+	the bulk structure and generic function of chromatin, 
+	and are encoded by \TotalGenes{} genes in 4 clusters in the human genome,
+	of which \TotalCodingGenes{} are coding genes and \TotalPseudoGenes{} are pseudogenes (\tref{tab:histone-gene-count}).
 
-  Canonical histones contribute the majority of proteins to 
-  the bulk structure and generic function of chromatin, 
-  and are encoded by \TotalGenes{} genes in 4 clusters in the human genome (\tref{tab:histone-gene-count}).
+\begin{table*}[hp]
+	\caption{
+	Count of human canonical histone coding and pseudogenes by histone cluster and type.
+	$\psi$ indicates pseudo genes.}
+	\label{tab:histone-gene-count}
+	\centering
+	\begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
+		\toprule
+		\null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
+			& \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
+			& \multicolumn{2}{c}{Total} \\
+		\midrule
+		HIST1   & \HTwoACodingInHISTOne{}     & \HTwoAPseudoInHISTOne{}
+			& \HTwoBCodingInHISTOne{}     & \HTwoBPseudoInHISTOne{}
+			& \HThreeCodingInHISTOne{}    & \HThreePseudoInHISTOne{}
+			& \HFourCodingInHISTOne{}     & \HFourPseudoInHISTOne{}
+			& \CodingGenesInHISTOne{}     & \PseudoGenesInHISTOne{} \\
+		HIST2   & \HTwoACodingInHISTTwo{}     & \HTwoAPseudoInHISTTwo{}
+			& \HTwoBCodingInHISTTwo{}     & \HTwoBPseudoInHISTTwo{}
+			& \HThreeCodingInHISTTwo{}    & \HThreePseudoInHISTTwo{}
+			& \HFourCodingInHISTTwo{}     & \HFourPseudoInHISTTwo{}
+			& \CodingGenesInHISTTwo{}     & \PseudoGenesInHISTTwo{} \\
+		HIST3   & \HTwoACodingInHISTThree{}   & \HTwoAPseudoInHISTThree{}
+			& \HTwoBCodingInHISTThree{}   & \HTwoBPseudoInHISTThree{}
+			& \HThreeCodingInHISTThree{}  & \HThreePseudoInHISTThree{}
+			& \HFourCodingInHISTThree{}   & \HFourPseudoInHISTThree{}
+			& \CodingGenesInHISTThree{}   & \PseudoGenesInHISTThree{} \\
+		HIST4   & \HTwoACodingInHISTFour{}    & \HTwoAPseudoInHISTFour{}
+			& \HTwoBCodingInHISTFour{}    & \HTwoBPseudoInHISTFour{}
+			& \HThreeCodingInHISTFour{}   & \HThreePseudoInHISTFour{}
+			& \HFourCodingInHISTFour{}    & \HFourPseudoInHISTFour{}
+			& \CodingGenesInHISTFour{}  & \PseudoGenesInHISTFour{} \\
+		\addlinespace
+		Total   & \HTwoACodingGenes{}       & \HTwoAPseudoGenes{}
+			& \HTwoBCodingGenes{}       & \HTwoBPseudoGenes{}
+			& \HThreeCodingGenes{}      & \HThreePseudoGenes{}
+			& \HFourCodingGenes{}       & \HFourPseudoGenes{}
+			& \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
 
-    \begin{table*}[hp]
-      \caption{
-	  Count of human canonical histone coding and pseudogenes by histone cluster and type.
-	  $\psi$ indicates pseudo genes.}
-      \label{tab:histone-gene-count}
-      \centering
-      \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
-        \toprule
-        \null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
-                & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
-                & \multicolumn{2}{c}{Total} \\
-        \midrule
-        HIST1   & \HTwoACodingInHISTOne{}     & \HTwoAPseudoInHISTOne{}
-                & \HTwoBCodingInHISTOne{}     & \HTwoBPseudoInHISTOne{}
-                & \HThreeCodingInHISTOne{}    & \HThreePseudoInHISTOne{}
-                & \HFourCodingInHISTOne{}     & \HFourPseudoInHISTOne{}
-                & \CodingGenesInHISTOne{}     & \PseudoGenesInHISTOne{} \\
-        HIST2   & \HTwoACodingInHISTTwo{}     & \HTwoAPseudoInHISTTwo{}
-                & \HTwoBCodingInHISTTwo{}     & \HTwoBPseudoInHISTTwo{}
-                & \HThreeCodingInHISTTwo{}    & \HThreePseudoInHISTTwo{}
-                & \HFourCodingInHISTTwo{}     & \HFourPseudoInHISTTwo{}
-                & \CodingGenesInHISTTwo{}     & \PseudoGenesInHISTTwo{} \\
-        HIST3   & \HTwoACodingInHISTThree{}   & \HTwoAPseudoInHISTThree{}
-                & \HTwoBCodingInHISTThree{}   & \HTwoBPseudoInHISTThree{}
-                & \HThreeCodingInHISTThree{}  & \HThreePseudoInHISTThree{}
-                & \HFourCodingInHISTThree{}   & \HFourPseudoInHISTThree{}
-                & \CodingGenesInHISTThree{}   & \PseudoGenesInHISTThree{} \\
-        HIST4   & \HTwoACodingInHISTFour{}    & \HTwoAPseudoInHISTFour{}
-                & \HTwoBCodingInHISTFour{}    & \HTwoBPseudoInHISTFour{}
-                & \HThreeCodingInHISTFour{}   & \HThreePseudoInHISTFour{}
-                & \HFourCodingInHISTFour{}    & \HFourPseudoInHISTFour{}
-                & \CodingGenesInHISTFour{}  & \PseudoGenesInHISTFour{} \\
-        \addlinespace
-        Total   & \HTwoACodingGenes{}       & \HTwoAPseudoGenes{}
-                & \HTwoBCodingGenes{}       & \HTwoBPseudoGenes{}
-                & \HThreeCodingGenes{}      & \HThreePseudoGenes{}
-                & \HFourCodingGenes{}       & \HFourPseudoGenes{}
-                & \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
-        \bottomrule
-      \end{tabular}
-    \end{table*}
+	Histones are delineated as either canonical or variant based on 
+	their gene location, expression characteristics and functional roles (\tref{tab:typical-histone-differences}).
+	Relationships within the histone family have been described using a variety of terminologies
+	reflecting biochemical, functional and genomic distinctions (\tref{tab:histone-divisions}).
 
-  Relationships within the histone family have been described using a variety of terminologies
-  reflecting biochemical, functional and genomic distinctions summarised below (\tref{tab:histone-divisions}).
+	From a biochemical perspective, histones are abundant proteins 
+	that are readily isolated due to their highly basic chemical character. 
+	Successive improvements in fractionation ultimately revealed 5 main histone types 
+	with nomenclature H1, H2A, H2B, H3 and H4 \citep{nomenclature}.
+	An additional H1--related histone H5 is recognised in avian erythrocytes \citep{HFive-review}.
 
-  From a biochemical perspective, histones are abundant proteins 
-  that are readily isolated due to their highly basic chemical character. 
-  Successive improvements in fractionation ultimately revealed 5 main histone types 
-  with nomenclature H1, H2A, H2B, H3 and H4 \citep{nomenclature}.
-  An additional H1--related histone H5 is recognised in avian erythrocytes \citep{HFive-review}.
+	The demonstration of the nucleosome as the fundamental repeating unit of chromatin \citep{Kornberg1974} 
+	revealed that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
+	nucleosome core particle. These four histones are referred to as core histones. 
+	In contrast, H1 associates with the linker DNA between nucleosome core particles 
+	and is referred to as a linker histone. 
+	The 5 human somatic H1 isoforms and 6 tissue-specific variants 
+	have been described and catalogued separately \citep{HarshmanFreitas2013}.
 
-  The demonstration of the nucleosome as the fundamental repeating unit of chromatin \citep{Kornberg1974} 
-  revealed that H2A, H2B, H3 and H4 associate as an octamer of two copies each within the
-  nucleosome core particle. These four histones are referred to as core histones. 
-  In contrast, H1 associates with the linker DNA between nucleosome core particles 
-  and is referred to as a linker histone. 
-  The 5 human somatic H1 isoforms and 6 tissue-specific variants 
-  have been described and catalogued separately \citep{HarshmanFreitas2013}.
+	Arginine and lysine content was used as an early distinction between the histones. 
+	The H1 linker histone has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as lysine-rich 
+	whereas the remaining 4 core histones are arginine-rich 
+	with highest ratios of \HTwoAArgLysRatio{} in H2A, \HTwoBArgLysRatio{} in H2B, 
+	\HThreeArgLysRatio{} in H3 and \HFourArgLysRatio{} in H4 type isoforms.
+	Nevertheless, the core histones have many lysines particularly in their N-terminal tails.
 
-  Arginine and lysine content was used as an early distinction between the histones. 
-  The H1 linker histone has a low arginine/lysine ratio of \LinkerArgLysRatio{} and became known as lysine-rich 
-  whereas the remaining 4 core histones are arginine-rich 
-  with highest ratios of \HTwoAArgLysRatio{} in H2A, \HTwoBArgLysRatio{} in H2B, 
-  \HThreeArgLysRatio{} in H3 and \HFourArgLysRatio{} in H4 type isoforms.
-  Nevertheless, the core histones have many lysines particularly in their N-terminal tails.
+	Extracting histones and separating them by polyacrylamide gel electrophoresis 
+	using the strongly anionic detergent sodium dodecyl sulphate (SDS PAGE) and neutral buffers 
+	gives single bands for each histone type \citep{ShechterHake2007}. 
+	However, PAGE with non-ionic detergent Triton X--100 and uncharged urea as denaturants
+	in acetic acid buffer (TAU or AUT PAGE) allows the separation of histone types into multiple bands 
+	due to post-translational modifications and differences at specific amino acids 
+	in the primary sequence \citep{PAGEND}. 
+	These TAU PAGE separations gave rise to subtype designations H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
 
-  Extracting histones and separating them by polyacrylamide gel electrophoresis 
-  using the strongly anionic detergent sodium dodecyl sulphate (SDS PAGE) and neutral buffers 
-  gives single bands for each histone type. 
-  However, PAGE with non-ionic detergent Triton X--100 and uncharged urea as denaturants
-  in acetic acid buffer (TAU or AUT PAGE) allows the separation of histone types into multiple bands 
-  due to post-translational modifications and differences at specific amino acids 
-  in the primary sequence variations \citep{PAGEND}. 
-  These separations gave rise to subtype designations H2A.1, H2A.2, H3.1, H3.2 and H3.3. 
+	From a functional perspective, canonical core histone expression
+	is significantly elevated during S~phase to provide chromatin packaging 
+	for DNA duplicated during replication.
+	This led to their description as ``replication dependent'', 
+	although a supply of canonical histones is required throughout the cell cycle. 
+	Metazoan canonical histone genes are distinctive 
+	because they lack introns and give rise to non-polyadenylated proten coding transcripts 
+	where turnover is independently regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
 
-  From a functional perspective, canonical core histone expression
-  is significantly elevated during S~phase to provide chromatin packaging 
-  for DNA duplicated during replication.
-  This led to their description as ``replication dependent'', 
-  although a supply of canonical histones is required throughout the cell cycle. 
-  Human and other metazoan canonical histone genes are distinctive 
-  because they lack introns and give rise to non-polyadenylated proten coding transcripts 
-  where turnover is independently regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
+\begin{table*}[hp]
+	\caption{General properties of canonical and variant histone proteins.}
+	\label{tab:typical-histone-differences}
+	\centering
+	\begin{tabular}{l l l}
+		\toprule
+		\null			     & Canonical             & Variants \\
+		\midrule
+		Expression timing         & Replication dependent & Replication independent \\
+		Sequence identity         & High			  & Low \\
+		Functional relationships  & Isoforms              & Distinct specialised functions \\
+		Transcript stabilisation  & Stem--loop in 3' UTR  & poly--A tail \\
+		Gene distribution         & Clusters              & Scattered \\
+	\bottomrule
+	\end{tabular}
+\end{table*}
+
+	In contrast, variant histones such as H2A.Z, TH2B and H3.3 have 
+	less sequence identity and lower abundance. 
+	They play functionally specific roles and are mostly expressed outside S~phase, 
+	so are decribed as ``replication independent''. 
+	Since histone variants are interpreted as taking the place of equivalent canonical histone types, 
+	the variant histones are also referred to as ``replacement'' histones.
+
+	From a genomic perspective the canonical histone genes are found in 4 clusters, 
+	possibly for regulatory efficiency. 
+	The multiple gene copies in these clustered arrays are sometimes confusingly referred to as ``allellic'' 
+	and the resulting protein isoforms are often referred to as ``wild type'' 
+	although both genes and protein products encompass distinctive variation in sequence and relative abundance, 
+	and their functional equivalence has not been tested.
+	In contrast, almost all variant histones are encoded by single genes dispersed in the genome 
+	with typical properties including introns, alternative splicing 
+	and polyadenylated transcripts (\tref{tab:typical-histone-differences}).
+
+	Despite the importance of histones for chromatin organisation and extensive interest
+	in their role in epigenetics and regulation, the systematic curation and classification of human histone
+	gene and protein sequences has not been revisited for some time \citep{Marzluff02}
+	and has accumulated \todo{TotalNumberDiiferences} differences
+	as rich annotations continue to propagate into reference sequence databases (\tref{tab:difference-from-Marzluff02}).
+
+	In this manuscript we provide a comprehensive catalogue
+	of canonical histone genes, proteins and pseudogenes.
+	Since curation and annotation are dynamic and evolving,
+	we have implemented the manuscript so that it can 
+	self-update from the most current data in the NCBI RefSeq database 
+	in order to maintain its value as a reference source in an accessible format.
+	All automatically generated values are displayed with a light grey background.
+	This manuscript generation process has remained stable in our laboratory for several years
+	and represents an example of ``reproducible research'' \citep{Claerbout2000}
+	that provides a novel model for curating relatively stable gene families.
 
   \begin{table*}[hp]
-    \caption{General properties of canonical and variant histone proteins.}
-    \label{tab:typical-histone-differences}
-    \centering
-    \begin{tabular}{l l l}
-      \toprule
-      \null                     & Canonical             & Variants \\
-      \midrule
-      Expression timing         & Replication dependent & Replication independent \\
-      Sequence identity         & High                  & Low \\
-      Functional relationships  & Isoforms              & Distinct specialised functions \\
-      Transcript stabilisation  & Stem--loop in 3' UTR  & poly--A tail \\
-      Gene distribution         & Clusters              & Scattered \\
-      \bottomrule
-    \end{tabular}
-  \end{table*}
-
-  In contrast, variant histones such as H2A.Z, TH2B and H3.3 have 
-  less sequence identity and lower abundance (\tref{tab:typical-histone-differences}). 
-  They play functionally specific roles and are mostly expressed outside S~phase, 
-  so are decribed as ``replication independent''. 
-  Since histone variants are interpreted as taking the place of equivalent canonical histone types, 
-  the variant histones are also referred to as ``replacement'' histones.
-
-  From a genomic perspective the canonical histone genes are found in 4 clusters, 
-  possibly for regulatory efficiency. 
-  The multiple gene copies in these clustered arrays are sometimes confusingly referred to as ``allellic'' 
-  and the resulting protein isoforms are often referred to as ``wild type'' 
-  although both genes and protein products encompass distinctive variation in sequence and relative abundance, 
-  and their functional equivalence has not been tested.
-  In contrast, almost all variant histones are encoded by single genes dispersed in the genome 
-  with typical properties including introns, alternative splicing 
-  and polyadenylated transcripts (\tref{tab:typical-histone-differences}).
-
-  Despite the importance of histones for chromatin organisation and extensive interest
-  in their role in epigenetics and regulation, the systematic curation and classification of human histone
-  gene and protein sequences has not been revisited for some time \citep{Marzluff02}
-  and has accumulated \todo{TotalNumberDiiferences} differences (\tref{tab:difference-from-Marzluff02}).
-  as rich annotations continue to propagate into reference sequence databases .
-
-  In this manuscript we provide a comprehensive catalogue
-  of canonical histone genes, proteins and pseudogenes.
-  Since curation and annotation are dynamic and evolving,
-  we have implemented the manuscript so that it can 
-  self-update from the most current data in the NCBI RefSeq database 
-  in order to maintain its value as a reference source in an accessible format.
-  All automatically generated values are displayed with a light grey background.
-  This manuscript generation process has remained stable in our laboratory for several years
-  and represents an example of ``reproducible research'' \citep{Claerbout2000}
-  that provides a novel model for curating relatively stable gene families.
-
-  \begin{table*}[htp]
     \caption{Terminology describing histone variation}
     \label{tab:histone-divisions}
     \centering
