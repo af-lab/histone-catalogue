@@ -1,0 +1,77 @@
+\section{Supplementary}
+
+\beginsupplement
+
+  %% Supplementary tables and figures
+\onecolumn
+
+\newpage
+\captionof{table}{Differences between the current human histone genes and \citep{Marzluff02}.}
+\label{tab:difference-from-Marzluff02}
+\input{results/table-reference_comparison}
+
+  %% this is a very long table (ctabular) that does not play nice with two columns
+  %% so we place it at the end. See why it was a problem at
+  %% http://tex.stackexchange.com/questions/101791/float-a-wide-ctabular-in-two-columns
+  %% We could split the table in two parts in which case we could use begin{table*}
+\newpage
+\captionof{table}{Catalogue of all annotated human canonical core histone gene, transcript and protein IDs}
+\label{tab:histone-catalogue}
+\input{results/table-histone_catalogue}
+
+\begin{figure*}
+	\centering
+	\subtop[H2A]{
+		\includegraphics[width=1.0\textwidth]
+		{seqlogo_H2A_cds.pdf}
+		\label{fig:H2A-cds-weblogo}
+	  }
+	\hfill
+	\subtop[H2B]{
+		\includegraphics[width=1.0\textwidth]
+		{seqlogo_H2B_cds.pdf}
+		\label{fig:H2B-cds-weblogo}
+	}
+	\subtop[H3]{
+	\includegraphics[width=1.0\textwidth]
+		{seqlogo_H3_cds.pdf}
+		\label{fig:H3-cds-weblogo}
+	}
+	\hfill
+	\subtop[H4]{
+		\includegraphics[width=1.0\textwidth]
+		{seqlogo_H4_cds.pdf}
+		\label{fig:H4-cds-weblogo}
+	}
+	\captionof{figure}{Sequence logos for canonical coding histone genes from \tref{tab:histone-catalogue}. 
+	showing coding regions of A. H2A, B. H2B, C. H3 and D. H4.}
+	\label{fig:histone-gene-variation}
+	\end{figure*}
+
+\begin{table*}[hp]
+	\caption{
+	Sequence differences between canonical histone genes.
+	Counts of weighted synonymous (Sd) and non-synonymous (Sn) substitutions and average ds/dn ratios
+	for pairwise comparisons of canonical histone coding regions \citep{KorberSNAP2000}.}
+	\label{tab:histone-gene-differences}
+	\centering
+	\begin{tabular}{r r r r}
+		\toprule
+		\null & Sd & Sn & ds/dn \\
+		\midrule
+		H2A	& 52.7 & 5.8 & 75.1 \\
+		H2B	& 36.9 & 5.5 & 58.7 \\
+		H3	& 57.1 & 1.8 & 214.4 \\
+		H4	& 49.2 & 3.9 & 204.7 \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+
+\newpage
+\captionof{table}{Catalogue of human variant core histone gene, transcript and protein IDs}
+\label{tab:variant-catalogue}
+\input{results/table-variant_catalogue}
+
+\newpage
+\input{results/histone_insanities.tex}

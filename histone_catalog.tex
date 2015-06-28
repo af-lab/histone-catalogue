@@ -72,7 +72,7 @@
 	Core histone proteins H2A, H2B, H3 and H4 are encoded 
 	by a large family of genes distributed across the human genome.
 	Canonical core histones contribute the majority of proteins to bulk chromatin packaging, 
-	and are encoded by \TotalCodingGenes{} by human genes comprising 
+	and are encoded by \TotalCodingGenes{} human genes comprising 
 	\HTwoACodingGenes{} for H2A,
 	\HTwoBCodingGenes{} for H2B,
 	\HThreeCodingGenes{} for H3 
@@ -82,7 +82,7 @@
 	\HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B, 
 	\HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} unique H4 protein isoforms.
 	This represents a surprising and seldom recognised variation
-	of up to \todo{highest identity}\% in amino acid identity. 
+	diverging to as far as \todo{lowest identity}\% amino acid identity. 
 	The gene sequence and protein isoform diversity 
 	exceeds commonly used subtype designations such as H2A.1 and H3.1
 	and exists in parallel to the well-known specialisation of variant histones. 
@@ -103,72 +103,14 @@
   \input{sections/proteins.tex}
   \input{sections/computation.tex}
   \input{sections/conclusion.tex}
+  \input{sections/supplementary.tex}
 
   \section{Acknowledgements}
-    We are grateful to all the nice people at \#perl and \#bioperl channels on
-    \url{irc.freenode.net}, especially Altreus, mst, LeoNerd, and pyrimidine for
-    their help with the most technical programming details.
+	We are grateful to all the nice people at \#perl and \#bioperl channels on
+	\url{irc.freenode.net}, especially Altreus, mst, LeoNerd, and pyrimidine for
+	their help with the most technical programming details.
 
   \bibliographystyle{nar}
   \bibliography{references}
-
-\beginsupplement
-
-  %% Supplementary tables and figures
-  \onecolumn
-
-  \newpage
-  \captionof{table}{Differences between the current reference (as per RefSeq)
-                    for human histone genes and the last published reference \citep{Marzluff02}.}
-  \label{tab:difference-from-Marzluff02}
-  \input{results/table-reference_comparison}
-
-  %% this is a very long table (ctabular) that does not play nice with two columns
-  %% so we place it at the end. See why it was a problem at
-  %% http://tex.stackexchange.com/questions/101791/float-a-wide-ctabular-in-two-columns
-  %% We could split the table in two parts in which case we could use begin{table*}
-  \newpage
-  \captionof{table}{Catalogue of all human canonical core histone genes, with
-                    respective transcripts, protein, and IDs}
-  \label{tab:histone-catalogue}
-  \input{results/table-histone_catalogue}
-
-	\begin{figure*}
-	  \centering
-	  \subtop[H2A]{
-	    \includegraphics[width=1.0\textwidth]
-	    {seqlogo_H2A_cds.pdf}
-	    \label{fig:H2A-cds-weblogo}
-	  }
-	  \hfill
-	  \subtop[H2B]{
-	    \includegraphics[width=1.0\textwidth]
-	    {seqlogo_H2B_cds.pdf}
-	    \label{fig:H2B-cds-weblogo}
-	  }
-	  \subtop[H3]{
-	    \includegraphics[width=1.0\textwidth]
-	    {seqlogo_H3_cds.pdf}
-	    \label{fig:H3-cds-weblogo}
-	  }
-	  \hfill
-	  \subtop[H4]{
-	    \includegraphics[width=1.0\textwidth]
-	    {seqlogo_H4_cds.pdf}
-	    \label{fig:H4-cds-weblogo}
-	  }
-	  \captionof{figure}{Sequence logos for canonical coding histone genes from \tref{tab:histone-catalogue}. 
-	showing coding regions of A. H2A, B. H2B, C. H3 and D. H4.}
-	  \label{fig:histone-gene-variation}
-	\end{figure*}
-
-  \newpage
-  \captionof{table}{Catalogue of human variant core histone genes 
-  showing transcript, protein, and ID}
-  \label{tab:variant-catalogue}
-  \input{results/table-variant_catalogue}
-
-  \newpage
-  \input{results/histone_insanities.tex}
 
 \end{document}
