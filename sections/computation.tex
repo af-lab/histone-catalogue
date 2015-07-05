@@ -3,51 +3,51 @@
 
 	A considerable number of builds and updates of the human genome sequence have been made 
 	since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}.
-	This has resulted in 
-	\todo{number of sequences added} canonical histone genes being added, 
+	This has resulted in \todo{number of sequences added} canonical histone genes being added, 
 	\todo{number of sequences removed} being removed, 
 	and \todo{number of sequences changed} sequences updated (\tref{tab:difference-from-Marzluff02}).
+	These changes reflect the ongoing nature and challenges of genome curation and annotation \citep{BorkKoonin1998}.
 
-	These changes reflect the ongoing nature of genome curation and annotation \addref{some generic curation overview paper}.
 	It is important for communities of researchers 
 	to contribute to this curation and feed back information. 
 	and we have submitted a number of proposals 
 	for incorrect, inconsistent or missing annotations
-	to genome sequence maintainers
-	such as \todo{need a brief example}. 
+	to genome sequence maintainers such as \todo{need a brief example}. 
 
 	The human canonical histone gene complement is relatively mature and is unlikely to undergo rapid change.
-	Nevertheless, it is inevitable that sequences and annotatations will be revised over time.
+	Nevertheless, it is inevitable that sequences and annotations will be revised over time. 
+	This is illustrated by the recent recognition that certain canonical isoforms are testes-specific variants, 
+	and by new observations that canonical isoforms vary in their cell type expression. 
+
 	We have attempted to address the challenges of the underlying dynamic nature of 
 	gene family curation with a novel dynamic manuscript format.
-
-	Manuscripts are the established and dominant method of scientific communication
+	Dynamic data is frequently made available via online databases
+	but these can be limited by their interfaces and presentation styles, and are difficult to cite.
+	In contrast, manuscripts are the established and dominant method of scientific communication
 	because they provide comprehensibility, peer review and established methods for citation.
-	A self-updating format ensures researchers will have convenient access to a current information.
-	To circumvent the challenge of variation of data in the dynamic manuscript 
-	we recommend that publications reference a traditional static citation 
-	and mention of the data access date in their Materials and Methods.
 
-	This manscript is generated directly from sequences and annotations in the canonical NCBI databases.
-	Since the processing system does not cache intermediate information 
-	the community of histone researchers can contribute changes to professional database maintainers 
-	and see this information directly and automatically reflected in the manuscript when refresh.
-	The long-term stability and transparency of NCBI means that sustainability is maximised.
-	In addition, dependencies on raw data source, alignment algorithms or display output libraries
-	could all be replaced by alternatives since the processing is automatic and script-based.
+	A self-updating manuscript format can therefore provide convenient access to a current information.
+	The challenge of variation of data in the dynamic manuscript can be addressed by
+	citing this publication as a traditional static manuscript 
+	and mentioning the data access date in Materials and Methods as a database.
 
-	This is an example of ``reproducible research'' \citep{reproducible-research-bioinformatics, reproducible-research-law}
-	and addresses current difficulties of irreproducibility \addref{irreproducilbility Nature?}.
-	In addition to all data being sourced directly from public repositories, 
-	all scripts including instructions for automatic builds via SCons \citep{SCons2005}
+	Finally, this implementation of a dynamic manuscript 
+	is an example of ``reproducible research'' \citep{reproducible-research-bioinformatics,reproducible-research-law}
+	and addresses current challenges of irreproducibility in biological data and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
+	The manscript is generated directly from sequences and annotations in the core NCBI databases.
+	The processing system does not cache intermediate information so all changes contributed by
+	the community of histone researchers will be incorporated by professional database maintainers 
+	and then be directly and automatically reflected in the next manuscript refresh.
+	All scripts including instructions for automatic builds via SCons \citep{SCons2005}
 	are directly available in a github repository (\url{https://github.com/af-lab/histone-catalog}).
-	Core processing is based on a BioPerl script bp\_genbank\_ref\_extractor
-	that we contributed to the Bio-EUtilities distribution 
-	which has been publically available since version 1.73 in 2013.
+	Core processing is based on a BioPerl \citep{BioPerl2002} script bp\_genbank\_ref\_extractor
+	that has been contributed to the Bio-EUtilities distribution 
+	and has been publically available since version 1.73 in 2013.
+	Dependencies on raw data, alignment algorithms or display output libraries
+	can be replaced by alternatives since the processing is automatic and script-based.
 
-	Furthermore, we have written the core scripts to enable them to generate 
+	The core scripts are written to enable them to generate 
 	equivalent information for other organisms with a one line change 
-	and we have trialled this for \textit{M. musculus} and \textit{Gallus gallus}.
-	We plan in future to apply it to a larger and more diverse case such as
+	and we have trialled this for \textit{M. musculus} and \textit{Gallus gallus} (not shown).
+	The approach could also be applied to larger and more diverse gene families such as
 	our previous cataloguing of the Snf2 family \citep{andrew-snf2-catalogue}.
-
