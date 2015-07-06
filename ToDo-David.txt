@@ -28,3 +28,8 @@ For each canonincal histone type
   - Calculate average of ds/dn column (or extract value at bottom)
 - Insert into table histone-gene-differences (supplementary.tex) and Sn values into genes.tex
 
+4. Write an index of all variables and formatted constructs avaialble for insertion.
+
+Format and Structure fixes
+
+1. Percentage calculation in paragraph 1 of genes.tex
