@@ -33,3 +33,5 @@ For each canonincal histone type
 Format and Structure fixes
 
 1. Percentage calculation in paragraph 1 of genes.tex
+
+2. Problems with bibtext for later entries in references.bib being assigned as "?". Is there a typo in a field?
