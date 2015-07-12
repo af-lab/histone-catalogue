@@ -52,7 +52,7 @@ $opts{email} = Email::Valid->address($opts{email})
 my $seq_dir = $ARGV[0];
 
 ## remove old files to avoid problems with previous results
-File::Path::remove_tree($seq_dir, {verbose => 1});
+File::Path::remove_tree($seq_dir, {verbose => 0});
 
 ## create search string
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
