@@ -259,6 +259,13 @@ def CheckLaTeXClass(context, doc_class):
   context.Result(is_ok)
   return is_ok
 
+def CheckBibTeXStyle(context, style):
+  context.Message("Checking for BibTeX style %s..." % style)
+  is_ok = 0 == subprocess.call(["kpsewhich", style + ".bst"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
 def CheckEmail(context, email):
   context.Message("Checking e-mail address...")
   ## Don't check email validity, the program that uses it will do it
@@ -284,6 +291,7 @@ conf = Configure(
   custom_tests = {
     "CheckLaTeXClass"   : CheckLaTeXClass,
     "CheckLaTeXPackage" : CheckLaTeXPackage,
+    "CheckBibTeXStyle"  : CheckBibTeXStyle,
     "CheckPerlModule"   : CheckPerlModule,
     "CheckEmail"        : CheckEmail,
     "CheckProg"         : CheckProg
@@ -321,6 +329,9 @@ DEPENDENCIES
     * capt-of
     * hyperref
 
+  BibTex style:
+    * nar (style for journal Nucleic Acid Research)
+
 """)
 
 for prog in ["bp_genbank_ref_extractor", "weblogo"]:
@@ -348,5 +359,9 @@ for package in ["fontenc", "graphicx", "url", "todonotes", "natbib", "color",
   if not conf.CheckLaTeXPackage(package):
     print "Unable to find required LaTeX package %s." % package
     Exit(1)
+
+if not conf.CheckBibTeXStyle("nar"):
+  print "Unable to find required BibTeX nar.bst style file."
+  Exit(1)
 
 env = conf.Finish()
