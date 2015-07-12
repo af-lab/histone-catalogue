@@ -6,7 +6,9 @@
 	named in order of decreasing histone gene count (\tref{tab:histone-gene-count}).
 	HIST1, is the major histone gene cluster at locus~\HISTOneLocus{}  
 	with \CodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones,
-	representing \calc{\CodingGenesInHISTOne{}*100/\TotalCodingGenes{}}\% of all canonical core histone genes. 
+	representing
+    \FPeval{\result}{round(\CodingGenesInHISTOne{}*100/\TotalCodingGenes{},1)} \result{}\%
+    of all canonical core histone genes.
 	HIST2 at locus~\HISTTwoLocus{} contains \CodingGenesInHISTTwo{}~coding genes, 
 	HIST3 at locus \HISTThreeLocus{} contains \CodingGenesInHISTThree{} coding genes, 
 	and HIST4 at locus \HISTFourLocus{} contains only \CodingGenesInHISTFour{}~coding gene. 

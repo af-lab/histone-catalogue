@@ -328,6 +328,7 @@ DEPENDENCIES
     * eqparbox
     * capt-of
     * hyperref
+    * fp
 
   BibTex style:
     * nar (style for journal Nucleic Acid Research)
