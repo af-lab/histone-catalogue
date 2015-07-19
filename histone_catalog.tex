@@ -35,11 +35,11 @@
 
 %% Supplement function from http://bytesizebio.net/2013/03/11/adding-supplementary-tables-and-figures-in-latex/
 \newcommand{\beginsupplement}{%
-	\setcounter{table}{0}
-	\renewcommand{\thetable}{S\arabic{table}}%
-	\setcounter{figure}{0}
-	\renewcommand{\thefigure}{S\arabic{figure}}%
-	}
+    \setcounter{table}{0}
+    \renewcommand{\thetable}{S\arabic{table}}%
+    \setcounter{figure}{0}
+    \renewcommand{\thefigure}{S\arabic{figure}}%
+    }
 
 %% to keep a pair of related table and figures, we set a new float and use it
 %%conjunction with the captionof command from capt-of
@@ -71,32 +71,32 @@
   \maketitle
 
   \begin{abstract}
-	Core histone proteins H2A, H2B, H3 and H4 are encoded 
-	by a large family of genes distributed across the human genome.
-	Canonical core histones contribute the majority of proteins to bulk chromatin packaging, 
-	and are encoded by \TotalCodingGenes{} human genes comprising 
-	\HTwoACodingGenes{} for H2A,
-	\HTwoBCodingGenes{} for H2B,
-	\HThreeCodingGenes{} for H3 
-	and \HFourCodingGenes{} for H4, 
-	along with at least \TotalPseudoGenes{} total pseudogenes.
-	The canonical histone genes display coding variation that gives rise to
-	\HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B, 
-	\HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} unique H4 protein isoforms.
-	This represents a surprising and seldom recognised variation
-	diverging to as far as \todo{lowest identity}\% amino acid identity. 
-	The gene sequence and protein isoform diversity 
-	exceeds commonly used subtype designations such as H2A.1 and H3.1
-	and exists in parallel to the well-known specialisation of variant histones. 
-	To assist understanding of the implications of histone diversity 
-	we have curated and catalogued the entire human canonical core histone gene and protein complement.
-	This work has led to multiple corrections to human histone annotations, 
-	reflecting the flux of the human genome as it is updated and enriched in reference databases. 
-	To avoid obsolescence and maximise accessibility of this information, 
-	we have developed a novel software framework that dynamically generates the canonical histone repertoire 
-	based on current genome annotations and inserts the information into manuscript format. 
-	This approach is inspired by the aims of reproducible research 
-	and can readily be adapted to histones of other organisms and to other gene families.
+    Core histone proteins H2A, H2B, H3 and H4 are encoded
+    by a large family of genes distributed across the human genome.
+    Canonical core histones contribute the majority of proteins to bulk chromatin packaging,
+    and are encoded by \TotalCodingGenes{} human genes comprising
+    \HTwoACodingGenes{} for H2A,
+    \HTwoBCodingGenes{} for H2B,
+    \HThreeCodingGenes{} for H3 
+    and \HFourCodingGenes{} for H4,
+    along with at least \TotalPseudoGenes{} total pseudogenes.
+    The canonical histone genes display coding variation that gives rise to
+    \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B,
+    \HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} unique H4 protein isoforms.
+    This represents a surprising and seldom recognised variation
+    diverging to as far as \todo{lowest identity}\% amino acid identity.
+    The gene sequence and protein isoform diversity
+    exceeds commonly used subtype designations such as H2A.1 and H3.1
+    and exists in parallel to the well-known specialisation of variant histones.
+    To assist understanding of the implications of histone diversity
+    we have curated and catalogued the entire human canonical core histone gene and protein complement.
+    This work has led to multiple corrections to human histone annotations,
+    reflecting the flux of the human genome as it is updated and enriched in reference databases.
+    To avoid obsolescence and maximise accessibility of this information,
+    we have developed a novel software framework that dynamically generates the canonical histone repertoire
+    based on current genome annotations and inserts the information into manuscript format.
+    This approach is inspired by the aims of reproducible research
+    and can readily be adapted to histones of other organisms and to other gene families.
   \end{abstract}
 
   \input{sections/intro.tex}
@@ -109,9 +109,9 @@
   \input{sections/supplementary.tex}
 
   \section{Acknowledgements}
-	We are grateful to all the nice people at \#perl and \#bioperl channels on
-	\url{irc.freenode.net}, especially Altreus, mst, LeoNerd, and pyrimidine for
-	their help with the most technical programming details.
+    We are grateful to all the nice people at \#perl and \#bioperl channels on
+    \url{irc.freenode.net}, especially Altreus, mst, LeoNerd, and pyrimidine for
+    their help with the most technical programming details.
 
   \bibliographystyle{nar}
   \bibliography{references}

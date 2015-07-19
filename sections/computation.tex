@@ -1,67 +1,67 @@
 \section{Reproducible research}
 \label{sec:reproducible}
 
-	A considerable number of builds and updates of the human genome sequence have been made 
-	since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}.
-	resulting in 
-	\todo{number of sequences added} canonical histone genes added, 
-	\todo{number of sequences removed} removed, 
-	and \todo{number of sequences changed} sequences updated (\tref{tab:difference-from-Marzluff02}).
-	These changes reflect the ongoing nature and challenges of genome curation and annotation \citep{BorkKoonin1998}.
+  A considerable number of builds and updates of the human genome sequence have been made
+  since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}.
+  resulting in
+  \todo{number of sequences added} canonical histone genes added,
+  \todo{number of sequences removed} removed,
+  and \todo{number of sequences changed} sequences updated (\tref{tab:difference-from-Marzluff02}).
+  These changes reflect the ongoing nature and challenges of genome curation and annotation \citep{BorkKoonin1998}.
 
-	It is important for communities of researchers 
-	to contribute to this curation and feed back information. 
-	We have submitted a number of proposals 
-	for incorrect, inconsistent or missing annotations
-	to genome sequence maintainers such as \todo{need a brief example}. 
+  It is important for communities of researchers
+  to contribute to this curation and feed back information.
+  We have submitted a number of proposals
+  for incorrect, inconsistent or missing annotations
+  to genome sequence maintainers such as \todo{need a brief example}.
 
-	The human canonical histone gene complement is relatively mature and is unlikely to undergo major change.
-	Nevertheless, it is inevitable that sequences and annotations will be revised over time. 
-	This is illustrated by the recent recognition that 
-	some genes annotated as canonical isoforms are testes-specific variants \citep{Talbert2012}, 
-	and by new observations of cell type-specific expression \citep{Molden2015}. 
+  The human canonical histone gene complement is relatively mature and is unlikely to undergo major change.
+  Nevertheless, it is inevitable that sequences and annotations will be revised over time.
+  This is illustrated by the recent recognition that
+  some genes annotated as canonical isoforms are testes-specific variants \citep{Talbert2012},
+  and by new observations of cell type-specific expression \citep{Molden2015}.
 
-	We have attempted to address the challenges of the dynamic nature of curating 
-	even relatively stable families using a novel dynamic manuscript format.
-	Dynamic data is frequently made available as online databases
-	but these can have limiting interfaces and presentation styles, and are difficult to cite.
-	In contrast, manuscripts are the established and dominant method of scientific communication
-	because they provide comprehensibility, peer review and established methods for citation.
+  We have attempted to address the challenges of the dynamic nature of curating
+  even relatively stable families using a novel dynamic manuscript format.
+  Dynamic data is frequently made available as online databases
+  but these can have limiting interfaces and presentation styles, and are difficult to cite.
+  In contrast, manuscripts are the established and dominant method of scientific communication
+  because they provide comprehensibility, peer review and established methods for citation.
 
-	A self-updating manuscript format can therefore provide 
-	convenient access to the most current information.
-	The challenge of variation of data in the dynamic manuscript can be addressed 
-	by citing the publication as a traditional static manuscript 
-	and stating access date in Materials and Methods in the same way as a database.
+  A self-updating manuscript format can therefore provide
+  convenient access to the most current information.
+  The challenge of variation of data in the dynamic manuscript can be addressed
+  by citing the publication as a traditional static manuscript
+  and stating access date in Materials and Methods in the same way as a database.
 
-	This implementation of a dynamic manuscript 
-	is also an example of ``reproducible research'' \citep{reproducible-research-bioinformatics,reproducible-research-law}
-	that offers a novel perspective on 
-	current challenges of irreproducibility in biological data and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
-	The manscript is generated directly from sequences and annotations 
-	in the core NCBI RefSeq resource \citep{PruittRefseq2014}.
-	The processing system does not cache intermediate information so all changes contributed by
-	the community of histone researchers will be incorporated by professional database maintainers 
-	and then be directly and automatically reflected in the next manuscript refresh.
-	All scripts including instructions for automatic builds 
-	are transparently available in a public github repository.
-	Core processing is based on a BioPerl script contributed to the Bio-EUtilities distribution 
-	and publicly available since 2013.
-	Dependencies on raw data, alignment algorithms or display output libraries
-	can also be upgraded by alternatives since the processing is automatic and script-based.
+  This implementation of a dynamic manuscript
+  is also an example of ``reproducible research'' \citep{reproducible-research-bioinformatics,reproducible-research-law}
+  that offers a novel perspective on
+  current challenges of irreproducibility in biological data and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
+  The manscript is generated directly from sequences and annotations
+  in the core NCBI RefSeq resource \citep{PruittRefseq2014}.
+  The processing system does not cache intermediate information so all changes contributed by
+  the community of histone researchers will be incorporated by professional database maintainers
+  and then be directly and automatically reflected in the next manuscript refresh.
+  All scripts including instructions for automatic builds
+  are transparently available in a public github repository.
+  Core processing is based on a BioPerl script contributed to the Bio-EUtilities distribution
+  and publicly available since 2013.
+  Dependencies on raw data, alignment algorithms or display output libraries
+  can also be upgraded by alternatives since the processing is automatic and script-based.
 
-	In the event of a major revision in the histone gene set such as removal of a cluster 
-	or eventual accumulation of insights rendering the explanatory text obsolete, 
-	the manuscript can be redrafted as an updated publication 
-	without the requirement to repeat the underlying data generation scripts.
-	New functions can also be added to scripts to reflect new types of information 
-	such as measures of variation from genome sequencing multiple individuals 
-	while still retaining backwards compatibility.
+  In the event of a major revision in the histone gene set such as removal of a cluster
+  or eventual accumulation of insights rendering the explanatory text obsolete,
+  the manuscript can be redrafted as an updated publication
+  without the requirement to repeat the underlying data generation scripts.
+  New functions can also be added to scripts to reflect new types of information
+  such as measures of variation from genome sequencing multiple individuals
+  while still retaining backwards compatibility.
 
-	Furthermore, the core scripts are written to enable them to generate 
-	equivalent information for other organisms with a one line change. 
-	We have successfuly trialled this for \textit{M. musculus} and \textit{Gallus gallus} (not shown) 
-	so an equivalent dynamic manuscript on these canonical gene sets 
-	simply requires redrafting the surrounding explanatory text.
-	The approach could also be applied to larger and more diverse gene families such as
-	our previous cataloguing of the Snf2 family \citep{andrew-snf2-catalogue}.
+  Furthermore, the core scripts are written to enable them to generate
+  equivalent information for other organisms with a one line change.
+  We have successfuly trialled this for \textit{M. musculus} and \textit{Gallus gallus} (not shown)
+  so an equivalent dynamic manuscript on these canonical gene sets
+  simply requires redrafting the surrounding explanatory text.
+  The approach could also be applied to larger and more diverse gene families such as
+  our previous cataloguing of the Snf2 family \citep{andrew-snf2-catalogue}.
