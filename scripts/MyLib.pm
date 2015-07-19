@@ -257,11 +257,12 @@ sub latex_string {
 
 ## gets a string that should be printed to define a new latex command
 sub latex_newcommand {
-  my $command = latex_string (num2en ($_[0]));
-  my $value   = $_[1];
+  my $definition = shift;
+  my $command = latex_string (num2en (shift));
+  my $value   = shift;
   ## we need to set the height of the color box manually otherwise \colorbox
   ## will change the height of the line
-  return "\\newcommand{\\$command}{\\ScriptValue{$value}}";
+  return "%% $definition\n\\newcommand{\\$command}{\\ScriptValue{$value}}";
 }
 
 ## Replaces numbers in a string by their english word, and capitalizes the

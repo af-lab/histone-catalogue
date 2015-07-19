@@ -42,8 +42,12 @@ my @core = grep {! $$_{'pseudo'}} MyLib::load_canonical ($path{sequences});
 ## Measure the arginine by lysine ratio in both the core and linker histones
 my $core_ratio   = arg_lys_ratio(@core);
 my $linker_ratio = arg_lys_ratio(MyLib::load_H1 ($path{sequences}));
-say {$stats} MyLib::latex_newcommand ("CoreArgLysRatio", $core_ratio);
-say {$stats} MyLib::latex_newcommand ("LinkerArgLysRatio", $linker_ratio);
+say {$stats} MyLib::latex_newcommand (
+  "Ratio of Total Number of Arginine and Lysines in all of the core histones",
+  "CoreArgLysRatio", $core_ratio);
+say {$stats} MyLib::latex_newcommand (
+  "Ratio of Total Number of Arginine and Lysines in all of the H1 histones",
+  "LinkerArgLysRatio", $linker_ratio);
 
 my @core_ratios;    ## to calculate range of values in the core
 my %seqs;           ## and the ratio for each histone type
@@ -52,11 +56,18 @@ foreach my $gene (@core) {
   push (@{$seqs{$$gene{'histone'}}}, $gene);
 }
 
-say {$stats} MyLib::latex_newcommand ("MinCoreArgLysRatio", List::Util::min (@core_ratios));
-say {$stats} MyLib::latex_newcommand ("MaxCoreArgLysRatio", List::Util::max (@core_ratios));
+say {$stats} MyLib::latex_newcommand (
+  "Smallest ratio of Arginine and Lysines in a single core histones",
+  "MinCoreArgLysRatio", List::Util::min (@core_ratios));
+say {$stats} MyLib::latex_newcommand (
+  "Largest ratio of Arginine and Lysines in a single core histones",
+  "MaxCoreArgLysRatio", List::Util::max (@core_ratios));
+
 foreach my $histone (keys %seqs) {
   my $hist_ratio = arg_lys_ratio (@{$seqs{$histone}});
-  say {$stats} MyLib::latex_newcommand ("${histone}ArgLysRatio", $hist_ratio);
+  say {$stats} MyLib::latex_newcommand (
+    "Ratio of Total Number of Arginine and Lysines in all of the ${histone} histones",
+    "${histone}ArgLysRatio", $hist_ratio);
 }
 
 close($stats) or die "Couldn't close $stats_path after writing: $!";

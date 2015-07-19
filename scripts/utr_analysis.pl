@@ -127,9 +127,15 @@ my $var_path = File::Spec->catdir($path{results}, "variables-utr.tex");
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-say {$var_file} MyLib::latex_newcommand ("StemLoopStart", Statistics::Basic::mode (@inits));
-say {$var_file} MyLib::latex_newcommand ("StemLoopEnd", Statistics::Basic::mode (@ends));
-say {$var_file} MyLib::latex_newcommand ("HDEsDistanceFromStemLoop", Statistics::Basic::mode (@sl2hde));
+say {$var_file} MyLib::latex_newcommand (
+  "Mode of distances, in bp, between the end of the CDS and the start of the stem loop.",
+  "StemLoopStart", Statistics::Basic::mode (@inits));
+say {$var_file} MyLib::latex_newcommand (
+  "Mode of distances, in bp, between the end of the CDS and the end of the stem loop.",
+  "StemLoopEnd", Statistics::Basic::mode (@ends));
+say {$var_file} MyLib::latex_newcommand (
+  "Mode of distances, in bp, between the HDE and the stem loop.",
+  "HDEsDistanceFromStemLoop", Statistics::Basic::mode (@sl2hde));
 
 close ($var_file)
   or die "Couldn't close $var_path after writing: $!";
@@ -154,4 +160,3 @@ sub align_and_seqlogo {
 
 align_and_seqlogo ("aligned_stem_loops.fasta", "seqlogo_stem_loops.eps", @stem_loops);
 align_and_seqlogo ("aligned_HDEs.fasta", "seqlogo_HDEs.eps", @hdes);
-

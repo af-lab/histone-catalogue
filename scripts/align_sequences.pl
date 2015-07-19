@@ -234,8 +234,10 @@ sub tex_compare_histone_proteins {
   my $histone   = shift;
   my $align     = shift;
 
-  say {$var_file} MyLib::latex_newcommand ($histone."PID" ,
-     sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
+  say {$var_file} MyLib::latex_newcommand (
+    "Overall percentage identity between all histone $histone proteins",
+    $histone."PID",
+    sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
 
   ## Why we do not get the consensus sequence from the align object, why is it wrong to use
   ## the consensus sequence, and what did Marzluff used on the paper then?
@@ -284,7 +286,9 @@ sub tex_compare_histone_proteins {
   }
   my $most_common = $common[0];
 
-  say {$var_file} MyLib::latex_newcommand ($histone."UniqueProteins" , scalar keys %seqs);
+  say {$var_file} MyLib::latex_newcommand (
+    "Number of unique proteins encoded by all histone $histone genes",
+    $histone."UniqueProteins" , scalar keys %seqs);
 
   ## Get a list of the genes whose sequence is equal to the most common,
   ## and the text describing the difference against it for the others.
