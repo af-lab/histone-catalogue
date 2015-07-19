@@ -27,21 +27,17 @@
 %% new command for box about missing references
 \newcommand{\addref}[1][]{\todo[color=red!40,size=\tiny]{Add reference: #1}}
 
-\usepackage{natbib}
+\usepackage[sectionbib]{natbib}
 
 \usepackage{fp}
+\usepackage{capt-of}
 
-%% Supplement function from http://bytesizebio.net/2013/03/11/adding-supplementary-tables-and-figures-in-latex/
-\newcommand{\beginsupplement}{
-  \setcounter{table}{0}
-  \renewcommand{\thetable}{S\arabic{table}}
-  \setcounter{figure}{0}
-  \renewcommand{\thefigure}{S\arabic{figure}}
-}
+\newfloat{supplement}{sup}{S}
+\setfloatlocations{supplement}{h}
+\renewcommand{\thesupplement}{S\arabic{supplement}}
 
 %% to keep a pair of related table and figures, we set a new float and use it
 %%conjunction with the captionof command from capt-of
-\usepackage{capt-of}
 \newfloat{TableAndFigure}{X}{capname}
 
 \input{results/variables-align_results}
