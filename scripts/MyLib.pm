@@ -236,13 +236,17 @@ sub load_seq {
   my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
   ## XXX  it is standard to remove the initial methionine when dealing
   ##      with histone proteins (it does not even count when giving position
-  ##      in the protein). However, this is really really not advisable,
-  ##      so we are not skipping it. The following can be uncommented
-  ##      to skip it.
-#  if ($type eq "proteins") {
-#    ## we remove the first amino acid since in histones it's cleaved off
-#    $seq = $seq->trunc(2, $seq->length);
-#  }
+  ##      in the protein). This is really really not recommended by the HGVS
+  ##      (one would think is also common sense), but the number of the
+  ##      amino acids is so ingrained in the field that we can't start
+  ##      now to give them other numbers (everyone knows H3 K4Me3, we can't
+  ##      start to correct them and call it H3 K5Me3 because we are not
+  ##      important enough to break the convention).  Comment and Uncomment
+  ##      the following block, to keep or remove the N-terminal methionine
+  if ($type eq "proteins") {
+    ## we remove the first amino acid since in histones it's cleaved off
+    $seq = $seq->trunc(2, $seq->length);
+  }
   return $seq;
 }
 
