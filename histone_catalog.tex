@@ -25,7 +25,13 @@
     \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B,
     \HThreeUniqueProteins{} H3, and \HFourUniqueProteins{} H4 unique protein isoforms.
     This represents a surprising and seldom recognised variation
-    diverging to as far as \todo{lowest identity}\% amino acid identity.
+    diverging to as low as
+    \FPmin{result}{\HTwoAPID}{\HTwoBPID}%
+    \FPmin{result}{\result}{\HThreePID}%
+    \FPmin{result}{\result}{\HFourPID}%
+    \result{}\% amino acid identity.
+    \todo{this is not really right since it's the lowest overall PID between
+          histones of the same type}
     The gene sequence and protein isoform diversity
     exceeds commonly used subtype designations such as H2A.1 and H3.1,
     and exists in parallel to the well-known specialisation of variant histones.
