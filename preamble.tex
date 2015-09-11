@@ -38,8 +38,9 @@
 \usepackage{fp}
 \usepackage{capt-of}
 
-\newfloat{supplement}{sup}{S}
+\newfloat{supplement}{sup}{Supplementary}
 \setfloatlocations{supplement}{h}
+\renewcommand{\thesupplement}{S\arabic{supplement}}
 
 \input{results/variables-align_results}
 \input{results/variables-cluster_stats}
