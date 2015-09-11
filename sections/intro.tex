@@ -20,7 +20,7 @@
   are pseudogenes (\tref{tab:histone-gene-count}).
 
   \begin{table}
-    \caption{Properties distingushing canonical and variant histone proteins.}
+    \caption{Properties distinguishing canonical and variant histone proteins.}
     \label{tab:typical-histone-differences}
     \centering
     \begin{tabular}{l l l}
@@ -36,12 +36,12 @@
     \end{tabular}
   \end{table}
 
-  \begin{table*}
+  \begin{table}
     \caption{Count of human canonical histone coding and pseudogenes by
              histone cluster and type. $\psi$ indicates pseudo genes.}
     \label{tab:histone-gene-count}
     \centering
-    \begin{tabular}{l r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$} r@{ + }l<{$\psi$}}
+    \begin{tabular}{l *{5}{r!{+}r<{$\psi$}}}
       \toprule
       \null   & \multicolumn{2}{c}{H2A}  & \multicolumn{2}{c}{H2B}
               & \multicolumn{2}{c}{H3}   & \multicolumn{2}{c}{H4}
@@ -75,7 +75,7 @@
               & \TotalCodingGenes{}       & \TotalPseudoGenes{} \\
       \bottomrule
     \end{tabular}
-  \end{table*}
+  \end{table}
 
   Relationships within the histone family have been described using a variety of terminologies
   reflecting biochemical, functional, and genomic distinctions that are briefly described below
@@ -117,19 +117,19 @@
   although a supply of canonical histones is inevitably required
   to partner variants throughout the cell cycle.
   Metazoan canonical histone genes are distinctive
-  because they lack introns and give rise to non-polyadenylated proten coding transcripts
+  because they lack introns and give rise to non-polyadenylated protein coding transcripts
   where turnover is independently regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
 
   In contrast, variant histones such as H2A.Z, TH2B, and H3.3 have
   less sequence identity and lower abundance.
   They play functionally specific roles and are mostly expressed outside S~phase,
-  so are decribed as ``replication independent''.
+  so are described as ``replication independent''.
   Since histone variants are interpreted as taking the place of equivalent canonical histone types,
   they are also referred to as ``replacement'' histones.
 
   From a genomic perspective the canonical histone genes are found in 4 clusters,
   possibly for regulatory efficiency.
-  The multiple gene copies in these clustered arrays are sometimes confusingly referred to as ``allellic''
+  The multiple gene copies in these clustered arrays are sometimes confusingly referred to as ``allelic''
   and the resulting combined protein isoforms are often considered to be ``wild type''
   although both genes and protein products encompass distinctive variation in sequence and relative abundance,
   and their functional equivalence has not been tested.
@@ -156,96 +156,91 @@
   and represents an example of ``reproducible research'' \citep{Claerbout2000}
   that provides a novel model for curating relatively stable gene families.
 
-  \begin{table*}
-    \caption{Terminology describing histone variation}
+  %% The following is a rather long table, longer than 1 page so it can't
+  %% go in a float.  There are several packages such as longtable or xtab
+  %% but those must be really used with tables.  However what we really
+  %% have is a list of descriptions.  If we converted this into a table,
+  %% like we had before, it would be a huge waste of space.  So we use
+  %% afterpage and captionof to mimick a floating table.  And we use the
+  %% shaded environment just because it looks good (although it does
+  %% introduce an annoyingly long vertical space before the caption).
+  \afterpage{
+    \captionof{table}{Terminology describing histone variation}
     \label{tab:histone-divisions}
-    \centering
-    \begin{tabular}{F p{\dimexpr(\textwidth-\eqboxwidth{firstentry}-4\tabcolsep)}}
-      \toprule
-      Allelic variants &
-      Copies of a canonical histone type gene. Not alleles by genetic definition. Not histone variants. \\
-      \addlinespace
+    \definecolor{shadecolor}{gray}{0.9}
+    \begin{shaded}
+      \begin{description}
+        \item[Allelic variants] \hfill \newline
+        Copies of a canonical histone type gene. Not alleles by genetic
+        definition. Not histone variants.
 
-      Canonical histones &
-      Core histones as described in \tref{tab:typical-histone-differences}.
-      Complement of variant histones in core histones, and contribute to
-      the majority of histones in chromatin.  Encompasses multiple
-      isoforms. \\
-      \addlinespace
+        \item[Canonical histones] \hfill \newline
+        Core histones as described in \tref{tab:typical-histone-differences}.
+        Complement of variant histones in core histones, and contribute to
+        the majority of histones in chromatin.  Encompasses multiple
+        isoforms.
 
-      Core histones &
-      Histones forming part of the nucleosome core particle wrapping 147 bp of DNA.
-      The 4 core histone types are H2A, H2B, H3, and H4.
-      Encompasses both canonical and variant histones. \\
-      \addlinespace
+        \item[Core histones] \hfill \newline
+        Histones forming part of the nucleosome core particle wrapping 147 bp of DNA.
+        The 4 core histone types are H2A, H2B, H3, and H4.
+        Encompasses both canonical and variant histones.
 
-      Heteromorphous variants &
-      Histone variants with distinct function and localisation that are readily separated (e.g. SDS PAGE).\\
-      \addlinespace
+        \item[Heteromorphous variants] \hfill \newline
+        Histone variants with distinct function and localisation that are
+        readily separated (e.g. SDS PAGE).
 
-      Homomorphous variants &
-      Canonical histone subtypes with isoform variation
-      requiring high resolution separation methods (e.g. TAU PAGE).\\
-      \addlinespace
+        \item[Homomorphous variants] \hfill \newline
+        Canonical histone subtypes with isoform variation
+        requiring high resolution separation methods (e.g. TAU PAGE).
 
-      Families &
-      Same as ``types''.\\
-      \addlinespace
+        \item[Families] \hfill \newline
+        Same as ``types''.
 
-      Isoforms &
-      Proteins with high sequence identity and assumed equivalent function.
-      Functional equivalence has not been demonstrated for canonical histone isoforms.\\
-      \addlinespace
+        \item[Isoforms] \hfill \newline
+        Proteins with high sequence identity and assumed equivalent function.
+        Functional equivalence has not been demonstrated for canonical histone isoforms.
 
-      Linker histones &
-      Histones binding to linker DNA adjacent to the nucleosome core particle.
-      The two linker histone types are H1 and H5.\\
-      \addlinespace
+        \item[Linker histones] \hfill \newline
+        Histones binding to linker DNA adjacent to the nucleosome core particle.
+        The two linker histone types are H1 and H5.
 
-      Non-allelic variants &
-      Histone variants. \\
-      \addlinespace
+        \item[Non-allelic variants] \hfill \newline
+        Histone variants.
 
-      Replacement histones &
-      Histone variants. \\
-      \addlinespace
+        \item[Replacement histones] \hfill \newline
+        Histone variants.
 
-      Replication-dependent &
-      Same as ``canonical histones''.  So named because their expression
-      occurs primarily during S phase. \\
-      \addlinespace
+        \item[Replication-dependent] \hfill \newline
+        Same as ``canonical histones''.  So named because their expression
+        occurs primarily during S phase.
 
-      Replication-independent &
-      Same as ``variant histones''.  So named because their expression is
-      decoupled from the cell cycle. \\
-      \addlinespace
+        \item[Replication-independent] \hfill \newline
+        Same as ``variant histones''.  So named because their expression is
+        decoupled from the cell cycle.
 
-      Subtypes &
-      Canonical histone type isoforms separable by TAU PAGE
-      (e.g. H2A.1, H2A.2).  Despite their naming, there is no evidence of
-      functional differences between them. \\
-      \addlinespace
+        \item[Subtypes] \hfill \newline
+        Canonical histone type isoforms separable by TAU PAGE
+        (e.g. H2A.1, H2A.2).  Despite their naming, there is no evidence of
+        functional differences between them.
 
-      Types &
-      Histone sequences able to participate in specific combinations
-      that define the repeating nucleosome structure.
-      The 5 histone types are H1, H2A, H2B, H3 and H4.\\
-      \addlinespace
+        \item[Types] \hfill \newline
+        Histone sequences able to participate in specific combinations
+        that define the repeating nucleosome structure.
+        The 5 histone types are H1, H2A, H2B, H3 and H4.
 
-      Variants &
-      Core histones as described in \tref{tab:typical-histone-differences}.
-      Complement of canonical histones in core histones.  They perform
-      specialized functions and contribute to a minor proportion of
-      histones in chromatin. \\
-      \addlinespace
+        \item[Variants] \hfill \newline
+        Core histones as described in \tref{tab:typical-histone-differences}.
+        Complement of canonical histones in core histones.  They perform
+        specialized functions and contribute to a minor proportion of
+        histones in chromatin.
 
-      Wild type histones &
-      Same as ``canonical histones''. \\
-      \bottomrule
-    \end{tabular}
-  \end{table*}
+        \item[Wild type histones] \hfill \newline
+        Same as ``canonical histones''.
+      \end{description}
+    \end{shaded}
+  }
 
-  \begin{table*}
+  \begin{table}
     \caption{Disjoint sets of histone naming.}
     \label{tab:histone-disjoint-sets}
     \centering
@@ -258,4 +253,4 @@
       Replication dependent & Replication independent \\
       \bottomrule
     \end{tabular}
-  \end{table*}
+  \end{table}

@@ -2,21 +2,24 @@
   Most depictions of chromatin imply that
   canonical histone protein types behave as a single protein,
   sometimes referred to as ``wild type''.
-  The assumption the relatively high identity of histone sequences between isoforms and species,
+  The assumption the relatively high identity of histone sequences
+  between isoforms and species,
   and the focus on functional distinctions of histone variants.
-  However, the strong selection pressure on histone amino acid sequences \citep{birth-death-review},
+  However, the strong selection pressure on histone amino acid
+  sequences \citep{birth-death-review},
   the roles of specific amino acid differences \citep{MazeAllis2014},
   and the structural effects of small variations \citep{KurumizakaCOSB2013}
   all suggest that the minor differences in canonical histone protein isoforms
   could have functional implications.
 
   Isoform variation in canonical histone types H2A and H2B is most pronounced,
-  with \HTwoAUniqueProteins{} H2A and \HTwoBUniqueProteins{} H2B encoded proteins.
-  In contrast only \HThreeUniqueProteins{} H3 and \HFourUniqueProteins{} H4 proteins
+  with \HTwoAUniqueProteins{}~H2A and \HTwoBUniqueProteins{}~H2B encoded proteins.
+  In contrast only \HThreeUniqueProteins{}~H3 and \HFourUniqueProteins{}~H4 proteins
   are encoded for these canonical histone types.
   There is also some variation in canonical histone length, particularly for H2A and H2B isoforms.
 
-  The nomenclature for histone protein isoforms follows directly from the gene names \citep{Marzluff02},
+  The nomenclature for histone protein isoforms follows directly
+  from the gene names \citep{Marzluff02},
   and supersedes the earlier nomenclature with forward slash which used different isoform letters
   \citep{AlbigGenomics1997,AlbigHumangen1997}.
   Human canonical histone polypeptides have typically been numbered
@@ -27,20 +30,22 @@
   by the translation initiation site (start codon) being numbered as residue 1'',
   and for ``the protein reference sequence should represent the primary
   translation product, not a processed mature protein''.  For consistency
-  with the rest of literature, we are ommitting the N-terminal methyonine
+  with the rest of literature, we are omitting the N-terminal methionine
   on figures, alignments, and amino-acid numbering.
   %% if we want to change our stance in this, we only need to uncomment
   %% 3 lines in MyLib.pm, in the routine that reads the sequence files.
 
   \subsection{Canonical H2A isoforms}
-    Canonical H2A genes encode \HTwoAUniqueProteins{} different H2A protein isoforms (\tref{tab:H2A-consensus})
+    Canonical H2A genes encode \HTwoAUniqueProteins{}~different H2A
+    protein isoforms (\tref{tab:H2A-consensus})
     which are is separable by TAU PAGE into two bands identified as H2A.1 and H2A.2.
-    The TAU PAGE separation distinguishes leucine or methionine at residue 52 \citep{FranklinZweidler1977,Zweidler1977},
+    The TAU PAGE separation distinguishes leucine or methionine at
+    residue 52 \citep{FranklinZweidler1977,Zweidler1977},
     implying there are up to 8 different protein sequences in H2A.1 and 2 in H2A.2.
     There is no concordance between H2A.1 and H2A.2
     and the location of their isoform-encoding genes in the histone gene clusters.
     HIST2 contains genes encoding isoforms with both Leu52 and Met52,
-    while HIST1, HIST2 and HIST3 all contain genes encoding H2A isoforms with Leu52.
+    while HIST1, HIST2, and HIST3 all contain genes encoding H2A isoforms with Leu52.
     No functional distinction between H2A.1 and H2A.2 has yet been reported.
 
     Excluding \textit{HIST1H2AA} discussed above,
@@ -51,79 +56,97 @@
     and the C-terminal residues from residue 125 onwards \tref{tab:H2A-consensus}.
     All these sites have implications for post-translational modifications.
 
-    \begin{TableAndFigure*}
+    \begin{table}
+      \caption{
+        Canonical H2A protein isoforms.  Upper panel shows isoforms
+        relative to the most common protein sequence.  Lower panel
+        shows sequence logo of all isoforms aligned with invariant
+        residues in grey.
+      }
       \label{tab:H2A-consensus}
       \input{results/table-H2A-proteins-align}
-      \label{fig:H2A-weblogo}
       \includegraphics[width=\textwidth]{seqlogo_H2A_proteins.pdf}
-      \captionof{figure}{Canonical H2A protein isoforms.
-                         Upper panel shows isoforms relative to the most common protein sequence.
-                         Lower panel shows sequence logo of all isoforms aligned with invariant residues in grey.}
-    \end{TableAndFigure*}
+    \end{table}
 
   \subsection{Canonical H2B isoforms}
     Canonical H2B has the most canonical isoforms \tref{tab:H2B-consensus}
-    although these \HTwoBUniqueProteins{} unique proteins all migrate together in TAU PAGE.
+    although these \HTwoBUniqueProteins{}~unique proteins all migrate together in TAU PAGE.
 
     There is significant variability between isoforms in the N-terminal region.
-    This is one of the most variable sites between canonical core histones of different species, and
+    This is one of the most variable sites between canonical
+    core histones of different species, and
     human H2B has a unique and distinctive N-terminal proline-acidic-proline motif, PEP/PDP
-    followed by a very variable residue with either alanine, serine, threonine or valine \fref{fig:H2B-weblogo}.
+    followed by a very variable residue with either alanine, serine,
+    threonine or valine \tref{tab:H2B-consensus}.
 
     Excluding \textit{HIST1H2BA} discussed above,
-    the remaining isoform differences are mainly the chemically similar valine or isoleucine at residue 40,
+    the remaining isoform differences are mainly the chemically
+    similar valine or isoleucine at residue 40,
     and serine to glycine and alanine at residues 76 and 125 respectively
     which both have post-translational modification implications.
-    Variation in H2B isoform levels between multiple cancer cell lines has been observed \citep{Molden2015},
+    Variation in H2B isoform levels between multiple cancer cell
+    lines has been observed \citep{Molden2015},
     although the functional implications are unknown.
 
-    \begin{TableAndFigure*}
+    \begin{table}
+      \caption{
+        Canonical H2B protein isoforms.  Upper panel shows isoforms
+        relative to the most common protein sequence.  Lower panel
+        shows sequence logo of all isoforms aligned with invariant
+        residues in grey.
+      }
       \label{tab:H2B-consensus}
       \input{results/table-H2B-proteins-align}
-      \label{fig:H2B-weblogo}
       \includegraphics[width=\textwidth]{seqlogo_H2B_proteins.pdf}
-      \captionof{figure}{Canonical H2B protein isoforms.
-                         Upper panel shows isoforms relative to the most common protein sequence.
-                         Lower panel shows sequence logo of all isoforms aligned with invariant residues in grey.}
-    \end{TableAndFigure*}
+    \end{table}
 
   \subsection{Canonical H3 isoforms}
-    Canonical H3 genes encode only \HThreeUniqueProteins{} different canonical isoforms \fref{tab:H3-consensus}.
-    The majority of H3 genes are in the HIST1 cluster and encode a single polypeptide sequence \citep{Ederveen2011}
+    Canonical H3 genes encode only \HThreeUniqueProteins{}~different
+    canonical isoforms \fref{tab:H3-consensus}.
+    The majority of H3 genes are in the HIST1 cluster and encode a
+    single polypeptide sequence \citep{Ederveen2011}
     whereas the three canonical H3 genes in HIST2 encode a different isoform
     with the interesting difference of serine rather that cysteine at residue 97
     that is separable by TAU PAGE \citep{FranklinZweidler1977}.
-    By coincidence the HIST1-encoded canonical H3 isoforms are identifed as H3.1 and the HIST2-encoded copies are H3.2.
-    As discussed in \Sref{sec:hist3h3}, \textit{HIST3H3} appears to be a largely testes specific variant H3T
+    By coincidence the HIST1-encoded canonical H3 isoforms are
+    identified as H3.1 and the HIST2-encoded copies are H3.2.
+    As discussed in \Sref{sec:hist3h3}, \textit{HIST3H3} appears t
+     be a largely testes specific variant H3T
     with four amino acid differences that has been assigned as H3.4 \citep{Talbert2012}
     even though it migrates with H3.1 in TAU PAGE.
 
-    \begin{TableAndFigure*}
+    \begin{table}
+      \caption{
+        Canonical H3 protein isoforms.  Upper panel shows isoforms
+        relative to the most common protein sequence.  Lower panel
+        shows sequence logo of all isoforms aligned with invariant
+        residues in grey.
+      }
       \label{tab:H3-consensus}
       \input{results/table-H3-proteins-align}
-      \label{fig:H3-weblogo}
       \includegraphics[width=\textwidth]{seqlogo_H3_proteins.pdf}
-      \captionof{figure}{Canonical H3 protein isoforms.
-                         Upper panel shows isoforms relative to the most common protein sequence.
-                         Lower panel shows sequence logo of all isoforms aligned with invariant residues in grey.}
-    \end{TableAndFigure*}
+    \end{table}
 
   \subsection{Canonical H4 isoforms}
-    H4 is the most homegenous of all canonical core histones,
-    with all but one of the \HFourCodingGenes{} genes encoding identical proteins \tref{tab:H4-consensus}.
-    These genes are located across HIST1, HIST2 and the isolated \textit{HIST4H4} comprising HIST4.
+    H4 is the most homogeneous of all canonical core histones,
+    with all but one of the \HFourCodingGenes{}~genes encoding
+    identical proteins \tref{tab:H4-consensus}.
+    These genes are located across HIST1, HIST2 and the isolated
+    \textit{HIST4H4} comprising HIST4.
     The divergent \textit{HIST1H4G} gene in the middle of the HIST1 cluster
     encodes an isoform with 15 amino acid differences and a deletion of the C-terminal 5 residues.
     This gene is annotated as being transcribed so merits further investigation.
 
-    \begin{TableAndFigure*}
+    \begin{table}
+      \caption{
+        Canonical H4 protein isoforms.  Upper panel shows isoforms
+        relative to the most common protein sequence.  Lower panel
+        shows sequence logo of all isoforms aligned with invariant
+        residues in grey.
+      }
       \label{tab:H4-consensus}
       \input{results/table-H4-proteins-align}
-      \label{fig:H4-weblogo}
       \includegraphics[width=\textwidth]{seqlogo_H4_proteins.pdf}
-      \captionof{figure}{Canonical H4 protein isoforms.
-                         Upper panel shows isoforms relative to the most common protein sequence.
-                         Lower panel shows sequence logo of all isoforms aligned with invariant residues in grey.}
-    \end{TableAndFigure*}
+    \end{table}
 
     \todo{There is an extra comma immedaitely after the HISTnHx in every table legend that is confusing and needs to be removed}
