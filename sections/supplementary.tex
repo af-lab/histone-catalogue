@@ -12,7 +12,10 @@
   %% memoir class).  We may still do that later but at the moment we use
   %% capt-of which allows to enter a caption outside a float.
   \newpage
-  \captionof{supplement}{Catalogue of all annotated human canonical core histone gene, transcript and protein IDs}
+  \captionof{supplement}{%
+    Catalogue of all annotated human canonical core histone gene,
+    transcript and protein IDs.
+  }
   \label{tab:histone-catalogue}
   \input{results/table-histone_catalogue}
 
@@ -119,4 +122,8 @@
   \input{results/table-variant_catalogue}
 
   \newpage
-  \input{results/histone_insanities.tex}
+  \begin{supplement}
+    \caption{Analysis of the current histone curation.}
+    \label{tab:curation-anomalies}
+    \input{results/histone_insanities.tex}
+  \end{supplement}
