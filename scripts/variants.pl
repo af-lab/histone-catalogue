@@ -19,7 +19,6 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use List::Util;                 # Includes min and max
-use Number::Format;             # pretty format of long numbers with SI prefix and precision
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -48,4 +47,3 @@ my $tex_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue
 my $csv_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.csv");
 MyLib::make_tex_catalogue ($tex_table_path, @variants);
 MyLib::make_csv_catalogue ($csv_table_path, @variants);
-
