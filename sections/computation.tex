@@ -4,9 +4,13 @@
   A considerable number of builds and updates of the human genome sequence have been made
   since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}
   resulting in
-  \todo{number of sequences added} canonical histone genes added,
-  \todo{number of sequences removed} removed,
-  and \todo{number of sequences changed} sequences updated (\tref{tab:difference-from-Marzluff02}).
+  \AddedSinceReference{} canonical histone genes added,
+  \RemovedSinceReference{} removed,
+  and
+  \FPeval{result}{round(\SequenceChangeSinceReference{}
+                        +\PseudoSinceReference{}
+                        +\CodingSinceReference{}, 0)} \result{}
+  sequences updated (\tref{tab:difference-from-Marzluff02}).
   These changes reflect the ongoing nature and challenges of
   genome curation and annotation \citep{BorkKoonin1998}.
 

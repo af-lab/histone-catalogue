@@ -47,6 +47,7 @@
 \input{results/variables-protein_stats}
 \input{results/variables-utr}
 \input{results/variables-variants}
+\input{results/variables-reference_comparison}
 \input{data/variables-Marzluff-stats}
 
 %% We define a style here which will be used around all the values that
@@ -68,7 +69,7 @@
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealFPeval{UnmarkedResult}{#2}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
-  \expandafter\newcommand\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
+  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
 \let\RealFPmin\FPmin

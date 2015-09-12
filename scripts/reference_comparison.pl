@@ -31,6 +31,7 @@ use MyLib;                      # Load functions
 ## It will create the following files:
 ##    * table-reference_comparison.tex (LaTeX table with the list of differences
 ##      between the current analysis and a reference.
+##    * variable-reference_comparison.tex
 ##
 ## Usage is:
 ##
@@ -107,6 +108,30 @@ say {$tab_fh} "  \\bottomrule";
 say {$tab_fh} "\\end{tabular}";
 
 close ($tab_fh) or die "Couldn't close $tab_path after writing: $!";
+
+my $var_path = File::Spec->catdir($path{results}, "variables-reference_comparison.tex");
+open (my $var_file, ">", $var_path)
+  or die "Could not open $var_path for writing: $!";
+
+say {$var_file} MyLib::latex_newcommand(
+  "Number of removed genes since the reference",
+  "RemovedSinceReference", scalar @{$changes{removed}});
+say {$var_file} MyLib::latex_newcommand(
+  "Number of added genes since the reference",
+  "AddedSinceReference", scalar @{$changes{added}});
+say {$var_file} MyLib::latex_newcommand(
+  "Number of genes that have changed from coding to pseudo since the reference",
+  "PseudoSinceReference", scalar @{$changes{pseudo}});
+say {$var_file} MyLib::latex_newcommand(
+  "Number of genes that have changed from pseudo to coding since the reference",
+  "CodingSinceReference", scalar @{$changes{coding}});
+say {$var_file} MyLib::latex_newcommand(
+  "Number of genes whose sequence has changed since the reference",
+  "SequenceChangeSinceReference", scalar @{$changes{sequence}});
+
+close ($var_file)
+  or die "Couldn't close $var_path after writing: $!";
+
 
 ## We can't use the normal load_canonical() because we didn't had enough
 ## data from his paper to rebuild the whole data. We only have the gene

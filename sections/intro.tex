@@ -236,16 +236,23 @@
     with typical properties including introns, alternative splicing,
     and polyadenylated transcripts (\tref{tab:typical-histone-differences}).
 
+  \subsection{Live manuscript}
+
     Despite the importance of histones for chromatin organisation and extensive interest
     in their role in epigenetics and regulation, the systematic
     curation and classification of human histone
     gene and protein sequences has not been revisited
     since the landmark survey of \citet{Marzluff02}.
-    The canonical histone catalogue has accumulated at least
-    \todo{Total Number of Differences in suppl table} differences (\tref{tab:difference-from-Marzluff02})
-    from that survey as rich annotations continue to propagate into reference sequence databases.
+    The canonical histone catalogue has accumulated
+    \FPeval{result}{round(\SequenceChangeSinceReference{}
+                          + \PseudoSinceReference{}
+                          + \CodingSinceReference{}
+                          + \AddedSinceReference{}
+                          + \RemovedSinceReference{}, 0)}
+    \result{}~differences (\tref{tab:difference-from-Marzluff02})
+    from that survey as rich annotations continue to propagate
+    into reference sequence databases.
 
-  \subsection{Live manuscript}
     In this manuscript we provide a comprehensive catalogue
     of canonical histone genes, proteins, and pseudogenes.
     Since curation and annotation are dynamic and evolving,
