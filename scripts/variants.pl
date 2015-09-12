@@ -31,6 +31,7 @@ use MyLib;                      # Load functions
 ##
 ##    * table-variant_catalogue.tex (a very long LaTeX table with all variant
 ##      histones, their UIDs, and transcript and protein accession numbers)
+##    * variables-variants.tex
 ##
 ## Usage is:
 ##
@@ -42,6 +43,16 @@ my %path = MyLib::parse_argv("sequences", "results");
 ## Get the variant genes and order them by gene symbol
 my @variants = sort {$$a{histone} cmp $$b{histone} || $$a{symbol} cmp $$b{symbol}}
   MyLib::load_variant ($path{sequences});
+
+my $var_path = File::Spec->catdir($path{results}, "variables-variants.tex");
+open (my $var_file, ">", $var_path)
+  or die "Could not open $var_path for writing: $!";
+
+say {$var_file} MyLib::latex_newcommand ("Total number of histone variants genes",
+                                         "TotalVariantGenes", scalar @variants);
+
+close ($var_file)
+  or die "Couldn't close $var_path after writing: $!";
 
 my $tex_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.tex");
 my $csv_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.csv");
