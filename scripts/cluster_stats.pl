@@ -22,8 +22,8 @@ use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use HistoneCatalogue;
+use MyLib;
 
 ## This script will calculate stats for each of the histone clusters. It will
 ## create the following files:
@@ -107,9 +107,12 @@ foreach my $cluster_k (keys %canon) {
   my $coord_start  = List::Util::min (@{$$cluster{'coordinates'}});
   my $coord_end    = List::Util::max (@{$$cluster{'coordinates'}});
   my $coord_length = MyLib::pretty_length (abs ($coord_start - $coord_end));
-  say {$stats} MyLib::latex_newcommand (
-    "Span, in bp with best SI prefix, of the histone cluster $cluster_k",
-    $cluster_k."Span", $coord_length);
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    $cluster_k."Span",
+    $coord_length,
+    "Span, in bp with best SI prefix, of the histone cluster $cluster_k"
+  );
 
   ## Get a nice LaTeX string showing the range of locus for each cluster,
   ## e.g, 6p21.3--6p22.2. The problem is that some locus have less precision
@@ -127,9 +130,12 @@ foreach my $cluster_k (keys %canon) {
     my $locus_end   = List::Util::maxstr (@locus);
     my $locus = $locus_start eq $locus_end ?
                 $locus_start : "$locus_start--$locus_end";
-    say {$stats} MyLib::latex_newcommand (
-      "Locus of the histone cluster $cluster_k",
-      $cluster_k."Locus", $locus);
+    HistoneCatalogue::say_latex_newcommand (
+      $stats,
+      $cluster_k."Locus",
+      $locus,
+      "Locus of the histone cluster $cluster_k"
+    );
   }
 
   ## Some clusters may not have any coding or pseudo gene in which case
@@ -137,62 +143,98 @@ foreach my $cluster_k (keys %canon) {
   $$cluster{'coding'} //= 0;
   $$cluster{'pseudo'} //= 0;
 
-  say {$stats} MyLib::latex_newcommand (
-    "Number of protein coding genes in the histone cluster $cluster_k",
-    "CodingGenesIn$cluster_k", $$cluster{'coding'});
-  say {$stats} MyLib::latex_newcommand (
-    "Number of pseudogenes genes in the histone cluster $cluster_k",
-    "PseudoGenesIn$cluster_k", $$cluster{'pseudo'});
-  say {$stats} MyLib::latex_newcommand (
-    "Total Number of genes in the histone cluster $cluster_k",
-    "TotalGenesIn$cluster_k",  $$cluster{'total'});
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    "CodingGenesIn$cluster_k",
+    $$cluster{'coding'},
+    "Number of protein coding genes in the histone cluster $cluster_k"
+  );
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    "PseudoGenesIn$cluster_k",
+    $$cluster{'pseudo'},
+    "Number of pseudogenes genes in the histone cluster $cluster_k"
+  );
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    "TotalGenesIn$cluster_k",
+    $$cluster{'total'},
+    "Total Number of genes in the histone cluster $cluster_k"
+  );
 
-  foreach my $histone (@MyVar::histones) {
+  foreach my $histone (@HistoneCatalogue::histones) {
     $$cluster{$histone}{"pseudo"} //= 0;
     $$cluster{$histone}{"coding"} //= 0;
     $$cluster{$histone}{"total"}  //= 0;
-    say {$stats} MyLib::latex_newcommand (
-      "Number of $histone coding genes in the histone cluster $cluster_k",
-      $histone."CodingIn$cluster_k", $$cluster{$histone}{'coding'});
-    say {$stats} MyLib::latex_newcommand (
-      "Number of $histone pseudogenes in the histone cluster $cluster_k",
-      $histone."PseudoIn$cluster_k", $$cluster{$histone}{'pseudo'});
-    say {$stats} MyLib::latex_newcommand (
-      "Total Number of $histone genes in the histone cluster $cluster_k",
-      $histone."TotalIn$cluster_k",  $$cluster{$histone}{'total'});
+    HistoneCatalogue::say_latex_newcommand (
+      $stats,
+      $histone."CodingIn$cluster_k",
+      $$cluster{$histone}{'coding'},
+      "Number of $histone coding genes in the histone cluster $cluster_k"
+    );
+    HistoneCatalogue::say_latex_newcommand (
+      $stats,
+      $histone."PseudoIn$cluster_k",
+      $$cluster{$histone}{'pseudo'},
+      "Number of $histone pseudogenes in the histone cluster $cluster_k"
+    );
+    HistoneCatalogue::say_latex_newcommand (
+      $stats,
+      $histone."TotalIn$cluster_k",
+      $$cluster{$histone}{'total'},
+      "Total Number of $histone genes in the histone cluster $cluster_k"
+    );
     $totals{pseudo} += $$cluster{$histone}{pseudo};
     $totals{coding} += $$cluster{$histone}{coding};
     $totals{total}  += $$cluster{$histone}{total};
   }
 }
 
-say {$stats} MyLib::latex_newcommand (
-  "Total number of canonical histone genes in the genome",
-  "TotalGenes", $totals{total});
-say {$stats} MyLib::latex_newcommand (
-  "Total number of canonical histone protein coding genes in the genome",
-  "TotalCodingGenes", $totals{coding});
-say {$stats} MyLib::latex_newcommand (
-  "Total number of canonical histone protein pseudogenes in the genome",
-  "TotalPseudoGenes", $totals{pseudo});
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "TotalGenes",
+  $totals{total},
+  "Total number of canonical histone genes in the genome"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "TotalCodingGenes",
+  $totals{coding},
+  "Total number of canonical histone protein coding genes in the genome"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "TotalPseudoGenes",
+  $totals{pseudo},
+  "Total number of canonical histone protein pseudogenes in the genome"
+);
 
-## Get the counts and stats for each of the histone types
-foreach my $histone (@MyVar::histones) {
+# Get the counts and stats for each of the histone types
+foreach my $histone (@HistoneCatalogue::histones) {
   my $coding = 0;
   my $pseudo = 0;
   foreach my $cluster(values %canon) {
     $coding += $$cluster{$histone}{"coding"};
     $pseudo += $$cluster{$histone}{"pseudo"};
   }
-  say {$stats} MyLib::latex_newcommand (
-    "Number of histone $histone coding genes",
-    $histone."CodingGenes", $coding);
-  say {$stats} MyLib::latex_newcommand (
-    "Number of histone $histone pseudogenes",
-    $histone."PseudoGenes", $pseudo);
-  say {$stats} MyLib::latex_newcommand (
-    "Total number of histone $histone genes",
-    $histone."TotalGenes", $coding + $pseudo);
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    $histone."CodingGenes",
+    $coding,
+    "Number of histone $histone coding genes"
+  );
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    $histone."PseudoGenes",
+    $pseudo,
+    "Number of histone $histone pseudogenes"
+  );
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    $histone."TotalGenes",
+    $coding + $pseudo,
+    "Total number of histone $histone genes"
+  );
 }
 
 close ($stats) or die "Couldn't close $stats_path after writing: $!";

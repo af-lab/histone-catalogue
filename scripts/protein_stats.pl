@@ -22,8 +22,8 @@ use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use HistoneCatalogue;
+use MyLib;
 
 ## This script will calculate stats for the proteins. It will
 ## create the following files:
@@ -42,12 +42,19 @@ my @core = grep {! $$_{'pseudo'}} MyLib::load_canonical ($path{sequences});
 ## Measure the arginine by lysine ratio in both the core and linker histones
 my $core_ratio   = arg_lys_ratio(@core);
 my $linker_ratio = arg_lys_ratio(MyLib::load_H1 ($path{sequences}));
-say {$stats} MyLib::latex_newcommand (
-  "Ratio of Total Number of Arginine and Lysines in all of the core histones",
-  "CoreArgLysRatio", $core_ratio);
-say {$stats} MyLib::latex_newcommand (
-  "Ratio of Total Number of Arginine and Lysines in all of the H1 histones",
-  "LinkerArgLysRatio", $linker_ratio);
+
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "CoreArgLysRatio",
+  $core_ratio,
+  "Ratio of Total Number of Arginine and Lysines in all of the core histones"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "LinkerArgLysRatio",
+  $linker_ratio,
+  "Ratio of Total Number of Arginine and Lysines in all of the H1 histones"
+);
 
 my @core_ratios;    ## to calculate range of values in the core
 my %seqs;           ## and the ratio for each histone type
@@ -56,18 +63,27 @@ foreach my $gene (@core) {
   push (@{$seqs{$$gene{'histone'}}}, $gene);
 }
 
-say {$stats} MyLib::latex_newcommand (
-  "Smallest ratio of Arginine and Lysines in a single core histones",
-  "MinCoreArgLysRatio", List::Util::min (@core_ratios));
-say {$stats} MyLib::latex_newcommand (
-  "Largest ratio of Arginine and Lysines in a single core histones",
-  "MaxCoreArgLysRatio", List::Util::max (@core_ratios));
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "MinCoreArgLysRatio",
+  List::Util::min (@core_ratios),
+  "Smallest ratio of Arginine and Lysines in a single core histones"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $stats,
+  "MaxCoreArgLysRatio",
+  List::Util::max (@core_ratios),
+  "Largest ratio of Arginine and Lysines in a single core histones"
+);
 
 foreach my $histone (keys %seqs) {
   my $hist_ratio = arg_lys_ratio (@{$seqs{$histone}});
-  say {$stats} MyLib::latex_newcommand (
+  HistoneCatalogue::say_latex_newcommand (
+    $stats,
+    "${histone}ArgLysRatio",
+    $hist_ratio,
     "Ratio of Total Number of Arginine and Lysines in all of the ${histone} histones",
-    "${histone}ArgLysRatio", $hist_ratio);
+  );
 }
 
 close($stats) or die "Couldn't close $stats_path after writing: $!";

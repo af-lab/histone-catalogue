@@ -37,8 +37,8 @@ use Storable;                   # persistence for Perl data structures
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use HistoneCatalogue;
+use MyLib;
 
 ## Make sure the email is valid. It is important that the email is correct
 ## since this script allows one to abuse (even if by accident), the NCBI
@@ -58,8 +58,8 @@ File::Path::remove_tree($seq_dir, {verbose => 0});
 ## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
 my $search = '"homo sapiens"[organism] ';
 $search   .= '(';
-$search   .= "$_*[gene name] OR " for (@MyVar::histones, "H1");               # get all variants
-$search   .= "HIST$_*[gene name] OR " for (1 .. $MyVar::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
+$search   .= "$_*[gene name] OR " for (@HistoneCatalogue::histones, "H1");               # get all variants
+$search   .= "HIST$_*[gene name] OR " for (1 .. $HistoneCatalogue::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
 $search   .= 'CENPA[gene name]';                                              # CENP-A name is special
 $search   .= ')';
 
@@ -79,7 +79,7 @@ my @args = (
   '--save-data',    'csv',
   '--email',        $opts{'email'},
 );
-my @call = ($MyVar::seq_extractor, @args, $search);
+my @call = ($HistoneCatalogue::seq_extractor, @args, $search);
 system (@call) == 0 or die "Running @call failed: $?";
 
 my %genes = MyLib::load_csv (File::Spec->catdir ($seq_dir, "data.csv"));

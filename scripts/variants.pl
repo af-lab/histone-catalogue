@@ -22,8 +22,7 @@ use List::Util;                 # Includes min and max
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use MyLib;
 
 ## This script will deal with histone variants. They are not really the subject
 ## of this paper but a table listing all of the variant histones is useful and
@@ -48,8 +47,12 @@ my $var_path = File::Spec->catdir($path{results}, "variables-variants.tex");
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-say {$var_file} MyLib::latex_newcommand ("Total number of histone variants genes",
-                                         "TotalVariantGenes", scalar @variants);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "TotalVariantGenes",
+  scalar @variants,
+  "Total number of histone variants genes"
+);
 
 close ($var_file)
   or die "Couldn't close $var_path after writing: $!";

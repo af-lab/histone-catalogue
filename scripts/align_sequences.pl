@@ -23,8 +23,8 @@ use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCo
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use HistoneCatalogue;
+use MyLib;
 
 ## This script will get the downloaded sequences from all canonical histones, align
 ## them, use the alignment to create a sequence logo and create a LaTeX table with
@@ -234,10 +234,12 @@ sub tex_compare_histone_proteins {
   my $histone   = shift;
   my $align     = shift;
 
-  say {$var_file} MyLib::latex_newcommand (
-    "Overall percentage identity between all histone $histone proteins",
+  HistoneCatalogue::say_latex_newcommand (
+    $var_file,
     $histone."PID",
-    sprintf ("%.${MyVar::size_precision}f", $align->overall_percentage_identity));
+    sprintf ("%.${HistoneCatalogue::size_precision}f", $align->overall_percentage_identity),
+    "Overall percentage identity between all histone $histone proteins"
+  );
 
   ## Why we do not get the consensus sequence from the align object, why is it wrong to use
   ## the consensus sequence, and what did Marzluff used on the paper then?
@@ -286,9 +288,12 @@ sub tex_compare_histone_proteins {
   }
   my $most_common = $common[0];
 
-  say {$var_file} MyLib::latex_newcommand (
+  HistoneCatalogue::say_latex_newcommand (
+    $var_file,
+    $histone."UniqueProteins",
+    scalar keys %seqs,
     "Number of unique proteins encoded by all histone $histone genes",
-    $histone."UniqueProteins" , scalar keys %seqs);
+  );
 
   ## Get a list of the genes whose sequence is equal to the most common,
   ## and the text describing the difference against it for the others.
@@ -325,7 +330,7 @@ sub tex_compare_histone_proteins {
     ## in a single row could be handy (easy to see the groups) but it would
     ## look horrible. Just image: the first column taking 70% of the table
     ## width because one of the different sequences has 5 gene names on it.
-    say {$table} "  $symbol & " . MyLib::latex_string ($description{$symbol}) ." \\\\";
+    say {$table} "  $symbol & " . HistoneCatalogue::mk_latex_string ($description{$symbol}) ." \\\\";
   }
 
   say {$table} "  \\bottomrule";

@@ -26,7 +26,7 @@ use Storable;                               # persistence for Perl data structur
 
 use FindBin;                                # Locate directory of original perl script
 use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
-use MyVar;                                  # Load variables
+use HistoneCatalogue;
 
 ## This function will parse the arguments used to call the script. It
 ## takes an array with the name of the required options, take them
@@ -144,13 +144,13 @@ sub select_canonical {
     my $symbol = $genes{$uid}{'symbol'};
 
     ## skip genes that don't look canonical and get cluster number
-    next unless $symbol =~ m/^HIST(\d+)($MyVar::histone_regexp)/i;
+    next unless $symbol =~ m/^HIST(\d+)($HistoneCatalogue::histone_regexp)/i;
 
     $genes{$uid}{'cluster'} = $1;
     $genes{$uid}{'histone'} = $2;
 
     ## warn if a gene is found whose nomeclature mentions an unknown cluster
-    if ($genes{$uid}{'cluster'} > $MyVar::cluster_number) {
+    if ($genes{$uid}{'cluster'} > $HistoneCatalogue::cluster_number) {
       warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
     }
     push (@canon, $genes{$uid}); # pushing references to that struct into an array
@@ -195,7 +195,7 @@ sub select_variant {
     my $symbol = $genes{$uid}{'symbol'};
 
     ## skip genes that don't look canonical and get cluster number
-    next unless $symbol =~ m/^(($MyVar::histone_regexp)F|CENPA)/i;
+    next unless $symbol =~ m/^(($HistoneCatalogue::histone_regexp)F|CENPA)/i;
 
     ## $2 will be the histone if followed by F. If it's empty, then $1 will
     ## be CENPA which is a H3 variant
@@ -252,17 +252,17 @@ sub load_seq {
 
 ## turn a distance in base pairs (a positive integer) into a string appropriate
 ## for text (in LaTeX format), e.g. 1000000 -> 1\,Mbp; 1540 -> 1.54\,kbp (the
-## precision is defined in MyVar.pm
+## precision is defined in HistoneCatalogue.pm
 sub pretty_length {
   my $length   = $_[0];
   ## (ceil() -1 ) because when /3, if it's 3, floor will give 1 when we want 0
   my $power    = ( ceil(length($length) / 3) -1) * 3;
   my $dec_case = 0;
   my $number   = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
-  if ( length($length) < $MyVar::size_precision) {
+  if ( length($length) < $HistoneCatalogue::size_precision) {
     ## nothing, no decimal cases at all in these cases
-  } elsif (length($number) < $MyVar::size_precision) {
-    my $dec_case = $MyVar::size_precision - length ($number);
+  } elsif (length($number) < $HistoneCatalogue::size_precision) {
+    my $dec_case = $HistoneCatalogue::size_precision - length ($number);
     $number      = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
   }
   my $prefix;
@@ -279,48 +279,6 @@ sub pretty_length {
     default   { $power -= 24; $prefix = "e+${power}Y" }
   }
   return "$number\\,${prefix}bp";
-}
-
-## escape necessary characters for latex (we will have really basic needs,
-## probably only the underscore)
-sub latex_string {
-  ## the list of characters to escape in a look-ahead operator so they are not
-  ## captured. This way the substution actually only adds a \ before them
-  (my $fixed = $_[0]) =~ s/(?=[_])/\\/g;
-  return $fixed;
-}
-
-## gets a string that should be printed to define a new latex command
-sub latex_newcommand {
-  my $definition = shift;
-  my $command = latex_string (num2en (shift));
-  my $value   = shift;
-  ## we need to set the height of the color box manually otherwise \colorbox
-  ## will change the height of the line
-  return "%% $definition\n\\newcommand{\\$command}{\\ScriptValue{$value}}";
-}
-
-## Replaces numbers in a string by their english word, and capitalizes the
-## first character. This is not meant to be correct, there's perl modules for
-## that (Lingua::EN::Nums2Words, Lingua::EN::Numbers or Number::Spell). We
-## really just want this to create valid LaTeX commands
-sub num2en {
-  my $string = shift;
-  my %trans = (
-               1 => "One",
-               2 => "Two",
-               3 => "Three",
-               4 => "Four",
-               5 => "Five",
-               6 => "Six",
-               7 => "Seven",
-               8 => "Eight",
-               9 => "Nine",
-               0 => "Zero",
-               );
-  my $keys = join ('', keys %trans);
-  $string =~ s/([$keys])/$trans{$1}/g;
-  return $string;
 }
 
 ## fill the catalogue. First argument is the file path for the
@@ -345,7 +303,7 @@ sub make_tex_catalogue {
       ## In the case of a gene with multiple transcripts, each will have
       ## its line on the table but the first two columns will be empty
       my @acc_cols = map {
-        MyLib::latex_string ($_ || "n/a") . " & " . MyLib::latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
+        HistoneCatalogue::mk_latex_string ($_ || "n/a") . " & " . HistoneCatalogue::mk_latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
       } (sort keys %{$$gene{'transcripts'}});
       print {$table} join ("      & & &", @acc_cols);
     }

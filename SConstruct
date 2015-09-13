@@ -221,7 +221,7 @@ analysis = [
 env.Alias ("analysis", analysis)
 env.Depends (
   analysis,
-  [data, path4script ("MyLib.pm"), path4script ("MyVar.pm")]
+  [data, path4script ("MyLib.pm"), path4script ("HistoneCatalogue.pm")]
 )
 
 

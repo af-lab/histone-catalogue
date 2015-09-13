@@ -20,8 +20,8 @@ use warnings;                   # Replacement for the -w flag, but lexically sco
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use HistoneCatalogue;
+use MyLib;
 
 ## This script performs a list of tests on the sequences, on what we expect
 ## from an histone gene, and give warnings about weird things. It will write
@@ -47,7 +47,7 @@ foreach my $gene (@data) {
   }
 
   ## check if we have possibly discovered a new cluster
-  if ($gene->{'cluster'} > $MyVar::cluster_number) {
+  if ($gene->{'cluster'} > $HistoneCatalogue::cluster_number) {
     push @weirds, "Gene $symbol belongs to unknown cluster $gene->{'cluster'}.";
   }
 
@@ -83,7 +83,7 @@ foreach my $gene (@data) {
 
       ## it's not annotated, but can we find it somewhere?
       my $str = $seq->seq;
-      if ($str =~ m/($MyVar::stlp_seq)/gi) {
+      if ($str =~ m/($HistoneCatalogue::stlp_seq)/gi) {
         my $start = pos ($str) - length ($1) +1; # start of *last* match
         push @weirds, "Gene $symbol has possible stem loop starting at position $start of $acc";
       } else {
@@ -96,12 +96,12 @@ foreach my $gene (@data) {
           next unless $feat->primary_tag eq "CDS";
           next unless scalar (grep {lc ($_) eq lc ($symbol)} $feat->get_tag_values("gene"));
           my $start = $feat->end;
-          my $end   = $start + $MyVar::stlp_dist + $MyVar::stlp_length;
+          my $end   = $start + $HistoneCatalogue::stlp_dist + $HistoneCatalogue::stlp_length;
           if ($end > $seq->length) {
             $end = $gseq->length ;
           }
           my $subseq = $gseq->subseq($start, $end);
-          if ($subseq =~ m/($MyVar::stlp_seq)/gi) {
+          if ($subseq =~ m/($HistoneCatalogue::stlp_seq)/gi) {
             my $sl = pos ($subseq) - length ($1) +1; # start of *last* match
             push @weirds, "Gene $symbol has possible stem loop in genomic starting at $sl bp from the end of its CDS";
           }
@@ -111,15 +111,15 @@ foreach my $gene (@data) {
     } else {
       ## the stem-loop is never too far away from the stop codon
       my $dist = $stem_loop->start - $cds->end;
-      if ($dist > $MyVar::stlp_dist) {
+      if ($dist > $HistoneCatalogue::stlp_dist) {
         push @weirds, "Gene $symbol has stem-loop $dist bp away from end of CDS on transcripts $acc.";
       }
       ## has a specific length
-      if ($stem_loop->length != $MyVar::stlp_length) {
+      if ($stem_loop->length != $HistoneCatalogue::stlp_length) {
         push @weirds, "Gene $symbol has stem-loop ".$stem_loop->length ." bp long on transcripts $acc.";
       }
       ## and a specific sequence
-      if ($stem_loop->seq->seq !~ m/^$MyVar::stlp_seq$/i) {
+      if ($stem_loop->seq->seq !~ m/^$HistoneCatalogue::stlp_seq$/i) {
         push @weirds, "Gene $symbol has unmatched stem-loop sequence ".$stem_loop->seq->seq." on transcript $acc.";
       }
     }
@@ -131,7 +131,7 @@ open (my $log, ">", $log_path)
   or die "Could not open $log_path for writing: $!";
 
 say {$log} "\\begin{itemize}";
-say {$log} "  \\item ". MyLib::latex_string ($_) foreach (@weirds);
+say {$log} "  \\item ". HistoneCatalogue::mk_latex_string ($_) foreach (@weirds);
 say {$log} "\\end{itemize}";
 
 close ($log) or die "Couldn't close $log_path after writing: $!";

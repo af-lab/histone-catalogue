@@ -25,8 +25,7 @@ use Bio::Seq;
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyVar;                      # Load variables
-use MyLib;                      # Load functions
+use MyLib;
 
 ## This script will look at the UTR (currently, only the stem loop)
 ##
@@ -127,15 +126,24 @@ my $var_path = File::Spec->catdir($path{results}, "variables-utr.tex");
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-say {$var_file} MyLib::latex_newcommand (
-  "Mode of distances, in bp, between the end of the CDS and the start of the stem loop.",
-  "StemLoopStart", Statistics::Basic::mode (@inits));
-say {$var_file} MyLib::latex_newcommand (
-  "Mode of distances, in bp, between the end of the CDS and the end of the stem loop.",
-  "StemLoopEnd", Statistics::Basic::mode (@ends));
-say {$var_file} MyLib::latex_newcommand (
-  "Mode of distances, in bp, between the HDE and the stem loop.",
-  "HDEsDistanceFromStemLoop", Statistics::Basic::mode (@sl2hde));
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "StemLoopStart",
+  Statistics::Basic::mode (@inits),
+  "Mode of distances, in bp, between the end of the CDS and the start of the stem loop."
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "StemLoopEnd",
+  Statistics::Basic::mode (@ends),
+  "Mode of distances, in bp, between the end of the CDS and the end of the stem loop."
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "HDEsDistanceFromStemLoop",
+  Statistics::Basic::mode (@sl2hde),
+  "Mode of distances, in bp, between the HDE and the stem loop."
+);
 
 close ($var_file)
   or die "Couldn't close $var_path after writing: $!";

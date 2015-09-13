@@ -21,7 +21,7 @@ use File::Spec;                 # Perform operation on file names
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
-use MyLib;                      # Load functions
+use MyLib;
 
 ## This script compares the new data against some reference. In our case, the reference
 ## is Marzluff, W.F., Gongidi, P., Woods, K.R., Jin, J., Maltais, l.J. (2002) The human
@@ -113,21 +113,36 @@ my $var_path = File::Spec->catdir($path{results}, "variables-reference_compariso
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-say {$var_file} MyLib::latex_newcommand(
-  "Number of removed genes since the reference",
-  "RemovedSinceReference", scalar @{$changes{removed}});
-say {$var_file} MyLib::latex_newcommand(
-  "Number of added genes since the reference",
-  "AddedSinceReference", scalar @{$changes{added}});
-say {$var_file} MyLib::latex_newcommand(
-  "Number of genes that have changed from coding to pseudo since the reference",
-  "PseudoSinceReference", scalar @{$changes{pseudo}});
-say {$var_file} MyLib::latex_newcommand(
-  "Number of genes that have changed from pseudo to coding since the reference",
-  "CodingSinceReference", scalar @{$changes{coding}});
-say {$var_file} MyLib::latex_newcommand(
-  "Number of genes whose sequence has changed since the reference",
-  "SequenceChangeSinceReference", scalar @{$changes{sequence}});
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "RemovedSinceReference",
+  scalar @{$changes{removed}},
+  "Number of removed genes since the reference"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "AddedSinceReference",
+  scalar @{$changes{added}},
+  "Number of added genes since the reference"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "PseudoSinceReference",
+  scalar @{$changes{pseudo}},
+  "Number of genes that have changed from coding to pseudo since the reference"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "CodingSinceReference",
+  scalar @{$changes{coding}},
+  "Number of genes that have changed from pseudo to coding since the reference"
+);
+HistoneCatalogue::say_latex_newcommand (
+  $var_file,
+  "SequenceChangeSinceReference",
+  scalar @{$changes{sequence}},
+  "Number of genes whose sequence has changed since the reference"
+);
 
 close ($var_file)
   or die "Couldn't close $var_path after writing: $!";
