@@ -216,6 +216,13 @@ analysis = [
     source = path4script ("variants.pl"),
     action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
   ),
+  env.Command(
+    target = path4result ("variables-configuration.tex"),
+    source = path4seq ("extractor.log"),
+    action = ("perl -Iscripts -MHistoneCatalogue -e "
+              + "\"HistoneCatalogue::write_config_variables "
+              + "(\'$TARGET\', \'$SOURCE\')\"")
+  ),
 ]
 
 env.Alias ("analysis", analysis)

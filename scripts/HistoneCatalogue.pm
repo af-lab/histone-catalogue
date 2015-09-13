@@ -21,6 +21,10 @@ use strict;
 use warnings;
 use Carp;
 
+use Bio::Root::Version;
+use Bio::Tools::EUtilities;
+use Bio::Tools::Run::Alignment::TCoffee;
+
 =var cluster_number
 An integer value with the current number of known clusters.
 =cut
@@ -54,6 +58,55 @@ generated values.  The idea is to control the appearance of these values
 automatically from the LaTeX sources.
 =cut
 our $tex_macro_name = "ScriptValue";
+
+
+=func write_config_variables
+
+Write the "configuration" variables such as BioPerl and TCoffee versions
+used, date of the sequences, etc...
+
+Params:
+  fpath - file where to write the LaTeX commands.
+  seq_log_path - path for the bp_genbank_ref_extractor log file.
+
+Exception:
+  If failure to open file for writing.
+=cut
+
+sub write_config_variables
+{
+  my $fpath = shift;
+  my $seq_log_path = shift;
+  open (my $var_tex, ">", $fpath)
+    or croak "Could not open $fpath for writing: $!";
+
+  say_latex_newcommand (
+    $var_tex,
+    "SequencesDate",
+    get_sequences_date ($seq_log_path),
+    "Date when the sequences were obtained and RefSeq was queried"
+  );
+  say_latex_newcommand (
+    $var_tex,
+    "BioPerlVersion",
+    $Bio::Root::Version::VERSION,
+    "Version of BioPerl used"
+  );
+  say_latex_newcommand (
+    $var_tex,
+    "BioEUtilitiesVersion",
+    $Bio::Tools::EUtilities::VERSION,
+    "Version of Bio-EUtilities used"
+  );
+  say_latex_newcommand (
+    $var_tex,
+    "TCoffeVersion",
+    Bio::Tools::Run::Alignment::TCoffee->new()->version(),
+    "Version of TCoffee used"
+  );
+
+  close $var_tex;
+}
 
 
 =func get_sequences_date

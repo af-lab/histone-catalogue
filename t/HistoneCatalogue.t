@@ -19,7 +19,9 @@ use utf8;
 use strict;
 use warnings;
 
-use Test::More tests => 7;
+use Test::More;
+use File::Temp;
+
 use HistoneCatalogue;
 
 ## To test functions whose first argument is an open file, and we want
@@ -34,6 +36,28 @@ sub test_with_perlio
   close $fh;
   return $file_contents;
 }
+
+## Create temporary file with the contents of a variable.  The first
+## argument to the function must be the expected file.
+sub test_with_tmp_file
+{
+  my $foo = shift;
+  my $content = shift;
+  my $tmp = File::Temp->new(UNLINK => 1);
+  open (my $fh, ">", $tmp->filename)
+    or die "Can't open variable to write: $!";
+  print {$fh} $content;
+  close $fh;
+  return &{$foo}($tmp->filename, @_);
+}
+
+
+ok (test_with_tmp_file (\&HistoneCatalogue::get_sequences_date, <<END)
+This is bp_genbank_ref_extractor on Bioperl 1.006924 on [2015-09-13 14:10:39]
+Entrez gene: searching with '"homo sapiens"[organism] (H2A*[gene name] OR H2B*[gene name])'
+Entrez gene: query "homo sapiens"[organism] (H2A*[gene name] OR H2B*[gene name])"
+END
+    eq '2015-09-13 14:10:39');
 
 
 ok (HistoneCatalogue::mk_latex_string ('foobar')
@@ -72,3 +96,4 @@ ok (test_with_perlio (\&HistoneCatalogue::say_latex_newcommand, "f0", "67%",
     eq "%% This is some serious\n%% Multiline documentation.\n"
        . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}\n");
 
+done_testing;
