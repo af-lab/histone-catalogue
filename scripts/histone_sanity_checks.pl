@@ -17,7 +17,6 @@
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use POSIX ();                   # We want to use strftime
 
 use FindBin;                    # Locate directory of original perl script
 use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
@@ -127,24 +126,12 @@ foreach my $gene (@data) {
   }
 }
 
-## Get the first line of the extractor log with the date for the sequences
-my $data_log_path = File::Spec->catdir($path{sequences}, "extractor.log");
-open (my $data_log, "<", $data_log_path)
-  or die "Could not open $data_log_path for reading: $!";
-my $data_header = <$data_log>; # read the first line only
-close $data_log;
-
-$data_header =~ m/(?<=\[)([\d\-: ]+)(?=\])/;
-my $date = $1;
-
 my $log_path = File::Spec->catdir($path{results}, "histone_insanities.tex");
 open (my $log, ">", $log_path)
   or die "Could not open $log_path for writing: $!";
 
-say {$log} "Analyzing histone sequences retrieved at ". MyLib::latex_string ($date);
 say {$log} "\\begin{itemize}";
 say {$log} "  \\item ". MyLib::latex_string ($_) foreach (@weirds);
 say {$log} "\\end{itemize}";
 
 close ($log) or die "Couldn't close $log_path after writing: $!";
-
