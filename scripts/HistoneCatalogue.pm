@@ -63,7 +63,7 @@ our $tex_macro_name = "ScriptValue";
 =func write_config_variables
 
 Write the "configuration" variables such as BioPerl and TCoffee versions
-used, date of the sequences, etc...
+used, date of the sequences, number of clusters, etc...
 
 Params:
   fpath - file where to write the LaTeX commands.
@@ -103,6 +103,12 @@ sub write_config_variables
     "TCoffeVersion",
     Bio::Tools::Run::Alignment::TCoffee->new()->version(),
     "Version of TCoffee used"
+  );
+  say_latex_newcommand (
+    $var_tex,
+    "NumberOfClusters",
+    $cluster_number,
+    "Number of histone clusters assumed"
   );
 
   close $var_tex;
