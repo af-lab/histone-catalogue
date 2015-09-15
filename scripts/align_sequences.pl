@@ -320,8 +320,8 @@ sub tex_compare_histone_proteins {
   say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
   say {$table} "  \\toprule";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
-                length ($most_common) . " amino acids" .
-                names_for_most_common ($histone, @eq2common) . ")}\\\\";
+                length ($most_common) . " amino acids; " .
+                HistoneCatalogue::mk_latex_list_name_isoforms ($histone, @eq2common) . ")}\\\\";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common}}} \\\\";
   say {$table} "  \\midrule";
 
@@ -399,28 +399,6 @@ sub seq_diff_str {
       $str .= $post;
     }
     $str .= " ";
-  }
-  return $str;
-}
-
-## From a list of histone symbols, creates a string listing them for display
-## of the type "HIST1H2A; --A, --B, --D; HIST2H2A: --B". Goes on top of the
-## table of differences between isoforms.
-##    usage: $str = most_comon_str ($histone_type, @list_of_gene_names)
-sub names_for_most_common {
-  my $histone = shift (@_);
-  my @genes   = sort (@_);
-  my ($str, $cluster) = ("", "");
-  foreach my $symbol (@genes) {
-    ## in some cases, there may be no isoform letter, for example, HIST4H4 so we
-    ## use (.*) instead of (.+) at the end
-    die "Unable to list most common sequence." unless $symbol =~ m/^(.+)$histone(.*)$/;
-    if ($cluster ne $1) {
-      $cluster = $1;
-      $str    .= "; $cluster$histone";
-      $str    .= " " if $2;
-    }
-    $str .= ", --$2" if $2;
   }
   return $str;
 }

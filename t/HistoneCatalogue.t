@@ -96,4 +96,13 @@ ok (test_with_perlio (\&HistoneCatalogue::say_latex_newcommand, "f0", "67%",
     eq "%% This is some serious\n%% Multiline documentation.\n"
        . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}\n");
 
+ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"))
+    eq "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A");
+ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4"))
+    eq "HIST4H4");
+ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AA3", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"))
+    eq "HIST1H2A --B, --C, --P; HIST2H2AA3; HIST4H2A");
+ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4"))
+    eq "HIST4H4");
+
 done_testing;

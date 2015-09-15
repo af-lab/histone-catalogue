@@ -254,4 +254,65 @@ sub say_latex_newcommand
   say {$file} mk_latex_newcommand ($name, $value);
 }
 
+
+=func mk_latex_list_name_isoforms
+
+Creates a string for use in LaTeX that describes a list of histone
+isoforms gene symbols.  This is meant for use in the table of
+isoforms to refer to all isoforms that encode the most common
+isoform.  For example, it will create a string such as:
+
+  HIST1H4 --B, --C, --E, --F, --I, --L; HIST2H4 --A, --B; HIST4H4
+
+Note how the last one is not followed by any -- isoform letter, because
+there isn't any.
+
+Params:
+  histone - string with histone name.  It is used in the regex to find
+    the cluster name and isoform letter.
+  symbols - list of gene symbols to be used.  Must all belong to the
+    same histone.
+
+Returns:
+  A string describing all the isoforms.
+
+Exception:
+  If regexp fails for some reason (probably wrong input).
+=cut
+
+sub mk_latex_list_name_isoforms {
+  my $histone = shift (@_);
+  my @symbols = @_;
+
+  my %clusters;
+  foreach my $symbol (@symbols)
+    {
+      ## Do not forget cases such as HIST4H4 where there is no isoform
+      ## letter.  But also don't skip those, we want the cluster name
+      ## anyway to generate the final string, we will filter out undefs
+      ## later.
+      if ($symbol !~ m/^((.+)$histone)(.*)$/i)
+        { die "Unable to list most common sequence."; }
+      push (@{$clusters{$1}}, $3);
+    }
+
+  my @cluster_strs;
+  foreach my $cluster (sort keys %clusters)
+    {
+      my @symbols = grep {$_} @{$clusters{$cluster}};
+      my $str;
+      if (@symbols == 0)
+        { $str = $cluster; }
+      elsif (@symbols == 1)
+        { $str = $cluster . $symbols[0]; }
+      else
+        {
+          @symbols = map {"--$_"} sort @symbols;
+          $str = $cluster . " " . join (", ", @symbols);
+        }
+      push (@cluster_strs, $str);
+    }
+  return join ("; ", @cluster_strs);
+}
+
 1;
