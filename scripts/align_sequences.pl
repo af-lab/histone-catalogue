@@ -21,8 +21,6 @@ use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
 use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCoffee
 
-use FindBin;                    # Locate directory of original perl script
-use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use HistoneCatalogue;
 use MyLib;
 

@@ -38,6 +38,9 @@
 .sconsign.dblite
 config.log
 
+## byte compiled python (because of site_scons/site_tools)
+*.pyc
+
 ## gedit latex plugin
 *.ini
 

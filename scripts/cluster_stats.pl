@@ -20,8 +20,6 @@ use warnings;                   # Replacement for the -w flag, but lexically sco
 use File::Spec;                 # Perform operation on file names
 use List::Util;                 # Includes min and max
 
-use FindBin;                    # Locate directory of original perl script
-use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use HistoneCatalogue;
 use MyLib;
 

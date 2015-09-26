@@ -2,10 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 import subprocess
 
 env = Environment()
+env.Append(PERL5LIB=['lib-perl5'])
+env.Tool('perl5')
+
+## FIXME very temporary while we move all of MyLib to our modules
+env.Append(PERL5LIB=['scripts'])
+
+## FIXME temporary while we create our perl5 builders, and clean how the
+##        scripts create output.
+perl_inc = ["-I" + inc for inc in env['PERL5LIB']]
+perl_command = "perl " + " ".join(perl_inc)
 
 env.Help("""
 By default, SCons will download new data from the Entrez Gene database,
@@ -15,7 +24,7 @@ The different target names are:
 
     data        - download new data
     analysis    - analyse data
-    publication - prepare PDF of the published paper
+    manuscript  - prepare PDF of the published paper
 
 Not specifying any target, calling `scons` on its own, is equivalent to
 selecting all of them. That means, if all dependencies are installed, the
@@ -125,7 +134,7 @@ data = env.Command (
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
-  action = "$SOURCE --email %s %s" % (env.GetOption ("email"), seq_dir)
+  action = "%s $SOURCE --email %s %s" % (perl_command, env.GetOption ("email"), seq_dir)
 )
 env.Alias("data", data)
 env.Clean(data, seq_dir)
@@ -184,42 +193,42 @@ analysis = [
   env.Command (
     target = align_targets,
     source = path4script ("align_sequences.pl"),
-    action = "$SOURCE --sequences %s --figures %s --results %s" % (seq_dir, figures_dir, results_dir)
+    action = "%s $SOURCE --sequences %s --figures %s --results %s" % (perl_command, seq_dir, figures_dir, results_dir)
   ),
   env.Command (
     target = clust_targets,
     source = path4script ("cluster_stats.pl"),
-    action = "$SOURCE --sequences %s -results %s" % (seq_dir, results_dir)
+    action = "%s $SOURCE --sequences %s -results %s" % (perl_command, seq_dir, results_dir)
   ),
   env.Command (
     target = prot_targets,
     source = path4script ("protein_stats.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
+    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
   ),
   env.Command (
     target = refer_targets,
     source = path4script ("reference_comparison.pl"),
-    action = "$SOURCE --sequences %s --results %s --reference %s" % (seq_dir, results_dir, reference_dir)
+    action = "%s $SOURCE --sequences %s --results %s --reference %s" % (perl_command, seq_dir, results_dir, reference_dir)
   ),
   env.Command (
     target = check_targets,
     source = path4script ("histone_sanity_checks.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
+    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
   ),
   env.Command (
     target = utr_targets,
     source = path4script ("utr_analysis.pl"),
-    action = "$SOURCE --sequences %s --figures %s --results %s" % (seq_dir, figures_dir, results_dir)
+    action = "%s $SOURCE --sequences %s --figures %s --results %s" % (perl_command, seq_dir, figures_dir, results_dir)
   ),
   env.Command (
     target = var_targets,
     source = path4script ("variants.pl"),
-    action = "$SOURCE --sequences %s --results %s" % (seq_dir, results_dir)
+    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
   ),
   env.Command(
     target = path4result ("variables-configuration.tex"),
     source = path4seq ("extractor.log"),
-    action = ("perl -Iscripts -MHistoneCatalogue -e "
+    action = ("%s -MHistoneCatalogue -e " % (perl_command)
               + "\"HistoneCatalogue::write_config_variables "
               + "(\'$TARGET\', \'$SOURCE\')\"")
   ),
@@ -228,7 +237,7 @@ analysis = [
 env.Alias ("analysis", analysis)
 env.Depends (
   analysis,
-  [data, path4script ("MyLib.pm"), path4script ("HistoneCatalogue.pm")]
+  [data, path4script ("MyLib.pm")]
 )
 
 
@@ -237,13 +246,14 @@ env.Depends (
 ## Dependent on the figures being converted into PDF.
 figures = env.PDF (source = Glob (os.path.join (figures_dir, "*.eps")))
 
-publication = env.PDF (
+manuscript = env.PDF (
   target = "histone_catalog.pdf",
   source = "histone_catalog.tex"
 )
-env.Alias ("publication", publication)
-Depends (publication, [figures, analysis])
+env.Alias ("manuscript", manuscript)
+Depends (manuscript, [figures, analysis])
 
+env.Default(manuscript)
 
 ## Build configuration (check if dependencies are all installed)
 ##
@@ -305,6 +315,33 @@ conf = Configure(
   }
 )
 
+perl_module_dependencies = [
+  "Email::Valid",
+  "Bio::Root::Version",
+  "Bio::Tools::EUtilities",
+  "Bio::SeqIO",
+  "Bio::Tools::Run::Alignment::TCoffee",
+  "Text::CSV",
+  "Statistics::Basic",
+]
+
+latex_package_dependencies = [
+  "fontenc",
+  "inputenc",
+  "graphicx",
+  "url",
+  "todonotes",
+  "natbib",
+  "color",
+  "kpfonts",
+  "seqsplit",
+  "eqparbox",
+  "capt-of",
+  "hyperref",
+  "fp",
+  "afterpage",
+]
+
 env.Help("""
 DEPENDENCIES
 
@@ -314,62 +351,45 @@ DEPENDENCIES
     * weblogo - Available at http://weblogo.threeplusone.com/
 
   Perl modules:
-    * Valid::Email
-    * Bio::SeqIO
-    * Bio::Tools::Run::Alignment::TCoffee
-    * Text::CSV
-    * Statistics::Basic
+""")
+for module in perl_module_dependencies:
+  env.Help("    * %s\n" % module)
 
+env.Help("""
   LaTeX document class
     * memoir
 
-  LaTeX packages:
-    * fontenc
-    * graphicx
-    * url
-    * todonotes
-    * natbib
-    * color
-    * palatino
-    * seqsplit
-    * eqparbox
-    * capt-of
-    * hyperref
-    * fp
-
-  BibTex style:
-    * nar (style for journal Nucleic Acid Research)
-
+  LaTeX packages
 """)
+for package in latex_package_dependencies:
+  env.Help("    * %s\n" % package)
 
-for prog in ["bp_genbank_ref_extractor", "weblogo"]:
-  if not conf.CheckProg(prog):
-    print ("Unable to find `%s' installed" % prog)
+
+## Seriously, this should be the default.  Otherwise, users won't even get
+## to see the help text  unless they pass the configure tests.
+if not env.GetOption('help'):
+  for prog in ["bp_genbank_ref_extractor", "weblogo"]:
+    if not conf.CheckProg(prog):
+      print ("Unable to find `%s' installed" % prog)
+      Exit(1)
+
+  for module in perl_module_dependencies:
+    if not conf.CheckPerlModule(module):
+      print "Unable to find perl module %s." % module
+      Exit(1)
+
+  for package in latex_package_dependencies:
+    if not conf.CheckLaTeXPackage(package):
+      print "Unable to find required LaTeX package %s." % package
+      Exit(1)
+
+  if not conf.CheckLaTeXClass("memoir"):
+    print "Unable to find the LaTeX document class memoir."
     Exit(1)
 
-if not conf.CheckEmail(env.GetOption("email")):
-  print ("Per NCBI policy, an email is required when using EUtilities to retrieve data\n"
-         "from the Entrez system. Run `scons -h' for details.")
-  Exit(1)
-
-for module in ["Bio::SeqIO", "Bio::Tools::Run::Alignment::TCoffee",
-               "Text::CSV", "Statistics::Basic", "Email::Valid"]:
-  if not conf.CheckPerlModule(module):
-    print "Unable to find perl module %s." % module
+  if not conf.CheckEmail(env.GetOption("email")):
+    print ("Per NCBI policy, an email is required when using EUtilities to retrieve data\n"
+           "from the Entrez system. Run `scons -h' for details.")
     Exit(1)
-
-if not conf.CheckLaTeXClass("memoir"):
-  print "Unable to find the LaTeX document class memoir."
-  Exit(1)
-
-for package in ["fontenc", "graphicx", "url", "todonotes", "natbib", "color",
-                "palatino", "seqsplit", "eqparbox", "capt-of", "hyperref"]:
-  if not conf.CheckLaTeXPackage(package):
-    print "Unable to find required LaTeX package %s." % package
-    Exit(1)
-
-if not conf.CheckBibTeXStyle("nar"):
-  print "Unable to find required BibTeX nar.bst style file."
-  Exit(1)
 
 env = conf.Finish()

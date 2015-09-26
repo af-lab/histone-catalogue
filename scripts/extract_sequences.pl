@@ -35,8 +35,6 @@ use Email::Valid;               # Check validity of Internet email addresses
 use Text::CSV 1.21;             # Comma-separated values manipulator
 use Storable;                   # persistence for Perl data structures
 
-use FindBin;                    # Locate directory of original perl script
-use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use HistoneCatalogue;
 use MyLib;
 

@@ -30,9 +30,6 @@ use Bio::DB::EUtilities;
 use Bio::Tools::Run::Alignment::Clustalw;
 use Bio::Seq;
 
-## Add script directory to @INC to find 'package'
-use FindBin;
-use lib $FindBin::Bin;
 use MyLib;
 
 my %path = MyLib::parse_argv ("sequences");

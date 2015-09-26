@@ -24,8 +24,6 @@ use Bio::SeqIO;                             # Handler for SeqIO formats
 use Getopt::Long;                           # Parse program arguments
 use Storable;                               # persistence for Perl data structures
 
-use FindBin;                                # Locate directory of original perl script
-use lib $FindBin::Bin;                      # Add script directory to @INC to find 'package'
 use HistoneCatalogue;
 
 ## This function will parse the arguments used to call the script. It

@@ -23,8 +23,6 @@ use Bio::Tools::Run::Alignment::Clustalw;
 use Statistics::Basic;          # we want to calculate mode
 use Bio::Seq;
 
-use FindBin;                    # Locate directory of original perl script
-use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyLib;
 
 ## This script will look at the UTR (currently, only the stem loop)

@@ -19,8 +19,6 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 
-use FindBin;                    # Locate directory of original perl script
-use lib $FindBin::Bin;          # Add script directory to @INC to find 'package'
 use MyLib;
 
 ## This script compares the new data against some reference. In our case, the reference
