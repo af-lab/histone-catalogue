@@ -95,9 +95,11 @@ env.Help("""
 TARGETS
 
   data
-    Connect to the Entrez system to download new sequences. This data is
-    required for the analysis. To prevent conflicts during analysis,
-    previously downloaded data will first be removed.
+    Get raw data required for the analysis from the Entrez system.  This
+    data is then used for analysis.
+
+  update
+    Remove previously downloaded raw data and download fresh one.
 
   analysis
     Run all the scripts to analyse the data such as: sequence alignments,
@@ -105,7 +107,7 @@ TARGETS
     all genes and proteins, sequence differences between isoforms. The
     analysis results are required for the publication.
 
-  publication
+  manuscript
     Build PDF for publication.
 
 """)
@@ -141,6 +143,13 @@ data = env.Command (
 env.Alias("data", data)
 env.Clean(data, seq_dir)
 
+
+## TARGET update
+##
+## Remove the previously downloaded data forcing a rebuild.
+if "update" in COMMAND_LINE_TARGETS:
+  env.AlwaysBuild(data)
+  env.Alias("update", data)
 
 ## TARGET analysis
 ##
