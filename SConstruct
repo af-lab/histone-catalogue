@@ -352,6 +352,8 @@ perl_module_dependencies = [
   "Statistics::Basic",
   "Moose",
   "Moose::Util::TypeConstraints",
+  "MooseX::StrictConstructor",
+  "namespace::autoclean",
   "Test::More",
   "Test::Exception",
 ]
