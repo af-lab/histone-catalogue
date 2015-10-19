@@ -31,54 +31,14 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Path;                 # Create or remove directory trees
 use File::Spec;                 # Perform operation on file names
-use Email::Valid;               # Check validity of Internet email addresses
 use Text::CSV 1.21;             # Comma-separated values manipulator
 use Storable;                   # persistence for Perl data structures
 
 use HistoneCatalogue;
 use MyLib;
 
-## Make sure the email is valid. It is important that the email is correct
-## since this script allows one to abuse (even if by accident), the NCBI
-## servers who may block access. With an email address they will contact
-## the user first.
-my %opts = MyLib::parse_argv ("email");
-$opts{email} = Email::Valid->address($opts{email})
-  or die "Invalid e-mail adress $opts{email}: $Email::Valid::Details";
-
 ## Path to save the donwloaded sequences
 my $seq_dir = $ARGV[0];
-
-## remove old files to avoid problems with previous results
-File::Path::remove_tree($seq_dir, {verbose => 0});
-
-## create search string
-## note that "Right side truncation with wild card does work for gene symbol" <-- from NCBI helpdesk in September 2011
-my $search = '"homo sapiens"[organism] ';
-$search   .= '(';
-$search   .= "$_*[gene name] OR " for (@HistoneCatalogue::histones, "H1");               # get all variants
-$search   .= "HIST$_*[gene name] OR " for (1 .. $HistoneCatalogue::cluster_number + 1);  # all clusters and try +1 to see if there's a new one
-$search   .= 'CENPA[gene name]';                                              # CENP-A name is special
-$search   .= ')';
-
-## run sequence extractor
-my @args = (
-  '--assembly',     'Reference GRCh',
-  '--genes',        'uid',
-  '--pseudo',
-  '--non-coding',
-  '--upstream',     '500',
-  '--downstream',   '500',
-  '--transcripts',  'accession',
-  '--proteins',     'accession',
-  '--limit',        '300',
-  '--format',       'genbank',
-  '--save',         $seq_dir,
-  '--save-data',    'csv',
-  '--email',        $opts{'email'},
-);
-my @call = ($HistoneCatalogue::seq_extractor, @args, $search);
-system (@call) == 0 or die "Running @call failed: $?";
 
 my %genes = MyLib::load_csv (File::Spec->catdir ($seq_dir, "data.csv"));
 my @canon = MyLib::select_canonical (%genes);
@@ -120,4 +80,3 @@ for ((["canonical", \@canon], ["variant", \@variants], ["h1", \@h1])) {
   gene2csv (File::Spec->catdir ($seq_dir, $_->[0] . ".csv"), @{$_->[1]});
   Storable::store ($_->[1], File::Spec->catdir ($seq_dir, $_->[0] . ".store"));
 }
-

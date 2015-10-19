@@ -9,6 +9,17 @@ env = Environment()
 env.Append(PERL5LIB=['lib-perl5'])
 env.Tool('perl5')
 
+def no_shell_command(target, source, env):
+  ## To be used as action to Command().  This has the advantage that there's
+  ## no shell involved, saving us from having to escape quotes, spaces,
+  ## wildcards, and whatsnot.  It has the disadvantage of not printing
+  ## anything useful during the build (which is why we print ourselves.
+  ## See https://pairlist4.pair.net/pipermail/scons-users/2015-October/004150.html
+  print "$" + " ".join(["'%s'" % (arg) for arg in env['action']])
+  return subprocess.call(env['action'])
+
+env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command)})
+
 ## FIXME very temporary while we move all of MyLib to our modules
 env.Append(PERL5LIB=['scripts'])
 
@@ -56,12 +67,17 @@ certain options to be specified.
 
 OPTIONS
 
-  --email=address
+  --email=ADDRESS
       Set email to be used when connecting to the NCBI servers. This can
       be anything that conforms to RCF822. The following are valid:
 
           scons --email="Your Name <your.name@domain.here>"
           scons --email="<your.name@domain.here>"
+
+  --organism=NAME
+      Organism species name to use when searching RefSeq for histone
+      sequences.  Defaults to Homo Sapiens.
+
 
   --verbose
       LaTeX and BibTeX compilers are silenced by default using the
@@ -83,6 +99,15 @@ AddOption(
   default = False,
   help    = "Print LaTeX and BibTeX output."
 )
+AddOption(
+  "--organism",
+  dest    = "organism",
+  action  = "store",
+  type    = "string",
+  default = "Homo sapiens",
+  help    = "Organism to search for histones."
+)
+
 
 if not env.GetOption("verbose"):
   env.AppendUnique(PDFLATEXFLAGS  = "-interaction=batchmode")
@@ -132,14 +157,66 @@ def path4seq (name):
 ## SCons does not like it when the target is a directory and will always
 ## consider it up to date, even if the source changes.  Because of this,
 ## we set the data.csv and data.asn1 files as target
-data = env.Command (
-  target = [path4seq ("data.csv"),
-            path4seq ("canonical.csv"), path4seq ("canonical.store"),
+
+def create_extract_sequences_args():
+  ## Gene names to use on the entrez query.  Note that:
+  ##    "Right side truncation with wild card does work for gene symbol"
+  ##                    ~ NCBI helpdesk via email (September 2011)
+  gene_names = [
+    "H1*[gene name]",
+    "H2A*[gene name]",
+    "H2B*[gene name]",
+    "H3*[gene name]",
+    "H4*[gene name]",
+    "HIST1*[gene name]",
+    "HIST2*[gene name]",
+    "HIST3*[gene name]",
+    "HIST4*[gene name]",
+    "CENPA[gene name]"
+  ]
+  entrez_query = '"%s"[organism] AND (%s)' % (env.GetOption("organism"),
+                                              " OR ".join (gene_names))
+
+  bp_genbank_ref_extractor_call = [
+    "bp_genbank_ref_extractor",
+    "--assembly",     "Reference GRCh",
+    "--genes",        "uid",
+    "--pseudo",
+    "--non-coding",
+    "--upstream",     "500",
+    "--downstream",   "500",
+    "--transcripts",  "accession",
+    "--proteins",     "accession",
+    "--limit",        "300",
+    "--format",       "genbank",
+    "--save",         seq_dir,
+    "--save-data",    "csv",
+    ## Should we check the email is valid?  It is important that the
+    ## email is correct since this script allows one to abuse the NCBI
+    ## servers who may block access. With an email address they will
+    ## contact the user first.
+    "--email",        env.GetOption("email"),
+    entrez_query
+  ]
+  return bp_genbank_ref_extractor_call
+
+## Ideally we would set target to the sequences directory and it would be
+## automatically removed when it gets rebuild.  However, a Dir as targets
+## means it's always out of date so it would force a rebuild every time.
+## That is why we set the csv and log files as targets.
+raw_data = env.NoShellCommand(
+  source = None,
+  target = [path4seq("data.csv"), path4seq("extractor.log")],
+  action = create_extract_sequences_args())
+
+data = env.Command(
+  target = [path4seq ("canonical.csv"), path4seq ("canonical.store"),
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
-  action = "%s $SOURCE --email %s %s" % (perl_command, env.GetOption ("email"), seq_dir)
+  action = "%s $SOURCE %s" % (perl_command, seq_dir)
 )
+env.Depends(data, path4seq ("data.csv"))
 env.Alias("data", data)
 env.Clean(data, seq_dir)
 

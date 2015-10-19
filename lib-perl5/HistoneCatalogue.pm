@@ -33,12 +33,13 @@ our $cluster_number = 4;
 ## histones that we care about (in case one day we start caring about H1)
 our @histones       = qw(H2A H2B H3 H4);
 our $histone_regexp = join ("|", @histones);
-## how to call bp_genbank_ref_extractor
-our $seq_extractor  = 'bp_genbank_ref_extractor';
+
 ## max number of significant figures (digits) for sizes (cluster length)
 our $size_precision = 2;
+
 ## LaTeX code to mark genes as pseudo on tables
 our $pseudo_mark    = '($\psi$)';
+
 ## max distance since end of CDS and start of stem-loop
 our $stlp_dist      = 70;
 
