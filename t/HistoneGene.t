@@ -32,11 +32,11 @@ my $ctor = sub { HistoneGene->new (@_) };
   ok ($g->histone_type eq 'H3');
 }
 
-dies_ok {my $g = &$ctor ()},
+dies_ok {my $g = &$ctor ()}
   'dies on constructor without arguments';
 
 dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                         histone_type => 'H2AX')},
+                         histone_type => 'H2AX')}
   'dies when setting inavlid histone type';
 
 {
