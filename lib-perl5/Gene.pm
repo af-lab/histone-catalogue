@@ -48,7 +48,7 @@ has ['symbol']
 has ['type']
   => (is => 'ro', isa => 'GeneType', required => 1);
 
-has ['ensembl_gene_id', 'species']
+has ['ensembl_id', 'species']
   => (is => 'ro', isa => 'NonEmptyStr', required => 0);
 
 has ['description']

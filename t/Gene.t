@@ -27,13 +27,15 @@ my $ctor = sub { Gene->new (@_) };
 
 {
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                  chr_acc => 'NC_007', chr_start => 500, chr_end => 1000);
+                  chr_acc => 'NC_007', chr_start => 500, chr_end => 1000,
+                  ensembl_id => 'foo78');
   ok ($g->uid       == 42);
   ok ($g->symbol    eq 'CENPA');
   ok ($g->type      eq 'coding');
   ok ($g->chr_acc   eq 'NC_007');
   ok ($g->chr_start == 500);
   ok ($g->chr_end   == 1000);
+  ok ($g->ensembl_id eq 'foo78');
 }
 
 dies_ok {my $g = &$ctor ()};
