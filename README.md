@@ -69,6 +69,7 @@ subset of these. Run `scons -h` for a complete list, divided by target.
   * Text::CSV
   * Statistics::Basic
 * [weblogo](weblogo.threeplusone.com) - generate the sequence logos
+* [inkscape](https://inkscape.org/) - for figure svg to pdf conversion
 
 The plan is to add a tag for the source version that got accepted for
 publication, and a branch with the data used for it. A checkout of that branch

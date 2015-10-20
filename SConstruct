@@ -20,6 +20,11 @@ def no_shell_command(target, source, env):
 
 env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command)})
 
+## Support for svg to pdf conversion via the PDF builder
+bld = env['BUILDERS']['PDF']
+bld.add_action('.svg', 'inkscape -A $TARGET $SOURCE')
+
+
 ## FIXME very temporary while we move all of MyLib to our modules
 env.Append(PERL5LIB=['scripts'])
 
@@ -337,7 +342,9 @@ env.Depends (
 ## TARGET manuscript
 ##
 ## Dependent on the figures being converted into PDF.
-figures = env.PDF (source = Glob (os.path.join (figures_dir, "*.eps")))
+static_figures = env.PDF(source=[path4figure("nomenclature-schematic.svg")])
+analysis_figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
+figures = [static_figures, analysis_figures]
 
 manuscript = env.PDF (
   target = "histone_catalog.pdf",
@@ -473,6 +480,7 @@ DEPENDENCIES
     * bp_genbank_ref_extractor - Distributed with the perl module
       Bio-EUtilities version 1.74 or later.
     * weblogo - Available at http://weblogo.threeplusone.com/
+    * inkscape - required to build PDF from the svg figures.
 
   Perl modules:
 """)
@@ -492,7 +500,7 @@ for package in latex_package_dependencies:
 ## Seriously, this should be the default.  Otherwise, users won't even get
 ## to see the help text  unless they pass the configure tests.
 if not env.GetOption('help'):
-  for prog in ["bp_genbank_ref_extractor", "weblogo"]:
+  for prog in ["bp_genbank_ref_extractor", "weblogo", "inkscape"]:
     if not conf.CheckProg(prog):
       print ("Unable to find `%s' installed" % prog)
       Exit(1)
