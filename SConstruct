@@ -209,24 +209,29 @@ raw_data = env.NoShellCommand(
   target = [path4seq("data.csv"), path4seq("extractor.log")],
   action = create_extract_sequences_args())
 
-data = env.Command(
+## AddPreAction() is required so that the directory is removed when rebuilding.
+## Clean() is required so that it's removed when calling "scons -c".
+env.AddPreAction(raw_data, 'rm -r ' + seq_dir)
+env.Clean(raw_data, seq_dir)
+env.Alias("data", raw_data)
+
+
+csv_data = env.Command(
   target = [path4seq ("canonical.csv"), path4seq ("canonical.store"),
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
   action = "%s $SOURCE %s" % (perl_command, seq_dir)
 )
-env.Depends(data, path4seq ("data.csv"))
-env.Alias("data", data)
-env.Clean(data, seq_dir)
-
+env.Depends(csv_data, raw_data)
+env.Alias("csv", csv_data)
 
 ## TARGET update
 ##
 ## Remove the previously downloaded data forcing a rebuild.
 if "update" in COMMAND_LINE_TARGETS:
-  env.AlwaysBuild(data)
-  env.Alias("update", data)
+  env.AlwaysBuild(raw_data)
+  env.Alias("update", raw_data)
 
 ## TARGET analysis
 ##
@@ -325,7 +330,7 @@ analysis = [
 env.Alias ("analysis", analysis)
 env.Depends (
   analysis,
-  [data, path4script ("MyLib.pm")]
+  [csv_data, path4script ("MyLib.pm")]
 )
 
 
