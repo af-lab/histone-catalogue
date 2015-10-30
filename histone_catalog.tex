@@ -25,13 +25,13 @@
     \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B,
     \HThreeUniqueProteins{} H3, and \HFourUniqueProteins{} H4 unique protein isoforms.
     This represents a surprising and seldom recognised variation
-    diverging to as low as
+    leading to amino acid identity as low as 
     \FPmin{result}{\HTwoAPID}{\HTwoBPID}%
     \FPmin{result}{\result}{\HThreePID}%
     \FPmin{result}{\result}{\HFourPID}%
-    \result{}\% amino acid identity.
-    \todo{this is not really right since it's the lowest overall PID between
-          histones of the same type}
+    \FPupn\result{\result{} 0 round} %
+    \result{}\% 
+    between canonical histones of the same type.
     The gene sequence and protein isoform diversity
     exceeds commonly used subtype designations such as H2A.1 and H3.1,
     and exists in parallel to the well-known specialisation of variant histones.
@@ -42,9 +42,9 @@
     reflecting the flux of the human genome as it is updated and
     enriched in reference databases.
     To avoid obsolescence and maximise accessibility of this information,
-    we have applied software build automation tools, to
+    we have applied software build automation tools to
     dynamically generate the canonical histone repertoire
-    based on current genome annotations, and to insert the information
+    based on current genome annotations and to insert the information
     into a manuscript format.
     This approach is inspired by the aims of reproducible research
     and can readily be adapted to histones of other organisms and
