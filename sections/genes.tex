@@ -3,19 +3,18 @@
   \subsection{Histone gene clustering}
     %% For simplicity, decided to list HIST4 explicitly for rather than
     %% allow it to come in by a variable
-    The human canonical histone genes are located in clusters HIST1 to HIST4,
+    The human canonical histone genes are located in clusters HIST1 to HIST\NumberOfClusters{},
     named in order of decreasing histone gene count (\tref{tab:histone-gene-count}).
     HIST1 is the major histone gene cluster at locus~\HISTOneLocus{}
     with \CodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones,
     representing
-    \FPeval{result}{round(\CodingGenesInHISTOne{}*100/\TotalCodingGenes{},1)} \result{}\%
+    \FPeval{result}{round(\CodingGenesInHISTOne{}*100/\TotalCodingGenes{},0)} \result{}\%
     of all canonical core histone genes.
     HIST2 at locus \HISTTwoLocus{} contains \CodingGenesInHISTTwo{}~coding genes,
     HIST3 at locus \HISTThreeLocus{} contains \CodingGenesInHISTThree{}~coding genes,
-    and HIST4 at locus \HISTFourLocus{} contains only \CodingGenesInHISTFour{}~coding gene.
+    and HIST4 at locus \HISTFourLocus{} contains \CodingGenesInHISTFour{}~coding gene.
 
-    Although the definition of canonical core histone genes appears to be stable,
-    progress in understanding histone gene function may lead to changes in these analyses.
+    Progress in understanding histone gene function may lead to changes in these analyses.
     For example, although \textit{HIST1H2BA} is nominally a canonical histone
     by nomenclature and cluster assignment,
     it has received significant attention as testes-specific TH2/TH2B/hTSH2B
@@ -29,24 +28,23 @@
     specifically in testes \citep{HuhChae1991}.
     It is therefore possible that \textit{HIST1H2AA} and \textit{HIST1H2BA}
     are undergoing sub-functionalisation and could be reclassified
-    as testes specific histone variants.
+    as testes specific histone variants albeit on the margins of the canonical HIST1 cluster.
 
     \label{sec:hist3h3}
-    A similar case could apply for the small HIST3 cluster 80 Mbp downstream of HIST2
-    which contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB},
-    and \textit{HIST3H3}.
+    Similarly, the small HIST3 cluster 80 Mbp downstream of HIST2
+    which contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB} and \textit{HIST3H3}.
     \textit{HIST3H3} encodes testes-specific H3T/H3.4
     that has distinctive biochemical properties \citep{WittExpCellRes1996,KurumizakaCOSB2013},
     while \textit{HIST3H2A} and \textit{HIST3H2BB} are amongst
     the most divergent canonical histones of their types.
 
     HIST1 and HIST2 are both contiguous high density arrays of histone genes.
-    HIST1 spans \HISTOneSpan{}
+    HIST1 spans \HISTOneSpan{} \todo{Remove stray escaped comma in value}
     and is the second most gene dense region in the human genome at
     megabase scale \citep{MHC-III-analysis}.
     \textit{HFE} encoding the hemochromatosis protein \citep{AlbigDoenecke1998}
     is the only non-histone protein coding gene located within the cluster
-    excluding the space between HIST1 and \textit{HIST1H2AA}-\textit{HIST1H2BA}.
+    if the space between HIST1 and \textit{HIST1H2BA} is excluded.
     The implications of tight and exclusive histone gene clustering
     is not well understood but may facilitate coordinate regulation
     \citep{Eirinlopez2009,close-regulators}.
@@ -87,8 +85,8 @@
     Despite the level of synonymous substitution,
     codon usage is strongly biased towards the most frequently used
     human codons for most amino acids (\fref{fig:histone-gene-codonusage}).
-    This suggests that histone translation continues to explore synonymous alternatives
-    despite an underlying dependence on the most abundant charged tRNAs.
+    This suggests that histone translation explores synonymous alternatives
+    with an underlying dependence on the most abundant charged tRNAs.
 
   \subsection{Canonical histone gene nomenclature}
     Canonical histone genes adhere to a Human Genome Organisation (HUGO)
@@ -103,9 +101,9 @@
     for the order relative to other histone genes of the same type in
     the cluster (\fref{fig:nomenclature}).
     For example, \textit{HIST1H2BD} is nominally the fourth H2B coding gene in the HIST1 cluster.
-    Identifiers are ordered by their genomic coordinates, i.e., starting at
-    the telomere of the short (p) arm, and ending at the telomere of the
-    long (q)~arm \citep{Marzluff02}.
+    Identifiers are ordered by their genomic coordinates starting at
+    the telomere of the short arm and ending at the telomere of the
+    long arm \citep{Marzluff02}.
 
     \begin{figure*}
       \centering
@@ -127,14 +125,14 @@
     to maintain the equivalence of gene symbols.
     Consequently there is no human \textit{HIST1H2AF} to accommodate
     \textit{Hist1h2af} in mouse while keeping both --E and --G identifiers
-    denoting the same ortholog in mouse and human.
+    consistent for mouse and human orthologs.
 
     Several new histone genes have been uncovered since the original
     naming (\tref{tab:difference-from-Marzluff02})
     and this required additional nomenclature exceptions.
     For example, new H2A encoding genes were identified in both human
-    and mouse HIST2 cluster preceding \textit{HIST2H2AA}.
-    This required renaming of \textit{HIST2H2AA} to \textit{HIST2H2AA3}
+    and mouse HIST2 cluster preceding \textit{HIST2H2AA}
+    leading to the renaming of \textit{HIST2H2AA} to \textit{HIST2H2AA3}
     and the addition of a new human gene as \textit{HIST2H2AA4}.
     There are no human orthologs of mouse \textit{Hist2h2aa1} and \textit{Hist2h2aa2}.
 
@@ -144,7 +142,7 @@
     \textit{HIST3H2BB} is the only H2B coding gene in HIST3.
     Newly uncovered pseudogenes are now suffixed with PS and a
     number in order of discovery (\fref{fig:nomenclature}),
-    such as \textit{HIST1H2APS5} --- 5\textsuperscript{th}~H2A pseudogene discovered in HIST1.
+    such as \textit{HIST1H2APS5} as the fifth H2A pseudogene discovered in HIST1.
     However, the pseudogenes named in the original classification retain their symbols without PS.
     This means that the absence of a PS suffix does not indicate a functional gene,
     and that there is no positional information in the gene symbols of most pseudogenes.
