@@ -14,17 +14,6 @@
   These changes reflect the ongoing nature and challenges of
   genome curation and annotation \citep{BorkKoonin1998}.
 
-  It is important for communities of researchers to contribute
-  to contribute to this curation and feed back information.
-  Indeed, it is possible for researchers to do so but we
-  feel that such opportunity is unknown to our colleagues.
-  Since the beginning of this work, we have submitted a number
-  of proposals for incorrect, inconsistent, or missing annotations
-  to RefSeq maintainers.  All of them were identified automatically
-  by our manuscript, which runs a series of tests to match existing
-  annotations to current knowledge of histones.  Identified
-  anomalies are listed on \tref{tab:curation-anomalies}.
-
   The human canonical histone gene complement is relatively mature
   and is unlikely to undergo major change.
   Nevertheless, it is inevitable that sequences and annotations will be revised over time.
@@ -32,54 +21,54 @@
   some genes annotated as canonical isoforms are testes-specific variants \citep{Talbert2012},
   and by new observations of cell type-specific expression \citep{Molden2015}.
 
-  We have attempted to address the challenges of the dynamic nature of curating
-  even relatively stable families using a novel dynamic manuscript format.
-  Dynamic data is frequently made available as online databases
-  but these can have limiting interfaces and presentation styles, and are difficult to cite.
-  In contrast, manuscripts are the established and dominant method of scientific communication
+  It is important for communities of researchers to contribute
+  to this curation and feed back information \citep{SteinNRG2001}, 
+  although many are unaware of this opportunity \citep{HollidaySPR2015}.
+  During this work we have submitted a number
+  of proposals for incorrect, inconsistent, or missing annotations
+  to RefSeq curators.  All of them were identified automatically
+  by our scripted tests to match existing
+  annotations to expected properties of histones. Outstanding
+  anomalies are listed in \tref{tab:curation-anomalies}.
+
+  Dynamic data is frequently presented in specialist online database resources
+  but these can have restrictive interfaces and presentation styles, and are difficult to cite.
+  In contrast, manuscripts are the established method of scientific communication
   because they provide comprehensibility, peer review, and established methods for citation.
 
-  A self-updating manuscript format can therefore provide
-  convenient access to the most current information.
-  The challenge of variation of data in the dynamic manuscript can be addressed
-  by citing the publication as a traditional static manuscript
-  and stating access date in Materials and Methods in the same way as a database.
+  A self-updating manuscript bridges the dynamic database and static manuscript 
+  presentation styles to provide convenient access to the most current information.
+  It encourages communities of researchers to directly feed into the annotations
+  and enables them to rapidly make use of data for any relatively stable gene family.
 
-  This implementation of a dynamic manuscript
-  is also an example of ``reproducible research''
+  One challenge for readers is to reference dynamic data within the manuscript. 
+  This is simply addressed by citing the publication as a traditional static manuscript
+  and stating the access date in Materials and Methods, as they would for a database.
+
+  Implementating a dynamic manuscript is also an example of ``reproducible research'' 
   \citep{reproducible-research-bioinformatics,reproducible-research-law}
-  that offers a novel perspective on
-  current challenges of irreproducibility in biological data
+  that addresses the topical challenges of irreproducibility in biological data
   and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
   The manuscript is generated directly from sequences and annotations
   in the core NCBI RefSeq resource \citep{PruittRefseq2014}.
-  The processing system does not cache intermediate information so all changes contributed by
-  the community of histone researchers will be incorporated by professional database maintainers
-  and then be directly and automatically reflected in the next manuscript refresh.
+  The processing system does not cache intermediate information, 
+  so all changes contributed by the community of histone researchers 
+  and curated by professional database maintainers
+  is directly and automatically reflected in the next manuscript refresh.
   All scripts including instructions for automatic builds
   are transparently available in a public github repository.
   Core processing is based on a BioPerl script contributed to the Bio-EUtilities distribution
   and publicly available since 2013.
-  Dependencies on raw data, alignment algorithms or display output libraries
-  can also be upgraded by alternatives since the processing is automatic and script-based.
+  Dependencies on raw data sources, alignment algorithms or display output libraries
+  can also be upgraded since the processing is automatic and script-based.
 
   In the event of a major revision in the histone gene set such as removal of a cluster
   or eventual accumulation of insights rendering the explanatory text obsolete,
-  the manuscript can be redrafted as an updated publication
+  the manuscript can be redrafted as a fresh publication
   without the requirement to repeat the underlying data generation scripts.
-  New functions can also be added to scripts to reflect new types of information
-  such as measures of variation from genome sequencing multiple individuals
+  New functions can also be added to scripts to reflect enhanced information
+  such as variation from genome sequencing of multiple individuals
   while still retaining backwards compatibility.
-
-  Just as we apply the concept of a software build system to the
-  manuscript, so do we apply the concept of continuous delivery.
-  Every change made to the manuscript or any of its scripts,
-  triggers a rebuild of the whole manuscript.  In addition, even
-  in the absence of code changes, we update the manuscript daily,
-  seeking new histones and changes to the histones annotations.
-  We pledge to keep this manuscript live and public, and encourage
-  all users to improve it such as any other free software project.
-  \todo{now we really need to make this public :)}
 
   Furthermore, the core scripts are written to enable them to generate
   equivalent information for other organisms with a one line change.
