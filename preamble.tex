@@ -38,6 +38,8 @@
 \usepackage{fp}
 \usepackage{capt-of}
 
+\usepackage[english]{isodate}
+
 \newfloat{supplement}{sup}{Supplementary}
 \setfloatlocations{supplement}{h}
 \renewcommand{\thesupplement}{S\arabic{supplement}}
@@ -64,8 +66,9 @@
 %% original ScriptValue and FPeval macros, and then replace FPeval with
 %% something that temporarily disables ScriptValue while we call the
 %% original FPeval.  See http://tex.stackexchange.com/questions/159155
-\let\RealFPeval\FPeval
 \let\RealScriptValue\ScriptValue
+
+\let\RealFPeval\FPeval
 \renewcommand{\FPeval}[2]{%
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealFPeval{UnmarkedResult}{#2}%
@@ -79,4 +82,11 @@
   \RealFPmin{\UnmarkedResult}{#2}{#3}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
   \expandafter\def\csname #1\endcsname{\UnmarkedResult}%
+}
+
+\let\Realprintdate\printdate
+\renewcommand{\printdate}[1]{%
+  \renewcommand{\ScriptValue}[1]{##1}%
+  \RealScriptValue{\Realprintdate{#1}}%
+  \renewcommand{\ScriptValue}{\RealScriptValue}%
 }

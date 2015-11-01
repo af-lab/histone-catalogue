@@ -57,7 +57,7 @@ This is bp_genbank_ref_extractor on Bioperl 1.006924 on [2015-09-13 14:10:39]
 Entrez gene: searching with '"homo sapiens"[organism] (H2A*[gene name] OR H2B*[gene name])'
 Entrez gene: query "homo sapiens"[organism] (H2A*[gene name] OR H2B*[gene name])"
 END
-    eq '2015-09-13 14:10:39');
+    eq '2015-09-13');
 
 
 ok (HistoneCatalogue::mk_latex_string ('foobar')

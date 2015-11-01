@@ -471,6 +471,7 @@ latex_package_dependencies = [
   "hyperref",
   "fp",
   "afterpage",
+  "isodate",
 ]
 
 env.Help("""

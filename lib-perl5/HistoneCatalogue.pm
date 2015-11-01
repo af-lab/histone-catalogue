@@ -137,7 +137,7 @@ sub get_sequences_date
   my $data_header = <$data_log>; # read the first line only
   close $data_log;
 
-  $data_header =~ m/(?<=\[)([\d\-: ]+)(?=\])/;
+  $data_header =~ m/(?<=\[)(\d\d\d\d\-\d\d\-\d\d)[\d: ]+(?=\])/;
   return $1;
 }
 
