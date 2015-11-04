@@ -45,8 +45,7 @@ my $var_path = File::Spec->catdir($path{results}, "variables-variants.tex");
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "TotalVariantGenes",
   scalar @variants,
   "Total number of histone variants genes"

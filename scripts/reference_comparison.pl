@@ -111,32 +111,27 @@ my $var_path = File::Spec->catdir($path{results}, "variables-reference_compariso
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "RemovedSinceReference",
   scalar @{$changes{removed}},
   "Number of removed genes since the reference"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "AddedSinceReference",
   scalar @{$changes{added}},
   "Number of added genes since the reference"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "PseudoSinceReference",
   scalar @{$changes{pseudo}},
   "Number of genes that have changed from coding to pseudo since the reference"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "CodingSinceReference",
   scalar @{$changes{coding}},
   "Number of genes that have changed from pseudo to coding since the reference"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "SequenceChangeSinceReference",
   scalar @{$changes{sequence}},
   "Number of genes whose sequence has changed since the reference"

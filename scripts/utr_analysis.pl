@@ -124,20 +124,17 @@ my $var_path = File::Spec->catdir($path{results}, "variables-utr.tex");
 open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "StemLoopStart",
   Statistics::Basic::mode (@inits),
   "Mode of distances, in bp, between the end of the CDS and the start of the stem loop."
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "StemLoopEnd",
   Statistics::Basic::mode (@ends),
   "Mode of distances, in bp, between the end of the CDS and the end of the stem loop."
 );
-HistoneCatalogue::say_latex_newcommand (
-  $var_file,
+say {$var_file} HistoneCatalogue::latex_newcommand (
   "HDEsDistanceFromStemLoop",
   Statistics::Basic::mode (@sl2hde),
   "Mode of distances, in bp, between the HDE and the stem loop."

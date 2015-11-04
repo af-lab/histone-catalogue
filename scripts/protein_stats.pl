@@ -41,14 +41,12 @@ my @core = grep {! $$_{'pseudo'}} MyLib::load_canonical ($path{sequences});
 my $core_ratio   = arg_lys_ratio(@core);
 my $linker_ratio = arg_lys_ratio(MyLib::load_H1 ($path{sequences}));
 
-HistoneCatalogue::say_latex_newcommand (
-  $stats,
+say {$stats} HistoneCatalogue::latex_newcommand (
   "CoreArgLysRatio",
   $core_ratio,
   "Ratio of Total Number of Arginine and Lysines in all of the core histones"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $stats,
+say {$stats} HistoneCatalogue::latex_newcommand (
   "LinkerArgLysRatio",
   $linker_ratio,
   "Ratio of Total Number of Arginine and Lysines in all of the H1 histones"
@@ -61,14 +59,12 @@ foreach my $gene (@core) {
   push (@{$seqs{$$gene{'histone'}}}, $gene);
 }
 
-HistoneCatalogue::say_latex_newcommand (
-  $stats,
+say {$stats} HistoneCatalogue::latex_newcommand (
   "MinCoreArgLysRatio",
   List::Util::min (@core_ratios),
   "Smallest ratio of Arginine and Lysines in a single core histones"
 );
-HistoneCatalogue::say_latex_newcommand (
-  $stats,
+say {$stats} HistoneCatalogue::latex_newcommand (
   "MaxCoreArgLysRatio",
   List::Util::max (@core_ratios),
   "Largest ratio of Arginine and Lysines in a single core histones"
@@ -76,8 +72,7 @@ HistoneCatalogue::say_latex_newcommand (
 
 foreach my $histone (keys %seqs) {
   my $hist_ratio = arg_lys_ratio (@{$seqs{$histone}});
-  HistoneCatalogue::say_latex_newcommand (
-    $stats,
+  say {$stats} HistoneCatalogue::latex_newcommand (
     "${histone}ArgLysRatio",
     $hist_ratio,
     "Ratio of Total Number of Arginine and Lysines in all of the ${histone} histones",

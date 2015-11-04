@@ -78,23 +78,17 @@ ok (HistoneCatalogue::mk_latex_string ("\nfoo^\nbar\n")
 
 ok ($HistoneCatalogue::tex_macro_name eq 'ScriptValue');
 
+ok (HistoneCatalogue::latex_newcommand ("foo", "bar")
+    eq "%% Not documented\n\\newcommand{\\foo}{\\ScriptValue{bar}}");
+ok (HistoneCatalogue::latex_newcommand ('HIST1H2A', '67%_p')
+    eq "%% Not documented\n\\newcommand{\\HISTOneHTwoA}{\\ScriptValue{67\\%\\_p}}");
 
-ok (HistoneCatalogue::mk_latex_newcommand ('foo', 'bar')
-    eq '\\newcommand{\\foo}{\\ScriptValue{bar}}');
-ok (HistoneCatalogue::mk_latex_newcommand ('HIST1H2A', '67%_p')
-    eq '\\newcommand{\\HISTOneHTwoA}{\\ScriptValue{67\%\_p}}');
-
-
-ok (test_with_perlio (\&HistoneCatalogue::say_latex_newcommand, "foo", "bar")
-    eq "%% Not documented\n\\newcommand{\\foo}{\\ScriptValue{bar}}\n");
-ok (test_with_perlio (\&HistoneCatalogue::say_latex_newcommand, "foo", "bar",
-                      "This is some serious documentation.")
+ok (HistoneCatalogue::latex_newcommand ("foo", "bar", "This is some serious documentation.")
     eq "%% This is some serious documentation.\n"
-       . "\\newcommand{\\foo}{\\ScriptValue{bar}}\n");
-ok (test_with_perlio (\&HistoneCatalogue::say_latex_newcommand, "f0", "67%",
-                      "This is some serious\nMultiline documentation.")
+       . "\\newcommand{\\foo}{\\ScriptValue{bar}}");
+ok (HistoneCatalogue::latex_newcommand ("f0", "67%", "This is some serious\nMultiline documentation.")
     eq "%% This is some serious\n%% Multiline documentation.\n"
-       . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}\n");
+       . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}");
 
 ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"))
     eq "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A");

@@ -232,8 +232,7 @@ sub tex_compare_histone_proteins {
   my $histone   = shift;
   my $align     = shift;
 
-  HistoneCatalogue::say_latex_newcommand (
-    $var_file,
+  say {$var_file} HistoneCatalogue::latex_newcommand (
     $histone."PID",
     sprintf ("%.${HistoneCatalogue::size_precision}f", $align->overall_percentage_identity),
     "Overall percentage identity between all histone $histone proteins"
@@ -286,8 +285,7 @@ sub tex_compare_histone_proteins {
   }
   my $most_common = $common[0];
 
-  HistoneCatalogue::say_latex_newcommand (
-    $var_file,
+  say {$var_file} HistoneCatalogue::latex_newcommand (
     $histone."UniqueProteins",
     scalar keys %seqs,
     "Number of unique proteins encoded by all histone $histone genes",

@@ -81,37 +81,31 @@ sub write_config_variables
   open (my $var_tex, ">", $fpath)
     or croak "Could not open $fpath for writing: $!";
 
-  say_latex_newcommand (
-    $var_tex,
+  say {$var_tex} latex_newcommand (
     "SequencesDate",
     get_sequences_date ($seq_log_path),
     "Date when the sequences were obtained and RefSeq was queried"
   );
-  say_latex_newcommand (
-    $var_tex,
+  say {$var_tex} latex_newcommand (
     "BioPerlVersion",
     $Bio::Root::Version::VERSION,
     "Version of BioPerl used"
   );
-  say_latex_newcommand (
-    $var_tex,
+  say {$var_tex} latex_newcommand (
     "BioEUtilitiesVersion",
     $Bio::Tools::EUtilities::VERSION,
     "Version of Bio-EUtilities used"
   );
-  say_latex_newcommand (
-    $var_tex,
+  say {$var_tex} latex_newcommand (
     "TCoffeVersion",
     Bio::Tools::Run::Alignment::TCoffee->new()->version(),
     "Version of TCoffee used"
   );
-  say_latex_newcommand (
-    $var_tex,
+  say {$var_tex} latex_newcommand (
     "NumberOfClusters",
     $cluster_number,
     "Number of histone clusters assumed"
   );
-
   close $var_tex;
 }
 
@@ -175,7 +169,10 @@ sub mk_latex_string
 }
 
 
-=func mk_latex_newcommand
+=func latex_newcommand
+
+Return LaTeX code for new LaTeX command with documentation as a LaTeX
+comment.
 
 Creates the LaTeX code that generates a new LaTeX command with that
 value as argument to $HistoneCatalogue::tex_macro_name. Because of
@@ -187,21 +184,26 @@ Params:
   name - name of the command.  Numbers get replaced, e.g., the
     name "HIST1" will be converted to "HISTOne"
   value - value corresponding to the new command.
+  docs - description of the command.  It will be added as a comment
+    on the previous line for documentation of the generated sources.
+    Defaults to "Not documented"
 
 Returns:
-  string - with \newcommand macro
+  string - with documentation as comments and \newcommand macro
 
 Exception:
   dies if name has any non-alphanumeric character.
 =cut
 
-sub mk_latex_newcommand
+sub latex_newcommand
 {
   my $name  = shift;
-  my $value = mk_latex_string (shift);
+  my $value = shift;
+  my $docs  = shift || "Not documented";
 
   if ($name =~ m/[^a-z0-9]/i)
     { croak "Unable to form LaTeX command '$name': must be alphanumeric"; }
+  $value = mk_latex_string ($value);
 
   ## Replace numeric characters with words.  This is not meant complete,
   ## there is Lingua::EN::Nums2Words, Lingua::EN::Numbers or Number::Spell
@@ -222,37 +224,12 @@ sub mk_latex_newcommand
 
   ## we need to set the height of the color box manually otherwise \colorbox
   ## will change the height of the line
-  return "\\newcommand{\\$name}{\\${tex_macro_name}{$value}}";
-}
+  my $command = "\\newcommand{\\$name}{\\${tex_macro_name}{$value}}";
 
+  ## Append a comment character for each line of the docs
+  $docs = join ("\n", map { "%% $_" } split ("\n", $docs));
 
-=func say_latex_newcommand
-
-Writes to a file a new LaTeX command with documentation as a LaTeX
-comment.  Command names must be alphanumeric (see mk_latex_newcommand
-for details).
-
-Params:
-  file - file open to write.
-  name - a string.  See mk_latex_newcommand
-  value -  a string.  See mk_latex_newcommand
-  docs - description of the command.  It will be added as a comment
-    on the previous line for documentation of the generated sources.
-    Defaults to "Not documented"
-
-Returns:
-  void
-=cut
-
-sub say_latex_newcommand
-{
-  my $file  = shift;
-  my $name  = shift;
-  my $value = shift;
-  my $docs  = shift || "Not documented";
-
-  say {$file} "%% $_" for split ("\n", $docs);
-  say {$file} mk_latex_newcommand ($name, $value);
+  return $docs . "\n" . $command;
 }
 
 
