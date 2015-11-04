@@ -328,7 +328,7 @@ analysis = [
     source = path4seq ("extractor.log"),
     action = ("%s -MHistoneCatalogue -e " % (perl_command)
               + "\"HistoneCatalogue::write_config_variables "
-              + "(\'$TARGET\', \'$SOURCE\')\"")
+              + "(\'$SOURCE\')\" > $TARGET")
   ),
 ]
 

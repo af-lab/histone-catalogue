@@ -61,52 +61,45 @@ automatically from the LaTeX sources.
 our $tex_macro_name = "ScriptValue";
 
 
-=func write_config_variables
+=func print_config_variables
 
-Write the "configuration" variables such as BioPerl and TCoffee versions
+Print the "configuration" variables such as BioPerl and TCoffee versions
 used, date of the sequences, number of clusters, etc...
 
 Params:
-  fpath - file where to write the LaTeX commands.
   seq_log_path - path for the bp_genbank_ref_extractor log file.
 
-Exception:
-  If failure to open file for writing.
 =cut
 
 sub write_config_variables
 {
-  my $fpath = shift;
   my $seq_log_path = shift;
-  open (my $var_tex, ">", $fpath)
-    or croak "Could not open $fpath for writing: $!";
 
-  say {$var_tex} latex_newcommand (
+  say latex_newcommand(
     "SequencesDate",
     get_sequences_date ($seq_log_path),
     "Date when the sequences were obtained and RefSeq was queried"
   );
-  say {$var_tex} latex_newcommand (
+  say latex_newcommand(
     "BioPerlVersion",
     $Bio::Root::Version::VERSION,
     "Version of BioPerl used"
   );
-  say {$var_tex} latex_newcommand (
+  say latex_newcommand(
     "BioEUtilitiesVersion",
     $Bio::Tools::EUtilities::VERSION,
     "Version of Bio-EUtilities used"
   );
-  say {$var_tex} latex_newcommand (
+  say latex_newcommand(
     "TCoffeVersion",
     Bio::Tools::Run::Alignment::TCoffee->new()->version(),
     "Version of TCoffee used"
   );
-  say {$var_tex} latex_newcommand (
+  say latex_newcommand(
     "NumberOfClusters",
     $cluster_number,
     "Number of histone clusters assumed"
   );
-  close $var_tex;
 }
 
 
