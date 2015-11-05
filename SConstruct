@@ -9,16 +9,24 @@ env = Environment()
 env.Append(PERL5LIB=['lib-perl5'])
 env.Tool('perl5')
 
-def no_shell_command(target, source, env):
-  ## To be used as action to Command().  This has the advantage that there's
-  ## no shell involved, saving us from having to escape quotes, spaces,
-  ## wildcards, and whatsnot.  It has the disadvantage of not printing
-  ## anything useful during the build (which is why we print ourselves.
-  ## See https://pairlist4.pair.net/pipermail/scons-users/2015-October/004150.html
-  print "$" + " ".join(["'%s'" % (arg) for arg in env['action']])
-  return subprocess.call(env['action'])
+## Add a NoShellCommand builder to be used like Command()
+##
+## This has the advantage that there's no shell involved, saving us
+## from having to escape quotes, spaces, wildcards, and whatsnot.
+##
+## See the whole mailing list thread at
+##  https://pairlist4.pair.net/pipermail/scons-users/2015-October/004150.html
+## with the solution found much later with
+##  https://pairlist4.pair.net/pipermail/scons-users/2015-November/004193.html
 
-env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command)})
+def no_shell_command(target, source, env):
+  return subprocess.call(env['action'])
+def no_shell_command_strfunc(target, source, env):
+  args = env['action']
+  return "$ %s " % (args[0]) + " ".join(["'%s'" % (arg) for arg in args[1:]])
+no_shell_command_action = Action(no_shell_command, strfunction=no_shell_command_strfunc)
+env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command_action)})
+
 
 ## Support for svg to pdf conversion via the PDF builder
 bld = env['BUILDERS']['PDF']
