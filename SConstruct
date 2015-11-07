@@ -36,11 +36,6 @@ bld.add_action('.svg', 'inkscape -A $TARGET $SOURCE')
 ## FIXME very temporary while we move all of MyLib to our modules
 env.Append(PERL5LIB=['scripts'])
 
-## FIXME temporary while we create our perl5 builders, and clean how the
-##        scripts create output.
-perl_inc = ["-I" + inc for inc in env['PERL5LIB']]
-perl_args = ["perl"] + perl_inc
-perl_command = " ".join(perl_args)
 
 env.Help("""
 By default, SCons will download new data from the Entrez Gene database,
@@ -231,13 +226,14 @@ env.Clean(raw_data, seq_dir)
 env.Alias("data", raw_data)
 
 
-csv_data = env.Command(
+csv_data = env.PerlCommand(
   target = [path4seq ("canonical.csv"), path4seq ("canonical.store"),
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
-  action = "%s $SOURCE %s" % (perl_command, seq_dir)
+  action = ["seq_dir"]
 )
+
 env.Depends(csv_data, raw_data)
 env.Alias("csv", csv_data)
 
@@ -298,40 +294,43 @@ var_targets += [path4result ("table-variant_catalogue.tex")]
 check_targets += [path4result ("histone_insanities.tex")]
 
 analysis = [
-  env.Command (
+  env.PerlCommand(
     target = align_targets,
     source = path4script ("align_sequences.pl"),
-    action = "%s $SOURCE --sequences %s --figures %s --results %s" % (perl_command, seq_dir, figures_dir, results_dir)
+    action = ["--sequences", seq_dir, "--figures", figures_dir,
+              "--results", results_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = clust_targets,
     source = path4script ("cluster_stats.pl"),
-    action = "%s $SOURCE --sequences %s -results %s" % (perl_command, seq_dir, results_dir)
+    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = prot_targets,
     source = path4script ("protein_stats.pl"),
-    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
+    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = refer_targets,
     source = path4script ("reference_comparison.pl"),
-    action = "%s $SOURCE --sequences %s --results %s --reference %s" % (perl_command, seq_dir, results_dir, reference_dir)
+    action = ["--sequences", seq_dir, "--results", results_dir,
+              "--reference", reference_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = check_targets,
     source = path4script ("histone_sanity_checks.pl"),
-    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
+    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = utr_targets,
     source = path4script ("utr_analysis.pl"),
-    action = "%s $SOURCE --sequences %s --figures %s --results %s" % (perl_command, seq_dir, figures_dir, results_dir)
+    action = ["--sequences", seq_dir, "--figures", figures_dir,
+              "--results", results_dir],
   ),
-  env.Command (
+  env.PerlCommand(
     target = var_targets,
     source = path4script ("variants.pl"),
-    action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
+    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
   env.PerlOutput(
     target = path4result("variables-configuration.tex"),
@@ -370,22 +369,10 @@ env.Default(manuscript)
 ## Only runs if specified from command line.
 
 if "check" in COMMAND_LINE_TARGETS:
-  def build_test_unit (test_file):
-    test_args = perl_args + [str(test_file)]
-    ## target must be "None" so it always builds (an empty string is always
-    ## up to date so that's no good).  And we need source, otherwise it
-    ## would also be always up to date.
-    test_unit = env.Command (
-      source = test_file,
-      target = None,
-      action = (lambda target="fff", source="fff", env="fff"
-        : subprocess.call (test_args, env = env['ENV']))
-    )
-    return test_unit
-
   test_suite = []
-  for tf in env.Glob("t/*.t"):
-    test_suite.append(build_test_unit(tf))
+  for test_file in env.Glob("t/*.t"):
+    unit = env.PerlCommand(source=test_file, target=None, action=[])
+    test_suite.append(unit)
   check = Alias ("check", [test_suite])
 
 
