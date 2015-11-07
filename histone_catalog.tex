@@ -2,6 +2,7 @@
 \counterwithout{section}{chapter}
 
 \input{preamble}
+\input{computations}
 
 \author{David Miguel Susano Pinto and Andrew Flaus}
 \title{The Human Canonical Core Histone Catalogue}
@@ -26,12 +27,8 @@
     \HTwoAUniqueProteins{} H2A, \HTwoBUniqueProteins{} H2B,
     \HThreeUniqueProteins{} H3, and \HFourUniqueProteins{} H4 unique protein isoforms.
     This represents a surprising and seldom recognised variation
-    leading to amino acid identity as low as 
-    \FPmin{result}{\HTwoAPID}{\HTwoBPID}%
-    \FPmin{result}{\result}{\HThreePID}%
-    \FPmin{result}{\result}{\HFourPID}%
-    \FPupn\result{\result{} 0 round} %
-    \result{}\% 
+    leading to amino acid identity as low as
+    \FPround{result}{\HallMinPID}{0} \result{}\%
     between canonical histones of the same type.
     The gene sequence and protein isoform diversity
     exceeds commonly used subtype designations such as H2A.1 and H3.1,

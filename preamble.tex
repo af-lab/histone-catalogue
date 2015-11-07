@@ -84,6 +84,14 @@
   \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
+\let\RealFPround\FPround
+\renewcommand{\FPround}[3]{%
+  \renewcommand{\ScriptValue}[1]{##1}%
+  \RealFPround{\UnmarkedResult}{#2}{#3}%
+  \renewcommand{\ScriptValue}{\RealScriptValue}%
+  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
+}
+
 \let\Realprintdate\printdate
 \renewcommand{\printdate}[1]{%
   \renewcommand{\ScriptValue}[1]{##1}%
