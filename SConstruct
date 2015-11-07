@@ -156,6 +156,8 @@ figures_dir   = "figs"
 seq_dir       = os.path.join (results_dir, "sequences")
 reference_dir = os.path.join ("data", "reference-Marzluff_2002")
 
+def path4lib(name):
+  return os.path.join("lib-perl5", name)
 def path4script (name):
   return os.path.join (scripts_dir, name)
 def path4result (name):
@@ -331,13 +333,12 @@ analysis = [
     source = path4script ("variants.pl"),
     action = "%s $SOURCE --sequences %s --results %s" % (perl_command, seq_dir, results_dir)
   ),
-  env.Command(
-    target = path4result ("variables-configuration.tex"),
-    source = path4seq ("extractor.log"),
-    action = ("%s -MHistoneCatalogue -e " % (perl_command)
-              + "\"HistoneCatalogue::write_config_variables "
-              + "(\'$SOURCE\')\" > $TARGET")
-  ),
+  env.PerlOutput(
+    target = path4result("variables-configuration.tex"),
+    source = path4lib("HistoneCatalogue.pm"),
+    M      = ["HistoneCatalogue"],
+    eval   = "HistoneCatalogue::write_config_variables('%s')" % path4seq("extractor.log")
+  )
 ]
 
 env.Alias ("analysis", analysis)
