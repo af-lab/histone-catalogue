@@ -81,7 +81,7 @@
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealFPmin{\UnmarkedResult}{#2}{#3}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
-  \expandafter\def\csname #1\endcsname{\UnmarkedResult}%
+  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
 \let\Realprintdate\printdate
