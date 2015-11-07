@@ -231,7 +231,7 @@ csv_data = env.PerlCommand(
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
   source = path4script ("extract_sequences.pl"),
-  action = ["seq_dir"]
+  action = [seq_dir]
 )
 
 env.Depends(csv_data, raw_data)
