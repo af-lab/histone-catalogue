@@ -493,6 +493,10 @@ env.Help("""
 for package in latex_package_dependencies:
   env.Help("    * %s\n" % package)
 
+env.Help("""
+  BibTeX style
+    * vancouver
+""")
 
 ## Seriously, this should be the default.  Otherwise, users won't even get
 ## to see the help text  unless they pass the configure tests.
@@ -514,6 +518,10 @@ if not env.GetOption('help'):
 
   if not conf.CheckLaTeXClass("memoir"):
     print "Unable to find the LaTeX document class memoir."
+    Exit(1)
+
+  if not conf.CheckBibTeXStyle("vancouver"):
+    print "Unable to find the BibTeX style vancouver."
     Exit(1)
 
   if not conf.CheckEmail(env.GetOption("email")):
