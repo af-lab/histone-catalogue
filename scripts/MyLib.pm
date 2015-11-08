@@ -263,19 +263,19 @@ sub pretty_length {
     my $dec_case = $HistoneCatalogue::size_precision - length ($number);
     $number      = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
   }
-  my $prefix;
-  given ($power) {
-    when  (0) { $prefix = ''  }
-    when  (3) { $prefix = 'k' }
-    when  (6) { $prefix = 'M' }
-    when  (9) { $prefix = 'G' }
-    when (12) { $prefix = 'T' }
-    when (15) { $prefix = 'P' }
-    when (18) { $prefix = 'E' }
-    when (21) { $prefix = 'Z' }
-    when (24) { $prefix = 'Y' }
-    default   { $power -= 24; $prefix = "e+${power}Y" }
-  }
+  my %prefixes = (
+    0  => '',
+    3  => 'k',
+    6  => 'M',
+    9  => 'G',
+    12 => 'T',
+    15 => 'P',
+    18 => 'E',
+    21 => 'Z',
+    24 => 'Y',
+  );
+  my $prefix = $prefixes{$power} || "e+" . ($power-24) . "Y";
+
   return "$number\\,${prefix}bp";
 }
 
