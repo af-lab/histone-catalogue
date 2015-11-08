@@ -62,7 +62,10 @@ has ['chr_acc']
 has ['chr_start', 'chr_end']
   => (is => 'ro', isa => 'PositiveInt', required => 0);
 
-## TODO figure out best way to have transcript and proteins accession numbers
+## Keys and values transcription and proteins accession numbers
+has ['products']
+  => (is => 'ro', isa => 'HashRef', lazy => 1, default => sub { {} });
+
 
 sub BUILD
 {
@@ -71,6 +74,14 @@ sub BUILD
     { croak "attempt to create a Gene with only chromosome start or end coordinates"; }
   elsif (($self->chr_start or $self->chr_start) and not $self->chr_acc)
     { croak "attempt to create a Gene with chromosome coordinates but no accession"; }
+
+  if ($self->is_coding())
+    {
+      if (scalar (keys %{$self->products}) == 0)
+        { croak "attempt to create a Gene of coding type without products"; }
+    }
+  elsif (scalar (keys %{$self->products}) > 0)
+    { croak "attempt to create a Gene of non coding type with products"; }
 }
 
 sub is_coding
@@ -79,6 +90,17 @@ sub is_coding
   return $self->type eq 'coding';
 }
 
+sub transcripts
+{
+  my $self = shift;
+  return keys %{$self->products()};
+}
+
+sub proteins
+{
+  my $self = shift;
+  return values %{$self->products()};
+}
 
 __PACKAGE__->meta->make_immutable;
 

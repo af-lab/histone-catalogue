@@ -27,36 +27,44 @@ my $ctor = sub { HistoneGene->new (@_) };
 
 {
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                  histone_type => 'H3');
-  ok ($g->symbol eq 'CENPA');
-  ok ($g->histone_type eq 'H3');
+                  histone_type => 'H3', products => {'NM_1' => 'NP_1'});
+  ok ($g->uid == 42, "retrieval of UID");
+  ok ($g->type eq 'coding', "retrieval of gene type");
+  ok ($g->symbol eq 'CENPA', "retrieval of gene symbol");
+  ok ($g->histone_type eq 'H3', "retrieval of histone type");
 }
 
 dies_ok {my $g = &$ctor ()}
   'dies on constructor without arguments';
 
 dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                         histone_type => 'H2AX')}
+                         histone_type => 'H2AX'), products => {'NM_1' => 'NP_1'}}
   'dies when setting inavlid histone type';
 
 {
+  my $g = &$ctor (uid => 42, symbol => 'HIST1H2AA4', type => 'coding',
+                  histone_type => 'H2A', products => {'NM_1' => 'NP_1'});
+  ok ($g->is_core_histone (), 'H2A canonical histone is core histone');
+  ok (! $g->is_linker_histone (), 'H2A canonical histone is not linker histone');
+}
+{
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                  histone_type => 'H3');
-  ok ($g->is_core_histone ());
-  ok (not $g->is_linker_histone ());
+                  histone_type => 'H3', products => {'NM_1' => 'NP_1'});
+  ok ($g->is_core_histone (), 'H3 histone variant is core histone');
+  ok (! $g->is_linker_histone (), 'H3 histone variant is not linker histone');
 }
 {
   my $g = &$ctor (uid => 42, symbol => 'HIST1H1A', type => 'coding',
-                  histone_type => 'H1');
-  ok (not $g->is_core_histone ());
-  ok ($g->is_linker_histone ());
+                  histone_type => 'H1', products => {'NM_1' => 'NP_1'});
+  ok (! $g->is_core_histone (), 'H1 histone is not core histone');
+  ok ($g->is_linker_histone (), 'H1 histone is linker histone');
 }
 {
   ## H5 is a linker histone in avian erythrocytes
   my $g = &$ctor (uid => 42, symbol => 'LOCfoo', type => 'coding',
-                  histone_type => 'H5');
-  ok (not $g->is_core_histone ());
-  ok ($g->is_linker_histone ());
+                  histone_type => 'H5', products => {'NM_1' => 'NP_1'});
+  ok (! $g->is_core_histone (), 'H5 histone is not core histone');
+  ok ($g->is_linker_histone (), 'H5 histone is core histone');
 }
 
 done_testing;

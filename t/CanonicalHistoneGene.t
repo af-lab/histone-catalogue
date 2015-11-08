@@ -26,37 +26,44 @@ use CanonicalHistoneGene;
 my $ctor = sub { CanonicalHistoneGene->new (@_) };
 
 {
-  my $g = &$ctor (uid => 42, symbol => 'HIST2H2BA4', type => 'coding');
-  ok ($g->symbol eq 'HIST2H2BA4');
-  ok ($g->histone_type eq 'H2B');
-  ok ($g->cluster == 2);
+  my $g = &$ctor (uid => 42, symbol => 'HIST2H2BA4', type => 'coding',
+                  products => {'NM_1' => 'NP_1'});
+  ok ($g->uid == 42, "retrieval of UID");
+  ok ($g->type eq 'coding', "retrieval of gene type");
+  ok ($g->symbol eq 'HIST2H2BA4', "retrieval of gene symbol");
+  ok ($g->histone_type eq 'H2B', "retrieval of histone type");
+  ok ($g->cluster == 2, "retrieval of histone cluster");
 }
 
-dies_ok {my $g = &$ctor ()};
+dies_ok {my $g = &$ctor ()} 'constructor dies without arguments';
 
 throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST2H2BA4', type => 'coding',
-                           cluster => 2)}
+                           cluster => 2, products => {'NM_1' => 'NP_1'})}
   qr/unknown attribute\(s\) passed to the constructor: cluster/,
   'setting cluster manually should throw an error';
 
 throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST2H2BA4', type => 'coding',
-                           histone_type => 'H2B')}
+                           histone_type => 'H2B', products => {'NM_1' => 'NP_1'})}
   qr/unknown attribute\(s\) passed to the constructor: histone_type/,
   'setting histone type manually should throw an error';
 
-throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST5H2BA4', type => 'coding')}
+throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST5H2BA4', type => 'coding',
+                           products => {'NM_1' => 'NP_1'})}
   qr/Validation failed for 'ClusterNumber' with value /,
   'attempt to use an histone with suggested cluster above 4';
 
-throws_ok {my $g = &$ctor (uid => 42, symbol => 'HISTH2BA4', type => 'coding')}
+throws_ok {my $g = &$ctor (uid => 42, symbol => 'HISTH2BA4', type => 'coding',
+                           products => {'NM_1' => 'NP_1'})}
   qr/unable to find cluster number from symbol HISTH2BA4/,
   'input check of cluster number from symbol';
 
-throws_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding')}
+throws_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
+                           products => {'NM_1' => 'NP_1'})}
   qr/unable to find cluster number from symbol CENPA/,
   'input check of cluster number from symbol';
 
-throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST2A4', type => 'coding')}
+throws_ok {my $g = &$ctor (uid => 42, symbol => 'HIST2A4', type => 'coding',
+                           products => {'NM_1' => 'NP_1'})}
   qr/unable to find cluster number from symbol HIST2A4/,
   'input check of histone type from symbol';
 

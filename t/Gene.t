@@ -28,22 +28,28 @@ my $ctor = sub { Gene->new (@_) };
 {
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
                   chr_acc => 'NC_007', chr_start => 500, chr_end => 1000,
-                  ensembl_id => 'foo78');
-  ok ($g->uid       == 42);
-  ok ($g->symbol    eq 'CENPA');
-  ok ($g->type      eq 'coding');
-  ok ($g->chr_acc   eq 'NC_007');
-  ok ($g->chr_start == 500);
-  ok ($g->chr_end   == 1000);
-  ok ($g->ensembl_id eq 'foo78');
+                  ensembl_id => 'foo78', products => {'NM_1' => 'NP_1'});
+  ok ($g->uid       == 42, "retrieval of UID");
+  ok ($g->symbol    eq 'CENPA', "retrieval of gene symbol");
+  ok ($g->type      eq 'coding', "retrieval of gene type");
+  ok ($g->chr_acc   eq 'NC_007', "retrieval of chr acc");
+  ok ($g->chr_start == 500, "retrieval of chr start");
+  ok ($g->chr_end   == 1000, "retrieval of chr end");
+  ok ($g->ensembl_id eq 'foo78', "retrieval of ensembl id");
 }
 
-dies_ok {my $g = &$ctor ()};
-dies_ok {my $g = &$ctor (uid => 42, symbol => 'foo')};
-dies_ok {my $g = &$ctor (uid => 42, symbol => '', type => 'coding')};
-dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'coding')};
-dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'garbage')};
-dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'protein coding')};
+dies_ok {my $g = &$ctor ()}
+  'constructor dies without arguments';
+dies_ok {my $g = &$ctor (uid => 42, symbol => 'foo')}
+  'dies without type';
+dies_ok {my $g = &$ctor (uid => 42, symbol => '', type => 'coding')}
+  'dies with empty symbol';
+dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'coding')}
+  'dies with non positive uid';
+dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'garbage')}
+  'dies with invalid, made up, type';
+dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'protein coding')}
+  "dies with 'protein coding' as type (very similar to coding)";
 
 throws_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
                            chr_acc => 'NC_007', chr_start => 67)}
@@ -60,20 +66,47 @@ throws_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
   qr/chromosome coordinates but no accession/,
   'chr_start and chr_end must not exist without chr_acc';
 
-dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'coding',
-                         species => '')};
-dies_ok {my $g = &$ctor (uid => -42, symbol => 'CENPA', type => 'coding',
-                         species => undef)};
+dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
+                         species => '')}
+  'dies with invalid species (empty string)';
+dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
+                         species => undef)}
+  'dies with invalid species (undef)';
 
 {
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
-                  chr_acc => 'NC_007');
-  ok (not defined ($g->chr_start));
+                  chr_acc => 'NC_007', products => {'NM_1' => 'NP_1'});
+  ok (! defined ($g->chr_start),
+      'chr start defaulting to undef');
 }
 
-ok (not &$ctor (uid => 5, symbol => 'A', type => 'pseudo')->is_coding ());
-ok (not &$ctor (uid => 5, symbol => 'A', type => 'unknown')->is_coding ());
-ok (not &$ctor (uid => 5, symbol => 'A', type => 'ncRNA')->is_coding ());
-ok (&$ctor (uid => 5, symbol => 'A', type => 'coding')->is_coding ());
+ok (! &$ctor (uid => 5, symbol => 'A', type => 'pseudo')->is_coding (),
+    'type pseudo not is_coding()');
+ok (! &$ctor (uid => 5, symbol => 'A', type => 'unknown')->is_coding (),
+     'type unknown not is_coding()');
+ok (! &$ctor (uid => 5, symbol => 'A', type => 'ncRNA')->is_coding (),
+    'type ncRNA not is_coding()');
+ok (&$ctor (uid => 5, symbol => 'A', type => 'coding',
+            products => {'NM_1' => 'NP_1'})->is_coding (),
+    'type coding is_coding()');
+
+{
+  my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                  products => {'NM_1' => 'NP_1'});
+  is_deeply ($g->products, {'NM_1' => 'NP_1'}, 'retrieve hash ref of products');
+  is_deeply ([$g->transcripts], ['NM_1'], 'retrieve array of transcripts');
+  is_deeply ([$g->proteins], ['NP_1'], 'retrieve array of proteins');
+}
+
+{
+  my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                  products => {'NM_1' => 'NP_1', 'NM_4' => 'NP_6'});
+  is_deeply ($g->products, {'NM_1' => 'NP_1', 'NM_4' => 'NP_6'},
+    'retrieve hash ref of products');
+  is_deeply ([sort $g->transcripts], ['NM_1', 'NM_4'],
+    'retrieve array of transcripts');
+  is_deeply ([sort $g->proteins], ['NP_1', 'NP_6'],
+    'retrieve array of proteins');
+}
 
 done_testing;
