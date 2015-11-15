@@ -1,0 +1,131 @@
+#!/usr/bin/perl
+use utf8;
+
+## Copyright (C) 2015 Carnë Draug <carandraug+dev@gmail.com>
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+use strict;
+use warnings;
+
+use File::Temp;
+use File::Spec;
+
+use Test::More;
+use Test::Exception;
+
+use HistoneSequencesDB;
+
+## Creates a temporary directory to mimic one for HistoneSequencesDB.
+## Takes the contents of csv file to be created.
+sub create_seq_dir
+{
+  my $csv_contents = shift;
+
+  my $dir = File::Temp->newdir();
+  my $csv_path = File::Spec->catfile($dir->dirname, "data.csv");
+  open (my $fh, ">", $csv_path)
+    or die "Can't open '$csv_path' to write: $!";
+  print {$fh} $csv_contents;
+  close $fh;
+  return $dir;
+}
+
+sub test_db
+{
+  my $db = shift;
+
+  my @genes = @{$db->genes};
+
+  is (scalar @genes, 9, "Read right number of genes");
+
+  is_deeply ([sort (map {$_->symbol} @genes)],
+             ['CENPA', 'H2AFZ', 'H2AFZP4', 'HIST1H2APS4', 'HIST1H2BD',
+              'HIST1H3F', 'HIST1H4I', 'HIST1H4K', 'HIST1H4L'],
+             "Got the right gene symbols");
+
+  is_deeply ([sort {$a <=> $b} (map {$_->uid} @genes)],
+             [1058, 3015, 3017, 8294, 8333, 8362, 8368, 8968, 100462795],
+             "Got the right gene UID");
+
+  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 9],
+             "Read the right species name");
+
+  {
+    my ($hist1h2bd) = grep {$_->symbol eq 'HIST1H2BD'} @genes;
+    my %products = %{$hist1h2bd->products};
+    is (scalar keys %products, 2,
+        "Read gene canonical histone with multiple products correctly");
+    is_deeply([sort (keys %products)], ["NM_021063", "NM_138720"],
+              "Read transcripts acc from multiple products");
+    is_deeply([sort (values %products)], ["NP_066407", "NP_619790"],
+              "Read protein acc from multiple products");
+    is ("NC_000006", $hist1h2bd->chr_acc, "Read chromosome accession");
+    is ("26157343", $hist1h2bd->chr_start, "Read chromosome start coordinates");
+    is ("26171849", $hist1h2bd->chr_end, "Read chromosome end coordinates");
+    is ("histone cluster 1, H2bd", $hist1h2bd->description, "Read description");
+    is ($hist1h2bd->histone_type, 'H2B', "Read histone type of coding multiple products");
+  }
+
+  my ($h2afzp4) = grep {$_->symbol eq 'H2AFZP4'} @genes;
+  is ($h2afzp4->type, 'pseudo', "Read pseudo variant as pseudo");
+  is ($h2afzp4->histone_type, 'H2A', "Read histone type of pseudo variant");
+
+  my ($cenpa) = grep {$_->symbol eq 'CENPA'} @genes;
+  is (scalar keys %{$cenpa->products}, 2,
+      "Read gene CENPA variant with multiple products correctly");
+  is ($cenpa->histone_type, 'H3', "Read histone type of CENPA");
+
+  my ($hist1h2aps4) = grep {$_->symbol eq 'HIST1H2APS4'} @genes;
+  is ($hist1h2aps4->type, 'pseudo', "Read pseudo gene correctly");
+  is ($hist1h2aps4->histone_type, 'H2A', "Read histone type of pseudo canonical");
+
+  my ($hist1h4ai) = grep {$_->symbol eq 'HIST1H4I'} @genes;
+  is ($hist1h4ai->type, 'coding', "Read coding gene correctly");
+  is ($hist1h4ai->histone_type, 'H4', "Read histone type of coding canonical");
+}
+
+## A sample from actual data for testing.  It has canonical histones,
+## both pseudo and coding, and with multiple products, the CENPA variant
+## with its atypical gene symbol, and non histone gene.
+my $dir = create_seq_dir(<<END);
+"gene symbol",species,"gene UID","EnsEMBL ID","gene name",pseudo,"transcript accession","protein accession",locus,"chromosome accession","chromosome start coordinates","chromosome stop coordinates",assembly
+HIST1H4K,"Homo sapiens",8362,ENSG00000273542,"histone cluster 1, H4k",0,NM_003541,NP_003532,6p22.1,NC_000006,27830674,27832027,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2APS4,"Homo sapiens",8333,,"histone cluster 1, H2a, pseudogene 4",1,,,6p21.3,NC_000006,26271693,26273040,"Reference GRCh38.p2 Primary Assembly"
+HIST1H4L,"Homo sapiens",8368,ENSG00000275126,"histone cluster 1, H4l",0,NM_003546,NP_003537,6p22.1,NC_000006,27872648,27874011,"Reference GRCh38.p2 Primary Assembly"
+HIST1H3F,"Homo sapiens",8968,ENSG00000277775,"histone cluster 1, H3f",0,NM_021018,NP_066298,6p22.2,NC_000006,26249642,26251107,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2BD,"Homo sapiens",3017,ENSG00000158373,"histone cluster 1, H2bd",0,NM_138720,NP_619790,6p21.3,NC_000006,26157343,26171849,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2BD,"Homo sapiens",3017,ENSG00000158373,"histone cluster 1, H2bd",0,NM_021063,NP_066407,6p21.3,NC_000006,26157343,26171849,"Reference GRCh38.p2 Primary Assembly"
+CENPA,"Homo sapiens",1058,ENSG00000115163,"centromere protein A",0,NM_001042426,NP_001035891,2p23.3,NC_000002,26785514,26795089,"Reference GRCh38.p2 Primary Assembly"
+CENPA,"Homo sapiens",1058,ENSG00000115163,"centromere protein A",0,NM_001809,NP_001800,2p23.3,NC_000002,26785514,26795089,"Reference GRCh38.p2 Primary Assembly"
+RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (non-active)",0,NM_001001673,NP_001001673,14q11.2,NC_000014,20555593,20561431,"Reference GRCh38.p2 Primary Assembly"
+RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (non-active)",0,NM_001110357,NP_001103827,14q11.2,NC_000014,20555593,20561431,"Reference GRCh38.p2 Primary Assembly"
+RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (non-active)",0,NM_001110361,NP_001103831,14q11.2,NC_000014,20555593,20561431,"Reference GRCh38.p2 Primary Assembly"
+HIST1H4I,"Homo sapiens",8294,09109,"histone cluster 1, H4i",0,NM_003495,NP_003486,6p21.33,NC_000006,27138809,27140178,"Reference GRCh38.p2 Primary Assembly"
+H2AFZP4,"Homo sapiens",100462795,,"H2A histone family, member Z pseudogene 4",1,,,11,NC_000011,70278415,70279797,"Reference GRCh38.p2 Primary Assembly"
+H2AFZ,"Homo sapiens",3015,ENSG00000164032,"H2A histone family, member Z",0,NM_002106,NP_002097,4q24,NC_000004,99947587,99950855,"Reference GRCh38.p2 Primary Assembly"
+END
+
+my $db = HistoneSequencesDB->new(dir => $dir->dirname);
+test_db($db);
+
+my $db_store = File::Temp->new();
+$db->write_db($db_store->filename);
+my $read_db = HistoneSequencesDB::read_db($db_store->filename);
+isa_ok($read_db, 'HistoneSequencesDB', "Read back HistoneSequencesDB from store");
+
+subtest "Test everything again with the read HistoneSequencesDB"
+  => sub { test_db($read_db); };
+
+done_testing;
