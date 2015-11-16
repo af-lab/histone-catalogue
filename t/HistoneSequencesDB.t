@@ -48,18 +48,18 @@ sub test_db
 
   my @genes = @{$db->genes};
 
-  is (scalar @genes, 9, "Read right number of genes");
+  is (scalar @genes, 10, "Read right number of genes");
 
   is_deeply ([sort (map {$_->symbol} @genes)],
-             ['CENPA', 'H2AFZ', 'H2AFZP4', 'HIST1H2APS4', 'HIST1H2BD',
+             ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4', 'HIST1H2APS4', 'HIST1H2BD',
               'HIST1H3F', 'HIST1H4I', 'HIST1H4K', 'HIST1H4L'],
              "Got the right gene symbols");
 
   is_deeply ([sort {$a <=> $b} (map {$_->uid} @genes)],
-             [1058, 3015, 3017, 8294, 8333, 8362, 8368, 8968, 100462795],
+             [1058, 3015, 3017, 8294, 8333, 8362, 8368, 8968, 55766, 100462795],
              "Got the right gene UID");
 
-  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 9],
+  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 10],
              "Read the right species name");
 
   {
@@ -94,11 +94,17 @@ sub test_db
   my ($hist1h4ai) = grep {$_->symbol eq 'HIST1H4I'} @genes;
   is ($hist1h4ai->type, 'coding', "Read coding gene correctly");
   is ($hist1h4ai->histone_type, 'H4', "Read histone type of coding canonical");
+
+  my ($h2afj) = grep {$_->symbol eq 'H2AFJ'} @genes;
+  is ($hist1h4ai->type, 'coding', "Read coding gene with non-coding transcript");
+  is_deeply ($h2afj->products, {'NM_177925' => 'NP_808760', 'NR_027716' => ''},
+    'read products with non-coding transcripts');
 }
 
 ## A sample from actual data for testing.  It has canonical histones,
 ## both pseudo and coding, and with multiple products, the CENPA variant
-## with its atypical gene symbol, and non histone gene.
+## with its atypical gene symbol, a non histone gene, and a coding gene
+## with non-coding transcripts.
 my $dir = create_seq_dir(<<END);
 "gene symbol",species,"gene UID","EnsEMBL ID","gene name",pseudo,"transcript accession","protein accession",locus,"chromosome accession","chromosome start coordinates","chromosome stop coordinates",assembly
 HIST1H4K,"Homo sapiens",8362,ENSG00000273542,"histone cluster 1, H4k",0,NM_003541,NP_003532,6p22.1,NC_000006,27830674,27832027,"Reference GRCh38.p2 Primary Assembly"
@@ -113,6 +119,8 @@ RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (n
 RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (non-active)",0,NM_001110357,NP_001103827,14q11.2,NC_000014,20555593,20561431,"Reference GRCh38.p2 Primary Assembly"
 RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (non-active)",0,NM_001110361,NP_001103831,14q11.2,NC_000014,20555593,20561431,"Reference GRCh38.p2 Primary Assembly"
 HIST1H4I,"Homo sapiens",8294,09109,"histone cluster 1, H4i",0,NM_003495,NP_003486,6p21.33,NC_000006,27138809,27140178,"Reference GRCh38.p2 Primary Assembly"
+H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NM_177925,NP_808760,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NR_027716,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
 H2AFZP4,"Homo sapiens",100462795,,"H2A histone family, member Z pseudogene 4",1,,,11,NC_000011,70278415,70279797,"Reference GRCh38.p2 Primary Assembly"
 H2AFZ,"Homo sapiens",3015,ENSG00000164032,"H2A histone family, member Z",0,NM_002106,NP_002097,4q24,NC_000004,99947587,99950855,"Reference GRCh38.p2 Primary Assembly"
 END

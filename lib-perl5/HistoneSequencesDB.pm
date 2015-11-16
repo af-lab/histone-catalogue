@@ -153,16 +153,13 @@ sub _build_genes_from_csv
           my $old_gene = $genes[$index];
           my $products = $old_gene->products ();
           my $nm_acc = $$entry{'transcript accession'};
-          my $np_acc = $$entry{'protein accession'};
 
-          if ($nm_acc && $np_acc)
-            { $products->{$nm_acc} = $np_acc; }
+          if ($nm_acc)
+            { $products->{$nm_acc} = $$entry{'protein accession'}; }
           else
             ## We should have never gotten here because:
             ##  1) if we are analysing a gene the second time, it has
             ##    products therefore it is not a pseudo-gene.
-            ##  2) our model expects a protein for each transcript and
-            ##    vice-versa
             {
               croak 'Found two entries for ' . $old_gene->symbol
                     . ' but no transcript-protein pair';
@@ -238,11 +235,10 @@ sub _build_genes_from_csv
             {
               $type = 'coding';
               my $nm_acc = $$entry{'transcript accession'};
-              my $np_acc = $$entry{'protein accession'};
-              if ($nm_acc && $np_acc)
-                { $products{$nm_acc} = $np_acc; }
+              if ($nm_acc)
+                { $products{$nm_acc} = $$entry{'protein accession'}; }
               else
-                { croak ("Coding gene $symbol without transcript-protein pair"); }
+                { croak ("Coding gene $symbol entry without a transcript"); }
             }
 
           my $gene = &$gene_ctor (

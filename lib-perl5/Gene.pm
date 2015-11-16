@@ -20,6 +20,8 @@ use strict;
 use warnings;
 use Carp;
 
+use List::Util;
+
 use Moose;
 use Moose::Util::TypeConstraints qw(enum subtype as where);
 
@@ -37,6 +39,13 @@ subtype 'PositiveInt',
   as 'Int',
   where { $_ > 0 };
 
+## Non-coding transcripts are a thing, so we may have a transcript (key)
+## without a matching protein (value).  Because of that we only check
+## the value of the keys.
+## See https://github.com/af-lab/histone-catalog/issues/21
+subtype 'GeneProducts',
+  as 'HashRef',
+  where { List::Util::all { $_ } keys %{$_} };
 
 ## NCBI gene ID
 has ['uid']
@@ -64,7 +73,7 @@ has ['chr_start', 'chr_end']
 
 ## Keys and values transcription and proteins accession numbers
 has ['products']
-  => (is => 'ro', isa => 'HashRef', lazy => 1, default => sub { {} });
+  => (is => 'ro', isa => 'GeneProducts', lazy => 1, default => sub { {} });
 
 
 sub BUILD
@@ -75,12 +84,16 @@ sub BUILD
   elsif (($self->chr_start or $self->chr_start) and not $self->chr_acc)
     { croak "attempt to create a Gene with chromosome coordinates but no accession"; }
 
+  my $n_products = (keys %{$self->products});
   if ($self->is_coding())
     {
-      if (scalar (keys %{$self->products}) == 0)
+      ## It is possible for some products have a transcript but no protein.
+      ## However, if we are a coding gene, at least one must encode a protein.
+      if ($n_products == 0
+          || List::Util::none { $_ } values %{$self->products})
         { croak "attempt to create a Gene of coding type without products"; }
     }
-  elsif (scalar (keys %{$self->products}) > 0)
+  elsif ($n_products > 0)
     { croak "attempt to create a Gene of non coding type with products"; }
 }
 

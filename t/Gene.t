@@ -109,4 +109,35 @@ ok (&$ctor (uid => 5, symbol => 'A', type => 'coding',
     'retrieve array of proteins');
 }
 
+{
+  my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                  products => {'NM_1' => 'NP_1', 'NM_4' => ''});
+  is_deeply ($g->products, {'NM_1' => 'NP_1', 'NM_4' => ''},
+    'retrieve hash ref of products with non-coding transcripts');
+}
+
+throws_ok
+  { my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                    products => {'' => ''})}
+  qr/Validation failed for 'GeneProducts'/,
+  "Fails with empty products pair";
+
+throws_ok
+  { my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                    products => {'NM_1' => 'NP_1', '' => ''})}
+  qr/Validation failed for 'GeneProducts'/,
+  "Fails with a empty products pair mixed with 'good' pairs";
+
+throws_ok
+  { my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                    products => {'NM_1' => '', 'NM_4' => ''})}
+  qr/Gene of coding type without products/,
+  "Fails with coding gene with all non-coding transcripts";
+
+throws_ok
+  { my $g = &$ctor (uid => 5, symbol => 'A', type => 'coding',
+                    products => {'NM_1' => 'NP_1', '' => 'NP_4'})}
+  qr/Validation failed for 'GeneProducts'/,
+  "Fails with an empty transcript";
+
 done_testing;
