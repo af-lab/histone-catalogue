@@ -108,3 +108,20 @@
 \FPmin{result}{\HTwoAPID}{\HTwoBPID}
 \FPmin{result}{\result}{\HThreePID}
 \FPmin{HallMinPID}{\result}{\HFourPID}
+
+
+\FPeval{result}{\SequenceChangeSinceReference{}
+                + \PseudoSinceReference{}
+                + \CodingSinceReference{}
+                + \AddedSinceReference{}
+                + \RemovedSinceReference{}}
+\FPround{TotalChangesSinceReference}{\result}{0} % of course is an integer
+
+
+\FPeval{PercentageGenesInHISTOne}{\CodingGenesInHISTOne{}*100/\TotalCodingGenes{}}
+
+
+\FPeval{result}{\SequenceChangeSinceReference{}
+                +\PseudoSinceReference{}
+                +\CodingSinceReference{}}
+\FPround{SequencesUpdatedSinceReference}{\result}{0} % of course is an integer
