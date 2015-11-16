@@ -28,11 +28,11 @@ my $ctor = sub { CanonicalHistoneGene->new (@_) };
 {
   my $g = &$ctor (uid => 42, symbol => 'HIST2H2BA4', type => 'coding',
                   products => {'NM_1' => 'NP_1'});
-  ok ($g->uid == 42, "retrieval of UID");
-  ok ($g->type eq 'coding', "retrieval of gene type");
-  ok ($g->symbol eq 'HIST2H2BA4', "retrieval of gene symbol");
-  ok ($g->histone_type eq 'H2B', "retrieval of histone type");
-  ok ($g->cluster == 2, "retrieval of histone cluster");
+  is ($g->uid, 42, "retrieval of UID");
+  is ($g->type, 'coding', "retrieval of gene type");
+  is ($g->symbol, 'HIST2H2BA4', "retrieval of gene symbol");
+  is ($g->histone_type, 'H2B', "retrieval of histone type");
+  is ($g->cluster, 2, "retrieval of histone cluster");
 }
 
 dies_ok {my $g = &$ctor ()} 'constructor dies without arguments';

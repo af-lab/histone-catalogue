@@ -28,10 +28,10 @@ my $ctor = sub { HistoneGene->new (@_) };
 {
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
                   histone_type => 'H3', products => {'NM_1' => 'NP_1'});
-  ok ($g->uid == 42, "retrieval of UID");
-  ok ($g->type eq 'coding', "retrieval of gene type");
-  ok ($g->symbol eq 'CENPA', "retrieval of gene symbol");
-  ok ($g->histone_type eq 'H3', "retrieval of histone type");
+  is ($g->uid, 42, "retrieval of UID");
+  is ($g->type, 'coding', "retrieval of gene type");
+  is ($g->symbol, 'CENPA', "retrieval of gene symbol");
+  is ($g->histone_type, 'H3', "retrieval of histone type");
 }
 
 dies_ok {my $g = &$ctor ()}

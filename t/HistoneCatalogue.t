@@ -60,43 +60,48 @@ END
     eq '2015-09-13');
 
 
-ok (HistoneCatalogue::mk_latex_string ('foobar')
-    eq 'foobar');
-ok (HistoneCatalogue::mk_latex_string ('_foo_bar_')
-    eq '\_foo\_bar\_');
-ok (HistoneCatalogue::mk_latex_string ('$foobar')
-    eq '\\$foobar');
-ok (HistoneCatalogue::mk_latex_string ('^$foobar^')
-    eq '\\textasciicircum{}\\$foobar\\textasciicircum{}');
-ok (HistoneCatalogue::mk_latex_string ('&%$#_{}~^\\' x2)
-    eq '\\&\\%\\$\\#\\_\\{\\}\\textasciitilde{}\\textasciicircum{}\\textbackslash{}' x2);
-ok (HistoneCatalogue::mk_latex_string ("\nfoo\nbar\n")
-    eq "\nfoo\nbar\n");
-ok (HistoneCatalogue::mk_latex_string ("\nfoo^\nbar\n")
-    eq "\nfoo\\textasciicircum{}\nbar\n");
+is (HistoneCatalogue::mk_latex_string ('foobar'), 'foobar',
+   "Escape (not) simple string for LaTeX");
+is (HistoneCatalogue::mk_latex_string ('_foo_bar_'), '\_foo\_bar\_',
+   "Escape underscores for LaTeX");
+is (HistoneCatalogue::mk_latex_string ('$foobar'), '\\$foobar',
+   "Escape dollar sign for LaTeX");
+is (HistoneCatalogue::mk_latex_string ('^$foobar^'),
+    '\\textasciicircum{}\\$foobar\\textasciicircum{}',
+    'Escape ^ and $ for LaTeX');
+is (HistoneCatalogue::mk_latex_string ('&%$#_{}~^\\' x2),
+    '\\&\\%\\$\\#\\_\\{\\}\\textasciitilde{}\\textasciicircum{}\\textbackslash{}' x2,
+    "Escape all escapable characters in string for LaTeX");
+is (HistoneCatalogue::mk_latex_string ("\nfoo\nbar\n"),
+    "\nfoo\nbar\n",
+    "Handle newlines when escaping (not) characters for LaTeX");
+is (HistoneCatalogue::mk_latex_string ("\nfoo^\nbar\n"),
+    "\nfoo\\textasciicircum{}\nbar\n",
+    "Handle newlines while escaping characters for LaTeX");
 
 
-ok ($HistoneCatalogue::tex_macro_name eq 'ScriptValue');
+is ($HistoneCatalogue::tex_macro_name, 'ScriptValue',
+    'Macro name for results is ScriptValue');
 
-ok (HistoneCatalogue::latex_newcommand ("foo", "bar")
-    eq "%% Not documented\n\\newcommand{\\foo}{\\ScriptValue{bar}}");
-ok (HistoneCatalogue::latex_newcommand ('HIST1H2A', '67%_p')
-    eq "%% Not documented\n\\newcommand{\\HISTOneHTwoA}{\\ScriptValue{67\\%\\_p}}");
+is (HistoneCatalogue::latex_newcommand ("foo", "bar"),
+    "%% Not documented\n\\newcommand{\\foo}{\\ScriptValue{bar}}");
+is (HistoneCatalogue::latex_newcommand ('HIST1H2A', '67%_p'),
+    "%% Not documented\n\\newcommand{\\HISTOneHTwoA}{\\ScriptValue{67\\%\\_p}}");
 
-ok (HistoneCatalogue::latex_newcommand ("foo", "bar", "This is some serious documentation.")
-    eq "%% This is some serious documentation.\n"
-       . "\\newcommand{\\foo}{\\ScriptValue{bar}}");
-ok (HistoneCatalogue::latex_newcommand ("f0", "67%", "This is some serious\nMultiline documentation.")
-    eq "%% This is some serious\n%% Multiline documentation.\n"
-       . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}");
+is (HistoneCatalogue::latex_newcommand ("foo", "bar", "This is some serious documentation."),
+    "%% This is some serious documentation.\n"
+    . "\\newcommand{\\foo}{\\ScriptValue{bar}}");
+is (HistoneCatalogue::latex_newcommand ("f0", "67%", "This is some serious\nMultiline documentation."),
+    "%% This is some serious\n%% Multiline documentation.\n"
+    . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}");
 
-ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"))
-    eq "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A");
-ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4"))
-    eq "HIST4H4");
-ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AA3", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"))
-    eq "HIST1H2A --B, --C, --P; HIST2H2AA3; HIST4H2A");
-ok (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4"))
-    eq "HIST4H4");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A")),
+    "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4")),
+    "HIST4H4");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AA3", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A")),
+    "HIST1H2A --B, --C, --P; HIST2H2AA3; HIST4H2A");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4")),
+    "HIST4H4");
 
 done_testing;

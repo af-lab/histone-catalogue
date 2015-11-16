@@ -29,13 +29,13 @@ my $ctor = sub { Gene->new (@_) };
   my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
                   chr_acc => 'NC_007', chr_start => 500, chr_end => 1000,
                   ensembl_id => 'foo78', products => {'NM_1' => 'NP_1'});
-  ok ($g->uid       == 42, "retrieval of UID");
-  ok ($g->symbol    eq 'CENPA', "retrieval of gene symbol");
-  ok ($g->type      eq 'coding', "retrieval of gene type");
-  ok ($g->chr_acc   eq 'NC_007', "retrieval of chr acc");
-  ok ($g->chr_start == 500, "retrieval of chr start");
-  ok ($g->chr_end   == 1000, "retrieval of chr end");
-  ok ($g->ensembl_id eq 'foo78', "retrieval of ensembl id");
+  is ($g->uid, 42, "retrieval of UID");
+  is ($g->symbol, 'CENPA', "retrieval of gene symbol");
+  is ($g->type, 'coding', "retrieval of gene type");
+  is ($g->chr_acc, 'NC_007', "retrieval of chr acc");
+  is ($g->chr_start, 500, "retrieval of chr start");
+  is ($g->chr_end, 1000, "retrieval of chr end");
+  is ($g->ensembl_id, 'foo78', "retrieval of ensembl id");
 }
 
 dies_ok {my $g = &$ctor ()}
