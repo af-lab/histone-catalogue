@@ -98,3 +98,13 @@
   \RealScriptValue{\Realprintdate{#1}}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
 }
+
+
+%%
+%% Some computations fit better here in LaTeX than the scripts.
+%%
+
+%% Minimum overall PID of each histone type
+\FPmin{result}{\HTwoAPID}{\HTwoBPID}
+\FPmin{result}{\result}{\HThreePID}
+\FPmin{HallMinPID}{\result}{\HFourPID}
