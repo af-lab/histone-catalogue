@@ -102,6 +102,17 @@ has 'transcripts_dir' =>
   default => "transcripts",
 );
 
+around BUILDARGS => sub
+{
+  my $orig = shift;
+  my $class = shift;
+
+  if (@_ == 1 && ! ref $_[0])
+    { return $class->$orig(dir => $_[0]); }
+  else
+    { return $class->$orig(@_); }
+};
+
 
 =method _build_genes_from_csv
 Read genes from the csv file create by bp_genbank_ref_extractor to build

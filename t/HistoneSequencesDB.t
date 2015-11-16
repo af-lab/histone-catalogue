@@ -117,7 +117,7 @@ H2AFZP4,"Homo sapiens",100462795,,"H2A histone family, member Z pseudogene 4",1,
 H2AFZ,"Homo sapiens",3015,ENSG00000164032,"H2A histone family, member Z",0,NM_002106,NP_002097,4q24,NC_000004,99947587,99950855,"Reference GRCh38.p2 Primary Assembly"
 END
 
-my $db = HistoneSequencesDB->new(dir => $dir->dirname);
+my $db = HistoneSequencesDB->new($dir->dirname);
 test_db($db);
 
 my $db_store = File::Temp->new();
