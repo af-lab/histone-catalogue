@@ -226,7 +226,7 @@ env.Clean(raw_data, seq_dir)
 env.Alias("data", raw_data)
 
 
-csv_data = env.PerlCommand(
+csv_data = env.PerlScript(
   target = [path4seq ("canonical.csv"), path4seq ("canonical.store"),
             path4seq ("variant.csv"), path4seq ("variant.store"),
             path4seq ("h1.csv"), path4seq ("h1.store")],
@@ -294,40 +294,40 @@ var_targets += [path4result ("table-variant_catalogue.tex")]
 check_targets += [path4result ("histone_insanities.tex")]
 
 analysis = [
-  env.PerlCommand(
+  env.PerlScript(
     target = align_targets,
     source = path4script ("align_sequences.pl"),
     action = ["--sequences", seq_dir, "--figures", figures_dir,
               "--results", results_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = clust_targets,
     source = path4script ("cluster_stats.pl"),
     action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = prot_targets,
     source = path4script ("protein_stats.pl"),
     action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = refer_targets,
     source = path4script ("reference_comparison.pl"),
     action = ["--sequences", seq_dir, "--results", results_dir,
               "--reference", reference_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = check_targets,
     source = path4script ("histone_sanity_checks.pl"),
     action = ["--sequences", seq_dir, "--results", results_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = utr_targets,
     source = path4script ("utr_analysis.pl"),
     action = ["--sequences", seq_dir, "--figures", figures_dir,
               "--results", results_dir],
   ),
-  env.PerlCommand(
+  env.PerlScript(
     target = var_targets,
     source = path4script ("variants.pl"),
     action = ["--sequences", seq_dir, "--results", results_dir],
@@ -371,7 +371,7 @@ env.Default(manuscript)
 if "check" in COMMAND_LINE_TARGETS:
   test_suite = []
   for test_file in env.Glob("t/*.t"):
-    unit = env.PerlCommand(source=test_file, target=None, action=[])
+    unit = env.PerlScript(source=test_file, target=None, action=[])
     test_suite.append(unit)
   check = Alias ("check", [test_suite])
 
