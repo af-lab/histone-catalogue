@@ -162,6 +162,7 @@ def path4figure (name):
 def path4seq (name):
   return os.path.join (seq_dir, name)
 
+
 ## TARGET data
 ##
 ## SCons does not like it when the target is a directory and will always
@@ -223,19 +224,45 @@ raw_data = env.NoShellCommand(
 ## Clean() is required so that it's removed when calling "scons -c".
 env.AddPreAction(raw_data, 'rm -r ' + seq_dir)
 env.Clean(raw_data, seq_dir)
-env.Alias("data", raw_data)
 
+db_store = path4result("histones_db.store")
+data_store = env.PerlSub(
+  target = db_store,
+  source = path4lib("HistoneSequencesDB.pm"),
+  action = 'HistoneSequencesDB->new("%s")->write_db("%s")' %(seq_dir, db_store)
+)
 
-csv_data = env.PerlScript(
-  target = [path4seq ("canonical.csv"), path4seq ("canonical.store"),
-            path4seq ("variant.csv"), path4seq ("variant.store"),
-            path4seq ("h1.csv"), path4seq ("h1.store")],
-  source = path4script ("extract_sequences.pl"),
+## old Storable files which we are replacing by HistoneSequencesDB
+seq_store = env.PerlScript(
+  target = [path4seq("canonical.store"), path4seq("variant.store"),
+            path4seq("h1.store")],
+  source = path4script("extract_sequences.pl"),
   action = [seq_dir]
 )
 
-env.Depends(csv_data, raw_data)
+env.Alias("data", [raw_data, data_store, seq_store])
+
+
+## TARGET csv_data
+##
+## This is completely useless and is not required by any other target.
+## It is even dangerous because csv is a really poor format for genes.
+## We only have this because Andrew wants it for his other projects.
+## See https://github.com/af-lab/histone-catalog/issues/3
+
+def path4csv (name=""):
+  return os.path.join(results_dir, "csv", name)
+
+csv_data = env.PerlScript(
+  target = [path4csv ("canonical_core_histones.csv"),
+            path4csv ("variant_histones.csv"),
+            path4csv ("linker_histones.csv")],
+  source = path4script ("create_histone_csv.pl"),
+  action = [db_store, path4csv()]
+)
+env.Depends(csv_data, [data_store])
 env.Alias("csv", csv_data)
+
 
 ## TARGET update
 ##
@@ -343,7 +370,7 @@ analysis = [
 env.Alias ("analysis", analysis)
 env.Depends (
   analysis,
-  [csv_data, path4script ("MyLib.pm")]
+  [data_store, seq_store, path4script ("MyLib.pm")]
 )
 
 

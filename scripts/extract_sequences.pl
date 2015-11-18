@@ -24,17 +24,14 @@
 ##
 ## Usage is:
 ##
-## extract_sequences --email you@there.eu path_to_save_sequences
+## extract_sequences path_to_save_sequences
 
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use File::Path;                 # Create or remove directory trees
 use File::Spec;                 # Perform operation on file names
-use Text::CSV 1.21;             # Comma-separated values manipulator
 use Storable;                   # persistence for Perl data structures
 
-use HistoneCatalogue;
 use MyLib;
 
 ## Path to save the donwloaded sequences
@@ -45,38 +42,6 @@ my @canon = MyLib::select_canonical (%genes);
 my @variants = MyLib::select_variant (%genes);
 my @h1 = MyLib::select_H1 (%genes);
 
-## I wish there was a file format for gene information but there is not.
-## Because histones are simple, we can get away with a CSV file.
-sub gene2csv {
-  my $fpath = shift;
-  my $csv = Text::CSV->new ({
-    binary => 1,
-    eol    => $/,
-  }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
-  open (my $fh, ">:encoding(utf8)", $fpath)
-    or die "Could not open $fpath for writing: $!";
-
-  $csv->print ($fh, ["Histone type", "Symbol", "NCBI UID", "EnsEMBL ID",
-                     "chr_acc", "chr_start", "chr_end",
-                     "Transcript accession", "Protein accession"]);
-
-  foreach my $gene (@_) {
-    my @line = ($gene->{histone}, $gene->{symbol}, $gene->{uid},
-                $gene->{chr_acc}, $gene->{start}, $gene->{end},
-                "", "");
-    if ($gene->{pseudo}) {
-      $csv->print ($fh, \@line);
-    } else {
-      while (my ($mrna, $prot) = each %{$gene->{transcripts}}) {
-        @line[-2,-1] = ($mrna, $prot);
-        $csv->print ($fh, \@line);
-      }
-    }
-  }
-  close $fh or die "Could not close $fpath after writing: $!";
-}
-
 for ((["canonical", \@canon], ["variant", \@variants], ["h1", \@h1])) {
-  gene2csv (File::Spec->catdir ($seq_dir, $_->[0] . ".csv"), @{$_->[1]});
   Storable::store ($_->[1], File::Spec->catdir ($seq_dir, $_->[0] . ".store"));
 }
