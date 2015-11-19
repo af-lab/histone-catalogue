@@ -48,18 +48,20 @@ sub test_db
 
   my @genes = @{$db->genes};
 
-  is (scalar @genes, 10, "Read right number of genes");
+  is (scalar @genes, 14, "Read right number of genes");
 
   is_deeply ([sort (map {$_->symbol} @genes)],
-             ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4', 'HIST1H2APS4', 'HIST1H2BD',
+             ['CENPA', 'H1F0', 'H1FX', 'H2AFJ', 'H2AFZ', 'H2AFZP4',
+              'HIST1H1D', 'HIST1H1T', 'HIST1H2APS4', 'HIST1H2BD',
               'HIST1H3F', 'HIST1H4I', 'HIST1H4K', 'HIST1H4L'],
              "Got the right gene symbols");
 
   is_deeply ([sort {$a <=> $b} (map {$_->uid} @genes)],
-             [1058, 3015, 3017, 8294, 8333, 8362, 8368, 8968, 55766, 100462795],
+             [1058, 3005, 3007, 3010, 3015, 3017, 8294, 8333, 8362,
+              8368, 8968, 8971, 55766, 100462795],
              "Got the right gene UID");
 
-  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 10],
+  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 14],
              "Read the right species name");
 
   {
@@ -99,6 +101,22 @@ sub test_db
   is ($hist1h4ai->type, 'coding', "Read coding gene with non-coding transcript");
   is_deeply ($h2afj->products, {'NM_177925' => 'NP_808760', 'NR_027716' => ''},
     'read products with non-coding transcripts');
+
+  my @canonical_core = $db->canonical_core;
+  is_deeply ([sort map {$_->symbol} @canonical_core],
+             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H3F', 'HIST1H4I',
+              'HIST1H4K', 'HIST1H4L'],
+             "Check grep of canonical core histones");
+
+  my @linkers = $db->linkers;
+  is_deeply ([sort map {$_->symbol} @linkers],
+             ['H1F0', 'H1FX', 'HIST1H1D', 'HIST1H1T'],
+             "Check grep of linker histones");
+
+  my @variants = $db->variants;
+  is_deeply ([sort map {$_->symbol} @variants],
+             ['CENPA', 'H1F0', 'H1FX', 'H2AFJ', 'H2AFZ', 'H2AFZP4'],
+             "Check grep of variant histones");
 }
 
 ## A sample from actual data for testing.  It has canonical histones,
@@ -123,6 +141,10 @@ H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NM_1
 H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NR_027716,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
 H2AFZP4,"Homo sapiens",100462795,,"H2A histone family, member Z pseudogene 4",1,,,11,NC_000011,70278415,70279797,"Reference GRCh38.p2 Primary Assembly"
 H2AFZ,"Homo sapiens",3015,ENSG00000164032,"H2A histone family, member Z",0,NM_002106,NP_002097,4q24,NC_000004,99947587,99950855,"Reference GRCh38.p2 Primary Assembly"
+H1F0,"Homo sapiens",3005,ENSG00000189060,"H1 histone family, member 0",0,NM_005318,NP_005309,22q13.1,NC_000022,37804607,37807936,"Reference GRCh38.p2 Primary Assembly"
+H1FX,"Homo sapiens",8971,ENSG00000184897,"H1 histone family, member X",0,NM_006026,NP_006017,3q21.3,NC_000003,129314271,129316777,"Reference GRCh38.p2 Primary Assembly"
+HIST1H1T,"Homo sapiens",3010,ENSG00000187475,"histone cluster 1, H1t",0,NM_005323,NP_005314,6p21.3,NC_000006,26106912,26108636,"Reference GRCh38.p2 Primary Assembly"
+HIST1H1D,"Homo sapiens",3007,ENSG00000124575,"histone cluster 1, H1d",0,NM_005320,NP_005311,6p21.3,NC_000006,26233712,26235488,"Reference GRCh38.p2 Primary Assembly"
 END
 
 my $db = HistoneSequencesDB->new($dir->dirname);

@@ -59,12 +59,33 @@ has 'dir' =>
   required => 1
 );
 
-has 'genes' =>
-(
+has 'genes' => (
   is => 'ro',
   isa => 'ArrayRef[Gene]',
   builder => '_build_genes_from_csv',
   init_arg => undef,
+);
+
+has '_canonical_core_idx' => (
+  is        => 'ro',
+  isa       => 'ArrayRef',
+  lazy      => 1,
+  builder   => '_build_canonical_core_idx',
+  init_arg  => undef,
+);
+has '_linkers_idx' => (
+  is        => 'ro',
+  isa       => 'ArrayRef',
+  lazy      => 1,
+  builder   => '_build_linkers_idx',
+  init_arg  => undef,
+);
+has '_variants_idx' => (
+  is        => 'ro',
+  isa       => 'ArrayRef',
+  lazy      => 1,
+  builder   => '_build_variants_idx',
+  init_arg  => undef,
 );
 
 has 'log_path' =>
@@ -260,6 +281,30 @@ sub _build_genes_from_csv
 }
 
 
+sub _build_canonical_core_idx
+{
+  my $self = shift;
+  my $genes = $self->genes;
+  my @idx = grep {$genes->[$_]->isa ('CanonicalHistoneGene')
+                  && $genes->[$_]->is_core_histone} 0 .. $#{$genes};
+  return \@idx;
+}
+sub _build_linkers_idx
+{
+  my $self = shift;
+  my $genes = $self->genes;
+  my @idx = grep {$genes->[$_]->is_linker_histone} 0 .. $#{$genes};
+  return \@idx;
+}
+sub _build_variants_idx
+{
+  my $self = shift;
+  my $genes = $self->genes;
+  my @idx = grep {! $genes->[$_]->isa ('CanonicalHistoneGene')} 0 .. $#{$genes};
+  return \@idx;
+}
+
+
 =method write_db
 
 Save a HistoneSequencesDB object into file for later retrieval via
@@ -303,6 +348,39 @@ sub read_db
   if (! $db->isa("HistoneSequencesDB"))
     { croak "Retrieve object from '$store_fpath' is not an HistoneSequencesDB"; }
   return $db;
+}
+
+
+=method canonical_core
+
+Return an array with all canonical and core histone genes.
+=cut
+sub canonical_core
+{
+  my $self = shift;
+  return @{$self->genes}[@{$self->_canonical_core_idx}];
+}
+
+=method linkers
+
+Return an array with all linker histone genes.  This includes
+both canonical and variant linkers.
+=cut
+sub linkers
+{
+  my $self = shift;
+  return @{$self->genes}[@{$self->_linkers_idx}];
+}
+
+=method variants
+
+Return an array with all variant histone genes.  This includes both
+core and linker variants.
+=cut
+sub variants
+{
+  my $self = shift;
+  return @{$self->genes}[@{$self->_variants_idx}];
 }
 
 

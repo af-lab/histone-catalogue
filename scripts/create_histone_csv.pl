@@ -97,18 +97,10 @@ if (! -d $out_dir)
     exit (2);
   }
 
-my @all_genes = @{$db->genes};
+my $out_path = sub { File::Spec->catdir ($out_dir, $_[0]); };
 
+gene2csv (&$out_path ("canonical_core_histones.csv"), $db->canonical_core);
+gene2csv (&$out_path ("variant_histones.csv"), $db->variants);
 
-my @canonical_core = grep {$_->isa ('CanonicalHistoneGene')
-                           && $_->is_core_histone} @all_genes;
-gene2csv (File::Spec->catdir ($out_dir, "canonical_core_histones.csv"),
-          @canonical_core);
-
-## this is both H1 and H5 (when they exist)
-my @linker = grep {$_->isa ('CanonicalHistoneGene')
-                   && $_->is_linker_histone} @all_genes;
-gene2csv (File::Spec->catdir ($out_dir, "linker_histones.csv"), @linker);
-
-my @variants = grep {! $_->isa ('CanonicalHistoneGene')} @all_genes;
-gene2csv (File::Spec->catdir ($out_dir, "variant_histones.csv"), @variants);
+## this is both H1 and H5 (when they exist), and variant H1
+gene2csv (&$out_path ("linker_histones.csv"), $db->linkers);
