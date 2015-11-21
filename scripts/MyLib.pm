@@ -313,27 +313,4 @@ sub make_tex_catalogue {
     or die "Couldn't close $path after writing: $!";
 }
 
-sub make_csv_catalogue {
-  my $fpath = shift;
-  my $csv = Text::CSV->new ({
-    binary => 1,
-    eol    => $/,
-  }) or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
-
-  open (my $fh, ">:encoding(utf8)", $fpath)
-    or die "Could not open $fpath for writing: $!";
-
-  $csv->print ($fh, ["Gene name", "Gene UID", "Transcript accession", "Protein accession"]);
-  foreach my $gene (@_) {
-    if ($$gene{'pseudo'}) {
-      $csv->print ($fh, [$$gene{'histone'}, $$gene{'symbol'}, $$gene{'uid'}, 'n/a', 'n/a']);
-    } else {
-      while (my ($mrna, $prot) = each %{$$gene{"transcripts"}}) {
-        $csv->print ($fh, [$$gene{'histone'}, $$gene{'symbol'}, $$gene{'uid'}, $mrna, $prot]);
-      }
-    }
-  }
-  close $fh or die "Could not close $fpath after writing: $!";
-}
-
 1; # a package must return true

@@ -89,9 +89,7 @@ foreach my $histone (sort keys %types) {
   push (@sorted, sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}});
 }
 my $tex_table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
-my $csv_table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.csv");
 MyLib::make_tex_catalogue ($tex_table_path, @sorted);
-MyLib::make_csv_catalogue ($csv_table_path, @sorted);
 
 
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");

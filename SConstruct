@@ -298,7 +298,6 @@ align_targets += [path4result ("variables-align_results.tex")]
 
 clust_targets += [
   path4result ("table-histone_catalogue.tex"),
-  path4result ("table-histone_catalogue.csv"),
   path4result ("variables-cluster_stats.tex"),
 ]
 
