@@ -21,6 +21,13 @@ use warnings;
 use Carp;
 
 use List::Util;
+## This should be the same as List::Util::all (according to perldoc).
+## We do this to cover older versions of perl with it.
+sub all_in_array (&@)
+{
+  ## As declared in new versions List::Util documentation
+  return List::Util::reduce { $a && $_[0]->(local $_ = $b) } 1, @_[1 .. $#_];
+}
 
 use Moose;
 use Moose::Util::TypeConstraints qw(enum subtype as where);
@@ -45,7 +52,7 @@ subtype 'PositiveInt',
 ## See https://github.com/af-lab/histone-catalog/issues/21
 subtype 'GeneProducts',
   as 'HashRef',
-  where { List::Util::all { $_ } keys %{$_} };
+  where { all_in_array { $_ } keys %{$_} };
 
 ## NCBI gene ID
 has ['uid']
