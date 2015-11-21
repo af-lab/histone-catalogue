@@ -28,6 +28,13 @@ sub all_in_array (&@)
   ## As declared in new versions List::Util documentation
   return List::Util::reduce { $a && $_[0]->(local $_ = $b) } 1, @_[1 .. $#_];
 }
+## Idem for List::Util::none
+sub none_in_array (&@)
+{
+  ## As declared in new versions List::Util documentation
+  return List::Util::reduce { $a && ! $_[0]->(local $_ = $b) } 1, @_[1 .. $#_];
+}
+
 
 use Moose;
 use Moose::Util::TypeConstraints qw(enum subtype as where);
@@ -97,7 +104,7 @@ sub BUILD
       ## It is possible for some products have a transcript but no protein.
       ## However, if we are a coding gene, at least one must encode a protein.
       if ($n_products == 0
-          || List::Util::none { $_ } values %{$self->products})
+          || none_in_array { $_ } values %{$self->products})
         { croak "attempt to create a Gene of coding type without products"; }
     }
   elsif ($n_products > 0)
