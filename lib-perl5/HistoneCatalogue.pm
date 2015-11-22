@@ -34,9 +34,6 @@ our $cluster_number = 4;
 our @histones       = qw(H2A H2B H3 H4);
 our $histone_regexp = join ("|", @histones);
 
-## max number of significant figures (digits) for sizes (cluster length)
-our $size_precision = 2;
-
 ## LaTeX code to mark genes as pseudo on tables
 our $pseudo_mark    = '($\psi$)';
 

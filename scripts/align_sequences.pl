@@ -234,7 +234,7 @@ sub tex_compare_histone_proteins {
 
   say {$var_file} HistoneCatalogue::latex_newcommand (
     $histone."PID",
-    sprintf ("%.${HistoneCatalogue::size_precision}f", $align->overall_percentage_identity),
+    $align->overall_percentage_identity,
     "Overall percentage identity between all histone $histone proteins"
   );
 
