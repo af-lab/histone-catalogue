@@ -248,37 +248,6 @@ sub load_seq {
   return $seq;
 }
 
-## turn a distance in base pairs (a positive integer) into a string appropriate
-## for text (in LaTeX format), e.g. 1000000 -> 1\,Mbp; 1540 -> 1.54\,kbp (the
-## precision is defined in HistoneCatalogue.pm
-sub pretty_length {
-  my $length   = $_[0];
-  ## (ceil() -1 ) because when /3, if it's 3, floor will give 1 when we want 0
-  my $power    = ( ceil(length($length) / 3) -1) * 3;
-  my $dec_case = 0;
-  my $number   = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
-  if ( length($length) < $HistoneCatalogue::size_precision) {
-    ## nothing, no decimal cases at all in these cases
-  } elsif (length($number) < $HistoneCatalogue::size_precision) {
-    my $dec_case = $HistoneCatalogue::size_precision - length ($number);
-    $number      = sprintf("%1.${dec_case}f", $length / (10 ** $power) );
-  }
-  my %prefixes = (
-    0  => '',
-    3  => 'k',
-    6  => 'M',
-    9  => 'G',
-    12 => 'T',
-    15 => 'P',
-    18 => 'E',
-    21 => 'Z',
-    24 => 'Y',
-  );
-  my $prefix = $prefixes{$power} || "e+" . ($power-24) . "Y";
-
-  return "$number\\,${prefix}bp";
-}
-
 ## fill the catalogue. First argument is the file path for the
 ## table, while the rest is an array of genes
 ## fill_catalogue ($path, @genes)

@@ -494,6 +494,10 @@ latex_package_dependencies = [
   "fp",
   "afterpage",
   "isodate",
+  "etoolbox",
+  "stringstrings",
+  "intcalc",
+  "siunitx",
 ]
 
 env.Help("""

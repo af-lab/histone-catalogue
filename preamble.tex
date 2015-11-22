@@ -35,8 +35,14 @@
 \usepackage[sectionbib,square,comma,numbers]{natbib}
 \bibliographystyle{vancouver}
 
+\usepackage{etoolbox}
+\usepackage{stringstrings}
 \usepackage{fp}
+\usepackage{intcalc}
 \usepackage{capt-of}
+
+\usepackage{siunitx}
+\DeclareSIUnit{\bp}{bp} % base pairs
 
 \usepackage[english]{isodate}
 
@@ -97,6 +103,50 @@
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealScriptValue{\Realprintdate{#1}}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
+}
+
+
+%% A function to automatically round a number using the "best" SI prefix.
+%% The idea is to transform very long numbers into something more
+%% reasonable.  For example, instead of 1672945bp, say 1.67Mbp.
+%% The first argument is the number, the second the length of the
+%% decimal part, adn the third a SI unit (as defined by the siunitx package)
+%% Examples:
+%%  \AutoSIPrefix{12345}{2}{\bp} => \SI{12.35}{\kilo\bp}  % note rounding of 12.345
+%%  \AutoSIPrefix{123456}{1}{\bp} => \SI{123.5}{\kilo\bp}
+%%  \AutoSIPrefix{1234567}{0}{\bp} => \SI{1}{\mega\bp}
+%%
+%% As with the overloading of the FP* macros, we need to redefine \ScriptValue
+\newcommand{\AutoSIPrefix}[3]{%
+  \renewcommand{\ScriptValue}[1]{##1}%
+  \stringlength[e]{#1}%
+  \numdef{\length}{\theresult}%
+%
+  \numdef{\modulo}{\intcalcMod{\length}{3}}%
+  \numdef{\power}{\intcalcMul{\intcalcDiv{\length}{3}}{3}}%
+%% If modulo is zero, then we use the prefix below
+  \ifnumequal{\modulo}{0}{\numdef{\modulo}{3} \numdef{\power}{\intcalcSub{\power}{3}}}{}%
+%
+  \ifnumequal{\power}{24}{\def\prefix{\yotta}}{%
+    \ifnumequal{\power}{21}{\def\prefix{\zetta}}{%
+      \ifnumequal{\power}{18}{\def\prefix{\exa}}{%
+        \ifnumequal{\power}{15}{\def\prefix{\peta}}{%
+          \ifnumequal{\power}{12}{\def\prefix{\tera}}{%
+            \ifnumequal{\power}{9}{\def\prefix{\giga}}{%
+              \ifnumequal{\power}{6}{\def\prefix{\mega}}{%
+                \ifnumequal{\power}{3}{\def\prefix{\kilo}}{%
+                  \def\prefix{}}}}}}}}}%
+%% Compute the integer part
+  \substring[q]{#1}{1}{\modulo}%
+  \csedef{integer}{\thestring}%
+%% Compute the fractional part
+  \numdef{\fractStart}{\intcalcAdd{\modulo}{1}}%
+  \substring[q]{#1}{\fractStart}{$}%
+  \csedef{fractional}{\thestring}%
+%% Round and echo
+  \RealFPround{\rounded}{\integer.\fractional}{#2}%
+  \renewcommand{\ScriptValue}{\RealScriptValue}%
+  \ScriptValue{\SI{\rounded}{\prefix#3}}%
 }
 
 

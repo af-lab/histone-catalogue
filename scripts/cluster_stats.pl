@@ -102,11 +102,11 @@ foreach my $cluster_k (keys %canon) {
   ## Calculate the length (in bp) of each cluster
   my $coord_start  = List::Util::min (@{$$cluster{'coordinates'}});
   my $coord_end    = List::Util::max (@{$$cluster{'coordinates'}});
-  my $coord_length = MyLib::pretty_length (abs ($coord_start - $coord_end));
+  my $coord_length = abs ($coord_start - $coord_end);
   say {$stats} HistoneCatalogue::latex_newcommand (
     $cluster_k."Span",
     $coord_length,
-    "Span, in bp with best SI prefix, of the histone cluster $cluster_k"
+    "Span, in bp, of the histone cluster $cluster_k"
   );
 
   ## Get a nice LaTeX string showing the range of locus for each cluster,
