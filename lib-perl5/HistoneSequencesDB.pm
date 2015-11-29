@@ -384,6 +384,109 @@ sub variants
 }
 
 
+=method _get_seq
+
+Args:
+  sub_dir
+  fname
+
+Returns
+  Bio::Seq
+=cut
+sub _get_seq
+{
+  my $self = shift;
+  my $sub_dir = shift;
+  my $fname = shift;
+  my $path = File::Spec->catdir($self->dir, $sub_dir, "$fname.gb");
+  ## We know there's only one sequence in those genbank files.
+  my $seq = Bio::SeqIO->new(-file => $path)->next_seq;
+  return $seq;
+}
+
+=method get_gene
+Args:
+  uid - a string with the gene uid.
+
+Returns:
+  Bio::Seq object for the gene.
+=cut
+sub get_gene
+{
+  my $self = shift;
+  my $uid = shift;
+  return $self->_get_seq($self->genes_dir, $uid);
+}
+
+=method get_transcript
+Args:
+  acc - a string with the transcript accession number.
+
+Returns:
+  Bio::Seq object for the transcript.
+=cut
+sub get_transcript
+{
+  my $self = shift;
+  my $acc = shift;
+  return $self->_get_seq($self->transcripts_dir, $acc);
+}
+
+=method get_transcript_cds
+Args:
+  acc - a string with the transcript accession number.
+
+Returns:
+  Bio::Seq object for the transcript CDS.
+=cut
+sub get_transcript_cds
+{
+  my $self = shift;
+  my $acc = shift;
+  my $seq = $self->_get_seq($self->transcripts_dir, $acc);
+  my $cds = ($seq->get_SeqFeatures("CDS"))[0]->seq();
+
+  ## Remove the start codon, for the same reasons we remove the methionine
+  ## in get_protein().  We want the sequences to match.
+  ##
+  ## In addition, also remove the stop codon (so it matches with the
+  ## protein sequence).  I'm not 100% sure this is correct but matches
+  ## our current needs.
+  $cds = $cds->trunc(4, $cds->length -3);
+
+  return $cds;
+}
+
+=method get_protein
+Args:
+  acc - a string with the protein accession number.
+
+Returns:
+  Bio::Seq object for the protein.
+=cut
+sub get_protein
+{
+  my $self = shift;
+  my $acc = shift;
+  my $seq = $self->_get_seq($self->proteins_dir, $acc);
+
+  ## XXX  it is standard to remove the initial methionine when dealing
+  ##      with histone proteins (it does not even count when giving position
+  ##      in the protein). This is really really not recommended by the HGVS
+  ##      (one would think is also common sense), but the number of the
+  ##      amino acids is so ingrained in the field that we can't start
+  ##      now to give them other numbers (everyone knows H3 K4Me3, we can't
+  ##      start to correct them and call it H3 K5Me3 because we are not
+  ##      important enough to break the convention).  Comment and Uncomment
+  ##      the following line, to keep or remove the N-terminal methionine
+
+  ## Remove the first amino acid since in histones it's cleaved off
+  $seq = $seq->trunc(2, $seq->length);
+
+  return $seq;
+}
+
+
 __PACKAGE__->meta->make_immutable;
 
 1;
