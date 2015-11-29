@@ -96,6 +96,8 @@ ok (&$ctor (uid => 5, symbol => 'A', type => 'coding',
   is_deeply ($g->products, {'NM_1' => 'NP_1'}, 'retrieve hash ref of products');
   is_deeply ([$g->transcripts], ['NM_1'], 'retrieve array of transcripts');
   is_deeply ([$g->proteins], ['NP_1'], 'retrieve array of proteins');
+  is_deeply ($g->coding_products, {'NM_1' => 'NP_1'},
+             'retrieve hash ref of coding products');
 }
 
 {
@@ -107,6 +109,8 @@ ok (&$ctor (uid => 5, symbol => 'A', type => 'coding',
     'retrieve array of transcripts');
   is_deeply ([sort $g->proteins], ['NP_1', 'NP_6'],
     'retrieve array of proteins');
+  is_deeply ($g->coding_products, {'NM_1' => 'NP_1', 'NM_4' => 'NP_6'},
+             'retrieve hash ref of coding products');
 }
 
 {
@@ -114,6 +118,8 @@ ok (&$ctor (uid => 5, symbol => 'A', type => 'coding',
                   products => {'NM_1' => 'NP_1', 'NM_4' => ''});
   is_deeply ($g->products, {'NM_1' => 'NP_1', 'NM_4' => ''},
     'retrieve hash ref of products with non-coding transcripts');
+  is_deeply ($g->coding_products, {'NM_1' => 'NP_1'},
+             'retrieve hash ref of coding products with non-coding transcripts');
 }
 
 throws_ok

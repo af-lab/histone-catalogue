@@ -129,6 +129,22 @@ sub proteins
   return values %{$self->products()};
 }
 
+=method coding_products
+
+Returns an hash ref, similar to products, but with the non-coding
+transcripts removed.
+=cut
+sub coding_products
+{
+  my $self = shift;
+  my $products = $self->products();
+
+  my @coding_transcripts = grep {$products->{$_}} keys %{$products};
+  my %coding_products = map {$_ => $products->{$_}} @coding_transcripts;
+  return \%coding_products;
+}
+
+
 __PACKAGE__->meta->make_immutable;
 
 1;
