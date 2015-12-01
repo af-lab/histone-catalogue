@@ -363,7 +363,12 @@ analysis = [
     source = path4lib("HistoneCatalogue.pm"),
     M      = ["HistoneCatalogue"],
     eval   = "HistoneCatalogue::write_config_variables('%s')" % path4seq("extractor.log")
-  )
+  ),
+  env.PerlOutput(
+    target = path4result("variables-dnds.tex"),
+    source = path4script("pairwise_dnds.pl"),
+    args   = [db_store],
+  ),
 ]
 
 env.Alias ("analysis", analysis)
@@ -468,6 +473,7 @@ perl_module_dependencies = [
   "Bio::Tools::EUtilities",
   "Bio::SeqIO",
   "Bio::Tools::Run::Alignment::TCoffee",
+  "Bio::Tools::Run::Phylo::PAML::Codeml",
   "Text::CSV",
   "Statistics::Basic",
   "Moose",
