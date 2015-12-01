@@ -69,7 +69,12 @@
 %% are automatically generated.  To do that, the scripts will put the
 %% values inside a ScriptValue macro which we define here to control how
 %% it really looks.
-\newcommand{\ScriptValue}[1]{\colorbox[gray]{0.8}{#1}}
+%%
+%% By mixing a \strut with \fboxsep set to 0pt, we get an expanded
+%% colorbox (not too tight), without changing the line height.  It
+%% also solves the issue of having different colorbox with different
+%% heights (see https://tex.stackexchange.com/questions/7530/height-of-colorbox )
+\newcommand{\ScriptValue}[1]{\setlength{\fboxsep}{0pt}\colorbox[gray]{0.8}{\strut \#1}}
 %% But then, we also want to make operations with those values in LaTeX
 %% using FPeval but FPeval fails because ScriptValue gets expanded into
 %% something non-numeric.  So we use the following trick: we store the
