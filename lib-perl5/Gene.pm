@@ -56,7 +56,7 @@ subtype 'PositiveInt',
 ## Non-coding transcripts are a thing, so we may have a transcript (key)
 ## without a matching protein (value).  Because of that we only check
 ## the value of the keys.
-## See https://github.com/af-lab/histone-catalog/issues/21
+## See https://github.com/af-lab/histone-catalogue/issues/21
 subtype 'GeneProducts',
   as 'HashRef',
   where { all_in_array { $_ } keys %{$_} };

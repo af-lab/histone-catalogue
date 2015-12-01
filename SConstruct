@@ -248,7 +248,7 @@ env.Alias("data", [raw_data, data_store, seq_store])
 ## This is completely useless and is not required by any other target.
 ## It is even dangerous because csv is a really poor format for genes.
 ## We only have this because Andrew wants it for his other projects.
-## See https://github.com/af-lab/histone-catalog/issues/3
+## See https://github.com/af-lab/histone-catalogue/issues/3
 
 def path4csv (name=""):
   return os.path.join(results_dir, "csv", name)
@@ -386,8 +386,8 @@ analysis_figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
 figures = [static_figures, analysis_figures]
 
 manuscript = env.PDF (
-  target = "histone_catalog.pdf",
-  source = "histone_catalog.tex"
+  target = "histone_catalogue.pdf",
+  source = "histone_catalogue.tex"
 )
 env.Alias ("manuscript", manuscript)
 Depends (manuscript, [figures, analysis])

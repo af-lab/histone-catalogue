@@ -36,7 +36,7 @@ paper which we use as reference for comparison)
   * results/sequences/ - automatically downloaded sequences
 * scripts/ - directory for scripts that will analyse the data
 * sections/ - directory whith the source for the paper
-* histone_catalog.tex - LaTeX source for the paper
+* histone_catalogue.tex - LaTeX source for the paper
 * README.md - this file, in Markdown syntax
 * references.bib - BibTeX database for the references in the paper
 * SConstruct - build instructions for SCons

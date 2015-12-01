@@ -29,7 +29,7 @@ use utf8;
 ## This is completely useless and is not used anywhere for the manuscript.
 ## It is even dangerous because csv is a really poor format for genes.
 ## We only have this because Andrew wants it for his other projects.
-## See https://github.com/af-lab/histone-catalog/issues/3
+## See https://github.com/af-lab/histone-catalogue/issues/3
 
 use strict;
 use warnings;
