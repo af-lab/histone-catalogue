@@ -25,6 +25,8 @@ use Bio::Root::Version;
 use Bio::Tools::EUtilities;
 use Bio::Tools::Run::Alignment::TCoffee;
 
+use HistoneSequencesDB;
+
 =var cluster_number
 An integer value with the current number of known clusters.
 =cut
@@ -123,6 +125,57 @@ sub get_sequences_date
 
   $data_header =~ m/(?<=\[)(\d\d\d\d\-\d\d\-\d\d)[\d: ]+(?=\])/;
   return $1;
+}
+
+
+=func say_histone_catalogue
+
+Prints a very long LaTeX table listing all input histone genes, sorted by
+histone type and symbol, their UIDs, and transcript and protein accession
+numbers.
+
+Args:
+  genes (array of HistoneGene)
+
+Returns:
+  void
+=cut
+sub say_histone_catalogue
+{
+  my @genes = @_;
+
+  @genes = sort {$a->histone_type cmp $b->histone_type
+                 || $a->symbol cmp $b->symbol} @genes;
+
+  say "\\begin{ctabular}{l l l l l}";
+  say "  \\toprule";
+  say "  Type & Gene name & Gene UID & Transcript accession & Protein accession \\\\";
+  say "  \\midrule";
+  foreach my $gene (@genes)
+    {
+      my @cols = ($gene->histone_type(), $gene->symbol(), $gene->uid());
+      if (not $gene->is_coding)
+        { say "  " . join (" & ", @cols, "pseudogene", "pseudogene") . "\\\\"; }
+      else
+        {
+          my $products = $gene->products();
+          my %tex_products = map { mk_latex_string($_) => mk_latex_string($products->{$_})
+                                   } keys %$products;
+          my @transcripts = sort keys %tex_products;
+
+          say "  " . join (" & ", @cols, $transcripts[0],
+                                  $tex_products{$transcripts[0]}) . "\\\\";
+
+          ## In the case of a gene with multiple transcripts, each will have
+          ## its line on the table but the first two columns will be empty.
+          foreach (@transcripts[1 .. $#transcripts])
+            { say "      & & & $_ & $tex_products{$_} \\\\"; }
+        }
+    }
+
+  say "  \\bottomrule";
+  say "\\end{ctabular}";
+  return;
 }
 
 

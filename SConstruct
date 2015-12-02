@@ -277,6 +277,8 @@ if "update" in COMMAND_LINE_TARGETS:
 ## groups all of them. Each of these scripts generate a large number of
 ## files, the targets, we need to make lists of them all
 
+perl_db_var = "HistoneSequencesDB::read_db('%s')" % db_store
+
 align_targets = list ()
 clust_targets = list ()
 prot_targets  = list ()
@@ -297,7 +299,6 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
 align_targets += [path4result ("variables-align_results.tex")]
 
 clust_targets += [
-  path4result ("table-histone_catalogue.tex"),
   path4result ("variables-cluster_stats.tex"),
 ]
 
@@ -320,6 +321,13 @@ var_targets += [path4result ("table-variant_catalogue.tex")]
 check_targets += [path4result ("histone_insanities.tex")]
 
 analysis = [
+  env.PerlOutput(
+    target = path4result("table-histone_catalogue.tex"),
+    source = path4lib("HistoneCatalogue.pm"),
+    M      = ["HistoneCatalogue", "HistoneSequencesDB"],
+    eval   = ("HistoneCatalogue::say_histone_catalogue(%s->canonical_core)"
+              % perl_db_var),
+  ),
   env.PerlScript(
     target = align_targets,
     source = path4script ("align_sequences.pl"),
@@ -480,8 +488,9 @@ perl_module_dependencies = [
   "Moose::Util::TypeConstraints",
   "MooseX::StrictConstructor",
   "namespace::autoclean",
-  "Test::More",
   "Test::Exception",
+  "Test::Output",
+  "Test::More",
 ]
 
 latex_package_dependencies = [

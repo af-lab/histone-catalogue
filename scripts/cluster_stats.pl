@@ -25,8 +25,6 @@ use MyLib;
 
 ## This script will calculate stats for each of the histone clusters. It will
 ## create the following files:
-##    * table-histone_catalogue.tex (a very long LaTeX table with all canonical
-##      histones, their UIDs, and transcript and protein accession numbers)
 ##    * variables-cluster_stats.tex (LaTeX variables with the number of histones
 ##      in each cluster, how many are pseudo and coding, the length of each
 ##      each cluster, and the location in the genome of each cluster)
@@ -80,17 +78,6 @@ foreach my $gene (@data) {
     }
   }
 }
-
-## Sort the histone by types, then sort them by their symbol, to
-## make the table with all of the canonical histones, their gene symbols,
-## UIDs, and protein and transcript accession numbers
-my @sorted;
-foreach my $histone (sort keys %types) {
-  push (@sorted, sort {$$a{'symbol'} cmp $$b{'symbol'}} @{$types{$histone}});
-}
-my $tex_table_path = File::Spec->catdir($path{results}, "table-histone_catalogue.tex");
-MyLib::make_tex_catalogue ($tex_table_path, @sorted);
-
 
 my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
 open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
