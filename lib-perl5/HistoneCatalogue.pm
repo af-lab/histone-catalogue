@@ -159,10 +159,17 @@ sub say_histone_catalogue
       else
         {
           my $products = $gene->products();
-          my %tex_products = map { mk_latex_string($_) => mk_latex_string($products->{$_})
-                                   } keys %$products;
-          my @transcripts = sort keys %tex_products;
+          my %tex_products = map
+            {
+              if ($products->{$_})
+                { mk_latex_string($_) => mk_latex_string($products->{$_}); }
+              else
+                ## Non-coding trancripts are an issue:
+                ##  https://github.com/af-lab/histone-catalogue/issues/21
+                { mk_latex_string($_) => mk_latex_string("non-coding"); }
+            } keys %$products;
 
+          my @transcripts = sort keys %tex_products;
           say "  " . join (" & ", @cols, $transcripts[0],
                                   $tex_products{$transcripts[0]}) . "\\\\";
 

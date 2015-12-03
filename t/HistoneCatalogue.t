@@ -166,4 +166,22 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->canonical_core) },
 \end{ctabular}
 END
 
+stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants) },
+    <<'END', 'Test variant histones with non-coding transcripts latex table');
+\begin{ctabular}{l l l l l}
+  \toprule
+  Type & Gene name & Gene UID & Transcript accession & Protein accession \\
+  \midrule
+  H1 & H1F0 & 3005 & NM\_005318 & NP\_005309\\
+  H1 & H1FX & 8971 & NM\_006026 & NP\_006017\\
+  H2A & H2AFJ & 55766 & NM\_177925 & NP\_808760\\
+      & & & NR\_027716 & non-coding \\
+  H2A & H2AFZ & 3015 & NM\_002106 & NP\_002097\\
+  H2A & H2AFZP4 & 100462795 & pseudogene & pseudogene\\
+  H3 & CENPA & 1058 & NM\_001042426 & NP\_001035891\\
+      & & & NM\_001809 & NP\_001800 \\
+  \bottomrule
+\end{ctabular}
+END
+
 done_testing;
