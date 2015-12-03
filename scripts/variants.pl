@@ -26,8 +26,6 @@ use MyLib;
 ## of this paper but a table listing all of the variant histones is useful and
 ## easy. It will generate the following files:
 ##
-##    * table-variant_catalogue.tex (a very long LaTeX table with all variant
-##      histones, their UIDs, and transcript and protein accession numbers)
 ##    * variables-variants.tex
 ##
 ## Usage is:
@@ -37,9 +35,7 @@ use MyLib;
 ## Check input options
 my %path = MyLib::parse_argv("sequences", "results");
 
-## Get the variant genes and order them by gene symbol
-my @variants = sort {$$a{histone} cmp $$b{histone} || $$a{symbol} cmp $$b{symbol}}
-  MyLib::load_variant ($path{sequences});
+my @variants = MyLib::load_variant ($path{sequences});
 
 my $var_path = File::Spec->catdir($path{results}, "variables-variants.tex");
 open (my $var_file, ">", $var_path)
@@ -53,6 +49,3 @@ say {$var_file} HistoneCatalogue::latex_newcommand (
 
 close ($var_file)
   or die "Couldn't close $var_path after writing: $!";
-
-my $tex_table_path = File::Spec->catdir($path{results}, "table-variant_catalogue.tex");
-MyLib::make_tex_catalogue ($tex_table_path, @variants);

@@ -316,7 +316,7 @@ utr_targets += [
   path4figure ("seqlogo_HDEs.eps"),
 ]
 
-var_targets += [path4result ("table-variant_catalogue.tex")]
+var_targets += [path4result ("variables-variants.tex")]
 
 check_targets += [path4result ("histone_insanities.tex")]
 
@@ -326,6 +326,13 @@ analysis = [
     source = path4lib("HistoneCatalogue.pm"),
     M      = ["HistoneCatalogue", "HistoneSequencesDB"],
     eval   = ("HistoneCatalogue::say_histone_catalogue(%s->canonical_core)"
+              % perl_db_var),
+  ),
+  env.PerlOutput(
+    target = path4result("table-variant_catalogue.tex"),
+    source = path4lib("HistoneCatalogue.pm"),
+    M      = ["HistoneCatalogue", "HistoneSequencesDB"],
+    eval   = ("HistoneCatalogue::say_histone_catalogue(%s->variants)"
               % perl_db_var),
   ),
   env.PerlScript(
