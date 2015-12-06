@@ -184,4 +184,10 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants) },
 \end{ctabular}
 END
 
+stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
+    <<'END', 'Test print of histone counts');
+%% Total number of histone variants genes
+\newcommand{\TotalVariantGenes}{\ScriptValue{6}}
+END
+
 done_testing;

@@ -186,6 +186,30 @@ sub say_histone_catalogue
 }
 
 
+=func say_histone_counts
+
+Prints a series of LaTeX newcommands with total number of histone
+genes, total per cluster and histone type, variants and canonical.
+
+Args:
+  db (HistoneSequencesDB)
+
+Returns:
+  void
+=cut
+sub say_histone_counts
+{
+  my $db = shift;
+
+  say HistoneCatalogue::latex_newcommand(
+    "TotalVariantGenes",
+    scalar (() = $db->variants),
+    "Total number of histone variants genes"
+  );
+  ## TODO expand with other stats
+}
+
+
 =func mk_latex_string
 
 Convert a string into a LaTeX usable string.  Basically, this means

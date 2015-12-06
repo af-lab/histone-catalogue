@@ -285,7 +285,6 @@ prot_targets  = list ()
 refer_targets = list ()
 check_targets = list ()
 utr_targets   = list ()
-var_targets   = list ()
 check_targets = list ()
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
@@ -316,8 +315,6 @@ utr_targets += [
   path4figure ("seqlogo_HDEs.eps"),
 ]
 
-var_targets += [path4result ("variables-variants.tex")]
-
 check_targets += [path4result ("histone_insanities.tex")]
 
 analysis = [
@@ -334,6 +331,12 @@ analysis = [
     M      = ["HistoneCatalogue", "HistoneSequencesDB"],
     eval   = ("HistoneCatalogue::say_histone_catalogue(%s->variants)"
               % perl_db_var),
+  ),
+  env.PerlOutput(
+    target = path4result("variables-histone_counts.tex"),
+    source = path4lib("HistoneCatalogue.pm"),
+    M      = ["HistoneCatalogue", "HistoneSequencesDB"],
+    eval   = ("HistoneCatalogue::say_histone_counts(%s)" % perl_db_var),
   ),
   env.PerlScript(
     target = align_targets,
@@ -367,11 +370,6 @@ analysis = [
     source = path4script ("utr_analysis.pl"),
     action = ["--sequences", seq_dir, "--figures", figures_dir,
               "--results", results_dir],
-  ),
-  env.PerlScript(
-    target = var_targets,
-    source = path4script ("variants.pl"),
-    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
   env.PerlOutput(
     target = path4result("variables-configuration.tex"),
