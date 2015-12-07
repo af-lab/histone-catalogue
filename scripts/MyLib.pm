@@ -248,38 +248,4 @@ sub load_seq {
   return $seq;
 }
 
-## fill the catalogue. First argument is the file path for the
-## table, while the rest is an array of genes
-## fill_catalogue ($path, @genes)
-sub make_tex_catalogue {
-  my $path = shift;
-  open (my $table, ">", $path)
-    or die "Could not open $path for writing: $!";
-
-  say {$table} "\\begin{ctabular}{l l l l l}";
-  say {$table} "  \\toprule";
-  say {$table} "  Type & Gene name & Gene UID & Transcript accession & Protein accession \\\\";
-  say {$table} "  \\midrule";
-
-  foreach my $gene (@_) {
-
-    print {$table} "  $$gene{'histone'} & $$gene{'symbol'} & $$gene{'uid'} & ";
-    if ($$gene{'pseudo'}) {
-      print {$table} "pseudogene & pseudogene \\\\\n";
-    } else {
-      ## In the case of a gene with multiple transcripts, each will have
-      ## its line on the table but the first two columns will be empty
-      my @acc_cols = map {
-        HistoneCatalogue::mk_latex_string ($_ || "n/a") . " & " . HistoneCatalogue::mk_latex_string ($$gene{"transcripts"}{$_} || "n/a") . "\\\\\n"
-      } (sort keys %{$$gene{'transcripts'}});
-      print {$table} join ("      & & &", @acc_cols);
-    }
-  }
-
-  say {$table} "  \\bottomrule";
-  say {$table} "\\end{ctabular}";
-  close ($table)
-    or die "Couldn't close $path after writing: $!";
-}
-
 1; # a package must return true
