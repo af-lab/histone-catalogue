@@ -343,7 +343,7 @@ analysis = [
   env.PerlOutput(
     target = path4result("variables-cluster_stats.tex"),
     source = path4script("cluster_stats.pl"),
-    args   = ["--sequences", seq_dir],
+    args   = [db_store],
   ),
   env.PerlScript(
     target = prot_targets,
