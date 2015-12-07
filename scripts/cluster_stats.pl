@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-## Copyright (C) 2011-2014 Carnë Draug <carandraug+dev@gmail.com>
+## Copyright (C) 2011-2015 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -17,49 +17,35 @@
 use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
-use File::Spec;                 # Perform operation on file names
 use List::Util;                 # Includes min and max
 
 use HistoneCatalogue;
 use MyLib;
 
-## This script will calculate stats for each of the histone clusters. It will
-## create the following files:
-##    * variables-cluster_stats.tex (LaTeX variables with the number of histones
-##      in each cluster, how many are pseudo and coding, the length of each
-##      each cluster, and the location in the genome of each cluster)
+## This script will print stats for each of the histone clusters. It will
+## include:
+##    (LaTeX variables with the number of histones
+##    in each cluster, how many are pseudo and coding, the length of each
+##    each cluster, and the location in the genome of each cluster)
 ##
 ## Usage is:
 ##
-## cluster_stats.pl --sequences path/for/sequences --results path/for/results
+## cluster_stats.pl --sequences path/for/sequences
 
 ## Check input options
-my %path = MyLib::parse_argv("sequences", "results");
+my %path = MyLib::parse_argv("sequences");
 
 ## Read the data and create a data structure for the analysis
 my %canon;   # organized by cluster, with counts of histones and other info
-my %types;   # histone types as keys for arrays of histones of that type
 my @data = MyLib::load_canonical ($path{sequences});
 foreach my $gene (@data) {
   my $symbol  = $$gene{'symbol'};
   my $cluster = "HIST" . $$gene{'cluster'};
   my $histone = $$gene{'histone'};
-  push (@{$types{$histone}}, $gene);
 
   ## to find the start and end of each cluster, we just list all the start and
   ## end coordinates. At the end, we get the min and max of them.
   push (@{$canon{$cluster}{"coordinates"}}, $$gene{'start'}, $$gene{'end'});
-
-  ## count histones (by cluster, type and coding/pseudo)
-  $canon{$cluster}{"total"}++;
-  $canon{$cluster}{$histone}{"total"}++;
-  if ($$gene{'pseudo'}) {
-    $canon{$cluster}{"pseudo"}++;
-    $canon{$cluster}{$histone}{"pseudo"}++;
-  } else {
-    $canon{$cluster}{"coding"}++;
-    $canon{$cluster}{$histone}{"coding"}++;
-  }
 
   ## Get the locus.
   ## It is not possible to calculate it from the genomic coordinates (but
@@ -79,18 +65,14 @@ foreach my $gene (@data) {
   }
 }
 
-my $stats_path = File::Spec->catdir($path{results}, "variables-cluster_stats.tex");
-open (my $stats, ">", $stats_path) or die "Could not open $stats_path for writing: $!";
-
 ## Get the counts and stats for each of the clusters
-my %totals;
 foreach my $cluster_k (keys %canon) {
   my $cluster = $canon{$cluster_k};
   ## Calculate the length (in bp) of each cluster
   my $coord_start  = List::Util::min (@{$$cluster{'coordinates'}});
   my $coord_end    = List::Util::max (@{$$cluster{'coordinates'}});
   my $coord_length = abs ($coord_start - $coord_end);
-  say {$stats} HistoneCatalogue::latex_newcommand (
+  say HistoneCatalogue::latex_newcommand(
     $cluster_k."Span",
     $coord_length,
     "Span, in bp, of the histone cluster $cluster_k"
@@ -112,12 +94,10 @@ foreach my $cluster_k (keys %canon) {
     my $locus_end   = List::Util::maxstr (@locus);
     my $locus = $locus_start eq $locus_end ?
                 $locus_start : "$locus_start--$locus_end";
-    say {$stats} HistoneCatalogue::latex_newcommand (
+    say HistoneCatalogue::latex_newcommand(
       $cluster_k."Locus",
       $locus,
       "Locus of the histone cluster $cluster_k"
     );
   }
 }
-
-close ($stats) or die "Couldn't close $stats_path after writing: $!";

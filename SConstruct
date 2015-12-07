@@ -297,10 +297,6 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
   ]
 align_targets += [path4result ("variables-align_results.tex")]
 
-clust_targets += [
-  path4result ("variables-cluster_stats.tex"),
-]
-
 prot_targets += [path4result ("variables-protein_stats.tex")]
 
 refer_targets += [path4result ("table-reference_comparison.tex")]
@@ -344,10 +340,10 @@ analysis = [
     action = ["--sequences", seq_dir, "--figures", figures_dir,
               "--results", results_dir],
   ),
-  env.PerlScript(
-    target = clust_targets,
-    source = path4script ("cluster_stats.pl"),
-    action = ["--sequences", seq_dir, "--results", results_dir],
+  env.PerlOutput(
+    target = path4result("variables-cluster_stats.tex"),
+    source = path4script("cluster_stats.pl"),
+    args   = ["--sequences", seq_dir],
   ),
   env.PerlScript(
     target = prot_targets,
