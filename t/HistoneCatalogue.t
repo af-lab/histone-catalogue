@@ -186,6 +186,66 @@ END
 
 stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
     <<'END', 'Test print of histone counts');
+%% Total number of canonical histone genes in the genome
+\newcommand{\TotalGenes}{\ScriptValue{6}}
+%% Total number of canonical histone protein coding genes in the genome
+\newcommand{\TotalCodingGenes}{\ScriptValue{5}}
+%% Total number of canonical histone protein pseudogenes in the genome
+\newcommand{\TotalPseudoGenes}{\ScriptValue{1}}
+%% Total number of histone H2A genes
+\newcommand{\HTwoATotalGenes}{\ScriptValue{1}}
+%% Number of histone H2A coding genes
+\newcommand{\HTwoACodingGenes}{\ScriptValue{0}}
+%% Number of histone H2A pseudogenes
+\newcommand{\HTwoAPseudoGenes}{\ScriptValue{1}}
+%% Total number of histone H2B genes
+\newcommand{\HTwoBTotalGenes}{\ScriptValue{1}}
+%% Number of histone H2B coding genes
+\newcommand{\HTwoBCodingGenes}{\ScriptValue{1}}
+%% Number of histone H2B pseudogenes
+\newcommand{\HTwoBPseudoGenes}{\ScriptValue{0}}
+%% Total number of histone H3 genes
+\newcommand{\HThreeTotalGenes}{\ScriptValue{1}}
+%% Number of histone H3 coding genes
+\newcommand{\HThreeCodingGenes}{\ScriptValue{1}}
+%% Number of histone H3 pseudogenes
+\newcommand{\HThreePseudoGenes}{\ScriptValue{0}}
+%% Total number of histone H4 genes
+\newcommand{\HFourTotalGenes}{\ScriptValue{3}}
+%% Number of histone H4 coding genes
+\newcommand{\HFourCodingGenes}{\ScriptValue{3}}
+%% Number of histone H4 pseudogenes
+\newcommand{\HFourPseudoGenes}{\ScriptValue{0}}
+%% Number of protein coding genes in the histone cluster 1
+\newcommand{\CodingGenesInHISTOne}{\ScriptValue{5}}
+%% Number of pseudogenes genes in the histone cluster 1
+\newcommand{\PseudoGenesInHISTOne}{\ScriptValue{1}}
+%% Total Number of genes in the histone cluster 1
+\newcommand{\TotalGenesInHISTOne}{\ScriptValue{6}}
+%% Number of H2A coding genes in the histone cluster 1
+\newcommand{\HTwoACodingInHISTOne}{\ScriptValue{0}}
+%% Number of H2A pseudogenes in the histone cluster 1
+\newcommand{\HTwoAPseudoInHISTOne}{\ScriptValue{1}}
+%% Total Number of H2A genes in the histone cluster 1
+\newcommand{\HTwoATotalInHISTOne}{\ScriptValue{1}}
+%% Number of H2B coding genes in the histone cluster 1
+\newcommand{\HTwoBCodingInHISTOne}{\ScriptValue{1}}
+%% Number of H2B pseudogenes in the histone cluster 1
+\newcommand{\HTwoBPseudoInHISTOne}{\ScriptValue{0}}
+%% Total Number of H2B genes in the histone cluster 1
+\newcommand{\HTwoBTotalInHISTOne}{\ScriptValue{1}}
+%% Number of H3 coding genes in the histone cluster 1
+\newcommand{\HThreeCodingInHISTOne}{\ScriptValue{1}}
+%% Number of H3 pseudogenes in the histone cluster 1
+\newcommand{\HThreePseudoInHISTOne}{\ScriptValue{0}}
+%% Total Number of H3 genes in the histone cluster 1
+\newcommand{\HThreeTotalInHISTOne}{\ScriptValue{1}}
+%% Number of H4 coding genes in the histone cluster 1
+\newcommand{\HFourCodingInHISTOne}{\ScriptValue{3}}
+%% Number of H4 pseudogenes in the histone cluster 1
+\newcommand{\HFourPseudoInHISTOne}{\ScriptValue{0}}
+%% Total Number of H4 genes in the histone cluster 1
+\newcommand{\HFourTotalInHISTOne}{\ScriptValue{3}}
 %% Total number of histone variants genes
 \newcommand{\TotalVariantGenes}{\ScriptValue{6}}
 END

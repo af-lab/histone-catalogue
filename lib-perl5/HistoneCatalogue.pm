@@ -201,12 +201,112 @@ sub say_histone_counts
 {
   my $db = shift;
 
+  ##
+  ## Canonical core counts
+  ##
+  my @canonical_core = $db->canonical_core;
+
+  say HistoneCatalogue::latex_newcommand(
+    "TotalGenes",
+    scalar (@canonical_core),
+    "Total number of canonical histone genes in the genome"
+  );
+  say HistoneCatalogue::latex_newcommand(
+    "TotalCodingGenes",
+    scalar grep ($_->type eq "coding", @canonical_core),
+    "Total number of canonical histone protein coding genes in the genome"
+  );
+  say HistoneCatalogue::latex_newcommand(
+    "TotalPseudoGenes",
+    scalar grep ($_->type eq "pseudo", @canonical_core),
+    "Total number of canonical histone protein pseudogenes in the genome"
+  );
+
+  ##
+  ## Count by histone type
+  ##
+  for my $histone (@HistoneCatalogue::histones)
+    {
+      my @this_histone = grep {$_->histone_type eq $histone} @canonical_core;
+      say HistoneCatalogue::latex_newcommand(
+        $histone."TotalGenes",
+        scalar (@this_histone),
+        "Total number of histone $histone genes"
+      );
+
+      say HistoneCatalogue::latex_newcommand(
+        $histone."CodingGenes",
+        scalar grep ($_->type eq "coding", @this_histone),
+        "Number of histone $histone coding genes"
+      );
+      say HistoneCatalogue::latex_newcommand(
+        $histone."PseudoGenes",
+        scalar grep ($_->type eq "pseudo", @this_histone),
+        "Number of histone $histone pseudogenes"
+      );
+    }
+
+  ##
+  ## Count by cluster number
+  ##
+  my %clusters = map {$_->cluster => 1} @canonical_core;
+  my @clusters = sort keys %clusters;
+  for my $cluster_k (@clusters)
+    {
+      my @this_cluster = grep {$_->cluster == $cluster_k} @canonical_core;
+      say HistoneCatalogue::latex_newcommand(
+        "CodingGenesInHIST$cluster_k",
+        scalar grep ($_->type eq "coding", @this_cluster),
+        "Number of protein coding genes in the histone cluster $cluster_k"
+      );
+      say HistoneCatalogue::latex_newcommand(
+        "PseudoGenesInHIST$cluster_k",
+        scalar grep ($_->type eq "pseudo", @this_cluster),
+        "Number of pseudogenes genes in the histone cluster $cluster_k"
+      );
+      say HistoneCatalogue::latex_newcommand(
+        "TotalGenesInHIST$cluster_k",
+        scalar @this_cluster,
+        "Total Number of genes in the histone cluster $cluster_k"
+      );
+    }
+
+  ##
+  ## Count by cluster and histone type
+  ##
+  for my $histone (@HistoneCatalogue::histones)
+    {
+      my @this_histone = grep {$_->histone_type eq $histone} @canonical_core;
+      for my $cluster_k (@clusters)
+        {
+          my @this_cluster = grep {$_->cluster == $cluster_k} @this_histone;
+          say HistoneCatalogue::latex_newcommand(
+            $histone."CodingInHIST$cluster_k",
+            scalar grep ($_->type eq "coding", @this_cluster),
+            "Number of $histone coding genes in the histone cluster $cluster_k"
+          );
+          say HistoneCatalogue::latex_newcommand(
+            $histone."PseudoInHIST$cluster_k",
+            scalar grep ($_->type eq "pseudo", @this_cluster),
+            "Number of $histone pseudogenes in the histone cluster $cluster_k"
+          );
+          say HistoneCatalogue::latex_newcommand(
+            $histone."TotalInHIST$cluster_k",
+            scalar @this_cluster,
+            "Total Number of $histone genes in the histone cluster $cluster_k"
+          );
+        }
+    }
+
+  ##
+  ## Histone variant counts
+  ##
   say HistoneCatalogue::latex_newcommand(
     "TotalVariantGenes",
     scalar (() = $db->variants),
     "Total number of histone variants genes"
   );
-  ## TODO expand with other stats
+
 }
 
 
