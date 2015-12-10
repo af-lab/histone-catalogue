@@ -115,8 +115,16 @@ sub get_dNdS_stats
     {
       for my $j (($i +1) .. ($n_seqs -1))
         {
-          push @{$stats->{'dN'}}, $MLmatrix->[$i]->[$j]->{'dN'};
-          push @{$stats->{'dS'}}, $MLmatrix->[$i]->[$j]->{'dS'};
+          my $dn = $MLmatrix->[$i]->[$j]->{'dN'};
+          my $ds = $MLmatrix->[$i]->[$j]->{'dS'};
+
+          ## Some sequences are exactly the same and will have a dN and
+          ## dS of zero, which then takes a dn/ds of 99.  This is all
+          ## non-sense so we just skip those cases.  See issue #23
+          next if $dn == 0 && $ds == 0;
+
+          push @{$stats->{'dN'}}, $dn;
+          push @{$stats->{'dS'}}, $ds;
           push @{$stats->{'omega'}}, $MLmatrix->[$i]->[$j]->{'omega'};
 #          say join("\t", $otus[$i]->display_id,
 #                         $otus[$j]->display_id,
