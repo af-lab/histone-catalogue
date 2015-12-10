@@ -100,11 +100,12 @@ sub get_dNdS_stats
   if ($rc <= 0)
     { die "Failed on phylogenetic analysis: ${dsdn_factory->error_string}"; }
 
-  my $MLmatrix = $parser->next_result->get_MLmatrix();
+  my $result = $parser->next_result();
+  my $MLmatrix = $result->get_MLmatrix();
 
   ## For inspection of individual values, we can get the sequences
-  ## names by using $otus->[$i]->display_id
-#  my @otus = $parser->next_result->get_seqs();
+  ## names by using $otus[$i]->display_id
+#  my @otus = $result->get_seqs();
 
   my $stats = {'dN' => [], 'dS' => [], 'omega' => []};
 
@@ -117,6 +118,11 @@ sub get_dNdS_stats
           push @{$stats->{'dN'}}, $MLmatrix->[$i]->[$j]->{'dN'};
           push @{$stats->{'dS'}}, $MLmatrix->[$i]->[$j]->{'dS'};
           push @{$stats->{'omega'}}, $MLmatrix->[$i]->[$j]->{'omega'};
+#          say join("\t", $otus[$i]->display_id,
+#                         $otus[$j]->display_id,
+#                         $MLmatrix->[$i]->[$j]->{'dN'},
+#                         $MLmatrix->[$i]->[$j]->{'dS'},
+#                         $MLmatrix->[$i]->[$j]->{'omega'});
         }
     }
   return $stats;
