@@ -325,7 +325,7 @@ analysis = [
     target = path4result("table-variant_catalogue.tex"),
     source = path4lib("HistoneCatalogue.pm"),
     M      = ["HistoneCatalogue", "HistoneSequencesDB"],
-    eval   = ("HistoneCatalogue::say_histone_catalogue(%s->variants)"
+    eval   = ("HistoneCatalogue::say_histone_catalogue(%s->variants_core)"
               % perl_db_var),
   ),
   env.PerlOutput(

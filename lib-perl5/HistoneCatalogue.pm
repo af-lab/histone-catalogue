@@ -207,19 +207,19 @@ sub say_histone_counts
   my @canonical_core = $db->canonical_core;
 
   say HistoneCatalogue::latex_newcommand(
-    "TotalGenes",
+    "TotalCoreGenes",
     scalar (@canonical_core),
-    "Total number of canonical histone genes in the genome"
+    "Total number of canonical core histone genes in the genome"
   );
   say HistoneCatalogue::latex_newcommand(
-    "TotalCodingGenes",
+    "TotalCoreCodingGenes",
     scalar grep ($_->type eq "coding", @canonical_core),
-    "Total number of canonical histone protein coding genes in the genome"
+    "Total number of canonical core histone protein coding genes in the genome"
   );
   say HistoneCatalogue::latex_newcommand(
-    "TotalPseudoGenes",
+    "TotalCorePseudoGenes",
     scalar grep ($_->type eq "pseudo", @canonical_core),
-    "Total number of canonical histone protein pseudogenes in the genome"
+    "Total number of canonical core histone protein pseudogenes in the genome"
   );
 
   ##
@@ -255,19 +255,19 @@ sub say_histone_counts
     {
       my @this_cluster = grep {$_->cluster == $cluster_k} @canonical_core;
       say HistoneCatalogue::latex_newcommand(
-        "CodingGenesInHIST$cluster_k",
+        "CoreCodingGenesInHIST$cluster_k",
         scalar grep ($_->type eq "coding", @this_cluster),
-        "Number of protein coding genes in the histone cluster $cluster_k"
+        "Number of core histone coding genes in the histone cluster $cluster_k"
       );
       say HistoneCatalogue::latex_newcommand(
-        "PseudoGenesInHIST$cluster_k",
+        "CorePseudoGenesInHIST$cluster_k",
         scalar grep ($_->type eq "pseudo", @this_cluster),
-        "Number of pseudogenes genes in the histone cluster $cluster_k"
+        "Number of core histone pseudogenes in the histone cluster $cluster_k"
       );
       say HistoneCatalogue::latex_newcommand(
-        "TotalGenesInHIST$cluster_k",
+        "TotalCoreGenesInHIST$cluster_k",
         scalar @this_cluster,
-        "Total Number of genes in the histone cluster $cluster_k"
+        "Total number of core histone genes in the histone cluster $cluster_k"
       );
     }
 
@@ -302,9 +302,9 @@ sub say_histone_counts
   ## Histone variant counts
   ##
   say HistoneCatalogue::latex_newcommand(
-    "TotalVariantGenes",
-    scalar (() = $db->variants),
-    "Total number of histone variants genes"
+    "TotalCoreVariantGenes",
+    scalar (() = $db->variants_core),
+    "Total number of core histone variants genes"
   );
 
 }

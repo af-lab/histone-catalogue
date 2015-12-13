@@ -80,11 +80,11 @@ has '_linkers_idx' => (
   builder   => '_build_linkers_idx',
   init_arg  => undef,
 );
-has '_variants_idx' => (
+has '_variants_core_idx' => (
   is        => 'ro',
   isa       => 'ArrayRef',
   lazy      => 1,
-  builder   => '_build_variants_idx',
+  builder   => '_build_variants_core_idx',
   init_arg  => undef,
 );
 
@@ -296,11 +296,12 @@ sub _build_linkers_idx
   my @idx = grep {$genes->[$_]->is_linker_histone} 0 .. $#{$genes};
   return \@idx;
 }
-sub _build_variants_idx
+sub _build_variants_core_idx
 {
   my $self = shift;
   my $genes = $self->genes;
-  my @idx = grep {! $genes->[$_]->isa ('CanonicalHistoneGene')} 0 .. $#{$genes};
+  my @idx = grep {! $genes->[$_]->isa ('CanonicalHistoneGene')
+                  && $genes->[$_]->is_core_histone} 0 .. $#{$genes};
   return \@idx;
 }
 
@@ -372,15 +373,14 @@ sub linkers
   return @{$self->genes}[@{$self->_linkers_idx}];
 }
 
-=method variants
+=method variants_core
 
-Return an array with all variant histone genes.  This includes both
-core and linker variants.
+Return an array with all variant core histone genes.
 =cut
-sub variants
+sub variants_core
 {
   my $self = shift;
-  return @{$self->genes}[@{$self->_variants_idx}];
+  return @{$self->genes}[@{$self->_variants_core_idx}];
 }
 
 

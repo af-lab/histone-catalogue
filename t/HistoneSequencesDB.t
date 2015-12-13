@@ -113,9 +113,9 @@ sub test_db
              ['H1F0', 'H1FX', 'HIST1H1D', 'HIST1H1T'],
              "Check grep of linker histones");
 
-  my @variants = $db->variants;
+  my @variants = $db->variants_core;
   is_deeply ([sort map {$_->symbol} @variants],
-             ['CENPA', 'H1F0', 'H1FX', 'H2AFJ', 'H2AFZ', 'H2AFZP4'],
+             ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4'],
              "Check grep of variant histones");
 }
 

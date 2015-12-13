@@ -166,14 +166,12 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->canonical_core) },
 \end{ctabular}
 END
 
-stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants) },
+stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants_core) },
     <<'END', 'Test variant histones with non-coding transcripts latex table');
 \begin{ctabular}{l l l l l}
   \toprule
   Type & Gene name & Gene UID & Transcript accession & Protein accession \\
   \midrule
-  H1 & H1F0 & 3005 & NM\_005318 & NP\_005309\\
-  H1 & H1FX & 8971 & NM\_006026 & NP\_006017\\
   H2A & H2AFJ & 55766 & NM\_177925 & NP\_808760\\
       & & & NR\_027716 & non-coding \\
   H2A & H2AFZ & 3015 & NM\_002106 & NP\_002097\\
@@ -186,12 +184,12 @@ END
 
 stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
     <<'END', 'Test print of histone counts');
-%% Total number of canonical histone genes in the genome
-\newcommand{\TotalGenes}{\ScriptValue{6}}
-%% Total number of canonical histone protein coding genes in the genome
-\newcommand{\TotalCodingGenes}{\ScriptValue{5}}
-%% Total number of canonical histone protein pseudogenes in the genome
-\newcommand{\TotalPseudoGenes}{\ScriptValue{1}}
+%% Total number of canonical core histone genes in the genome
+\newcommand{\TotalCoreGenes}{\ScriptValue{6}}
+%% Total number of canonical core histone protein coding genes in the genome
+\newcommand{\TotalCoreCodingGenes}{\ScriptValue{5}}
+%% Total number of canonical core histone protein pseudogenes in the genome
+\newcommand{\TotalCorePseudoGenes}{\ScriptValue{1}}
 %% Total number of histone H2A genes
 \newcommand{\HTwoATotalGenes}{\ScriptValue{1}}
 %% Number of histone H2A coding genes
@@ -216,12 +214,12 @@ stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
 \newcommand{\HFourCodingGenes}{\ScriptValue{3}}
 %% Number of histone H4 pseudogenes
 \newcommand{\HFourPseudoGenes}{\ScriptValue{0}}
-%% Number of protein coding genes in the histone cluster 1
-\newcommand{\CodingGenesInHISTOne}{\ScriptValue{5}}
-%% Number of pseudogenes genes in the histone cluster 1
-\newcommand{\PseudoGenesInHISTOne}{\ScriptValue{1}}
-%% Total Number of genes in the histone cluster 1
-\newcommand{\TotalGenesInHISTOne}{\ScriptValue{6}}
+%% Number of core histone coding genes in the histone cluster 1
+\newcommand{\CoreCodingGenesInHISTOne}{\ScriptValue{5}}
+%% Number of core histone pseudogenes in the histone cluster 1
+\newcommand{\CorePseudoGenesInHISTOne}{\ScriptValue{1}}
+%% Total number of core histone genes in the histone cluster 1
+\newcommand{\TotalCoreGenesInHISTOne}{\ScriptValue{6}}
 %% Number of H2A coding genes in the histone cluster 1
 \newcommand{\HTwoACodingInHISTOne}{\ScriptValue{0}}
 %% Number of H2A pseudogenes in the histone cluster 1
@@ -246,8 +244,8 @@ stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
 \newcommand{\HFourPseudoInHISTOne}{\ScriptValue{0}}
 %% Total Number of H4 genes in the histone cluster 1
 \newcommand{\HFourTotalInHISTOne}{\ScriptValue{3}}
-%% Total number of histone variants genes
-\newcommand{\TotalVariantGenes}{\ScriptValue{6}}
+%% Total number of core histone variants genes
+\newcommand{\TotalCoreVariantGenes}{\ScriptValue{4}}
 END
 
 done_testing;
