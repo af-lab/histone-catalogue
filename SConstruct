@@ -541,7 +541,7 @@ for package in latex_package_dependencies:
 
 env.Help("""
   BibTeX style
-    * vancouver
+    * agu
 """)
 
 ## Seriously, this should be the default.  Otherwise, users won't even get
@@ -566,8 +566,8 @@ if not env.GetOption('help'):
     print "Unable to find the LaTeX document class memoir."
     Exit(1)
 
-  if not conf.CheckBibTeXStyle("vancouver"):
-    print "Unable to find the BibTeX style vancouver."
+  if not conf.CheckBibTeXStyle("agu"):
+    print "Unable to find the BibTeX style agu."
     Exit(1)
 
   if not conf.CheckEmail(env.GetOption("email")):
