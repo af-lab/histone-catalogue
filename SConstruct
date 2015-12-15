@@ -378,6 +378,11 @@ analysis = [
     source = path4script("pairwise_dnds.pl"),
     args   = [db_store],
   ),
+  env.PerlOutput(
+    target = path4result("table-codon_usage.tex"),
+    source = path4script("codon_usage.pl"),
+    args   = [db_store],
+  ),
 ]
 
 env.Alias ("analysis", analysis)

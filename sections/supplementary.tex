@@ -100,22 +100,13 @@
   \end{supplement}
 
   \newpage
-  \begin{supplement}
-    \caption{Codon usage percentages for all canonical histone coding regions
-             calculated by CUSP.}
-    \label{tab:histone-gene-codonusage}
-    \centering
-    \begin{tabular}{r r r r}
-      \toprule
-      \null &  & ds/dn \\
-      \midrule
-      Ala &  \\
-      Arg & 36.9 & 5.5 & 58.7 \\
-      H3 & 57.1 & 1.8 & 214.4 \\
-      H4 & 49.2 & 3.9 & 204.7 \\
-      \bottomrule
-    \end{tabular}
-  \end{supplement}
+  \newpage
+  \captionof{supplement}{%
+    Frequency of each codon relative to the number of codons coding for the
+    same amino acid.
+  }
+  \label{tab:histone-gene-codonusage}
+  \input{results/table-codon_usage}
 
   \newpage
   \captionof{supplement}{Catalogue of human variant core histone gene, transcript and protein IDs}
