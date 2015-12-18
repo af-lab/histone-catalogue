@@ -73,36 +73,39 @@
 %% also solves the issue of having different colorbox with different
 %% heights (see https://tex.stackexchange.com/questions/7530/height-of-colorbox )
 \newcommand{\ScriptValue}[1]{\setlength{\fboxsep}{0pt}\colorbox[gray]{0.8}{\strut #1}}
+
 %% But then, we also want to make operations with those values in LaTeX
 %% using FPeval but FPeval fails because ScriptValue gets expanded into
 %% something non-numeric.  So we use the following trick: we store the
 %% original ScriptValue and FPeval macros, and then replace FPeval with
 %% something that temporarily disables ScriptValue while we call the
-%% original FPeval.  See http://tex.stackexchange.com/questions/159155
+%% original FPeval.
+%% See https://tex.stackexchange.com/questions/159155/identify-pieces-of-text-automatically-generated-from-input-and-new-command
+%% and https://tex.stackexchange.com/questions/283655/overloading-functions-of-the-fp-package
 \let\RealScriptValue\ScriptValue
 
 \let\RealFPeval\FPeval
 \renewcommand{\FPeval}[2]{%
   \renewcommand{\ScriptValue}[1]{##1}%
-  \RealFPeval{UnmarkedResult}{#2}%
+  \RealFPeval{\UnmarkedResult}{#2}%
+  \edef#1{\noexpand\ScriptValue{\UnmarkedResult}}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
-  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
 \let\RealFPmin\FPmin
 \renewcommand{\FPmin}[3]{%
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealFPmin{\UnmarkedResult}{#2}{#3}%
+  \edef#1{\noexpand\ScriptValue{\UnmarkedResult}}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
-  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
 \let\RealFPround\FPround
 \renewcommand{\FPround}[3]{%
   \renewcommand{\ScriptValue}[1]{##1}%
   \RealFPround{\UnmarkedResult}{#2}{#3}%
+  \edef#1{\noexpand\ScriptValue{\UnmarkedResult}}%
   \renewcommand{\ScriptValue}{\RealScriptValue}%
-  \expandafter\def\csname #1\endcsname{\ScriptValue{\UnmarkedResult}}%
 }
 
 \let\Realprintdate\printdate
@@ -162,23 +165,23 @@
 %%
 
 %% Minimum overall PID of each histone type
-\FPmin{result}{\HTwoAPID}{\HTwoBPID}
-\FPmin{result}{\result}{\HThreePID}
-\FPmin{HallMinPID}{\result}{\HFourPID}
+\FPmin{\result}{\HTwoAPID}{\HTwoBPID}
+\FPmin{\result}{\result}{\HThreePID}
+\FPmin{\HallMinPID}{\result}{\HFourPID}
 
 
-\FPeval{result}{\SequenceChangeSinceReference{}
+\FPeval{\result}{\SequenceChangeSinceReference{}
                 + \PseudoSinceReference{}
                 + \CodingSinceReference{}
                 + \AddedSinceReference{}
                 + \RemovedSinceReference{}}
-\FPround{TotalChangesSinceReference}{\result}{0} % of course is an integer
+\FPround{\TotalChangesSinceReference}{\result}{0} % of course is an integer
 
 
-\FPeval{PercentageGenesInHISTOne}{\CoreCodingGenesInHISTOne{}*100/\TotalCoreCodingGenes{}}
+\FPeval{\PercentageGenesInHISTOne}{\CoreCodingGenesInHISTOne{}*100/\TotalCoreCodingGenes{}}
 
 
-\FPeval{result}{\SequenceChangeSinceReference{}
+\FPeval{\result}{\SequenceChangeSinceReference{}
                 +\PseudoSinceReference{}
                 +\CodingSinceReference{}}
-\FPround{SequencesUpdatedSinceReference}{\result}{0} % of course is an integer
+\FPround{\SequencesUpdatedSinceReference}{\result}{0} % of course is an integer
