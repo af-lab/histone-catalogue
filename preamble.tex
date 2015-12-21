@@ -115,6 +115,38 @@
   \renewcommand{\ScriptValue}{\RealScriptValue}%
 }
 
+%% When using \SI, sometimes we are doing with "normal" values, othertimes
+%% they are \ScriptValue macros.  In those cases, we will want to keep
+%% ScriptValue box around the values, but we need to be careful to not
+%% "promote" if not.  So we check of #1 is a macro (and assume it's
+%% \ScriptValue if true.
+
+\let\RealSI\SI
+\renewcommand{\SI}[2]{%
+  \ifdefmacro{#1}%
+    {%
+      \renewcommand{\ScriptValue}[1]{##1}%
+      \RealScriptValue{\RealSI{#1}{#2}}%
+      \renewcommand{\ScriptValue}{\RealScriptValue}%
+    }%
+    {%
+      \RealSI{#1}{#2}%
+    }%
+}
+
+\let\RealSIrange\SIrange
+\renewcommand{\SIrange}[3]{%
+  \ifdefmacro{#1}%
+    {%
+      \renewcommand{\ScriptValue}[1]{##1}%
+      \RealScriptValue{\RealSIrange{#1}{#2}{#3}}%
+      \renewcommand{\ScriptValue}{\RealScriptValue}%
+    }%
+    {%
+      \RealSIrange{#1}{#2}{#3}%
+    }%
+}
+
 
 %% A function to automatically round a number using the "best" SI prefix.
 %% The idea is to transform very long numbers into something more

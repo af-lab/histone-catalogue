@@ -7,7 +7,7 @@
     named in order of decreasing histone gene count (\tref{tab:histone-gene-count}).
     HIST1 is the major histone gene cluster at locus~\HISTOneLocus{}
     with \CoreCodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones,
-    representing \FPround{\result}{\PercentageGenesInHISTOne}{2} \result{}\%
+    representing \FPround{\result}{\PercentageGenesInHISTOne}{0} \SI{\result}{\percent}
     of all canonical core histone genes.
     HIST2 at locus \HISTTwoLocus{} contains \CoreCodingGenesInHISTTwo{}~coding genes,
     HIST3 at locus \HISTThreeLocus{} contains \CoreCodingGenesInHISTThree{}~coding genes,
@@ -19,7 +19,7 @@
     it has received significant attention as testes-specific TH2/TH2B/hTSH2B
     \citep{Zalensky2002,LiAusio2005,Shinagawa2014}.
     This gene encodes the most divergent canonical H2B
-    and is located 300 kbp upstream of the rest of the HIST1 cluster
+    and is located \SI{300}{\kilo\bp} upstream of the rest of the HIST1 cluster
     separated by a number of non-histone genes.
     It is adjacent to \textit{HIST1H2AA} which encodes a H2A protein
     of similarly high variation,
@@ -30,8 +30,9 @@
     as testes specific histone variants albeit on the margins of the canonical HIST1 cluster.
 
     \label{sec:hist3h3}
-    Similarly, the small HIST3 cluster 80 Mbp downstream of HIST2
-    which contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB} and \textit{HIST3H3}.
+    Similarly, the small HIST3 cluster \SI{80}{\mega\bp} downstream of HIST2
+    which contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB},
+    and \textit{HIST3H3}.
     \textit{HIST3H3} encodes testes-specific H3T/H3.4
     that has distinctive biochemical properties \citep{WittExpCellRes1996,KurumizakaCOSB2013},
     while \textit{HIST3H2A} and \textit{HIST3H2BB} are amongst
@@ -60,16 +61,19 @@
 
   \subsection{Histone gene sequences}
     Despite the high conservation of canonical histone proteins,
-    the coding regions their genes exhibit considerable variation
+    their genes coding regions exhibit considerable variation
     (\fref{fig:h2a-histone-gene-variation}, \ref{fig:h2b-histone-gene-variation},
     \ref{fig:h3-histone-gene-variation}, and \ref{fig:h4-histone-gene-variation}).
-    These differences are largely located in the third base position of codons 
+    These differences are largely located in the third base position of codons
     and reflect the very high ratio of synonymous to non-synonymous
     substitutions (\tref{tab:histone-gene-differences}).
 
     The mean number of synonymous substitutions per synonymous site ($d_S$)
-    between pairs of canonical histone genes is \MeanHTwoAdS{} for H2A,
-    \MeanHTwoBdS{} for H2B, \MeanHThreedS for H3, and \MeanHFourdS{} for H4.
+    between pairs of canonical histone genes is
+    \FPround{\result}{\MeanHTwoAdS}{1} \result{} for H2A,
+    \FPround{\result}{\MeanHTwoBdS}{1} \result{} for H2B,
+    \FPround{\result}{\MeanHThreedS}{1} \result{} for H3,
+    and \FPround{\result}{\MeanHFourdS}{1} \result{} for H4,
     This is consistent with observations that
     synonymous codon divergence exceeds non-synonymous variation
     for histone genes across eukaryotes \citep{Piontkivska2002, Rooney2002}.
