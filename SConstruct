@@ -283,9 +283,7 @@ align_targets = list ()
 clust_targets = list ()
 prot_targets  = list ()
 refer_targets = list ()
-check_targets = list ()
 utr_targets   = list ()
-check_targets = list ()
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
   align_targets += [
@@ -301,8 +299,6 @@ prot_targets += [path4result ("variables-protein_stats.tex")]
 
 refer_targets += [path4result ("table-reference_comparison.tex")]
 
-check_targets += [path4result ("histone_insanities.tex")]
-
 utr_targets += [
   path4result ("variables-utr.tex"),
   path4result ("aligned_stem_loops.fasta"),
@@ -311,7 +307,6 @@ utr_targets += [
   path4figure ("seqlogo_HDEs.eps"),
 ]
 
-check_targets += [path4result ("histone_insanities.tex")]
 
 analysis = [
   env.PerlOutput(
@@ -356,10 +351,10 @@ analysis = [
     action = ["--sequences", seq_dir, "--results", results_dir,
               "--reference", reference_dir],
   ),
-  env.PerlScript(
-    target = check_targets,
-    source = path4script ("histone_sanity_checks.pl"),
-    action = ["--sequences", seq_dir, "--results", results_dir],
+  env.PerlOutput(
+    target = path4result("histone_insanities.tex"),
+    source = path4script("histone_sanity_checks.pl"),
+    args   = [db_store],
   ),
   env.PerlScript(
     target = utr_targets,
