@@ -487,6 +487,22 @@ sub get_protein
 }
 
 
+=func sort_histones
+
+Sorts an array of histone genes in the most expected order, i.e., by
+histone type and then by gene symbol.
+
+Args:
+  Array of HistoneGene
+
+Returns
+  Array of HistoneGene
+=cut
+sub sort_histones
+{
+  return sort {$a->histone_type cmp $b->histone_type
+               || $a->symbol cmp $b->symbol} @_;
+}
 __PACKAGE__->meta->make_immutable;
 
 1;

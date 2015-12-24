@@ -142,10 +142,7 @@ Returns:
 =cut
 sub say_histone_catalogue
 {
-  my @genes = @_;
-
-  @genes = sort {$a->histone_type cmp $b->histone_type
-                 || $a->symbol cmp $b->symbol} @genes;
+  my @genes = HistoneSequencesDB::sort_histones(@_);
 
   say "\\begin{ctabular}{l l l l l}";
   say "  \\toprule";

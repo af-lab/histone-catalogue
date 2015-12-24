@@ -117,6 +117,16 @@ sub test_db
   is_deeply ([sort map {$_->symbol} @variants],
              ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4'],
              "Check grep of variant histones");
+
+  is_deeply ([map {$_->symbol} HistoneSequencesDB::sort_histones(@canonical_core)],
+             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H3F', 'HIST1H4I',
+              'HIST1H4K', 'HIST1H4L'],
+             "Check sorting of array of histones");
+
+  is_deeply ([map {$_->symbol} HistoneSequencesDB::sort_histones(@variants)],
+             ['H2AFJ', 'H2AFZ', 'H2AFZP4', 'CENPA'],
+             "Check sorting of array of variant histones with CENPA");
+
 }
 
 ## A sample from actual data for testing.  It has canonical histones,
