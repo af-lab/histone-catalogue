@@ -59,6 +59,17 @@ automatically from the LaTeX sources.
 =cut
 our $tex_macro_name = "ScriptValue";
 
+=var u7_srna
+Bio::Seq object for the human U7 sRNA sequence that binds to the HDE.
+
+Reverse complement subsequence of human U7 small nuclear 1 (RNU7-1), snRNA
+between position 8 and 17 (http://www.ncbi.nlm.nih.gov/nuccore/NR_023317)
+as described on Figure 1 of Marzluff, William F., Eric J. Wagner, and Robert
+J. Duronio. "Metabolism and regulation of canonical histone mRNAs: life
+without a poly (A) tail." Nature Reviews Genetics 9.11 (2008): 843--854.
+=cut
+our $u7_srna = Bio::Seq->new(-seq =>"AAAGAGCTGT", -id => 'U7');
+
 
 =func print_config_variables
 

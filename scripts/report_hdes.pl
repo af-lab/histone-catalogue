@@ -30,6 +30,7 @@ use Bio::DB::EUtilities;
 use Bio::Tools::Run::Alignment::Clustalw;
 use Bio::Seq;
 
+use HistoneCatalogue;
 use MyLib;
 
 my %path = MyLib::parse_argv ("sequences");
@@ -48,13 +49,6 @@ my $fetcher = Bio::DB::EUtilities->new(
   -rettype  => 'gb',
   -email    => 'david.pinto@nuigalway.ie',
 );
-
-## Reverse complement subsequence of human U7 small nuclear 1 (RNU7-1), snRNA
-## between position 8 and 17 (http://www.ncbi.nlm.nih.gov/nuccore/NR_023317)
-## as described on Figure 1 of Marzluff, William F., Eric J. Wagner, and Robert
-## J. Duronio. "Metabolism and regulation of canonical histone mRNAs: life
-## without a poly (A) tail." Nature Reviews Genetics 9.11 (2008): 843--854.
-my $u7_srna = Bio::Seq->new(-seq =>"AAAGAGCTGT", -id => 'U7');
 
 foreach my $gene (MyLib::load_canonical ($path{sequences})) {
 
@@ -80,7 +74,7 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
     my $genomic_post_sl = $genomic_cds->end + $stem_loop_end +2;
 
     my $aln = $clustalw->align([
-      $u7_srna,
+      $HistoneCatalogue::u7_srna,
       Bio::Seq->new(
         -seq => $gseq->subseq($genomic_post_sl, $genomic_post_sl + 40),
         -id  => $seq->display_id,
@@ -146,4 +140,3 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
 
   }
 }
-
