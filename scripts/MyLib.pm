@@ -35,7 +35,7 @@ use HistoneCatalogue;
 sub parse_argv {
   ## List of all possible options accross all our scripts. Any function
   ## trying to look for an option not listed here will cause an error.
-  my @possible_opt = qw(sequences figures results email reference);
+  my @possible_opt = qw(sequences figures results email reference cluster);
 
   ## Initialize the hash options for all requested options
   my %req_opt = map { $_ => "" } @_;
