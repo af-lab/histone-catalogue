@@ -44,7 +44,7 @@ sub parse_argv {
   my @parsing;
   foreach my $opt (@_) {
     if (! grep {$_ eq $opt} @possible_opt) {
-      die "Unrecognized option to parse $_";
+      die "Unrecognized option to parse $opt";
     }
     ## We don't bother doing checking of the values. That will be
     ## up to the caller.
