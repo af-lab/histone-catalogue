@@ -281,7 +281,6 @@ perl_db_var = "HistoneSequencesDB::read_db('%s')" % db_store
 
 align_targets = list ()
 clust_targets = list ()
-prot_targets  = list ()
 refer_targets = list ()
 utr_targets   = list ()
 
@@ -294,8 +293,6 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
     path4result ("table-%s-proteins-align.tex" % histone),
   ]
 align_targets += [path4result ("variables-align_results.tex")]
-
-prot_targets += [path4result ("variables-protein_stats.tex")]
 
 refer_targets += [path4result ("table-reference_comparison.tex")]
 
@@ -340,10 +337,10 @@ analysis = [
     source = path4script("cluster_stats.pl"),
     args   = [db_store],
   ),
-  env.PerlScript(
-    target = prot_targets,
-    source = path4script ("protein_stats.pl"),
-    action = ["--sequences", seq_dir, "--results", results_dir],
+  env.PerlOutput(
+    target = path4result("variables-protein_stats.tex"),
+    source = path4script("protein_stats.pl"),
+    args   = [db_store],
   ),
   env.PerlScript(
     target = refer_targets,
