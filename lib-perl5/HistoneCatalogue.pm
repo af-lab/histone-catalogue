@@ -452,7 +452,7 @@ sub mk_latex_list_name_isoforms {
       ## anyway to generate the final string, we will filter out undefs
       ## later.
       if ($symbol !~ m/^((.+)$histone)(.*)$/i)
-        { die "Unable to list most common sequence."; }
+        { croak "Unable to list most common sequence."; }
       push (@{$clusters{$1}}, $3);
     }
 

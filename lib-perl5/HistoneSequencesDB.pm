@@ -150,10 +150,10 @@ sub _build_genes_from_csv
   ## To cover the widest range of parsing options, you will always
   ## want to set binary
   my $csv = Text::CSV->new ({binary => 1, eol => $/})
-    or die "Cannot use Text::CSV: ". Text::CSV->error_diag ();
+    or croak "Cannot use Text::CSV: ". Text::CSV->error_diag ();
 
   open (my $file, "<", $csv_path)
-    or die "Could not open '$csv_path' for reading: $!";
+    or croak "Could not open '$csv_path' for reading: $!";
 
   ## read all into array of hashes with headers as keys
   $csv->column_names ($csv->getline ($file));
