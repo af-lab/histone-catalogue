@@ -23,6 +23,7 @@ use Bio::Tools::Run::Alignment::Clustalw;
 use Statistics::Basic;          # we want to calculate mode
 use Bio::Seq;
 
+use WebLogo;
 use MyLib;
 
 ## This script will look at the UTR (currently, only the stem loop)
@@ -41,14 +42,6 @@ use MyLib;
 ## (see the align_sequences script)
 
 my %path = MyLib::parse_argv ("sequences", "figures", "results");
-
-my @weblogo_params = (
-  "--format",         "eps",
-  "--datatype",       "fasta",
-  "--sequence-type",  "dna",
-  "--fineprint",      "",   # empty fineprint
-  "--color-scheme",   "monochrome",
-);
 
 my @hdes;
 my @stem_loops;
@@ -147,11 +140,15 @@ sub align_and_seqlogo {
     'outfile' => $align_path,
   )->align(\@_);
 
-  system (
-    "weblogo", @weblogo_params,
-    "--fin",   $align_path,
-    "--fout",  $slogo_path,
-  ) == 0 or die "Call to weblogo failed: $?";
+  my $weblogo = WebLogo->new();
+  $weblogo->call(
+    $align_path,
+    $slogo_path,
+    {
+      "--datatype",       "fasta",
+      "--sequence-type",  "dna",
+    },
+  );
 }
 
 align_and_seqlogo ("aligned_stem_loops.fasta", "seqlogo_stem_loops.eps", @stem_loops);

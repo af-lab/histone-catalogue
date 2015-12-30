@@ -480,6 +480,7 @@ perl_module_dependencies = [
   "Bio::SeqIO",
   "Bio::Tools::Run::Alignment::TCoffee",
   "Bio::Tools::Run::Phylo::PAML::Codeml",
+  "File::Which",
   "Text::CSV",
   "Statistics::Basic",
   "Moose",
