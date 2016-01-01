@@ -473,23 +473,31 @@ conf = Configure(
   }
 )
 
+## grep -rh '^use ' t/ lib-perl5/ scripts/| sort | uniq
+## and then remove the core modules and pragmas
 perl_module_dependencies = [
-  "Email::Valid",
+  "Bio::Align::Utilities",
+  "Bio::CodonUsage::Table",
+  "Bio::DB::EUtilities",
   "Bio::Root::Version",
-  "Bio::Tools::EUtilities",
+  "Bio::Seq",
   "Bio::SeqIO",
+  "Bio::SeqUtils",
+  "Bio::Tools::CodonTable",
+  "Bio::Tools::EUtilities",
+  "Bio::Tools::Run::Alignment::Clustalw",
   "Bio::Tools::Run::Alignment::TCoffee",
   "Bio::Tools::Run::Phylo::PAML::Codeml",
+  "Bio::Tools::SeqStats",
   "File::Which",
-  "Text::CSV",
-  "Statistics::Basic",
   "Moose",
   "Moose::Util::TypeConstraints",
   "MooseX::StrictConstructor",
   "namespace::autoclean",
+  "Statistics::Basic",
   "Test::Exception",
   "Test::Output",
-  "Test::More",
+  "Text::CSV",
 ]
 
 latex_package_dependencies = [
