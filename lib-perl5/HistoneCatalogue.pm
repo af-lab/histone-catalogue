@@ -25,6 +25,7 @@ use Bio::Root::Version;
 use Bio::Tools::EUtilities;
 use Bio::Tools::Run::Alignment::TCoffee;
 
+use WebLogo;
 use HistoneSequencesDB;
 
 =var cluster_number
@@ -104,6 +105,11 @@ sub write_config_variables
     "TCoffeVersion",
     Bio::Tools::Run::Alignment::TCoffee->new()->version(),
     "Version of TCoffee used"
+  );
+  say latex_newcommand(
+    "WebLogoVersion",
+    WebLogo->new()->version,
+    "Version of WebLogo used"
   );
   say latex_newcommand(
     "NumberOfClusters",
