@@ -20,6 +20,8 @@ use strict;
 use warnings;
 use Carp;
 
+use File::Copy;
+use File::Temp;
 use File::Which;
 
 use Moose;
@@ -175,36 +177,36 @@ sub seqlogo_2_fancy_align
   ##        proteins, their height will be the height of the stack so not in
   ##        black.  We probably should highlight those as well.
 
+  my $fh = File::Temp->new(UNLINK => 0);
+
   open (my $read, "<", $fin)
     or croak "Couldn't open $fin for reading: $!\n";
-  my @weblogo = <$read>;
-  close($read) or die "Couldn't close $_[0] after reading: $!";
-
-  ## we may be overwriting the file
-  open (my $save, ">", $fout)
-    or croak "Couldn't open $fout for writing: $!\n";
 
   my $fixed = 0;
-  foreach (@weblogo)
+  while (my $line = <$read>)
     {
-      if ($_ =~ m/tc show/)
+      if ($line =~ m/tc show/)
         {
           ## There should be only one 'tc show' ocurrence on each file.
           ## If this is not true, something's wrong (maybe a different
           ## version of weblogo).
           if ($fixed)
             { croak "Trying to fix previously fixed sequence Logo. Probably new version of weblogo and we need to update our script."; }
-          print {$save} "        ysize stack_height stack_margin sub ge {\n" .
-                        "            0.7 0.7 0.7 setrgbcolor\n" .
-                        "        } {\n" .
-                        "            0.0 0.0 0.0 setrgbcolor\n" .
-                        "        }ifelse\n";
+          print {$fh} "        ysize stack_height stack_margin sub ge {\n" .
+                      "            0.7 0.7 0.7 setrgbcolor\n" .
+                      "        } {\n" .
+                      "            0.0 0.0 0.0 setrgbcolor\n" .
+                      "        }ifelse\n";
           $fixed = 1;
         }
-      print {$save} $_;
+      print {$fh} $line;
     }
-  close ($save)
-    or croak "Couldn't close $fout after writing: $!";
+  close($read)
+    or croak "Couldn't close $fin after reading: $!";
+
+  close($fh)
+    or croak "Couldn't close $fh after reading: $!";
+  File::Copy::move("$fh", $fout);
 }
 
 
