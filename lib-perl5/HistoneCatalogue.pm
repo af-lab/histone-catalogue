@@ -475,4 +475,91 @@ sub mk_latex_list_name_isoforms {
   return join ("; ", @cluster_strs);
 }
 
+
+=func describe_protein_variant
+Create HGVS recommended description of difference between two protein sequences.
+
+Create string with sequence difference according to nomenclature set by HGVS
+at http://www.hgvs.org/mutnomen/recs-prot.html
+
+TODO this should be made into a bioperl module
+
+Args:
+  common (Bio::Seq)
+  variant (Bio::Seq)
+
+Returns:
+  String with difference.
+=cut
+sub describe_protein_variant
+{
+  my $common = (shift)->seq;
+  my $variant = (shift)->seq;
+
+  my $str;
+
+  ## finding differences between the sequences and store start and end position
+  ## of each interval of differences
+  my $mask = $common ^ $variant;
+  my @pos;
+  push (@pos, [@-, @+]) while ($mask =~ /[^\0]+/g);
+
+  ## positions of all - in $$common to adjust position number
+  my @pos_adj;
+  push (@pos_adj, @-) while ($common =~ m/-/g);
+
+  foreach my $idx (@pos)
+    {
+      my $start = ${$idx}[0];
+      my $end   = ${$idx}[1];
+
+      my $pre  = substr ($common,  $start, $end - $start);
+      my $post = substr ($variant, $start, $end - $start);
+
+      ## adjust the position number due to the missing residues in $ori
+      my $spos = $start +1 - (grep {$_ < $start} @pos_adj);  # start position
+      my $epos = $end      - (grep {$_ < $end  } @pos_adj);  # end position
+
+      if ($pre !~ m/-/ && $post !~ m/-/)
+        {
+          ## substitution: Gly10Ser or Gly10_Met13LysCysHisVal
+          $str .= substr ($pre, 0, 1) . $spos;
+          $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
+          $str .= $post;
+        }
+      elsif ($pre !~ m/[^-]/)
+        {
+          ## all insertion: Lys2_met3insGln
+          ## FIXME we should differentiate with duplication
+          ## FIXME we should check that before and after it's not a --
+          $str .= substr ($common, $start -1, 1) . ($spos -1) .
+                  "_" .
+                  substr ($common, $end, 1) . $spos .
+                  "ins" . $post;
+        }
+      elsif ($post !~ m/[^-]/)
+        {
+          ## all deletion: Cys28del or Cys28_Met32del
+          $str .= substr ($pre, 0, 1) . $spos;
+          $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
+          $str .= "del";
+        }
+      else
+        {
+          ## FIXME a mix of deletion and insertion and substitution... we should
+          ##       have something better for this but what?
+
+          ## remove the - from the sequence for display
+          $pre  =~ s/-//g;
+          $post =~ s/-//g;
+
+          $str .= substr ($pre, 0, 1) . $spos;
+          $str .= "_" . substr ($pre, -1) . $epos;
+          $str .= $post;
+        }
+      $str .= " ";
+    }
+  return $str;
+}
+
 1;

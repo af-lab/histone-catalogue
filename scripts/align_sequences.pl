@@ -21,6 +21,8 @@ use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
 use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCoffee
 
+use Bio::Seq;
+
 use HistoneCatalogue;
 use WebLogo;
 use MyLib;
@@ -239,7 +241,7 @@ sub tex_compare_histone_proteins {
     my $n = @common;
     warn ("Found $n `most common' sequences for $histone. Only the first will be used.");
   }
-  my $most_common = $common[0];
+  my $most_common = Bio::Seq->new(-seq => $common[0]);
 
   say {$var_file} HistoneCatalogue::latex_newcommand (
     $histone."UniqueProteins",
@@ -256,14 +258,14 @@ sub tex_compare_histone_proteins {
     ## method is not working, and this is likely a bug on the TCoffee method
     ## which is not creating the Bio::Seq object properly for the alignment.
     my $symbol = $pacc2gsym{$seq->display_id};
-    if ($seq->seq ne $most_common) {
-      $description{$symbol} = seq_diff_str (\$most_common, \$seq->seq);
+    if ($seq->seq ne $most_common->seq) {
+      $description{$symbol} = HistoneCatalogue::describe_protein_variant($most_common, $seq);
     } else {
       push @eq2common, $symbol;
     }
   }
 
-  $most_common =~ tr/-//d; # remove the gaps from the alignment
+  (my $most_common_seq = $most_common->seq) =~ tr/-//d; # remove the gaps from the alignment
 
   my $filepath = File::Spec->catdir($path{results}, "table-${histone}-proteins-align.tex");
   open (my $table, ">", $filepath)
@@ -272,9 +274,9 @@ sub tex_compare_histone_proteins {
   say {$table} "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
   say {$table} "  \\toprule";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
-                length ($most_common) . " amino acids; " .
+                length ($most_common_seq) . " amino acids; " .
                 HistoneCatalogue::mk_latex_list_name_isoforms ($histone, @eq2common) . ")}\\\\";
-  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common}}} \\\\";
+  say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common_seq}}} \\\\";
   say {$table} "  \\midrule";
 
   foreach my $symbol (sort keys %description) {
@@ -288,69 +290,4 @@ sub tex_compare_histone_proteins {
   say {$table} "  \\bottomrule";
   say {$table} "\\end{tabular}";
   close($table) or die "Couldn't close $filepath after writing: $!";
-}
-
-## Create string with sequence difference according to nomenclature set by HGVS
-## at http://www.hgvs.org/mutnomen/recs-prot.html
-##    usage: $string = seq_diff_str ($normal, $variant)
-sub seq_diff_str {
-  ## TODO this should be made into a bioperl module
-
-  my ($common, $variant) = @_;
-  my $str;
-
-  ## finding differences between the sequences and store start and end position
-  ## of each interval of differences
-  my $mask = $$common ^ $$variant;
-  my @pos;
-  push (@pos, [@-, @+]) while ($mask =~ /[^\0]+/g);
-
-  ## positions of all - in $$common to adjust position number
-  my @pos_adj;
-  push (@pos_adj, @-) while ($$common =~ m/-/g);
-
-  foreach my $idx (@pos) {
-    my $start = ${$idx}[0];
-    my $end   = ${$idx}[1];
-
-    my $pre  = substr ($$common,  $start, $end - $start);
-    my $post = substr ($$variant, $start, $end - $start);
-
-    ## adjust the position number due to the missing residues in $ori
-    my $spos = $start +1 - (grep {$_ < $start} @pos_adj);  # start position
-    my $epos = $end      - (grep {$_ < $end  } @pos_adj);  # end position
-
-    if ($pre !~ m/-/ && $post !~ m/-/) {
-      ## substitution: Gly10Ser or Gly10_Met13LysCysHisVal
-      $str .= substr ($pre, 0, 1) . $spos;
-      $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
-      $str .= $post;
-    } elsif ($pre !~ m/[^-]/) {
-      ## all insertion: Lys2_met3insGln
-      ## FIXME we should differentiate with duplication
-      ## FIXME we should check that before and after it's not a --
-      $str .= substr ($$common, $start -1, 1) . ($spos -1) .
-              "_" .
-              substr ($$common, $end, 1) . $spos .
-              "ins" . $post;
-    } elsif ($post !~ m/[^-]/) {
-      ## all deletion: Cys28del or Cys28_Met32del
-      $str .= substr ($pre, 0, 1) . $spos;
-      $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
-      $str .= "del";
-    } else {
-      ## FIXME a mix of deletion and insertion and substitution... we should
-      ##       have something better for this but what?
-
-      ## remove the - from the sequence for display
-      $pre  =~ s/-//g;
-      $post =~ s/-//g;
-
-      $str .= substr ($pre, 0, 1) . $spos;
-      $str .= "_" . substr ($pre, -1) . $epos;
-      $str .= $post;
-    }
-    $str .= " ";
-  }
-  return $str;
 }
