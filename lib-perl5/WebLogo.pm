@@ -118,6 +118,7 @@ sub _get_version
 {
   my $self = shift;
   my $bin = $self->bin_path;
+  ## We expect something like "WebLogo 3.4 (2014-06-02)"
   `$bin --version` =~ m/^WebLogo ([0-9\.]+) \(/;
   if (! defined $1)
     { croak "Unable to identify version of weblogo"; }
@@ -196,7 +197,7 @@ sub seqlogo_2_fancy_align
                       "            0.7 0.7 0.7 setrgbcolor\n" .
                       "        } {\n" .
                       "            0.0 0.0 0.0 setrgbcolor\n" .
-                      "        }ifelse\n";
+                      "        } ifelse\n";
           $fixed = 1;
         }
       print {$fh} $line;
