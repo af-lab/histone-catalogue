@@ -446,7 +446,8 @@ Exception:
   If regexp fails for some reason (probably wrong input).
 =cut
 
-sub mk_latex_list_name_isoforms {
+sub mk_latex_list_name_isoforms
+{
   my $histone = shift (@_);
   my @symbols = @_;
 
@@ -502,19 +503,18 @@ sub describe_protein_variant
   my $common = (shift)->seq;
   my $variant = (shift)->seq;
 
-  my $str;
+  ## We will need this later to adjust the position numbers.
+  my @gaps;
+  push (@gaps, $-[0]) while ($common =~ m/-/g);
 
-  ## finding differences between the sequences and store start and end position
-  ## of each interval of differences
+  ## Find differences between the two sequences and store the start
+  ## and end position of each **interval** of differences.
   my $mask = $common ^ $variant;
-  my @pos;
-  push (@pos, [@-, @+]) while ($mask =~ /[^\0]+/g);
+  my @diffs;
+  push (@diffs, [@-, @+]) while ($mask =~ /[^\0]+/g);
 
-  ## positions of all - in $$common to adjust position number
-  my @pos_adj;
-  push (@pos_adj, @-) while ($common =~ m/-/g);
-
-  foreach my $idx (@pos)
+  my @desc; # the list of differences description
+  foreach my $idx (@diffs)
     {
       my $start = ${$idx}[0];
       my $end   = ${$idx}[1];
@@ -523,14 +523,16 @@ sub describe_protein_variant
       my $post = substr ($variant, $start, $end - $start);
 
       ## adjust the position number due to the missing residues in $ori
-      my $spos = $start +1 - (grep {$_ < $start} @pos_adj);  # start position
-      my $epos = $end      - (grep {$_ < $end  } @pos_adj);  # end position
+      my $spos = $start +1 - (grep {$_ < $start} @gaps);  # start position
+      my $epos = $end      - (grep {$_ < $end  } @gaps);  # end position
 
+      my $str;
       if ($pre !~ m/-/ && $post !~ m/-/)
         {
           ## substitution: Gly10Ser or Gly10_Met13LysCysHisVal
-          $str .= substr ($pre, 0, 1) . $spos;
-          $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
+          $str = substr ($pre, 0, 1) . $spos;
+          if ($spos != $epos)
+            { $str .= "_" . substr ($pre, -1) . $epos; }
           $str .= $post;
         }
       elsif ($pre !~ m/[^-]/)
@@ -538,16 +540,17 @@ sub describe_protein_variant
           ## all insertion: Lys2_met3insGln
           ## FIXME we should differentiate with duplication
           ## FIXME we should check that before and after it's not a --
-          $str .= substr ($common, $start -1, 1) . ($spos -1) .
-                  "_" .
-                  substr ($common, $end, 1) . $spos .
-                  "ins" . $post;
+          $str = substr ($common, $start -1, 1) . ($spos -1)
+                 . "_"
+                 . substr ($common, $end, 1) . $spos
+                 . "ins" . $post;
         }
       elsif ($post !~ m/[^-]/)
         {
           ## all deletion: Cys28del or Cys28_Met32del
-          $str .= substr ($pre, 0, 1) . $spos;
-          $str .= "_" . substr ($pre, -1) . $epos if ($spos != $epos);
+          $str = substr ($pre, 0, 1) . $spos;
+          if ($spos != $epos)
+            { $str .= "_" . substr ($pre, -1) . $epos; }
           $str .= "del";
         }
       else
@@ -559,13 +562,13 @@ sub describe_protein_variant
           $pre  =~ s/-//g;
           $post =~ s/-//g;
 
-          $str .= substr ($pre, 0, 1) . $spos;
-          $str .= "_" . substr ($pre, -1) . $epos;
-          $str .= $post;
+          $str = substr ($pre, 0, 1) . $spos
+                 . "_" . substr ($pre, -1) . $epos
+                 . $post;
         }
-      $str .= " ";
+      push (@desc, $str);
     }
-  return $str;
+  return join (" ", @desc);
 }
 
 1;
