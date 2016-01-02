@@ -330,6 +330,12 @@ compare_variant_description(
   "describe protein variant with deletions at the end in both sequences");
 
 compare_variant_description(
+  "GTASHRDN*------",
+  "GTASHRDNQAE-IL*",
+  "*9Qext*5",
+  "describe extension on C terminus with gap on the variant");
+
+compare_variant_description(
   "SGR--GKGGKGLGKGGAKR",
   "SMRLYGK-GK--GKLLAKR",
   "G2M R3_G4insLY G6del G9_L10del G13_G14LL",
@@ -340,6 +346,13 @@ compare_variant_description(
   "SGRGKG",
   "",
   "describe nothing when sequences are equal");
+
+## we check this because our sequences may not be complete
+compare_variant_description(
+  "MGRGKG",
+  "SGRGKG",
+  "M1S",
+  "do not confuse change at the start with extension of N terminus");
 
 compare_variant_description(
   "TESHH-K--A-K",

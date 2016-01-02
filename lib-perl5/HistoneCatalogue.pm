@@ -517,6 +517,7 @@ sub describe_protein_variant
           substr ($variant, $-[0], 1) = "";
         }
     }
+  my $seq_len = length ($common);
 
   ## We will need this later to adjust the position numbers.
   my @gaps;
@@ -531,8 +532,8 @@ sub describe_protein_variant
   my @desc; # the list of differences description
   foreach my $idx (@diffs)
     {
-      my $start = ${$idx}[0];
-      my $end   = ${$idx}[1];
+      my $start = $idx->[0];
+      my $end   = $idx->[1];
 
       my $pre  = substr ($common,  $start, $end - $start);
       my $post = substr ($variant, $start, $end - $start);
@@ -542,7 +543,30 @@ sub describe_protein_variant
       my $epos = $end      - (grep {$_ < $end  } @gaps);  # end position
 
       my $str;
-      if ($pre !~ m/-/ && $post !~ m/-/)
+      if ($start == 0 && substr ($common, 0, 1) eq "-")
+        {
+          ## extension of N terminus: Met1ext-5 or Met1Valext-12
+
+          ## If variant retains the methionine/start codon of the original
+          ## sequence, the extension was caused by a new start codon upstream,
+          if (substr ($variant, $end, 1) eq "M")
+            { $str = "M1ext-$end"; }
+          ## otherwise it was forced because the original start codon is gone.
+          else
+            {
+              my $ext_len = $end - 1;
+              my $new_aa = substr ($variant, $ext_len, 1);
+              $str = "M1${new_aa}ext-$ext_len";
+            }
+        }
+      elsif ($end == $seq_len && substr ($common, -1, 1) eq "-")
+        {
+          ## extension of C terminus: *110Glnext*17
+          my $ext_len = $end - $spos;
+          my $new_aa = substr ($variant, $start, 1);
+          $str = "*${spos}${new_aa}ext*${ext_len}";
+        }
+      elsif ($pre !~ m/-/ && $post !~ m/-/)
         {
           ## substitution: Gly10Ser or Gly10_Met13LysCysHisVal
           $str = substr ($pre, 0, 1) . $spos;
