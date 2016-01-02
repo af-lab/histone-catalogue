@@ -489,10 +489,10 @@ Create HGVS recommended description of difference between two protein sequences.
 Create string with sequence difference according to nomenclature set by HGVS
 at http://www.hgvs.org/mutnomen/recs-prot.html
 
-TODO this should be made into a bioperl module
+TODO this should be added to Bioperl instead
 
 Args:
-  common (Bio::Seq)
+  standard (Bio::Seq)
   variant (Bio::Seq)
 
 Returns:
@@ -500,32 +500,32 @@ Returns:
 =cut
 sub describe_protein_variant
 {
-  my $common = (shift)->seq;
+  my $standard = (shift)->seq;
   my $variant = (shift)->seq;
 
-  if (length ($common) != length ($variant))
+  if (length ($standard) != length ($variant))
     { croak "length of common and variant sequences is different"; }
 
   ## It is possible for the two sequences to have gaps ("-") on the same
   ## locations (they may be a pair from a multiple sequence alignment).
   ## So we start by removing those "gaps".
-  while ($common =~ m/-/g)
+  while ($standard =~ m/-/g)
     {
       if (substr ($variant, $-[0], 1) eq "-")
         {
-          substr ($common, $-[0], 1) = "";
+          substr ($standard, $-[0], 1) = "";
           substr ($variant, $-[0], 1) = "";
         }
     }
-  my $seq_len = length ($common);
+  my $seq_len = length ($standard);
 
   ## We will need this later to adjust the position numbers.
   my @gaps;
-  push (@gaps, $-[0]) while ($common =~ m/-/g);
+  push (@gaps, $-[0]) while ($standard =~ m/-/g);
 
   ## Find differences between the two sequences and store the start
   ## and end position of each **interval** of differences.
-  my $mask = $common ^ $variant;
+  my $mask = $standard ^ $variant;
   my @diffs;
   push (@diffs, [@-, @+]) while ($mask =~ /[^\0]+/g);
 
@@ -535,15 +535,15 @@ sub describe_protein_variant
       my $start = $idx->[0];
       my $end   = $idx->[1];
 
-      my $pre  = substr ($common,  $start, $end - $start);
+      my $pre  = substr ($standard,  $start, $end - $start);
       my $post = substr ($variant, $start, $end - $start);
 
-      ## adjust the position number due to the missing residues in $ori
+      ## adjust the position number due to the missing residues in $standard
       my $spos = $start +1 - (grep {$_ < $start} @gaps);  # start position
       my $epos = $end      - (grep {$_ < $end  } @gaps);  # end position
 
       my $str;
-      if ($start == 0 && substr ($common, 0, 1) eq "-")
+      if ($start == 0 && substr ($standard, 0, 1) eq "-")
         {
           ## extension of N terminus: Met1ext-5 or Met1Valext-12
 
@@ -559,7 +559,7 @@ sub describe_protein_variant
               $str = "M1${new_aa}ext-$ext_len";
             }
         }
-      elsif ($end == $seq_len && substr ($common, -1, 1) eq "-")
+      elsif ($end == $seq_len && substr ($standard, -1, 1) eq "-")
         {
           ## extension of C terminus: *110Glnext*17
           my $ext_len = $end - $spos;
@@ -579,9 +579,9 @@ sub describe_protein_variant
           ## all insertion: Lys2_met3insGln
           ## FIXME we should differentiate with duplication
           ## FIXME we should check that before and after it's not a --
-          $str = substr ($common, $start -1, 1) . ($spos -1)
+          $str = substr ($standard, $start -1, 1) . ($spos -1)
                  . "_"
-                 . substr ($common, $end, 1) . $spos
+                 . substr ($standard, $end, 1) . $spos
                  . "ins" . $post;
         }
       elsif ($post !~ m/[^-]/)
