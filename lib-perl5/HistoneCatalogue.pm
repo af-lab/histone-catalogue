@@ -503,6 +503,21 @@ sub describe_protein_variant
   my $common = (shift)->seq;
   my $variant = (shift)->seq;
 
+  if (length ($common) != length ($variant))
+    { croak "length of common and variant sequences is different"; }
+
+  ## It is possible for the two sequences to have gaps ("-") on the same
+  ## locations (they may be a pair from a multiple sequence alignment).
+  ## So we start by removing those "gaps".
+  while ($common =~ m/-/g)
+    {
+      if (substr ($variant, $-[0], 1) eq "-")
+        {
+          substr ($common, $-[0], 1) = "";
+          substr ($variant, $-[0], 1) = "";
+        }
+    }
+
   ## We will need this later to adjust the position numbers.
   my @gaps;
   push (@gaps, $-[0]) while ($common =~ m/-/g);

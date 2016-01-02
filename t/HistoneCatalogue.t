@@ -23,6 +23,8 @@ use Test::Output;
 use Test::More;
 use File::Temp;
 
+use Test::Exception;
+
 use HistoneCatalogue;
 use HistoneSequencesDB;
 
@@ -332,5 +334,23 @@ compare_variant_description(
   "SMRLYGK-GK--GKLLAKR",
   "G2M R3_G4insLY G6del G9_L10del G13_G14LL",
   "describe several types of protein changes");
+
+compare_variant_description(
+  "SGRGKG",
+  "SGRGKG",
+  "",
+  "describe nothing when sequences are equal");
+
+compare_variant_description(
+  "TESHH-K--A-K",
+  "TESHE-A--T-K",
+  "H5_A7EAT",
+  "do not get distracted by equal gaps on the sequences");
+
+throws_ok
+  { HistoneCatalogue::describe_protein_variant(Bio::Seq->new(-seq => 'SMRLY'),
+                                               Bio::Seq->new(-seq => 'SMRLY-'))}
+  qr/length of common and variant sequences is different/,
+  'die with sequences of different length';
 
 done_testing;
