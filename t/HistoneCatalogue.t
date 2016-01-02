@@ -248,4 +248,89 @@ stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
 \newcommand{\TotalCoreVariantGenes}{\ScriptValue{4}}
 END
 
+sub compare_variant_description
+{
+  my $o_seq = shift;
+  my $v_seq = shift;
+  my $expected  = shift;
+  my $test_name = shift;
+
+  my $o = Bio::Seq->new(-seq => $o_seq);
+  my $v = Bio::Seq->new(-seq => $v_seq);
+  is(HistoneCatalogue::describe_protein_variant($o, $v), $expected, $test_name);
+}
+
+compare_variant_description(
+  "TESHHKAK",
+  "TESHHKTK",
+  "A7T",
+  "describe single aa substitution");
+
+compare_variant_description(
+  "TESHHKAK",
+  "TESHEATK",
+  "H5_A7EAT",
+  "describe chunk of aa substitution");
+
+compare_variant_description(
+  "TESHHKAK",
+  "TASHEATK",
+  "E2A H5_A7EAT",
+  "describe multiple aa substitution");
+
+compare_variant_description(
+  "MKMGHQQQCC",
+  "MKMGHQQ-CC",
+  "Q8del",
+  "describe single aa deletion");
+
+compare_variant_description(
+  "MK---MGHQQQCC",
+  "MKQSKMGHQQQCC",
+  "K2_M3insQSK",
+  "describe insertion of several aa");
+
+## p.Met1ext-5
+## a variant in the 5' UTR activates a new upstream translation initiation
+## site starting with amino acid Met-5 (Methionine -5)
+compare_variant_description(
+  "-----MTAS",
+  "MGTASMTAS",
+  "M1ext-5",
+  "describe extension on N terminus because of new upstream start codon");
+
+## p.Met1Valext-12
+## amino acid Met1 is changed to Val activating an upstream translation
+## initiation site at position -12 (Methionine -12)
+compare_variant_description(
+  "------------MTAS",
+  "MGTASHRDNKKTVTAS",
+  "M1Vext-12",
+  "describe extension on N terminus because of change on start codon");
+
+## p.*110Glnext*17 (alternatively p.Ter110GlnextTer17 or p.*110Qext*17)
+## describes a variant in the stop codon (Ter/*) at position 110, changing it
+## to a codon for Glutamine (Gln, Q) and adding a tail of new amino acids to
+## the protein's C-terminus ending at a new stop codon (Ter17/*17)
+compare_variant_description(
+  "GTASHRDN*-----",
+  "GTASHRDNQAEIL*",
+  "*9Qext*5",
+  "describe extension on C terminus because of change on stop codon");
+
+## This case is tricky because it's a deletion of the C-terminus
+## but the original sequence also has a deletion inside (note that
+## sequence come from a multi sequence alignment so this is normal)
+compare_variant_description(
+  "TESHHKAKG-K",
+  "TESHHKTK---",
+  "A7T G9_K10del",
+  "describe protein variant with deletions at the end in both sequences");
+
+compare_variant_description(
+  "SGR--GKGGKGLGKGGAKR",
+  "SMRLYGK-GK--GKLLAKR",
+  "G2M R3_G4insLY G6del G9_L10del G13_G14LL",
+  "describe several types of protein changes");
+
 done_testing;
