@@ -287,9 +287,7 @@ utr_targets   = list ()
 for histone in ["H2A", "H2B", "H3", "H4"]:
   align_targets += [
     path4result ("aligned_%s_proteins.fasta"   % histone),
-    path4figure ("seqlogo_%s_proteins.eps"     % histone),
     path4result ("aligned_%s_cds.fasta"        % histone),
-    path4figure ("seqlogo_%s_cds.eps"          % histone),
     path4result ("table-%s-proteins-align.tex" % histone),
   ]
 align_targets += [path4result ("variables-align_results.tex")]
@@ -376,6 +374,26 @@ analysis = [
     args   = [db_store],
   ),
 ]
+
+
+histone_seqlogos = []
+for histone in ["H2A", "H2B", "H3", "H4"]:
+  protein_align = path4result("aligned_%s_proteins.fasta" % histone)
+  cds_align = path4result("aligned_%s_cds.fasta" % histone)
+
+  protein_logo  = path4result("seqlogo_%s_proteins.eps" % histone)
+  cds_logo  = path4figure("seqlogo_%s_cds.eps" % histone)
+
+  for s, t in zip ([protein_align, cds_align], [protein_logo, cds_logo]):
+    logo = env.PerlScript(
+      target = t,
+      source = path4script("mk_histone_seqlogo.pl"),
+      action = [str(s), t],
+    )
+    Depends(logo, [align_targets])
+    histone_seqlogos += [logo]
+
+analysis += histone_seqlogos
 
 env.Alias ("analysis", analysis)
 env.Depends (

@@ -24,18 +24,15 @@ use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCo
 use Bio::Seq;
 
 use HistoneCatalogue;
-use WebLogo;
 use MyLib;
 
 ## This script will get the downloaded sequences from all canonical histones, align
-## them, use the alignment to create a sequence logo and create a LaTeX table with
+## them, and create a LaTeX table with
 ## the differences between each histone.
 ##
 ## It will create the following files:
 ##    * results/aligned_H2A_proteins.fasta (one for each histone)
 ##    * results/aligned_H2A_cds.fasta (one for each histone)
-##    * figs/seqlogo_H2A_proteins.eps (one for each histone)
-##    * figs/seqlogo_H2A_cds.eps (one for each histone)
 ##    * results/table-H2A-proteins-align.tex (one per histone, with the differences
 ##      between the different histone proteins in tabular form)
 ##    * results/variables-align_results.tex (LaTeX variables for the numbers
@@ -51,7 +48,7 @@ use MyLib;
 ##    * path/for/figures   - directory where this script will save the seqlogo eps files
 ##
 ## If we are using this script, we will be using TCoffee http://www.tcoffee.org/
-## and weblogo http://weblogo.threeplusone.com/ We should reference them with:
+## We should reference it with:
 ##
 ## Notredame, C, Higgins, DG, Heringa, J (2000). "T-Coffee: A novel method for fast and
 ## accurate multiple sequence alignment" Journal of molecular biology, 302(1):205-218
@@ -66,28 +63,13 @@ use MyLib;
 ##  year={2000},
 ##}
 ##
-## Crooks, GE, Hon, G, Chandonia, JM, Brenner SE (2004). "WebLogo: a sequence logo
-## generator", Genome Research, 14:1188-1190
-##
-##@article{weblogo2004,
-##  title={{WebLogo}: a sequence logo generator},
-##  author={Crooks, G.E. and Hon, G. and Chandonia, J.M. and Brenner, S.E.},
-##  journal={Genome research},
-##  volume={14},
-##  number={6},
-##  pages={1188--1190},
-##  year={2004},
-##}
 ##
 ## Flow of this script:
 ##    1 - read in all protein sequences of all canonical histone, creating a Bio::Seq
 ##        object for each of them
 ##    2 - multiple sequence alignment for each
-##    3 - use weblogo to create a sequence logo for each
-##    4 - modify the sequence logo postscript to leave in dark only the positions
-##        where the sequence differs
-##    5 - compare each protein to the most common sequence, listing each difference
-##    6 - make pretty LaTeX table to display it
+##    3 - compare each protein to the most common sequence, listing each difference
+##    4 - make pretty LaTeX table to display it
 
 my %path = MyLib::parse_argv("sequences", "figures", "results");
 
@@ -131,28 +113,24 @@ my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex")
 open (my $var_file, ">", $var_path) or die "Could not open $var_path for writing: $!";
 
 foreach my $histone (keys %proteins) {
-  my $cds_align = align_and_weblogo (
+  my $cds_align = align(
     File::Spec->catdir($path{results}, "aligned_${histone}_cds.fasta"),
-    File::Spec->catdir($path{figures}, "seqlogo_${histone}_cds.eps"),
     @{$cds{$histone}}
   );
 
-  my $protein_align = align_and_weblogo (
+  my $protein_align = align(
     File::Spec->catdir($path{results}, "aligned_${histone}_proteins.fasta"),
-    File::Spec->catdir($path{figures}, "seqlogo_${histone}_proteins.eps"),
     @{$proteins{$histone}}
   );
   tex_compare_histone_proteins ($var_file, $histone, $protein_align);
-
 }
 close ($var_file) or die "Couldn't close $var_path after writing: $!";
 
 
 ## Align all sequences with TCoffee, saving the alignment as a fasta file.
-## Then use that file to create a logo (with WebLogo) as an eps file.
-sub align_and_weblogo {
+sub align
+{
   my $align_path  = shift;
-  my $logo_path   = shift;
 
   ## this works but goes against the documentation. We can't fix the problem upstream because
   ## we don't know what's really wrong. Should we fix the documentation or should we fix the
@@ -165,23 +143,7 @@ sub align_and_weblogo {
   );
 
   $tcoffee->outfile($align_path);
-  my $align = $tcoffee->align(\@_);
-
-  my $weblogo = WebLogo->new();
-  $weblogo->call(
-    $align_path,
-    $logo_path,
-    {
-      "--units",          "probability",
-      "--show-yaxis",     "no",
-      "--stacks-per-line", 50,
-      "--datatype",       "fasta",
-      "--errorbars",      "no",
-    },
-  );
-  WebLogo::seqlogo_2_fancy_align($logo_path, $logo_path);
-
-  return $align;
+  return $tcoffee->align(\@_);
 }
 
 
