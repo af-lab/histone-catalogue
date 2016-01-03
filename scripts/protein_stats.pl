@@ -55,13 +55,13 @@ sub arg_lys_ratio
 
   my $arg = 0;
   my $lys = 0;
-  my $analysis = sub
+  my $it = $db->protein_iterator (@genes);
+  while (my $p = $it->())
     {
-      my $s = $_->seq;
+      my $s = $p->seq;
       $arg++ while $s =~ m/R/ig;
       $lys++ while $s =~ m/K/ig;
     };
-  $db->foreach_protein ($analysis, @genes);
   if ($arg == 0 || $lys == 0)
     { die "Found 0 arginine or lysine while calculating arg/lys ratio"; }
   return ($arg/$lys);
@@ -91,18 +91,14 @@ sub main
     {
       my @this_histones = grep {$_->histone_type eq $histone} @core;
 
-      ## Passing a closure to $db->foreach_protein(), we will analyse
-      ## all the proteins in one go.  This is not very pretty, but it
-      ## saves us from reading the same sequences multiple times.  An
-      ## alternative would be to get all the protein Bio::Seq first
-      ## but we also don't want to use that much memory.
-
       my %seqs;     # sequence as keys to count unique proteins
       my $arg = 0;  # count of arginine residues
       my $lys = 0;  # count of lysine residues
-      my $analysis = sub
+
+      my $it = $db->protein_iterator (@this_histones);
+      while (my $p = $it->())
         {
-          my $s = $_->seq;
+          my $s = $p->seq;
           $seqs{$s} = 1;
 
           ## we know that some genes will encode proteins with the same sequence. We
@@ -111,9 +107,7 @@ sub main
           ## levels of each gene so we have to assume they are equal
           $arg++ while $s =~ m/R/ig;
           $lys++ while $s =~ m/K/ig;
-        };
-      $db->foreach_protein ($analysis, @this_histones);
-
+        }
       if ($arg == 0 || $lys == 0)
         { die "Found 0 arginine or lysine while calculating arg/lys ratio"; }
 

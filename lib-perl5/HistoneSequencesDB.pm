@@ -505,46 +505,37 @@ sub sort_histones
 }
 
 
-=method foreach_protein
+=method protein_iterator
 
-Executes a block with the Bio::Seq object for the protein of each
-input gene.  Note that some genes may have more than one, or even
-zero proteins.  So the block may never be executed or be executed
-more times than the number of genes.
-
-Example:
-  ## Get all protein sequence (string) for all genes
-  my @prot_seqs = $db->foreach_protein (sub { $_->seq }, @genes);
-
-  ## Use a closure to analyse all proteins
-  my $max_length = 0;
-  $db->foreach_protein (sub { $max_length = $_->length if $_->length > $max_length}, @genes );
+Given a list of genes, creates an iterator for all its proteins.  Note
+that some genes may have more than one, or even zero proteins.  So the
+iterator may return more or less proteins than the number of genes.
 
 Args:
-  $block - block of code to be executed
   @genes ([Gene])
 
 Returns:
-  return value of $block
+  iterator for Bio::Seq protein
+  undef when iterator is exhausted
 =cut
-sub foreach_protein
+sub protein_iterator
 {
   my $db = shift;
-  my $block = shift;
   my @genes = @_;
 
-  my @result;
+  my @acc;
   for my $g (@genes)
     {
       my $products = $g->coding_products();
-      for my $p_acc (values %{$products})
-        {
-          ## make $_ available to &$block
-          local $_ = $db->get_protein($p_acc);
-          push @result, &$block;
-        }
+      push (@acc, values %{$products});
     }
-  return @result;
+
+  return sub
+    {
+      while (my $p_acc = shift @acc)
+        { return $db->get_protein($p_acc); }
+      return undef;
+    };
 }
 
 
