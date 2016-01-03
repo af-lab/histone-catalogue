@@ -33,6 +33,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 
 use HistoneCatalogue;
+use HistoneSequencesDB;
 use MyLib;
 
 if (@ARGV != 1)
@@ -110,6 +111,14 @@ foreach my $gene (@genes) {
                 {
                   next unless $feat->primary_tag eq "CDS";
                   next unless scalar (grep {lc ($_) eq lc ($symbol)} $feat->get_tag_values("gene"));
+
+                  ## There should only be one (also, ideally we would refer
+                  ## the transcript but we don't have that information from
+                  ## the CDS feature (and we don't want to use the mRNA
+                  ## feature because that includes the UTR which complicates
+                  ## to find the actual CDS).
+                  my $protein_acc = ($feat->get_tag_values("protein_id"))[0];
+
                   my $start = $feat->end;
                   my $end   = $start + $HistoneCatalogue::stlp_dist + $HistoneCatalogue::stlp_length;
                   if ($end > $seq->length)
@@ -118,7 +127,7 @@ foreach my $gene (@genes) {
                   if ($subseq =~ m/($HistoneCatalogue::stlp_seq)/gi)
                     {
                       my $sl = pos ($subseq) - length ($1) +1; # start of *last* match
-                      push @weirds, "$symbol has possible stem loop in genomic starting at $sl bp from the end of its CDS";
+                      push @weirds, "$symbol has possible stem loop in genomic sequence starting at $sl bp from the end of protein $protein_acc CDS";
                     }
                 }
             }
