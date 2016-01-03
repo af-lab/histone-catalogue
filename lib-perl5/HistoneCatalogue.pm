@@ -610,4 +610,32 @@ sub describe_protein_variant
   return join (" ", @desc);
 }
 
+
+=func most_common_seq_in_alignment
+
+Args:
+  align (Bio::Align::AlignI)
+
+Returns:
+  Bio::Seq object with most common sequence on $align
+=cut
+sub most_common_seq_in_alignment
+{
+  my $align = shift;
+
+  my $max = 0;
+  my %seqs;
+  foreach ($align->each_seq)
+    {
+      if (++$seqs{$_->seq} > $max)
+        { $max++; }
+    }
+  foreach (keys %seqs)
+    {
+      if ($seqs{$_} == $max)
+        { return Bio::Seq->new(-seq => $_); }
+    }
+  croak "Unable to find most common sequence.";
+}
+
 1;

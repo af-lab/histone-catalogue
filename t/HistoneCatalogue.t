@@ -25,6 +25,10 @@ use File::Temp;
 
 use Test::Exception;
 
+use Bio::Seq;
+use Bio::SimpleAlign;
+use Bio::LocatableSeq;
+
 use HistoneCatalogue;
 use HistoneSequencesDB;
 
@@ -365,5 +369,16 @@ throws_ok
                                                Bio::Seq->new(-seq => 'SMRLY-'))}
   qr/length of common and variant sequences is different/,
   'die with sequences of different length';
+
+{
+  my $aln = Bio::SimpleAlign->new();
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f1', -seq => 'ART-IRG-RA'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f2', -seq => 'ARTKIRGERA'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f3', -seq => 'QRTKIRGARV'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f4', -seq => 'ARTKIRGERA'));
+  is(HistoneCatalogue::most_common_seq_in_alignment($aln)->seq,
+     'ARTKIRGERA',
+     'find most common sequence in alignment');
+}
 
 done_testing;

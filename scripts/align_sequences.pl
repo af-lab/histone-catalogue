@@ -188,23 +188,7 @@ sub tex_compare_histone_proteins {
   ## want to use in the tables describing the variants is the most common sequence, not the
   ## consensus.
 
-  ## Getting the value of $max here, even though the values for each key is
-  ## already the number of times for each sequence, saves us having to loop
-  ## through the values later to find it.
-  my $max = 0;
-  my %seqs; # keys will be aligned sequences
-  foreach ($align->each_seq) {
-    ## increment the value in the hash everytime and also increment the
-    ## value of $max if we go above it
-    $max++ if (++$seqs{$_->seq} > $max);
-  }
-  my @common = grep ($seqs{$_} == $max, keys %seqs);
-  if (@common > 1) {
-    my $n = @common;
-    warn ("Found $n `most common' sequences for $histone. Only the first will be used.");
-  }
-  my $most_common = Bio::Seq->new(-seq => $common[0]);
-
+  my $most_common = HistoneCatalogue::most_common_seq_in_alignment($align);
 
   ## Get a list of the genes whose sequence is equal to the most common,
   ## and the text describing the difference against it for the others.
