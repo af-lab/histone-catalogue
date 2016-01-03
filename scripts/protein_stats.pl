@@ -53,49 +53,19 @@ sub arg_lys_ratio
   my $db = shift;
   my @genes = @_;
 
-  my $arg = 0; # count of arginine residues
-  my $lys = 0; # count of lysine residues
-  foreach my $products (map { $_->coding_products } @genes)
+  my $arg = 0;
+  my $lys = 0;
+  my $analysis = sub
     {
-      foreach my $acc (values %$products)
-        {
-          my $seq = $db->get_protein($acc)->seq;
-          ## we know that some genes will encode proteins with the same sequence. We
-          ## are counting those again on purpose. This gives us the Arg/Lys ratio for
-          ## the proteins being expressed. Of course, we do not know the expression
-          ## levels of each gene so we have to assume they are equal
-          $arg++ while $seq =~ m/R/ig;
-          $lys++ while $seq =~ m/K/ig;
-        }
-    }
+      my $s = $_->seq;
+      $arg++ while $s =~ m/R/ig;
+      $lys++ while $s =~ m/K/ig;
+    };
+  $db->foreach_protein ($analysis, @genes);
   if ($arg == 0 || $lys == 0)
     { die "Found 0 arginine or lysine while calculating arg/lys ratio"; }
   return ($arg/$lys);
 }
-
-=func number_unique_proteins
-
-Args:
-  $db (HistoneSequencesDB)
-  @genes ([Gene])
-
-Returns:
-  integer with number of unique proteins.
-=cut
-sub number_unique_proteins
-{
-  my $db = shift;
-  my @genes = @_;
-
-  my %seqs;
-  foreach my $products (map { $_->coding_products } @genes)
-    {
-      foreach my $acc (values %$products)
-        { $seqs{$db->get_protein($acc)->seq} = 1; }
-    }
-  return scalar keys %seqs;
-}
-
 
 sub main
 {
@@ -120,15 +90,42 @@ sub main
   foreach my $histone (@HistoneCatalogue::histones)
     {
       my @this_histones = grep {$_->histone_type eq $histone} @core;
+
+      ## Passing a closure to $db->foreach_protein(), we will analyse
+      ## all the proteins in one go.  This is not very pretty, but it
+      ## saves us from reading the same sequences multiple times.  An
+      ## alternative would be to get all the protein Bio::Seq first
+      ## but we also don't want to use that much memory.
+
+      my %seqs;     # sequence as keys to count unique proteins
+      my $arg = 0;  # count of arginine residues
+      my $lys = 0;  # count of lysine residues
+      my $analysis = sub
+        {
+          my $s = $_->seq;
+          $seqs{$s} = 1;
+
+          ## we know that some genes will encode proteins with the same sequence. We
+          ## are counting those again on purpose. This gives us the Arg/Lys ratio for
+          ## the proteins being expressed. Of course, we do not know the expression
+          ## levels of each gene so we have to assume they are equal
+          $arg++ while $s =~ m/R/ig;
+          $lys++ while $s =~ m/K/ig;
+        };
+      $db->foreach_protein ($analysis, @this_histones);
+
+      if ($arg == 0 || $lys == 0)
+        { die "Found 0 arginine or lysine while calculating arg/lys ratio"; }
+
       say HistoneCatalogue::latex_newcommand(
         "${histone}ArgLysRatio",
-        arg_lys_ratio($db, @this_histones),
+        ($arg / $lys),
         "Ratio of Total Number of Arginine and Lysines in all of the ${histone} histones",
       );
 
       say HistoneCatalogue::latex_newcommand(
         "${histone}UniqueProteins",
-        number_unique_proteins($db, @this_histones),
+        scalar (keys (%seqs)),
         "Number of unique proteins encoded by all histone $histone genes",
       );
     }
