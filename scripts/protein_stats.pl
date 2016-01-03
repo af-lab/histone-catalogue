@@ -23,8 +23,10 @@ use utf8;
 ## DESCRIPTION
 ##
 ## It will read the store file of an HistoneSequencesDB object, and
-## print to stdout Tex newcommands with protein stats (arg by lys ratios
-## only at the moment).
+## print to stdout Tex newcommands with the following protein stats:
+##
+##  * arg by lys ratio (per histone type, and core vs linker)
+##  * number of unique protein sequences per histone type
 
 use 5.010;
 use strict;
@@ -71,6 +73,30 @@ sub arg_lys_ratio
   return ($arg/$lys);
 }
 
+=func number_unique_proteins
+
+Args:
+  $db (HistoneSequencesDB)
+  @genes ([Gene])
+
+Returns:
+  integer with number of unique proteins.
+=cut
+sub number_unique_proteins
+{
+  my $db = shift;
+  my @genes = @_;
+
+  my %seqs;
+  foreach my $products (map { $_->coding_products } @genes)
+    {
+      foreach my $acc (values %$products)
+        { $seqs{$db->get_protein($acc)->seq} = 1; }
+    }
+  return scalar keys %seqs;
+}
+
+
 sub main
 {
   if (@_ != 1)
@@ -98,6 +124,12 @@ sub main
         "${histone}ArgLysRatio",
         arg_lys_ratio($db, @this_histones),
         "Ratio of Total Number of Arginine and Lysines in all of the ${histone} histones",
+      );
+
+      say HistoneCatalogue::latex_newcommand(
+        "${histone}UniqueProteins",
+        number_unique_proteins($db, @this_histones),
+        "Number of unique proteins encoded by all histone $histone genes",
       );
     }
 

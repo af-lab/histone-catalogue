@@ -243,11 +243,6 @@ sub tex_compare_histone_proteins {
   }
   my $most_common = Bio::Seq->new(-seq => $common[0]);
 
-  say {$var_file} HistoneCatalogue::latex_newcommand (
-    $histone."UniqueProteins",
-    scalar keys %seqs,
-    "Number of unique proteins encoded by all histone $histone genes",
-  );
 
   ## Get a list of the genes whose sequence is equal to the most common,
   ## and the text describing the difference against it for the others.
