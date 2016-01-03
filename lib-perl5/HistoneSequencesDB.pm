@@ -503,6 +503,51 @@ sub sort_histones
   return sort {$a->histone_type cmp $b->histone_type
                || $a->symbol cmp $b->symbol} @_;
 }
+
+
+=method foreach_protein
+
+Executes a block with the Bio::Seq object for the protein of each
+input gene.  Note that some genes may have more than one, or even
+zero proteins.  So the block may never be executed or be executed
+more times than the number of genes.
+
+Example:
+  ## Get all protein sequence (string) for all genes
+  my @prot_seqs = $db->foreach_protein (sub { $_->seq }, @genes);
+
+  ## Use a closure to analyse all proteins
+  my $max_length = 0;
+  $db->foreach_protein (sub { $max_length = $_->length if $_->length > $max_length}, @genes );
+
+Args:
+  $block - block of code to be executed
+  @genes ([Gene])
+
+Returns:
+  return value of $block
+=cut
+sub foreach_protein
+{
+  my $db = shift;
+  my $block = shift;
+  my @genes = @_;
+
+  my @result;
+  for my $g (@genes)
+    {
+      my $products = $g->coding_products();
+      for my $p_acc (values %{$products})
+        {
+          ## make $_ available to &$block
+          local $_ = $db->get_protein($p_acc);
+          push @result, &$block;
+        }
+    }
+  return @result;
+}
+
+
 __PACKAGE__->meta->make_immutable;
 
 1;
