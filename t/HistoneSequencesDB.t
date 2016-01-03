@@ -19,6 +19,7 @@ use utf8;
 use strict;
 use warnings;
 
+use FindBin;
 use File::Temp;
 use File::Spec;
 
@@ -167,5 +168,30 @@ isa_ok($read_db, 'HistoneSequencesDB', "Read back HistoneSequencesDB from store"
 
 subtest "Test everything again with the read HistoneSequencesDB"
   => sub { test_db($read_db); };
+
+## Tests that require actual sequence files
+{
+  my $db_dir = File::Spec->catfile($FindBin::Bin, "test-data", "test-sequences");
+  my $db2 = HistoneSequencesDB->new($db_dir);
+
+  ## we pick two pseudo genes and a gene with two transcripts, so we can
+  ## check the number of iterations.
+  my @genes = grep { $_->symbol =~ /HIST1H2APS4|HIST1H2BD|HIST1H3F|HIST1H4I|H2AFZP4/ } @{$db2->genes};
+
+  my @lengths;
+  my $c = 0;
+
+  my $it = $db2->protein_iterator(HistoneSequencesDB::sort_histones (@genes));
+  while (my $p = $it->())
+    {
+      $c++;
+      push @lengths, $p->length;
+    }
+  is ($c, 4, "iterate over proteins right number of times");
+  is_deeply (\@lengths, [125, 125, 135, 102],
+             "iterate over the right proteins in right order");
+  ok (! defined $it->(), "exhausted iterator stays undef");
+}
+
 
 done_testing;

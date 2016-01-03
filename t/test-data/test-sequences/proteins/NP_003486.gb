@@ -1,0 +1,309 @@
+LOCUS       NP_003486                103 aa            linear   PRI 18-AUG-2015
+DEFINITION  histone H4 [Homo sapiens].
+ACCESSION   NP_003486
+VERSION     NP_003486.1  GI:4504321
+DBSOURCE    REFSEQ: accession NM_003495.2
+KEYWORDS    RefSeq.
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (residues 1 to 103)
+  AUTHORS   Kato D, Osakabe A, Tachiwana H, Tanaka H and Kurumizaka H.
+  TITLE     Human tNASP promotes in vitro nucleosome assembly with histone H3.3
+  JOURNAL   Biochemistry 54 (5), 1171-1179 (2015)
+   PUBMED   25615412
+REFERENCE   2  (residues 1 to 103)
+  AUTHORS   Rolland T, Tasan M, Charloteaux B, Pevzner SJ, Zhong Q, Sahni N, Yi
+            S, Lemmens I, Fontanillo C, Mosca R, Kamburov A, Ghiassian SD, Yang
+            X, Ghamsari L, Balcha D, Begg BE, Braun P, Brehme M, Broly MP,
+            Carvunis AR, Convery-Zupan D, Corominas R, Coulombe-Huntington J,
+            Dann E, Dreze M, Dricot A, Fan C, Franzosa E, Gebreab F, Gutierrez
+            BJ, Hardy MF, Jin M, Kang S, Kiros R, Lin GN, Luck K, MacWilliams
+            A, Menche J, Murray RR, Palagi A, Poulin MM, Rambout X, Rasla J,
+            Reichert P, Romero V, Ruyssinck E, Sahalie JM, Scholz A, Shah AA,
+            Sharma A, Shen Y, Spirohn K, Tam S, Tejeda AO, Trigg SA, Twizere
+            JC, Vega K, Walsh J, Cusick ME, Xia Y, Barabasi AL, Iakoucheva LM,
+            Aloy P, De Las Rivas J, Tavernier J, Calderwood MA, Hill DE, Hao T,
+            Roth FP and Vidal M.
+  TITLE     A proteome-scale map of the human interactome network
+  JOURNAL   Cell 159 (5), 1212-1226 (2014)
+   PUBMED   25416956
+REFERENCE   3  (residues 1 to 103)
+  AUTHORS   Lubula MY, Eckenroth BE, Carlson S, Poplawski A, Chruszcz M and
+            Glass KC.
+  TITLE     Structural insights into recognition of acetylated histone ligands
+            by the BRPF1 bromodomain
+  JOURNAL   FEBS Lett. 588 (21), 3844-3854 (2014)
+   PUBMED   25281266
+REFERENCE   4  (residues 1 to 103)
+  AUTHORS   Chodaparambil JV, Pate KT, Hepler MR, Tsai BP, Muthurajan UM, Luger
+            K, Waterman ML and Weis WI.
+  TITLE     Molecular functions of the TLE tetramerization domain in Wnt target
+            gene repression
+  JOURNAL   EMBO J. 33 (7), 719-731 (2014)
+   PUBMED   24596249
+REFERENCE   5  (residues 1 to 103)
+  AUTHORS   Urahama T, Horikoshi N, Osakabe A, Tachiwana H and Kurumizaka H.
+  TITLE     Structure of human nucleosome containing the testis-specific
+            histone variant TSH2B
+  JOURNAL   Acta Crystallogr F Struct Biol Commun 70 (PT 4), 444-449 (2014)
+   PUBMED   24699735
+REFERENCE   6  (residues 1 to 103)
+  AUTHORS   Marzluff WF, Gongidi P, Woods KR, Jin J and Maltais LJ.
+  TITLE     The human and mouse replication-dependent histone genes
+  JOURNAL   Genomics 80 (5), 487-498 (2002)
+   PUBMED   12408966
+REFERENCE   7  (residues 1 to 103)
+  AUTHORS   Albig W, Kardalinou E, Drabent B, Zimmer A and Doenecke D.
+  TITLE     Isolation and characterization of two human H1 histone genes within
+            clusters of core histone genes
+  JOURNAL   Genomics 10 (4), 940-948 (1991)
+   PUBMED   1916825
+REFERENCE   8  (residues 1 to 103)
+  AUTHORS   Turner BM, O'Neill LP and Allan IM.
+  TITLE     Histone H4 acetylation in human cells. Frequency of acetylation at
+            different sites defined by immunolabeling with site-specific
+            antibodies
+  JOURNAL   FEBS Lett. 253 (1-2), 141-145 (1989)
+   PUBMED   2474456
+REFERENCE   9  (residues 1 to 103)
+  AUTHORS   Ebralidse KK, Grachev SA and Mirzabekov AD.
+  TITLE     A highly basic histone H4 domain bound to the sharply bent region
+            of nucleosomal DNA
+  JOURNAL   Nature 331 (6154), 365-367 (1988)
+   PUBMED   3340182
+REFERENCE   10 (residues 1 to 103)
+  AUTHORS   Pauli,U., Chrysogelos,S., Stein,G., Stein,J. and Nick,H.
+  TITLE     Protein-DNA interactions in vivo upstream of a cell cycle-regulated
+            human H4 histone gene
+  JOURNAL   Science 236 (4806), 1308-1311 (1987)
+   PUBMED   3035717
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from AB000905.1.
+            
+            Summary: Histones are basic nuclear proteins that are responsible
+            for the nucleosome structure of the chromosomal fiber in
+            eukaryotes. Two molecules of each of the four core histones (H2A,
+            H2B, H3, and H4) form an octamer, around which approximately 146 bp
+            of DNA is wrapped in repeating units, called nucleosomes. The
+            linker histone, H1, interacts with linker DNA between nucleosomes
+            and functions in the compaction of chromatin into higher order
+            structures. This gene is intronless and encodes a
+            replication-dependent histone that is a member of the histone H4
+            family. Transcripts from this gene lack polyA tails but instead
+            contain a palindromic termination element. This gene is found in
+            the histone microcluster on chromosome 6p21.33. [provided by
+            RefSeq, Aug 2015].
+            
+            Publication Note:  This RefSeq record includes a subset of the
+            publications that are available for this gene. Please see the Gene
+            record to access additional publications.
+            
+            ##RefSeq-Attributes-START##
+            replication-dependent histone :: PMID: 12408966
+            ##RefSeq-Attributes-END##
+FEATURES             Location/Qualifiers
+     source          1..103
+                     /organism="Homo sapiens"
+                     /db_xref="taxon:9606"
+                     /chromosome="6"
+                     /map="6p21.33"
+     Protein         1..103
+                     /product="histone H4"
+                     /note="Histone 4 family, member M; H4 histone family,
+                     member M; histone family member; histone 1, H4i"
+                     /calculated_mol_wt=11236
+     Region          1..103
+                     /region_name="PLN00035"
+                     /note="histone H4; Provisional"
+                     /db_xref="CDD:177669"
+     Site            2
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N-acetylserine. {ECO:0000269|PubMed:17967882};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            2
+                     /site_type="phosphorylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine. {ECO:0000269|PubMed:17967882};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            4
+                     /site_type="methylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Asymmetric dimethylarginine, by PRMT1, alternate.
+                     {ECO:0000269|PubMed:11387442, ECO:0000269|PubMed:11448779,
+                     ECO:0000269|PubMed:15345777}; Omega-N-methylarginine, by
+                     PRMT1, alternate. {ECO:0000269|PubMed:11387442,
+                     ECO:0000269|PubMed:11448779, ECO:0000269|PubMed:15345777};
+                     Symmetric dimethylarginine, by PRMT5 and PRMT7, alternate.
+                     {ECO:0000250}; propagated from UniProtKB/Swiss-Prot
+                     (P62805.2)"
+     Site            4
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Citrulline, alternate.
+                     {ECO:0000269|PubMed:15345777,
+                     ECO:0000269|PubMed:16567635}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            6
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine, alternate.
+                     {ECO:0000269|PubMed:19608861, ECO:0000269|PubMed:2474456,
+                     ECO:0000269|PubMed:7664735}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            6
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-crotonyllysine, alternate.
+                     {ECO:0000269|PubMed:21925322}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            9
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine, alternate.
+                     {ECO:0000269|PubMed:19608861, ECO:0000269|PubMed:2474456,
+                     ECO:0000269|PubMed:7664735}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            9
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-crotonyllysine, alternate.
+                     {ECO:0000269|PubMed:21925322}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            13
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine, alternate.
+                     {ECO:0000269|PubMed:17967882, ECO:0000269|PubMed:19608861,
+                     ECO:0000269|PubMed:2474456, ECO:0000269|PubMed:7664735};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            13
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-crotonyllysine, alternate.
+                     {ECO:0000269|PubMed:21925322}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            17
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine, alternate.
+                     {ECO:0000269|PubMed:17967882, ECO:0000269|PubMed:19608861,
+                     ECO:0000269|PubMed:2474456, ECO:0000269|PubMed:7664735};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            17
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-crotonyllysine, alternate. {ECO:0000250};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Region          18..101
+                     /region_name="H4"
+                     /note="Histone H4, one of the four histones, along with
+                     H2A, H2B and H3, which forms the eukaryotic nucleosome
+                     core; along with H3, it plays a central role in nucleosome
+                     formation; histones bind to DNA and wrap the genetic
+                     material into 'beads on a string' in...; cd00076"
+                     /db_xref="CDD:238031"
+     Site            21
+                     /site_type="methylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6,N6,N6-trimethyllysine, alternate.
+                     {ECO:0000269|PubMed:12086618, ECO:0000269|PubMed:15964846,
+                     ECO:0000269|PubMed:17967882}; N6,N6-dimethyllysine,
+                     alternate. {ECO:0000269|PubMed:12086618,
+                     ECO:0000269|PubMed:15964846, ECO:0000269|PubMed:17967882};
+                     N6-methyllysine, alternate. {ECO:0000269|PubMed:12086618,
+                     ECO:0000269|PubMed:15964846, ECO:0000269|PubMed:17967882};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            32
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine. {ECO:0000269|PubMed:19608861};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            order(34,38,42,44,48,51,54..55,58..59,62..63,66..67,87,91)
+                     /site_type="other"
+                     /note="H4 interaction site"
+                     /db_xref="CDD:238031"
+     Site            order(41,43,45)
+                     /site_type="other"
+                     /note="H2A interaction site"
+                     /db_xref="CDD:238031"
+     Site            order(45..46,48,74,78..79,81,83,97)
+                     /site_type="DNA binding"
+                     /note="DNA-binding site [nucleotide binding]"
+                     /db_xref="CDD:238031"
+     Site            48
+                     /site_type="phosphorylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine, by PAK2.
+                     {ECO:0000269|PubMed:17081983, ECO:0000269|PubMed:18669648,
+                     ECO:0000269|PubMed:19690332, ECO:0000269|PubMed:20068231,
+                     ECO:0000269|PubMed:21406692, ECO:0000269|PubMed:21724829,
+                     ECO:0000269|PubMed:24275569}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            52
+                     /site_type="phosphorylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphotyrosine. {ECO:0000269|PubMed:15592455,
+                     ECO:0000269|PubMed:20068231}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            order(69,72..73,76..79,85..86,89,92..93)
+                     /site_type="other"
+                     /note="H2B interaction site [polypeptide binding]"
+                     /db_xref="CDD:238031"
+     Site            89
+                     /site_type="phosphorylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphotyrosine. {ECO:0000269|PubMed:24275569};
+                     propagated from UniProtKB/Swiss-Prot (P62805.2)"
+     Site            92
+                     /site_type="acetylation"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-acetyllysine, alternate.
+                     {ECO:0000269|PubMed:19818714}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            92
+                     /site_type="modified"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="N6-succinyllysine, alternate.
+                     {ECO:0000250|UniProtKB:P62806}; propagated from
+                     UniProtKB/Swiss-Prot (P62805.2)"
+     Site            97..101
+                     /site_type="other"
+                     /note="H2A-H2B docking site [polypeptide binding]"
+                     /db_xref="CDD:238031"
+     CDS             1..103
+                     /gene="HIST1H4I"
+                     /gene_synonym="H4/m; H4FM; H4M"
+                     /coded_by="NM_003495.2:1..312"
+                     /db_xref="CCDS:CCDS4620.1"
+                     /db_xref="GeneID:8294"
+                     /db_xref="HGNC:HGNC:4793"
+                     /db_xref="HPRD:09109"
+                     /db_xref="MIM:602833"
+ORIGIN      
+        1 msgrgkggkg lgkggakrhr kvlrdniqgi tkpairrlar rggvkrisgl iyeetrgvlk
+       61 vflenvirda vtytehakrk tvtamdvvya lkrqgrtlyg fgg
+//
+
