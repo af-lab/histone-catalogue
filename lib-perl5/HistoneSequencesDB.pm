@@ -42,6 +42,8 @@ use Text::CSV 1.21; # require 1.21 for getline_hr_all
 use Moose;
 use Moose::Util::TypeConstraints qw(subtype as where);
 
+use Bio::SeqIO;
+
 use CanonicalHistoneGene;
 use HistoneGene;
 use Gene;
