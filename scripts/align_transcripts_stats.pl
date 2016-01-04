@@ -5,7 +5,7 @@ use utf8;
 ## which is under the Perl 5 license (Artistic License 1.0 or GNU GPL)
 ##
 ## Copyright (C) 2003-2015 Jason Stajich <jason@bioperl.org>
-## Copyright (C) 2015 Carnë Draug <carandraug+dev@gmail.com>
+## Copyright (C) 2015-2016 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,13 +22,12 @@ use utf8;
 
 ## SYNOPSIS
 ##
-##   pairwise_dnds.pl path/for/dbfile
+##   align_transcripts_stats.pl path/for/transcript/align_1 path/for/transcript/align_2 path/for/transcript/align_X
 ##
 ## DESCRIPTION
 ##
-## It will read the store file of an HistoneSequencesDB object, and
-## print to stdout Tex newcommands that define the mean dN, dS, and
-## dN/dS, one for each core histone type.
+## It read several alignment of transcripts and prints to stdout stats about
+## them.  At the moment, that's only the mean dN, dS, and dN/dS.
 
 use 5.010;
 use strict;
@@ -39,63 +38,35 @@ use File::Spec;
 ## Codeml implements the method of Goldman and Yang (1994)
 ## Yn00 implements the method of Yang and Nielsen (2000)
 use Bio::Tools::Run::Phylo::PAML::Codeml;
+use Bio::AlignIO;
 
-use Bio::Tools::Run::Alignment::TCoffee;    # alternatively, Clustalw
-use Bio::Align::Utilities;
 use Statistics::Basic;
 
 use HistoneCatalogue;
-use HistoneSequencesDB;
-
 
 =func get_dNdS
 
-From a list of Genes, it computes the pairwise dN, dS, and omega (dN/dS)
-values, and returns their mean.
+Computes the pairwise dN, dS, and omega (dN/dS) values from an alignment.
 
 Since the purpose is to estimate synonymous and nonsynonymous substitutions,
-we need to make sure the alignment is done as to perform multiples of 3.
-So instead of aligning the CDS, we align the protein sequences, and then
-convert the aligned proteins sequences back to their CDS sequences.
+the alignment should have been performed in multiples of 3.  This can be
+done by aligning the protein sequence and the convert the aligned protein
+sequences back to their CDS sequences.
 
 Args:
-  $db (HistoneSequencesDB)
-  @genes ([Gene])
+  align (Bio::Align::AlignI)
 
 Returns:
   {'dN' => float, 'dS' => float, 'omega' => float}
 =cut
 sub get_dNdS_stats
 {
-  my $db = shift;
-  my @genes = @_;
-
-  ## Get all the protein as Bio::Seq objects for the alignment.
-  ## Also get all cds with protein accession as key.
-  my %seqs;
-  my @prots;
-  for my $g (@genes)
-    {
-      my $products = $g->coding_products();
-      for my $t_acc (keys %{$products})
-        {
-          my $p_acc = $products->{$t_acc};
-          $seqs{$p_acc} = $db->get_transcript_cds($t_acc);
-          my $protein = $db->get_protein($p_acc);
-          push @prots, $protein;
-        }
-    }
-
-  ## Align the protein sequences, and then convert the aligned protein
-  ## sequence back to their original cDNA.
-  my $aln_factory = Bio::Tools::Run::Alignment::TCoffee->new(-verbose => -1);
-  my $aa_aln = $aln_factory->align(\@prots);
-  my $dna_aln = Bio::Align::Utilities::aa_to_dna_aln($aa_aln, \%seqs);
+  my $align = shift;
 
   my $dsdn_factory = Bio::Tools::Run::Phylo::PAML::Codeml->new(
     -params => {'runmode' => -2, 'seqtype' => 1},
   );
-  $dsdn_factory->alignment($dna_aln);
+  $dsdn_factory->alignment($align);
   my ($rc, $parser) = $dsdn_factory->run();
   if ($rc <= 0)
     { die "Failed on phylogenetic analysis: ${dsdn_factory->error_string}"; }
@@ -110,7 +81,7 @@ sub get_dNdS_stats
   my $stats = {'dN' => [], 'dS' => [], 'omega' => []};
 
   ## Iterate over the lower triangular elements below the main diagonal.
-  my $n_seqs = scalar keys %seqs;
+  my $n_seqs = $align->num_sequences;
   for my $i (0 .. ($n_seqs -2))
     {
       for my $j (($i +1) .. ($n_seqs -1))
@@ -139,27 +110,32 @@ sub get_dNdS_stats
 
 sub main
 {
-  if (@_ != 1)
+  if (@_ < 1)
     {
       print "Usage error -- no input arguments.\n";
       print "Correct usage is:\n";
       print "\n";
-      print "  \$ pairwise_dnds.pl path/for/dbfile\n";
+      print "  \$ align_transcripts_stats.pl path/for/transcript/align_1 path/for/transcript/align_2 path/for/transcript/align_X \n";
       exit (1);
     }
 
-  my $db = HistoneSequencesDB::read_db ($_[0]);
-
-  my @genes = $db->canonical_core();
-  foreach my $histone (@HistoneCatalogue::histones)
+  for my $aln_file (@_)
     {
-      my @this_histones = grep {$_->histone_type eq $histone
-                                && $_->type eq "coding"} @genes;
-      my $dNdS_stats = get_dNdS_stats ($db, @this_histones);
+      if ((File::Spec->splitpath($aln_file))[2]
+           !~ /aligned_($HistoneCatalogue::histone_regexp)_cds.fasta/)
+        { die "unable to identify histone type from alignment filename '$aln_file'"; }
+      my $histone = $1;
+
+      my $aln = Bio::AlignIO->new(-file => $aln_file)->next_aln();
+
+      ##
+      ## dN/dS stats per histone type
+      ##
+
+      my $dNdS_stats = get_dNdS_stats ($aln);
 
       ## We set IPRES to 4 for the dN and dS values, and 5 for omega,
       ## because that's the precision we get back from codeml
-
       local $Statistics::Basic::IPRES = 4;
       say HistoneCatalogue::latex_newcommand (
         "Mean".$histone."dN",

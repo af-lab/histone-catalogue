@@ -362,11 +362,6 @@ analysis = [
     eval   = "HistoneCatalogue::write_config_variables('%s')" % path4seq("extractor.log")
   ),
   env.PerlOutput(
-    target = path4result("variables-dnds.tex"),
-    source = path4script("pairwise_dnds.pl"),
-    args   = [db_store],
-  ),
-  env.PerlOutput(
     target = path4result("table-codon_usage.tex"),
     source = path4script("codon_usage.pl"),
     args   = [db_store],
@@ -377,11 +372,12 @@ analysis = [
 ##
 ##  protein aligns ----> table describing isoforms
 ##       |           |--> protein sequence logo
-##       |           |--> alignment percentage identity
-##       ↓
+##       |           |--> protein align stats -- >alignment percentage identity
+##      \_/
 ##  transcript aligns ----> cds sequence logo
-##                     |--> dn/ds
+##                     |--> transcript align stats --> dn/ds
 
+cds_aligns = []
 for histone in ["H2A", "H2B", "H3", "H4"]:
   protein_align = path4result("aligned_%s_proteins.fasta" % histone)
 
@@ -394,6 +390,7 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
   analysis += [isoforms_desc]
 
   f_cds_align = path4result("aligned_%s_cds.fasta" % histone)
+  cds_aligns += [f_cds_align]
   cds_align = env.PerlScript(
     target = f_cds_align,
     source = path4script("align_transcripts.pl"),
@@ -413,6 +410,13 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
     Depends(logo, [aln])
     analysis += [logo]
 
+cds_align_stats = env.PerlOutput(
+  target = path4result("variables-align_transcripts_stats.tex"),
+  source = path4script("align_transcripts_stats.pl"),
+  args   = cds_aligns,
+)
+Depends(cds_align_stats, cds_aligns)
+analysis += [cds_align_stats]
 
 env.Alias ("analysis", analysis)
 env.Depends (
