@@ -285,10 +285,7 @@ refer_targets = list ()
 utr_targets   = list ()
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
-  align_targets += [
-    path4result ("aligned_%s_proteins.fasta"   % histone),
-  ]
-align_targets += [path4result ("variables-align_results.tex")]
+  align_targets += [path4result("aligned_%s_proteins.fasta" % histone)]
 
 refer_targets += [path4result ("table-reference_comparison.tex")]
 
@@ -325,8 +322,7 @@ analysis = [
   env.PerlScript(
     target = align_targets,
     source = path4script ("align_sequences.pl"),
-    action = ["--sequences", seq_dir, "--figures", figures_dir,
-              "--results", results_dir],
+    action = ["--sequences", seq_dir, "--results", results_dir],
   ),
   env.PerlOutput(
     target = path4result("variables-cluster_stats.tex"),
@@ -378,8 +374,10 @@ analysis = [
 ##                     |--> transcript align stats --> dn/ds
 
 cds_aligns = []
+protein_aligns = []
 for histone in ["H2A", "H2B", "H3", "H4"]:
   protein_align = path4result("aligned_%s_proteins.fasta" % histone)
+  protein_aligns += [protein_align]
 
   isoforms_desc = env.PerlOutput(
     target = path4result("table-%s-proteins-align.tex" % histone),
@@ -417,6 +415,15 @@ cds_align_stats = env.PerlOutput(
 )
 Depends(cds_align_stats, cds_aligns)
 analysis += [cds_align_stats]
+
+protein_align_stats = env.PerlOutput(
+  target = path4result("variables-align_proteins_stats.tex"),
+  source = path4script("align_proteins_stats.pl"),
+  args   = protein_aligns,
+)
+Depends(protein_align_stats, protein_aligns)
+analysis += [protein_align_stats]
+
 
 env.Alias ("analysis", analysis)
 env.Depends (

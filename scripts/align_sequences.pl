@@ -29,8 +29,6 @@ use MyLib;
 ##
 ## It will create the following files:
 ##    * results/aligned_H2A_proteins.fasta (one for each histone)
-##    * results/variables-align_results.tex (LaTeX variables for the numbers
-##      of unique histone proteins)
 ##
 ## Usage is:
 ##
@@ -65,7 +63,7 @@ use MyLib;
 ##    3 - compare each protein to the most common sequence, listing each difference
 ##    4 - make pretty LaTeX table to display it
 
-my %path = MyLib::parse_argv("sequences", "figures", "results");
+my %path = MyLib::parse_argv("sequences", "results");
 
 ## keys are the histone types (H2A, H2B, etc), and values are Bio::Seq objects
 my %proteins;
@@ -87,18 +85,12 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
         MyLib::load_seq("protein", $access, $path{sequences}));
 }
 
-my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex");
-open (my $var_file, ">", $var_path) or die "Could not open $var_path for writing: $!";
-
 foreach my $histone (keys %proteins) {
   my $protein_align = align(
     File::Spec->catdir($path{results}, "aligned_${histone}_proteins.fasta"),
     @{$proteins{$histone}}
   );
-  tex_compare_histone_proteins ($var_file, $histone, $protein_align);
 }
-close ($var_file) or die "Couldn't close $var_path after writing: $!";
-
 
 ## Align all sequences with TCoffee, saving the alignment as a fasta file.
 sub align
@@ -117,17 +109,4 @@ sub align
 
   $tcoffee->outfile($align_path);
   return $tcoffee->align(\@_);
-}
-
-
-sub tex_compare_histone_proteins {
-  my $var_file  = shift;
-  my $histone   = shift;
-  my $align     = shift;
-
-  say {$var_file} HistoneCatalogue::latex_newcommand (
-    $histone."PID",
-    $align->overall_percentage_identity,
-    "Overall percentage identity between all histone $histone proteins"
-  );
 }
