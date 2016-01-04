@@ -434,8 +434,6 @@ Note how the last one is not followed by any -- isoform letter, because
 there isn't any.
 
 Params:
-  histone - string with histone name.  It is used in the regex to find
-    the cluster name and isoform letter.
   symbols - list of gene symbols to be used.  Must all belong to the
     same histone.
 
@@ -448,7 +446,6 @@ Exception:
 
 sub mk_latex_list_name_isoforms
 {
-  my $histone = shift (@_);
   my @symbols = @_;
 
   my %clusters;
@@ -458,9 +455,9 @@ sub mk_latex_list_name_isoforms
       ## letter.  But also don't skip those, we want the cluster name
       ## anyway to generate the final string, we will filter out undefs
       ## later.
-      if ($symbol !~ m/^((.+)$histone)(.*)$/i)
-        { croak "Unable to list most common sequence."; }
-      push (@{$clusters{$1}}, $3);
+      if ($symbol !~ m/^((.+)($HistoneCatalogue::histone_regexp))(.*)$/i)
+        { croak "Unable to list most common sequence"; }
+      push (@{$clusters{$1}}, $4);
     }
 
   my @cluster_strs;

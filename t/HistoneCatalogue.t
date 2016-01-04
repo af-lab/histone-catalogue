@@ -144,14 +144,21 @@ is (HistoneCatalogue::latex_newcommand ("f0", "67%", "This is some serious\nMult
     "%% This is some serious\n%% Multiline documentation.\n"
     . "\\newcommand{\\fZero}{\\ScriptValue{67\\%}}");
 
-is (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A")),
-    "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A");
-is (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4")),
-    "HIST4H4");
-is (HistoneCatalogue::mk_latex_list_name_isoforms ("H2A", ("HIST2H2AA3", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A")),
-    "HIST1H2A --B, --C, --P; HIST2H2AA3; HIST4H2A");
-is (HistoneCatalogue::mk_latex_list_name_isoforms ("H4", ("HIST4H4")),
-    "HIST4H4");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("HIST2H2AF", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"),
+    "HIST1H2A --B, --C, --P; HIST2H2AF; HIST4H2A",
+    "list of isoforms gene symbols");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("HIST2H2AA3", "HIST1H2AB", "HIST1H2AC", "HIST1H2AP", "HIST4H2A"),
+    "HIST1H2A --B, --C, --P; HIST2H2AA3; HIST4H2A",
+    "list of isoforms gene symbols with a weird 'AA3' descriptor");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("HIST1H4A", "HIST1H4B", "HIST1H4P", "HIST4H4"),
+    "HIST1H4 --A, --B, --P; HIST4H4",
+    "list of isoforms gene symbols with a symbol without descriptor");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("HIST2H2AB"),
+    "HIST2H2AB",
+    "list of gene symbols with a single element");
+is (HistoneCatalogue::mk_latex_list_name_isoforms ("HIST4H4"),
+    "HIST4H4",
+    "list of gene symbols with a single element and without descriptor");
 
 my $db = create_test_db ();
 

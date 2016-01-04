@@ -216,7 +216,7 @@ sub tex_compare_histone_proteins {
   say {$table} "  \\toprule";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common $histone isoform (" .
                 length ($most_common_seq) . " amino acids; " .
-                HistoneCatalogue::mk_latex_list_name_isoforms ($histone, @eq2common) . ")}\\\\";
+                HistoneCatalogue::mk_latex_list_name_isoforms (@eq2common) . ")}\\\\";
   say {$table} "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common_seq}}} \\\\";
   say {$table} "  \\midrule";
 
