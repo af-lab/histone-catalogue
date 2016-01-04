@@ -641,4 +641,104 @@ sub most_common_seq_in_alignment
   return Bio::Seq->new(-seq => $seqs[0]);
 }
 
+=func say_table_isoforms_description
+
+Prints a LaTeX table with two columns describing the differences from
+each sequence against the most common sequence.  The most common sequence
+is displayed at the top in a single row.  Note that we use the most common
+sequence.  We do not use the consensus sequence.
+
+* Why do not use the consensus sequence?
+
+Using the consensus sequences is wrong because it can be a sequence that
+doesn't actually exist.
+
+A consensus sequence is the most frequent residue at _each_ position, not
+the most frequent sequence.  So, how should we act with respect to insertions
+and deletions?  The aligned sequences will have "-" (nothing) at such
+locations, which means that even if only one of the proteins has a residue
+at a certain location, the consensus sequence will keep it.  For example:
+
+    SIHK----K
+    SKHKAKGLK <-- the only that is different
+    SIHK----K
+    SIHK----K
+    SIHK----K
+
+    SIHKAKGLK <-- consensus sequence (different from all of them)
+
+In this case, the consensus sequence does not actually exist.  Even
+considering the empty positions (-) if it was a residue and count it
+on the frequency.
+
+* What did Marzluff used on the paper then?
+
+To work around this cases, programs to define a consensus sequence often
+have tuning parameters such as threshold.  Marzluff's paper, says that the
+consensus sequence was calculated with the PRETTYBOX program, part of the
+GCG package http://www.csd.hku.hk/bruhk/gcgdoc/prettybox.html which indeed
+does have such paremeters.  He does not mention what parameteres were used
+but should be safe to assume he used the default values.
+
+Anyway, the consensus can still lead to a new sequence, one that is different
+from all the sequences used in the alignment and I'm surprised that didn't
+happen on Marzluff's paper.  And if we think about it, what we really want
+to compare against is the most common sequence, so why should we be tuning
+algorithms to compute a consensus that is equal to the most common sequence?
+
+Args:
+  align (Bio::Align)
+  pacc2gsym (Hash) Protein ACCession 2 Gene SYMbol - a hash that maps
+    the protein accession (display_id of the sequences in $align) to
+    gene symbols to be used in the table.  May not actually be the gene
+    symbol.  For example, genes with multiple transcripts must handle
+    it somehow.
+
+Returns:
+  void
+=cut
+sub say_table_isoforms_description
+{
+  my $align = shift;
+  my %pacc2gsym = @_;
+
+  my $most_common = HistoneCatalogue::most_common_seq_in_alignment($align);
+
+  my @eq2common;
+  my %desc;
+  foreach my $seq ($align->each_seq)
+    {
+      ## We use display_id to get the accession number because
+      ## accession_number is not defined on the align object.
+      my $symbol = $pacc2gsym{$seq->display_id};
+      if ($seq->seq eq $most_common->seq)
+        { push (@eq2common, $symbol); }
+      else
+        { $desc{$symbol} = HistoneCatalogue::describe_protein_variant($most_common, $seq); }
+    }
+
+  (my $most_common_seq = $most_common->seq) =~ tr/-//d; # remove the gaps
+
+
+  say "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
+  say "  \\toprule";
+  say "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common isoform (" .
+                length ($most_common_seq) . " amino acids; " .
+                HistoneCatalogue::mk_latex_list_name_isoforms (@eq2common) . ")}\\\\";
+  say "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common_seq}}} \\\\";
+  say "  \\midrule";
+
+  foreach my $symbol (sort keys %desc)
+    {
+      ## Having each equal proteins that are different from the most common
+      ## in a single row could be handy (easy to see the groups) but it would
+      ## look horrible. Just image: the first column taking 70% of the table
+      ## width because one of the different sequences has 5 gene names on it.
+      say "  $symbol & " . HistoneCatalogue::mk_latex_string ($desc{$symbol}) ." \\\\";
+    }
+
+  say "  \\bottomrule";
+  say "\\end{tabular}";
+}
+
 1;
