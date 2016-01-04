@@ -613,6 +613,10 @@ sub describe_protein_variant
 
 =func most_common_seq_in_alignment
 
+Returns the most common sequence (actual Bio::Seq->seq) from an
+alignment.  If there is more than one sequence with equal
+frequencies, returns the first one after sorting.
+
 Args:
   align (Bio::Align::AlignI)
 
@@ -630,12 +634,14 @@ sub most_common_seq_in_alignment
       if (++$seqs{$_->seq} > $max)
         { $max++; }
     }
-  foreach (keys %seqs)
-    {
-      if ($seqs{$_} == $max)
-        { return Bio::Seq->new(-seq => $_); }
-    }
-  croak "Unable to find most common sequence.";
+  ## the sort is important for reproducibility.  If there is more than
+  ## one sequence with same frequency, we want to always return the same.
+  my @seqs = sort grep {$seqs{$_} == $max} keys %seqs;
+
+  if (! @seqs) # probably only happens if $align was empty
+    { croak "Unable to find most common sequence (maybe empty alignment)"; }
+
+  return Bio::Seq->new(-seq => $seqs[0]);
 }
 
 1;

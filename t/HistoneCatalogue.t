@@ -380,5 +380,23 @@ throws_ok
      'ARTKIRGERA',
      'find most common sequence in alignment');
 }
+{
+  my $aln = Bio::SimpleAlign->new();
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f1', -seq => 'ART-IRG-RA'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f2', -seq => 'QRTKIRGARV'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f3', -seq => 'ARTKIRGERA'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f4', -seq => 'QRTKIRGARV'));
+  $aln->add_seq(Bio::LocatableSeq->new(-display_id => 'f5', -seq => 'ARTKIRGERA'));
+  is(HistoneCatalogue::most_common_seq_in_alignment($aln)->seq,
+     'ARTKIRGERA',
+     'return "lowest" sequence for multiple most common sequences');
+}
+{
+  my $aln = Bio::SimpleAlign->new();
+  throws_ok { HistoneCatalogue::most_common_seq_in_alignment($aln) }
+    qr/Unable to find most common sequence \(maybe empty alignment\)/,
+    'die properly with empty alignment';
+}
+
 
 done_testing;
