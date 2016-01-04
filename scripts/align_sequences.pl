@@ -113,11 +113,6 @@ my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex")
 open (my $var_file, ">", $var_path) or die "Could not open $var_path for writing: $!";
 
 foreach my $histone (keys %proteins) {
-  my $cds_align = align(
-    File::Spec->catdir($path{results}, "aligned_${histone}_cds.fasta"),
-    @{$cds{$histone}}
-  );
-
   my $protein_align = align(
     File::Spec->catdir($path{results}, "aligned_${histone}_proteins.fasta"),
     @{$proteins{$histone}}

@@ -287,7 +287,6 @@ utr_targets   = list ()
 for histone in ["H2A", "H2B", "H3", "H4"]:
   align_targets += [
     path4result ("aligned_%s_proteins.fasta"   % histone),
-    path4result ("aligned_%s_cds.fasta"        % histone),
   ]
 align_targets += [path4result ("variables-align_results.tex")]
 
@@ -385,10 +384,6 @@ analysis = [
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
   protein_align = path4result("aligned_%s_proteins.fasta" % histone)
-  protein_logo  = path4figure("seqlogo_%s_proteins.eps" % histone)
-
-  cds_align = path4result("aligned_%s_cds.fasta" % histone)
-  cds_logo  = path4figure("seqlogo_%s_cds.eps" % histone)
 
   isoforms_desc = env.PerlOutput(
     target = path4result("table-%s-proteins-align.tex" % histone),
@@ -398,11 +393,22 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
   Depends(isoforms_desc, [protein_align])
   analysis += [isoforms_desc]
 
-  for aln, f_logo in zip ([protein_align, cds_align], [protein_logo, cds_logo]):
+  f_cds_align = path4result("aligned_%s_cds.fasta" % histone)
+  cds_align = env.PerlScript(
+    target = f_cds_align,
+    source = path4script("align_transcripts.pl"),
+    action = [db_store, str(protein_align), f_cds_align],
+  )
+  Depends(cds_align, [protein_align])
+  analysis += [cds_align]
+
+  protein_logo = path4figure("seqlogo_%s_proteins.eps" % histone)
+  cds_logo = path4figure("seqlogo_%s_cds.eps" % histone)
+  for aln, logo in zip ([protein_align, f_cds_align], [protein_logo, cds_logo]):
     logo = env.PerlScript(
-      target = f_logo,
+      target = logo,
       source = path4script("mk_histone_seqlogo.pl"),
-      action = [str(aln), f_logo],
+      action = [aln, logo],
     )
     Depends(logo, [aln])
     analysis += [logo]
