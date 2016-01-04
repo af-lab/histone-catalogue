@@ -18,10 +18,7 @@ use 5.010;                      # Use Perl 5.10
 use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
-use File::Temp;                 # Create temporary files
 use Bio::Tools::Run::Alignment::TCoffee;  # Multiple sequence alignment with TCoffee
-
-use Bio::Seq;
 
 use HistoneCatalogue;
 use MyLib;
@@ -32,9 +29,6 @@ use MyLib;
 ##
 ## It will create the following files:
 ##    * results/aligned_H2A_proteins.fasta (one for each histone)
-##    * results/aligned_H2A_cds.fasta (one for each histone)
-##    * results/table-H2A-proteins-align.tex (one per histone, with the differences
-##      between the different histone proteins in tabular form)
 ##    * results/variables-align_results.tex (LaTeX variables for the numbers
 ##      of unique histone proteins)
 ##
@@ -73,15 +67,8 @@ use MyLib;
 
 my %path = MyLib::parse_argv("sequences", "figures", "results");
 
-## Two hashes whose keys are the histone types (H2A, H2B, etc), and values
-## are Bio::Seq objects of:
+## keys are the histone types (H2A, H2B, etc), and values are Bio::Seq objects
 my %proteins;
-my %cds;
-
-## maps protein accession number to a gene symbol (because the
-## sequence we get from the alignment only has the accession
-## number and we want to use the gene symbol for the tables
-my %pacc2gsym; # Protein ACCession 2 Gene SYMbol
 
 foreach my $gene (MyLib::load_canonical ($path{sequences})) {
   my $symbol = $$gene{'symbol'};
@@ -96,17 +83,8 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
     warn ("Gene $symbol has more than one protein. Will use the first one ($access) only!");
   }
 
-  $pacc2gsym{$access} = $symbol;
   push (@{$proteins{$$gene{histone}}},
         MyLib::load_seq("protein", $access, $path{sequences}));
-
-  my $mrna = MyLib::load_seq ("transcript", $$gene{proteins}{$access}, $path{sequences});
-  my $cds = ($mrna->get_SeqFeatures ("CDS"))[0];
-  if (! $cds) {
-    warn ("Unable to find CDS for $symbol");
-    next;
-  }
-  push (@{$cds{$$gene{histone}}}, $cds->seq ());
 }
 
 my $var_path = File::Spec->catdir($path{results}, "variables-align_results.tex");
