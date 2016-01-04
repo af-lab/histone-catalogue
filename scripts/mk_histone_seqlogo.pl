@@ -50,7 +50,9 @@ $weblogo->call(
   {
     "--units",          "probability",
     "--show-yaxis",     "no",
-    "--stacks-per-line", 50,
+    ## Use a multiple of 3 so that codons get aligned (useful to show that
+    ## changes on the 3rd letter of a codon are much more frequent).
+    "--stacks-per-line", 45,
     "--datatype",       "fasta",
     "--errorbars",      "no",
   },
