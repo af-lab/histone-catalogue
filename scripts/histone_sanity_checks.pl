@@ -105,7 +105,7 @@ foreach my $gene (@genes) {
               ## if we can't find it the stem-loop on the transcript, could it
               ## be that it's actually on the genome, but whoever made the curation
               ## thinks it's good to remove it?
-              my $gseq = $db->get_gene($gene->uid);
+              my $gseq = $db->get_genomic($gene->uid);
               ## find the CDS for this specific gene
               foreach my $feat ($gseq->get_SeqFeatures)
                 {

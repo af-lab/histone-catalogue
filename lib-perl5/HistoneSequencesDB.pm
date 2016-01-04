@@ -406,14 +406,14 @@ sub _get_seq
   return $seq;
 }
 
-=method get_gene
+=method get_genomic
 Args:
   uid - a string with the gene uid.
 
 Returns:
   Bio::Seq object for the gene.
 =cut
-sub get_gene
+sub get_genomic
 {
   my $self = shift;
   my $uid = shift;
