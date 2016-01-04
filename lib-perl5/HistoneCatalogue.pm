@@ -719,8 +719,14 @@ sub say_table_isoforms_description
 
   (my $most_common_seq = $most_common->seq) =~ tr/-//d; # remove the gaps
 
+  ## tabularx has a column option "X" to set a column width to whatever
+  ## space is available after the others.  We use it for the second column,
+  ## the one describing the differences.
 
-  say "\\begin{tabular}{F p{\\dimexpr(\\textwidth-\\eqboxwidth{firstentry}-4\\tabcolsep)}}";
+  ## The "\dimexpr\textwidth-2\tabcolsep\relax" below refers to the total
+  ## width of a table.  See http://tex.stackexchange.com/a/99330/24374
+
+  say "\\begin{tabularx}{\\dimexpr\\textwidth-2\\tabcolsep\\relax}{l >{\\raggedright\\arraybackslash}X}";
   say "  \\toprule";
   say "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common isoform (" .
                 length ($most_common_seq) . " amino acids; " .
@@ -738,7 +744,7 @@ sub say_table_isoforms_description
     }
 
   say "  \\bottomrule";
-  say "\\end{tabular}";
+  say "\\end{tabularx}";
 }
 
 1;

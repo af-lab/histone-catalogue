@@ -10,16 +10,6 @@
 \usepackage[final,hyperindex,hyperfootnotes,bookmarksnumbered,colorlinks]{hyperref}
 
 \usepackage{afterpage}
-\usepackage{eqparbox}
-%% keep size of first column of sequence align table on memory to calculate
-%% the size limit for the second column
-\newsavebox{\firstentrybox}
-\newcolumntype{F}{%
-  >{\begin{lrbox}{\firstentrybox}}%
-    l%
-  <{\end{lrbox}%
-  \eqmakebox[firstentry][l]{\unhcopy\firstentrybox}}%
-}
 
 \newsubfloat{figure}
 
