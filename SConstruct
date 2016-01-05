@@ -522,13 +522,16 @@ conf = Configure(
 ## grep -rh '^use ' t/ lib-perl5/ scripts/| sort | uniq
 ## and then remove the core modules and pragmas
 perl_module_dependencies = [
+  "Bio::AlignIO",
   "Bio::Align::Utilities",
   "Bio::CodonUsage::Table",
   "Bio::DB::EUtilities",
+  "Bio::LocatableSeq",
   "Bio::Root::Version",
   "Bio::Seq",
   "Bio::SeqIO",
   "Bio::SeqUtils",
+  "Bio::SimpleAlign",
   "Bio::Tools::CodonTable",
   "Bio::Tools::EUtilities",
   "Bio::Tools::Run::Alignment::Clustalw",
