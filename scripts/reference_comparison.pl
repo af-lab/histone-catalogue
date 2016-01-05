@@ -85,7 +85,7 @@ foreach my $previous (@reference) {
 my $tab_path = File::Spec->catdir($path{results}, "table-reference_comparison.tex");
 open (my $tab_fh, ">", $tab_path) or die "Could not open $tab_path for writing: $!";
 
-say {$tab_fh} "\\begin{tabular}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}";
+say {$tab_fh} "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}";
 say {$tab_fh} "  \\toprule";
 
 my %pairs = (
