@@ -231,6 +231,7 @@ data_store = env.PerlSub(
   source = path4lib("HistoneSequencesDB.pm"),
   action = 'HistoneSequencesDB->new("%s")->write_db("%s")' %(seq_dir, db_store)
 )
+env.Depends(data_store, raw_data)
 
 ## old Storable files which we are replacing by HistoneSequencesDB
 seq_store = env.PerlScript(
