@@ -65,8 +65,8 @@ foreach my $gene (@new_data) {
     push (@{$changes{coding}}, $symbol);
   ## last difference we check is if the protein sequence has changed
   } elsif (! $previous->{pseudo} && ! $gene->{pseudo}) {
-    my $old_seq = MyLib::load_seq ("protein", (keys $previous->{proteins})[0], $path{reference});
-    my $new_seq = MyLib::load_seq ("protein", (keys $gene->{proteins})[0], $path{sequences});
+    my $old_seq = MyLib::load_seq ("protein", (keys %{ $previous->{proteins} })[0], $path{reference});
+    my $new_seq = MyLib::load_seq ("protein", (keys %{ $gene->{proteins} })[0], $path{sequences});
     if ($old_seq->seq ne $new_seq->seq) {
       push (@{$changes{sequence}}, $symbol);
     }
