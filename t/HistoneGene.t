@@ -67,4 +67,15 @@ dies_ok {my $g = &$ctor (uid => 42, symbol => 'CENPA', type => 'coding',
   ok ($g->is_linker_histone (), 'H5 histone is core histone');
 }
 
+is(HistoneGene::symbol2type("HIST1H1A"), "H1",
+   "find H1 (linker) histone type from gene symbol");
+is(HistoneGene::symbol2type("HIST3H2AA4"), "H2A",
+   "find H2A (canonical) histone type from gene symbol from another cluster");
+is(HistoneGene::symbol2type("CENPA"), "H3",
+   "recognize CEPNA as H3 histone type");
+ok(! defined HistoneGene::symbol2type("FOOH2AFX"),
+   "return undef for non histone gene symbol");
+ok(! defined HistoneGene::symbol2type("CENPAA"),
+   "return undef for something similar but different from CENPA");
+
 done_testing;

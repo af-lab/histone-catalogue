@@ -51,6 +51,34 @@ sub is_linker_histone
 }
 
 
+=func symbol2type
+Convert gene symbol to histone type.
+
+Args:
+  symbol - string with gene symbol.
+
+Returns:
+  string or undef (if symbol does not look like histone).
+=cut
+sub symbol2type
+{
+  my $symbol = shift;
+
+  my $type;
+  if ($symbol =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4)/i) # canonical
+    { $type = uc $2; }
+  elsif ($symbol =~ m/^((H1|H2A|H2B|H3|H4)F|CENPA$)/i) # variant
+    {
+      ## $2 will be the histone if followed by F. If it's empty,
+      ## then $1 will be CENPA which is a H3 variant.
+      if ($2)
+        { $type = uc $2; }
+      elsif ($1 eq "CENPA")
+        { $type = "H3"; }
+    }
+  return $type;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
