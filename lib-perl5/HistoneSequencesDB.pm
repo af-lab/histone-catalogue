@@ -36,6 +36,7 @@ use Carp;
 
 use Storable;
 use File::Spec;
+use List::Util;
 
 use Text::CSV 1.21; # require 1.21 for getline_hr_all
 
@@ -137,6 +138,116 @@ around BUILDARGS => sub
 };
 
 
+=func _csv_line_2_Gene
+Creates a new Gene object from a Text::CSV line (an hash ref with the
+csv headers as keys).
+
+Args:
+  entry (HashRef)
+
+Returns:
+  Gene
+
+Exception:
+  dies if failing to create a Gene object (e.g., a line for a coding
+    gene without products).
+=cut
+sub _csv_line_2_Gene
+{
+  my $entry = shift;
+
+  my $uid = $entry->{'gene UID'};
+  my $symbol = $entry->{'gene symbol'};
+
+  my $gene_ctor;
+  if ($symbol =~ m/^HIST(\d+)/i) # a canonical histone (belongs to a cluster)
+    { $gene_ctor = sub { CanonicalHistoneGene->new(@_); }; }
+  else # must be an histone variant
+    {
+      my $histone_type = HistoneGene::symbol2type($symbol);
+      if (! $histone_type)
+        { croak "Unable to find histone variant type on '$symbol'"; }
+      $gene_ctor = sub { HistoneGene->new('histone_type' => $histone_type, @_); };
+    }
+
+  my $type;
+  my %products = ();
+  if ($entry->{'pseudo'})
+    { $type = 'pseudo'; }
+  else
+    {
+      $type = 'coding';
+      my $nm_acc = $entry->{'transcript accession'};
+      if ($nm_acc)
+        { $products{$nm_acc} = $entry->{'protein accession'}; }
+      else
+        { croak ("Coding gene $symbol entry without a transcript"); }
+    }
+
+  my $gene = &$gene_ctor (
+    'uid' => $uid,
+    'symbol' => $symbol,
+    'type' => $type,
+    'species' => $entry->{"species"},
+    'description' => $entry->{'gene name'},
+    'chr_acc' => $entry->{'chromosome accession'},
+    'chr_start' => $entry->{'chromosome start coordinates'},
+    'chr_end' => $entry->{'chromosome stop coordinates'},
+    'products' => \%products,
+  );
+  return $gene;
+}
+
+=func _updated_Gene_with_csv_line
+
+Args:
+  entry (HashRef)
+
+Returns:
+  Gene
+
+Exception:
+  dies if failing to create a Gene object (e.g., a line for a coding
+    gene without products).
+=cut
+sub _updated_Gene_with_csv_line
+{
+  my $old_gene = shift;
+  my $entry = shift;
+
+  my $products = $old_gene->products;
+  my $nm_acc = $entry->{'transcript accession'};
+
+  if ($nm_acc)
+    { $products->{$nm_acc} = $entry->{'protein accession'}; }
+  else
+    ## Hopefully we will never get here
+    { croak 'Found two entries for ' . $old_gene->symbol . ' but no transcript-protein pair'; }
+
+  my @ctor_args;
+
+  ## If we were dealing a non-canonical histone gene, we must
+  ## specify the histone type on the constructor.
+  if (! $old_gene->isa("CanonicalHistoneGene"))
+    { push (@ctor_args, 'histone_type' => $old_gene->histone_type); }
+
+  my $gene = $old_gene->new
+    (
+      'uid' => $old_gene->uid,
+      'symbol' => $old_gene->symbol,
+      'type' => $old_gene->type,
+      'species' => $old_gene->species,
+      'description' => $old_gene->description,
+      'chr_acc' => $old_gene->chr_acc,
+      'chr_start' => $old_gene->chr_start,
+      'chr_end' => $old_gene->chr_end,
+      'products' => $products,
+      @ctor_args,
+    );
+  return $gene;
+}
+
+
 =method _build_genes_from_csv
 Read genes from the csv file create by bp_genbank_ref_extractor to build
 this object "genes" property.
@@ -162,123 +273,68 @@ sub _build_genes_from_csv
   my $data = $csv->getline_hr_all ($file);
   close $file;
 
+  ## We fill the genes as we read the csv file, one line at a time.
+  ## A gene may take more than one csv entry.  So we update gene
+  ## entries when.  However, some entries on their own do not form
+  ## a valid gene.  Our current case is a coding gene with one protein
+  ## and another non-coding transcript.  If the first entry of the
+  ## gene is the non-coding transcript, the Gene constructor will fail
+  ## (a coding gene must have a protein product).  For those cases, we
+  ## add the csv entries to this pending hash.
+  my %pending; # keys are gene UID, values are {'entries' => \@csv_lines, 'err' => '$@'}
+
   my @genes;
   foreach my $entry (@$data)
     {
-      my $uid = $$entry{'gene UID'};
+      my $symbol = $entry->{'gene symbol'};
+      my $histone_type = HistoneGene::symbol2type($symbol);
+      next unless $histone_type;
 
-      ## It is possible that we saw this gene before (remember that the
-      ## csv file has 1 line per product, not per gene).
-      my ($index) = grep $genes[$_]->uid() == $uid, 0 .. $#genes;
+      my $uid = $entry->{'gene UID'};
 
-      if (defined $index) # update the gene
+      if (! $entry->{'chromosome accession'})
+        {
+          carp ("Gene with UID '$uid' has no genomic information. Skipping it!");
+          next;
+        }
+
+      if (grep { $_ == $uid} keys %pending)
+        {
+          my $gene;
+          eval { $gene = _csv_line_2_Gene($entry); };
+          if ($@)
+            { push (@{ $pending{$uid}->{entries} }, $entry); }
+          else
+            {
+              my @failed_entries = @{ $pending{$uid}->{entries} };
+              for (@failed_entries)
+                { $gene = _updated_Gene_with_csv_line ($gene, $_); }
+              push (@genes, $gene);
+              delete $pending{$uid};
+            }
+        }
+      elsif (my $index = List::Util::first { $genes[$_]->uid() == $uid } 0 .. $#genes)
         {
           my $old_gene = $genes[$index];
-          my $products = $old_gene->products ();
-          my $nm_acc = $$entry{'transcript accession'};
-
-          if ($nm_acc)
-            { $products->{$nm_acc} = $$entry{'protein accession'}; }
-          else
-            ## We should have never gotten here because:
-            ##  1) if we are analysing a gene the second time, it has
-            ##    products therefore it is not a pseudo-gene.
-            {
-              croak 'Found two entries for ' . $old_gene->symbol
-                    . ' but no transcript-protein pair';
-            }
-
-          my @ctor_args;
-
-          ## If we were dealing a non-canonical histone gene, we must
-          ## specify the histone type on the constructor.
-          if (! $old_gene->isa("CanonicalHistoneGene"))
-            { push (@ctor_args, 'histone_type' => $old_gene->histone_type); }
-
-          my $gene = $old_gene->new
-            (
-              'uid' => $uid,
-              'symbol' => $old_gene->symbol,
-              'type' => $old_gene->type,
-              'species' => $old_gene->species,
-              'description' => $old_gene->description,
-              'chr_acc' => $old_gene->chr_acc,
-              'chr_start' => $old_gene->chr_start,
-              'chr_end' => $old_gene->chr_end,
-              'products' => $products,
-              @ctor_args,
-            );
-
-          $genes[$index] = $gene;
+          my $new_gene = _updated_Gene_with_csv_line($old_gene, $entry);
+          $genes[$index] = $new_gene;
         }
       else
         {
-          ## skip genes without genomic information
-          if (! $$entry{'chromosome accession'})
+          my $gene;
+          eval { $gene = _csv_line_2_Gene($entry); };
+          if ($@)
             {
-              carp ("Gene with UID '$uid' has no genomic information. Skipping it!");
-              next;
+              $pending{$uid}->{err} = $@;
+              $pending{$uid}->{entries} = [$entry];
             }
-
-          my $symbol = $$entry{'gene symbol'}; # should we upper case?
-
-          my $gene_ctor;
-          my @ctor_args;
-          ## A canonical histone (linker or core)
-          if ($symbol =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4)/i)
-            {
-              $gene_ctor = sub { CanonicalHistoneGene->new(@_); };
-            }
-          ## A variant histone
-          elsif ($symbol =~ m/^((H1|H2A|H2B|H3|H4)F|CENPA)/i)
-            {
-              my $histone_type;
-              ## $2 will be the histone if followed by F. If it's empty,
-              ## then $1 will be CENPA which is a H3 variant
-              if ($2)
-                { $histone_type = uc $2; }
-              elsif ($1 eq "CENPA")
-                { $histone_type = "H3"; }
-              else
-                {
-                  carp ("Rules to guess histone variant type failed on '$symbol'");
-                  next;
-                }
-              $gene_ctor = sub { HistoneGene->new(@_); };
-              push (@ctor_args, 'histone_type' => $histone_type);
-            }
-          else # not an histone
-            { next; }
-
-          my $type;
-          my %products = ();
-          if ($$entry{'pseudo'})
-            { $type = 'pseudo'; }
           else
-            {
-              $type = 'coding';
-              my $nm_acc = $$entry{'transcript accession'};
-              if ($nm_acc)
-                { $products{$nm_acc} = $$entry{'protein accession'}; }
-              else
-                { croak ("Coding gene $symbol entry without a transcript"); }
-            }
-
-          my $gene = &$gene_ctor (
-            'uid' => $uid,
-            'symbol' => $symbol,
-            'type' => $type,
-            'species' => $$entry{"species"},
-            'description' => $$entry{'gene name'},
-            'chr_acc' => $$entry{'chromosome accession'},
-            'chr_start' => $$entry{'chromosome start coordinates'},
-            'chr_end' => $$entry{'chromosome stop coordinates'},
-            'products' => \%products,
-            @ctor_args,
-          );
-          push (@genes, $gene);
+            { push (@genes, $gene); }
         }
     }
+  if (%pending)
+    { croak 'Unable to form Gene for '. join (" ", keys %pending); }
+
   return \@genes;
 }
 

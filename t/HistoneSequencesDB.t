@@ -49,20 +49,21 @@ sub test_db
 
   my @genes = @{$db->genes};
 
-  is (scalar @genes, 14, "Read right number of genes");
+  is (scalar @genes, 16, "Read right number of genes");
 
   is_deeply ([sort (map {$_->symbol} @genes)],
-             ['CENPA', 'H1F0', 'H1FX', 'H2AFJ', 'H2AFZ', 'H2AFZP4',
+             ['CENPA', 'H1F0', 'H1FX', 'H2AFJ', 'H2AFZ', 'H2AFZP4', 'H2BFFD',
               'HIST1H1D', 'HIST1H1T', 'HIST1H2APS4', 'HIST1H2BD',
-              'HIST1H3F', 'HIST1H4I', 'HIST1H4K', 'HIST1H4L'],
+              'HIST1H2BTTF', 'HIST1H3F', 'HIST1H4I', 'HIST1H4K', 'HIST1H4L'],
              "Got the right gene symbols");
+
 
   is_deeply ([sort {$a <=> $b} (map {$_->uid} @genes)],
              [1058, 3005, 3007, 3010, 3015, 3017, 8294, 8333, 8362,
-              8368, 8968, 8971, 55766, 100462795],
+              8368, 8968, 8971, 55766, 99999998, 99999999, 100462795],
              "Got the right gene UID");
 
-  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 14],
+  is_deeply ([map {$_->species} @genes], [('Homo sapiens') x 16],
              "Read the right species name");
 
   {
@@ -105,7 +106,7 @@ sub test_db
 
   my @canonical_core = $db->canonical_core;
   is_deeply ([sort map {$_->symbol} @canonical_core],
-             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H3F', 'HIST1H4I',
+             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H2BTTF', 'HIST1H3F', 'HIST1H4I',
               'HIST1H4K', 'HIST1H4L'],
              "Check grep of canonical core histones");
 
@@ -116,17 +117,31 @@ sub test_db
 
   my @variants = $db->variants_core;
   is_deeply ([sort map {$_->symbol} @variants],
-             ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4'],
+             ['CENPA', 'H2AFJ', 'H2AFZ', 'H2AFZP4', 'H2BFFD'],
              "Check grep of variant histones");
 
   is_deeply ([map {$_->symbol} HistoneSequencesDB::sort_histones(@canonical_core)],
-             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H3F', 'HIST1H4I',
+             ['HIST1H2APS4', 'HIST1H2BD', 'HIST1H2BTTF', 'HIST1H3F', 'HIST1H4I',
               'HIST1H4K', 'HIST1H4L'],
              "Check sorting of array of histones");
 
   is_deeply ([map {$_->symbol} HistoneSequencesDB::sort_histones(@variants)],
-             ['H2AFJ', 'H2AFZ', 'H2AFZP4', 'CENPA'],
+             ['H2AFJ', 'H2AFZ', 'H2AFZP4', 'H2BFFD', 'CENPA'],
              "Check sorting of array of variant histones with CENPA");
+
+  my ($h2bffd) = grep { $_->symbol eq 'H2BFFD' } @genes;
+  is ($h2bffd->description, "H2B fake for test",
+      'Confirm we got the right fake gene for testing');
+  is_deeply($h2bffd->products, {'NR_027999' => '', 'NR_027998' => '',
+                                'NM_177999' => 'NP_808999'},
+            "Find products of gene with non-coding transcript defined first");
+
+  my ($hist1h2bttf) = grep { $_->symbol eq 'HIST1H2BTTF' } @genes;
+  is ($hist1h2bttf->description, "H2B fake for test 2",
+      'Confirm we got the right other fake gene for testing');
+  is_deeply($hist1h2bttf->products, {'NR_027997' => '', 'NR_027996' => '',
+                                     'NM_177998' => 'NP_808998'},
+            "Find products of gene with non-coding transcript defined first");
 
 }
 
@@ -134,6 +149,9 @@ sub test_db
 ## both pseudo and coding, and with multiple products, the CENPA variant
 ## with its atypical gene symbol, a non histone gene, and a coding gene
 ## with non-coding transcripts.
+## Also has the fake H2BFD and HIST1H2BTTF, which are coding genes with
+## some non-coding transcripts.  They differ on H2AFJ for testing in that
+## their first csv lines are the non-coding transcript.
 my $dir = create_seq_dir(<<END);
 "gene symbol",species,"gene UID","EnsEMBL ID","gene name",pseudo,"transcript accession","protein accession",locus,"chromosome accession","chromosome start coordinates","chromosome stop coordinates",assembly
 HIST1H4K,"Homo sapiens",8362,ENSG00000273542,"histone cluster 1, H4k",0,NM_003541,NP_003532,6p22.1,NC_000006,27830674,27832027,"Reference GRCh38.p2 Primary Assembly"
@@ -150,6 +168,12 @@ RNASE9,"Homo sapiens",390443,ENSG00000188655,"ribonuclease, RNase A family, 9 (n
 HIST1H4I,"Homo sapiens",8294,09109,"histone cluster 1, H4i",0,NM_003495,NP_003486,6p21.33,NC_000006,27138809,27140178,"Reference GRCh38.p2 Primary Assembly"
 H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NM_177925,NP_808760,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
 H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NR_027716,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+H2BFD,"Homo sapiens",99999999,ENSG99999999999,"H2B fake for test",0,NR_027999,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+H2BFFD,"Homo sapiens",99999999,ENSG99999999999,"H2B fake for test",0,NR_027998,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+H2BFFD,"Homo sapiens",99999999,ENSG99999999999,"H2B fake for test",0,NM_177999,NP_808999,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2BTTF,"Homo sapiens",99999998,ENSG99999999998,"H2B fake for test 2",0,NR_027997,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2BTTF,"Homo sapiens",99999998,ENSG99999999998,"H2B fake for test 2",0,NM_177998,NP_808998,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+HIST1H2BTTF,"Homo sapiens",99999998,ENSG99999999998,"H2B fake for test 2",0,NR_027996,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
 H2AFZP4,"Homo sapiens",100462795,,"H2A histone family, member Z pseudogene 4",1,,,11,NC_000011,70278415,70279797,"Reference GRCh38.p2 Primary Assembly"
 H2AFZ,"Homo sapiens",3015,ENSG00000164032,"H2A histone family, member Z",0,NM_002106,NP_002097,4q24,NC_000004,99947587,99950855,"Reference GRCh38.p2 Primary Assembly"
 H1F0,"Homo sapiens",3005,ENSG00000189060,"H1 histone family, member 0",0,NM_005318,NP_005309,22q13.1,NC_000022,37804607,37807936,"Reference GRCh38.p2 Primary Assembly"
