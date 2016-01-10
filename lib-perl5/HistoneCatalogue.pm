@@ -723,15 +723,17 @@ sub say_table_isoforms_description
   ## space is available after the others.  We use it for the second column,
   ## the one describing the differences.
 
-  ## The "\dimexpr\textwidth-2\tabcolsep\relax" below refers to the total
-  ## width of a table.  See http://tex.stackexchange.com/a/99330/24374
+  ## The "\dimexpr\linewidth-2\tabcolsep\relax" below refers to the
+  ## available space (width) for text in a table with 2 columns.  The
+  ## actual space for the table is \linewidth
+  ## See http://tex.stackexchange.com/a/99330/24374
 
-  say "\\begin{tabularx}{\\dimexpr\\textwidth-2\\tabcolsep\\relax}{l >{\\raggedright\\arraybackslash}X}";
+  say "\\begin{tabularx}{\\linewidth}{l >{\\raggedright\\arraybackslash}X}";
   say "  \\toprule";
-  say "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{Most common isoform (" .
+  say "  \\multicolumn{2}{p{\\dimexpr\\linewidth-2\\tabcolsep\\relax}}{Most common isoform (" .
                 length ($most_common_seq) . " amino acids; " .
                 HistoneCatalogue::mk_latex_list_name_isoforms (@eq2common) . ")}\\\\";
-  say "  \\multicolumn{2}{p{\\dimexpr\\textwidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common_seq}}} \\\\";
+  say "  \\multicolumn{2}{p{\\dimexpr\\linewidth-2\\tabcolsep\\relax}}{\\texttt{\\seqsplit{$most_common_seq}}} \\\\";
   say "  \\midrule";
 
   foreach my $symbol (sort keys %desc)
