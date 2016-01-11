@@ -13,46 +13,48 @@
 
   The human canonical histone gene complement is relatively mature
   and is unlikely to undergo major change.
-  Nevertheless, it is inevitable that sequences and annotations will be revised over time.
+  Nevertheless, it is inevitable that sequences and annotations will be revised over time
+  and this can prompt reevaluation of assumptions about their properties.
   This is illustrated by the recent recognition that
   some genes annotated as canonical isoforms are testes-specific variants \citep{Talbert2012},
   and by new observations of cell type-specific expression \citep{Molden2015}.
 
   It is important for communities of researchers to contribute
-  to this curation and feed back information \citep{SteinNRG2001},
+  to ongoing curation and to feed back information \citep{SteinNRG2001},
   although many are unaware of this opportunity \citep{HollidaySPR2015}.
   During this work we have submitted a number
   of proposals for incorrect, inconsistent, or missing annotations
   to RefSeq curators.  All of them were identified automatically
   by our scripted tests which matches existing
   annotations to expected properties of histones.
-  \tref{tab:curation-anomalies} is the dynamic list of existing
-  anomalies from where we based our fix proposals to RefSeq.
+  \tref{tab:curation-anomalies} is the dynamic list of existing apparent
+  anomalies and this has been the source of our proposals to RefSeq.
 
   Dynamic data is frequently presented in specialist online database resources
   but these can have restrictive interfaces and presentation styles, and are difficult to cite.
   In contrast, manuscripts are the established method of scientific communication
-  because they provide comprehensibility, peer review, and established methods for citation.
+  because they provide accessible information for readers, can be peer reviewed, 
+  and have well-established methods for citation.
 
-  A self-updating manuscript bridges the dynamic database and static manuscript
-  presentation styles to provide convenient access to the most current information.
+  A self-updating manuscript bridges these dynamic database and static manuscript
+  presentation styles by providing convenient access to the most current information.
   It encourages communities of researchers to directly feed into the annotations
   and enables them to rapidly make use of data for any relatively stable gene family.
 
-  One challenge for readers is to reference dynamic data within the manuscript.
-  This is simply addressed by citing the publication as a traditional static manuscript
+  One challenge is for researchers to reference dynamic data within the manuscript.
+  This can be simply addressed by citing the publication as a traditional static manuscript
   and stating the access date in Materials and Methods, as they would for a database.
 
   Implementating a dynamic manuscript is also an example of ``reproducible research''
   \citep{reproducible-research-bioinformatics,reproducible-research-law}
   that addresses the topical challenges of irreproducibility in biological data
   and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
-  The manuscript is generated directly from sequences and annotations
+  This manuscript is generated directly from sequences and annotations
   in the core NCBI RefSeq resource \citep{PruittRefseq2014}.
   The processing system does not cache intermediate information,
   so all changes contributed by the community of histone researchers
   and curated by professional database maintainers
-  is directly and automatically reflected in the next manuscript refresh.
+  are directly and automatically reflected in the next manuscript refresh.
   All scripts including instructions for automatic builds
   are transparently available in a public github repository.
   Core processing is based on a BioPerl script contributed to the Bio-EUtilities distribution
@@ -63,12 +65,12 @@
   In the event of a major revision in the histone gene set such as removal of a cluster
   or eventual accumulation of insights rendering the explanatory text obsolete,
   the manuscript can be redrafted as a fresh publication
-  without the requirement to repeat the underlying data generation scripts.
-  New functions can also be added to scripts to reflect enhanced information
-  such as variation from genome sequencing of multiple individuals
+  without the requirement to rewrite the underlying data generation scripts.
+  New functions can also be added to scripts to reflect enhanced information,
+  such as variation from genome sequencing of multiple individuals,
   while still retaining backwards compatibility.
 
-  Furthermore, the core scripts are written to enable them to generate
+  Furthermore, the core scripts are written to facilitate generating
   equivalent information for other organisms with a one line change.
   We have successfully trialled this for \textit{Mus musculus}
   and \textit{Gallus gallus} (not shown)
