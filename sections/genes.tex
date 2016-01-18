@@ -106,7 +106,57 @@
 
     \begin{figure*}
       \centering
-      \includegraphics[width=\textwidth]{nomenclature-schematic.pdf}
+      \subbottom[canonical coding gene]{%
+        \begin{minipage}{0.37\textwidth}
+          \centering
+          \Huge{%
+            \colorbox{red}{\strut HIST1}%
+            \colorbox{green}{\strut H2B}%
+            \colorbox{blue!40}{\strut D}%
+          }
+
+          \scriptsize{%
+            \colorbox{blue!40}{\strut 4\textsuperscript{th}}
+            \colorbox{green}{\strut H2B}
+            \colorbox{red}{\strut in Histone cluster 1}
+          }
+        \end{minipage}
+      }
+      \subbottom[canonical pseudogene]{%
+        \begin{minipage}{0.37\textwidth}
+          \centering
+          \Huge{%
+            \colorbox{red}{\strut HIST2}%
+            \colorbox{green}{\strut H3}%
+            \colorbox{yellow}{\strut PS}%
+            \colorbox{blue!40}{\strut 2}%
+          }
+
+          \scriptsize{%
+            \colorbox{blue!43}{\strut 2\textsuperscript{nd}}
+            \colorbox{green}{\strut H3}
+            \colorbox{yellow}{\strut pseudogene}
+            \colorbox{blue!40}{\strut found}
+            \colorbox{red}{\strut in cluster 2}
+          }
+        \end{minipage}
+      }
+      \subbottom[variant]{%
+        \begin{minipage}{0.22\textwidth}
+          \centering
+          \Huge{%
+            \colorbox{red}{\strut H2A}%
+            \colorbox{green}{\strut F}%
+            \colorbox{blue!40}{\strut X}%
+          }
+
+          \scriptsize{%
+            \colorbox{red}{\strut H2A}
+            \colorbox{green}{\strut Family}
+            \colorbox{blue!40}{\strut member X}
+          }
+        \end{minipage}
+      }
       \caption{Histone gene nomenclature.
                Canonical histone gene names encode relative genomic order by cluster.
                Canonical pseudogenes named since 2002 include cluster,
