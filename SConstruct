@@ -429,22 +429,34 @@ env.Depends (
   [data_store, seq_store, path4script ("MyLib.pm")]
 )
 
-
-## TARGET manuscript
-##
-## Dependent on the figures being converted into PDF.
+## Our figures, converted to pdf as required for pdflatex
 static_figures = env.PDF(source=[path4figure("nomenclature-schematic.svg")])
 analysis_figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
 figures = [static_figures, analysis_figures]
 
+## TARGET catalogue
+##
+## A simpler LaTeX document with the most important tables and figures.
+## This works for all organisms, since the actual manuscript is only
+## available for the select organisms that we bothered to write.
+
+catalogue = env.PDF(
+  target = "catalogue.pdf",
+  source = "catalogue.tex"
+)
+env.Alias("catalogue", catalogue)
+Depends(catalogue, [analysis_figures, analysis])
+env.Default(catalogue)
+
+
+## TARGET manuscript
+
 manuscript = env.PDF (
-  target = "histone_catalogue.pdf",
-  source = "histone_catalogue.tex"
+  target = "manuscript.pdf",
+  source = "manuscript.tex"
 )
 env.Alias ("manuscript", manuscript)
 Depends (manuscript, [figures, analysis])
-
-env.Default(manuscript)
 
 
 ## TARGET check

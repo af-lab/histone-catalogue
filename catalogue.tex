@@ -1,0 +1,59 @@
+\documentclass[a4paper,oneside,onecolumn,article]{memoir}
+
+\input{preamble}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+  \section*{Build information}
+  \begin{description}
+    \item[Data accession date] \hfill \newline
+      \printdate{\SequencesDate}
+    \item[Build date] \hfill \newline
+      \today
+    \item[BioPerl version] \hfill \newline
+      \BioPerlVersion{}
+    \item[Bio-EUtilities version] \hfill \newline
+      \BioEUtilitiesVersion
+    \item[T-Coffee version] \hfill \newline
+      \TCoffeVersion
+    \item[WebLogo version] \hfill \newline
+      \WebLogoVersion
+  \end{description}
+
+  \section*{Count of histone genes by cluster and type}
+  \input{sections/table-histone_count}
+
+  \newpage
+  \section*{Catalogue of canonical core histone genes and products}
+  \input{results/table-histone_catalogue}
+
+  %% We don't really need a section* for the following, it's already
+  %% on the table.
+  \newpage
+  \input{results/table-H2A-proteins-align}
+  \includegraphics[width=\textwidth]{seqlogo_H2A_proteins.pdf}
+
+  \newpage
+  \input{results/table-H2B-proteins-align}
+  \includegraphics[width=\textwidth]{seqlogo_H2B_proteins.pdf}
+
+  \newpage
+  \input{results/table-H3-proteins-align}
+  \includegraphics[width=\textwidth]{seqlogo_H3_proteins.pdf}
+
+  \newpage
+  \input{results/table-H4-proteins-align}
+  \includegraphics[width=\textwidth]{seqlogo_H4_proteins.pdf}
+
+  \newpage
+  \section*{Catalogue of variant core histone genes and products}
+  \input{results/table-variant_catalogue}
+
+  \newpage
+  \section*{List of current curation anomalies}
+  \begin{itemize}
+  \input{results/histone_insanities}
+  \end{itemize}
+
+\end{document}
