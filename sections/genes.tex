@@ -1,14 +1,14 @@
 \section{Histone genes}
 
-  \subsection{Canonical histone gene nomenclature}
-    Canonical histone genes adhere to a Human Genome Organisation (HUGO)
+  \subsection{Canonical core histone gene nomenclature}
+    Canonical core histone genes adhere to a Human Genome Organisation (HUGO)
     Gene Nomenclature Committee (HGNC)
     endorsed system derived from the cluster number and position relative
     to other histones \citep{Marzluff02}.
     This superseded an earlier arbitrary scheme with backslashes (e.g. H2b/b)
     that preceded genome sequencing \citep{AlbigGenomics1997,AlbigHumangen1997}.
 
-    The canonical histone gene symbols are divided into 3 parts:
+    The canonical core histone gene symbols are divided into 3 parts:
     HIST cluster, histone type, and identifier letter
     for the order relative to other histone genes of the same type in
     the cluster (\fref{fig:nomenclature}).
@@ -70,10 +70,9 @@
         \end{minipage}
       }
       \caption{Histone gene nomenclature.
-               Canonical histone gene names encode relative genomic order by cluster.
-               Canonical pseudogenes named since 2002 include cluster,
-               PS label, and discovery order identifier.
-               Most variant histone genes are identified with F and identifier letter.}
+               Canonical core histone gene names encode relative genomic order by cluster.
+               Pseudogenes named since 2002 include cluster, PS label and discovery order identifier.
+               Most variant core histone genes are identified with F and identifier letter.}
       \label{fig:nomenclature}
     \end{figure*}
 
@@ -115,7 +114,7 @@
   \subsection{Histone gene clustering}
     %% For simplicity, decided to list HIST4 explicitly for rather than
     %% allow it to come in by a variable
-    The human canonical histone genes are located in clusters HIST1 to HIST\NumberOfClusters{},
+    The human canonical core histone genes are located in clusters HIST1 to HIST\NumberOfClusters{},
     named in order of decreasing histone gene count (\tref{tab:histone-gene-count}).
     HIST1 is the major histone gene cluster at locus~\HISTOneLocus{}
     with \CoreCodingGenesInHISTOne{}~functional core histone genes plus all canonical H1 histones,
@@ -152,6 +151,7 @@
     Conversely, progress in understanding histone gene function
     is also suggesting a need to update 
     the definitions of the canonical histone gene clusters.
+
     For example, the \textit{HIST1H2AA} and \textit{HIST1H2BA} genes 
     are located \SI{300}{\kilo\bp} upstream of the rest of the HIST1 cluster
     and separated from all other cluster members a number of non-histone genes.
@@ -165,10 +165,9 @@
     are divergently transcribed specifically in testes \citep{HuhChae1991}.
     It is therefore possible that \textit{HIST1H2AA} and \textit{HIST1H2BA}
     are undergoing sub-functionalisation and should be reclassified
-    as testes specific histone variants outside the canonical HIST1 cluster.
-    This would in turn lead to a recalculation of the length of the canonical HIST1 cluster.
+    as testes specific histone variants outside the HIST1 cluster.
+    This would in turn lead to a recalculation of the length of this cluster.
 
-    \label{sec:hist3h3}
     A similar case exists for the small HIST3 cluster \SI{80}{\mega\bp} downstream of HIST2.
     HIST3 contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB} and \textit{HIST3H3}.
     \textit{HIST3H3} encodes testes-specific H3T/H3.4 
@@ -182,7 +181,7 @@
     and the need for a dynamic approach to classification.
 
   \subsection{Histone gene sequences}
-    Despite the high conservation of canonical histone proteins,
+    Despite the high conservation of canonical core histone proteins,
     their genes coding regions exhibit considerable variation
     (\fref{fig:h2a-histone-gene-variation}, \ref{fig:h2b-histone-gene-variation},
     \ref{fig:h3-histone-gene-variation}, and \ref{fig:h4-histone-gene-variation}).
@@ -191,7 +190,7 @@
     substitutions (\tref{tab:histone-gene-differences}).
 
     The mean number of synonymous substitutions per synonymous site ($d_S$)
-    within sets of canonical histone gene types is
+    within sets of canonical core histone gene types is
     \FPround{\result}{\MeanHTwoAdS}{1} \result{} for H2A,
     \FPround{\result}{\MeanHTwoBdS}{1} \result{} for H2B,
     \FPround{\result}{\MeanHThreedS}{1} \result{} for H3,
