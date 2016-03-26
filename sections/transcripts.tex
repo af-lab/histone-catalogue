@@ -32,16 +32,23 @@
   This post-translation regulation of canonical histone transcripts
   is achieved by a stem-loop encoded in the mRNA 3' untranslated region
   that is recognised by specialised spliceosome-related RNA
-  processing and stabilisation complexes.
-  The stem-loop is encoded from \StemLoopStart{} to \StemLoopEnd{} bp after the stop codon
-  and has a highly conserved sequence and structure
-  (\fref{fig:stem-loop-seqlogo} \citep{stem-loop-structure}).
+  processing and stabilisation complexes \citep{stem-loop-structure}.
+  The modal location of annotated stem-loops is \StemLoopStart{} to \StemLoopEnd{} bp after the stop codon
+  for the set of all canonical histone genes.
+  The sequence logo of all aligned stem-loops
+  confirms these are highly conserved in sequence and structure (\fref{fig:stem-loop-seqlogo}).
+
   The RNA stem-loop structure is bound by the Stem-Loop Binding Protein (SLBP)
   which is up-regulated 10--20 fold during S~phase to stabilise
   histone mRNAs \citep{SLBP-regulation}.
   Immediately downstream of the stem-loop a purine-rich Histone Downstream Element (HDE)
-  interacts with U7 snRNA to direct efficient 3' end
-  processing (\fref{fig:HDE-seqlogo}) \citep{HDE-sequence}.
+  interacts with U7 snRNA to direct efficient 3' end processing.
+  Although this is not an annotated feature of histone genes,
+  alignment of the canonical HDE \citep{HDE-sequence} to all canonical histone genes
+  shows the modal location of the HDE is 
+  \HDEsDistanceFromStemLoop{} bp downstream of the stem-loop.
+  The sequence logo calculated from all aligned HDEs 
+  confirms that this feature is also highly conserved (\fref{fig:HDE-seqlogo}).
 
   \begin{figure}
     \centering
@@ -55,9 +62,9 @@
       \label{fig:HDE-seqlogo}
     }
     \caption{%
-      Sequence logos for stem-loops and Histone Downstream Elements (HDEs)
-      from alignment of all canonical histone mRNA 3' untranslated
-      regions (UTRs).
+      Sequence logos for A) annotated stem-loops, and 
+      B) Histone Downstream Elements (HDEs) identified by homology
+      for all canonical histone gene 3' untranslated regions (UTRs).
     }
   \end{figure}
 
@@ -65,14 +72,14 @@
   and contribute to increased histone translation efficiency,
   enabling rapid production of canonical histones to package the newly duplicated genome.
 
-  Although the vast bulk of canonical histone transcripts appear to depend on this mechanism,
-  \SIrange{1}{5}{\percent} of canonical histone transcripts
-  are 3' polyadenylated \citep{YangGenomeBiol2011}
+  Although the vast bulk of canonical histone transcripts 
+  appear to be regulated by this mechanism,
+  1-5\% of canonical histone transcripts
+  are found to be 3' polyadenylated \citep{YangGenomeBiol2011}
   and some genes have annotations indicating two transcripts
-  differing in whether they have stem-loop or polyadenylation
-  signals (\tref{tab:curation-anomalies}).
+  differing in whether they have stem-loop or polyadenylation signals (\tref{tab:curation-anomalies}).
   Histone variant transcripts lack a 3' stem-loop and are
-  polyadenylated in the same way as all other protein coding genes.
+  polyadenylated in the same way as almost all other protein coding genes.
   The exception is H2AX, which has alternatively processed transcripts
   exhibiting the stem-loop characteristic of canonical histones
   or a poly(A) tail found on other variant histones \citep{HTwoAX-transcripts,our-H2AX-review}.
