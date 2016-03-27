@@ -14,40 +14,37 @@
   The human canonical core histone gene complement is relatively mature
   and is unlikely to undergo major change.
   Nevertheless, it is inevitable that sequences and annotations will be revised over time
-  and this can prompt reevaluation of assumptions about their properties.
-  This is illustrated by the recent recognition that
-  some genes annotated as canonical core isoforms are testes-specific variants \citep{Talbert2012},
+  based on continuous curation and improved experimental insights.
+  This in turn prompts reevaluation of assumptions about their properties,
+  illustrated by the recent recognition that some genes 
+  annotated as canonical core histone isoforms are testes-specific variants \citep{Talbert2012},
   and by new observations of cell type-specific expression \citep{Molden2015}.
 
   It is important for communities of researchers to contribute
   to ongoing curation and to feed back information \citep{SteinNRG2001},
   although many are unaware of this opportunity \citep{HollidaySPR2015}.
-  During this work we have submitted a number
-  of proposals for incorrect, inconsistent, or missing annotations
-  to RefSeq curators.  All of them were identified automatically
-  by our scripted tests which matches existing
-  annotations to expected properties of histones.
-  \tref{tab:curation-anomalies} is the dynamic list of existing apparent
-  anomalies and this has been the source of our proposals to RefSeq.
+  During this work we have submitted a number of proposals 
+  for incorrect, inconsistent, or missing annotations to RefSeq curators.
+  These annotation issues were identified automatically
+  by scripted tests for consistency and uniformity 
+  between the database annotations and expected properties of histones.
+  \tref{tab:curation-anomalies} lists current apparent anomalies from these tests
+  and is the basis for ongoing feedbackd to RefSeq.
 
   Dynamic data is frequently presented in specialist online database resources
   but these can have restrictive interfaces and presentation styles, and are difficult to cite.
   In contrast, manuscripts are the established method of scientific communication
-  because they provide accessible information for readers, can be peer reviewed,
-  and have well-established methods for citation.
+  because they provide descriptive and accessible information for readers, 
+  can be peer reviewed, and have well-established methods for citation.
 
-  A self-updating manuscript bridges these dynamic database and static manuscript
+  A self-updating manuscript bridges the features of dynamic database and static manuscript
   presentation styles by providing convenient access to the most current information.
-  It encourages communities of researchers to directly feed into the annotations
+  It encourages communities of researchers to directly feed into the annotation process
   and enables them to rapidly make use of data for any relatively stable gene family.
-
-  One challenge is for researchers to reference dynamic data within the manuscript.
-  This can be simply addressed by citing the publication as a traditional static manuscript
-  and stating the access date in Materials and Methods, as they would for a database.
 
   Implementating a dynamic manuscript is also an example of ``reproducible research''
   \citep{reproducible-research-bioinformatics,reproducible-research-law}
-  that addresses the topical challenges of irreproducibility in biological data
+  that addresses the topical challenge of irreproducibility in biological data
   and interpretation \citep{ErrorProne2012,OpenPrograms2012}.
   This manuscript is generated directly from sequences and annotations
   in the core NCBI RefSeq resource \citep{PruittRefseq2014}.
@@ -62,19 +59,22 @@
   Dependencies on raw data sources, alignment algorithms, or display output libraries
   can also be upgraded since the processing is automatic and script-based.
 
-  In the event of a major revision in the histone gene set such as removal of a cluster,
-  or eventual accumulation of insights rendering the explanatory text obsolete,
-  the manuscript can be redrafted as a fresh publication
-  without the requirement to rewrite the underlying data generation scripts.
-  New functions can also be added to scripts to reflect enhanced information,
-  such as variation from genome sequencing of multiple individuals,
-  while still retaining backwards compatibility.
+  One potential challenge for researchers is the referencing of dynamic data within the manuscript.
+  This can be simply addressed by citing the publication as a traditional static manuscript
+  and stating the access date in their Materials and Methods, as they would for a database.
 
-  Furthermore, the core scripts are written to facilitate generating
+  Although the dynamic data will remain current,
+  major revisions in understanding of a gene family or accumulation of small insights
+  may in time render the explanatory static manuscript text obsolete.
+  In this case the manuscript can simply be refreshed and republished in revised form
+  in the same way as a traditional manuscript.
+  The underlying scripts generating the dynamic data do not need to be rewritten, 
+  although new functions can be added to reflect new insights.
+
+  The core scripts underlying this manuscript are written to facilitate generating
   equivalent information for other organisms via build options.
-  We have successfully trialled this for \textit{Mus musculus}
-  and \textit{Gallus gallus} (not shown)
-  so an equivalent dynamic manuscript on these gene sets
-  simply requires redrafting the surrounding explanatory text.
-  The approach could also be applied to larger and more diverse gene families such as
+  We have successfully trialled this for \textit{Mus musculus} and \textit{Gallus gallus} (not shown)
+  An equivalent dynamic manuscript for such gene sets
+  also simply requires redrafting the surrounding explanatory text.
+  The approach is also applicable to larger and more diverse gene families such as
   our previous cataloguing of the Snf2 family \citep{andrew-snf2-catalogue}.
