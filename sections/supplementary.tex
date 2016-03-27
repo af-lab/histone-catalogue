@@ -1,7 +1,11 @@
 \section*{Supplementary Data}
 
   \begin{supplement}
-    \caption{Differences between the current human histone genes and \citet{Marzluff02}.}
+    \caption{
+        Changes in human canonical core histone gene catalogue
+        annotated in NCBI RefSeq obtained on \printdate{\SequencesDate{}
+        compared to \citet{Marzluff02}.
+    }
     \label{tab:difference-from-Marzluff02}
     \input{results/table-reference_comparison}
   \end{supplement}
@@ -13,8 +17,8 @@
   %% capt-of which allows to enter a caption outside a float.
   \newpage
   \captionof{supplement}{%
-    Catalogue of all annotated human canonical core histone gene and
-    respective products.
+    Catalogue of annotated human canonical core histone genes, transcripts and encoded proteins.
+    Data obtained from NCBI RefSeq \citep{OLearyRefseq2016} on \printdate{\SequencesDate{}}.
   }
   \label{tab:histone-catalogue}
   \input{results/table-histone_catalogue}
@@ -22,42 +26,60 @@
   \newpage
   \begin{supplement}
     \centering
-    \caption{Sequence logo for the H2A canonical coding histone genes.}
+    \caption{
+        Sequence logo for the human canonical H2A gene coding regions
+        listed in table \tref{tab:histone-catalogue}.
+        Initiator codon ATG and stop codon are omitted.
+    }
     \label{fig:h2a-histone-gene-variation}
     \includegraphics[width=1.0\textwidth]{seqlogo_H2A_cds.pdf}
   \end{supplement}
   \newpage
   \begin{supplement}
     \centering
-    \caption{Sequence logo for the H2B canonical coding histone genes.}
+    \caption{
+        Sequence logo for the human canonical H2B gene coding regions
+        listed in table \tref{tab:histone-catalogue}.
+        Initiator codon ATG and stop codon are omitted.
+    }
     \label{fig:h2b-histone-gene-variation}
     \includegraphics[width=1.0\textwidth]{seqlogo_H2B_cds.pdf}
   \end{supplement}
   \newpage
   \begin{supplement}
     \centering
-    \caption{Sequence logo for the H3 canonical coding histone genes.}
+    \caption{
+        Sequence logo for the human canonical H3 gene coding regions
+        listed in table \tref{tab:histone-catalogue}.
+        Initiator codon ATG and stop codon are omitted.
+    }
     \label{fig:h3-histone-gene-variation}
     \includegraphics[width=1.0\textwidth]{seqlogo_H3_cds.pdf}
   \end{supplement}
   \newpage
   \begin{supplement}
     \centering
-    \caption{Sequence logo for the H4 canonical coding histone genes.}
+    \caption{
+        Sequence logo for the human canonical H4 gene coding regions
+        listed in table \tref{tab:histone-catalogue}.
+        Initiator codon ATG and stop codon are omitted.
+    }
     \label{fig:h4-histone-gene-variation}
     \includegraphics[width=1.0\textwidth]{seqlogo_H4_cds.pdf}
   \end{supplement}
 
   \newpage
   \begin{supplement}
-    \caption{HGNC recognised histone variant family stem names, commonly used protein names,
-             and names for improved consistency based on proposal by \citet{Talbert2012}.
-             \textit{HIST1H2BA} and \textit{HIST3H3} are included as discussed above.}
+    \caption{
+        Annotated histone variants.
+        HGNC histone family names \citep{HGNC2015}, commonly used protein names,
+        and nomenclature proposal of \citet{Talbert2012}.
+    }
     \label{tab:histone-variant-families}
     \centering
     \begin{tabularx}{\linewidth}{l l l >{\raggedright\arraybackslash}X}
       \toprule
-      Family & Protein & \citet{Talbert2012} & Notes \\
+      Family & Common name & \citet{Talbert2012} & Notes \\
       \midrule
       H2AFB & H2A.Bbd & H2A.B & equivalent to H2A.L \\
       H2AFJ & H2A.J & H2A.J & at HIST4 locus \\
@@ -69,7 +91,7 @@
       H2BFS & - & - & pseudogene \\
       H2BFWT & ? & H2B.W & testes specific, X-linked \\
       H2BFX & - & - & pseudogene \\
-      HIST1H2BA & TH2B/TSH2B & H2B.1 & testes specific \\
+      HIST1H2BA & TH2B/TSH2B & TS H2B.1 & testes specific \\
       HIST3H3 & H3T & H3.4 & testes specific \\
       H3F3 & H3.3 & H3.3 & euchromatin related \\
       CENPA & CENP-A & - & centromere-specific \\
@@ -79,12 +101,13 @@
 
   \newpage
   \begin{supplement}
-    \caption{Sequence differences between canonical histone genes.
-             Average counts of non-synonymous ($d_N$) and synonymous ($d_S$)
-             nucleotide substitutions between all pairwise comparisons of
-             canonical core histone coding regions by histone type,
-             and average $d_N/d_S$ ratios for the pairwise comparisons as
-             computed by PAML's \texttt{codeml} (\citet{GoldmanYang1994} method).}
+    \caption{
+        Synonymous and non-synonymous differences between canonical core histone genes.
+        Mean of positional non-synonymous ($d_N$) and synonymous ($d_S$) nucleotide substitution rates 
+        and mean of $d_N/d_S$ ratios
+        for all pairwise comparisons of canonical core histone gene coding regions
+        computed using \citet{GoldmanYang1994} method by PAML \texttt{codeml}.
+    }
     \label{tab:histone-gene-differences}
     \centering
     \begin{tabular}{l l l l}
@@ -102,16 +125,16 @@
   \newpage
   \newpage
   \captionof{supplement}{%
-    Frequency of each codon relative to the number of codons coding for the
-    same amino acid.
+    Codon usage frequency for each amino acid 
+    and canonical core histone type.
   }
   \label{tab:histone-gene-codonusage}
   \input{results/table-codon_usage}
 
   \newpage
   \captionof{supplement}{%
-    Catalogue of all annotated human variant core histone gene and
-    respective products.
+    Catalogue of annotated human core histone variant genes, transcripts and encoded proteins.
+    Data obtained from NCBI RefSeq \citep{OLearyRefseq2016} on \printdate{\SequencesDate{}}. 
   }
 
   \label{tab:variant-catalogue}
@@ -119,9 +142,11 @@
 
   \newpage
   \begin{supplement}
-    \caption{Analysis of the current histone curation.  Existing annotations
-      are matched against current knowledge of histones to create a list
-      of anomalies.  These are then reported back to RefSeq for review.}
+    \caption{
+        Variations in canonical core histone gene annotations
+        compared to expectation of single exon, single transcript, and stem-loop.
+        Data obtained from NCBI RefSeq \citep{OLearyRefseq2016} on \printdate{\SequencesDate{}}.
+    }
     \label{tab:curation-anomalies}
     \begin{itemize}
     \input{results/histone_insanities.tex}
