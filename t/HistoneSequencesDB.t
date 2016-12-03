@@ -218,4 +218,40 @@ subtest "Test everything again with the read HistoneSequencesDB"
 }
 
 
+## One of the problems of using a csv file with one product per line when
+## what we want is genes, is that a gene gets split over lines and then we
+## have to join them.  We had a weird bug that was triggered only when one
+## such gene was the first row in the csv file and the second row could not
+## make a valid gene (H2AFJ has a non-protein coding transcript).  This test
+## case triggers it.
+sub test_split_gene_first_2_rows
+{
+  my $db_dir = shift;
+  my $db2 = HistoneSequencesDB->new($db_dir->dirname);
+  isa_ok($db2, 'HistoneSequencesDB', "Created HistoneSequencesDB");
+
+  my @genes = @{$db2->genes};
+  is (scalar @genes, 2, "Read right number of genes");
+
+  is_deeply ([sort (map {$_->symbol} @genes)], ['H2AFJ', 'HIST1H4K',],
+             "Got the right gene symbols");
+
+  is_deeply ([sort {$a <=> $b} (map {$_->uid} @genes)], [8362, 55766],
+             "Got the right gene UID");
+
+  my ($h2afj) = grep {$_->symbol eq 'H2AFJ'} @genes;
+  is ($h2afj->type, 'coding', "Read coding gene with non-coding transcript");
+  is_deeply ($h2afj->products, {'NM_177925' => 'NP_808760', 'NR_027716' => ''},
+    'read products with non-coding transcripts');
+}
+
+#my $dir2 = ;
+subtest "Special case with 'bad' gene split on first two rows"
+  => sub { test_split_gene_first_2_rows(create_seq_dir(<<END)); };
+"gene symbol",species,"gene UID","EnsEMBL ID","gene name",pseudo,"transcript accession","protein accession",locus,"chromosome accession","chromosome start coordinates","chromosome stop coordinates",assembly
+H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NM_177925,NP_808760,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+H2AFJ,"Homo sapiens",55766,ENSG00000246705,"H2A histone family, member J",0,NR_027716,,12p12.3,NC_000012,14773836,14778502,"Reference GRCh38.p2 Primary Assembly"
+HIST1H4K,"Homo sapiens",8362,ENSG00000273542,"histone cluster 1, H4k",0,NM_003541,NP_003532,6p22.1,NC_000006,27830674,27832027,"Reference GRCh38.p2 Primary Assembly"
+END
+
 done_testing;

@@ -283,7 +283,7 @@ sub _build_genes_from_csv
   ## add the csv entries to this pending hash.
   my %pending; # keys are gene UID, values are {'entries' => \@csv_lines, 'err' => '$@'}
 
-  my @genes;
+  my %genes;
   foreach my $entry (@$data)
     {
       my $symbol = $entry->{'gene symbol'};
@@ -309,15 +309,15 @@ sub _build_genes_from_csv
               my @failed_entries = @{ $pending{$uid}->{entries} };
               for (@failed_entries)
                 { $gene = _updated_Gene_with_csv_line ($gene, $_); }
-              push (@genes, $gene);
+              $genes{$uid} = $gene;
               delete $pending{$uid};
             }
         }
-      elsif (my $index = List::Util::first { $genes[$_]->uid() == $uid } 0 .. $#genes)
+      elsif (exists $genes{$uid})
         {
-          my $old_gene = $genes[$index];
+          my $old_gene = $genes{$uid};
           my $new_gene = _updated_Gene_with_csv_line($old_gene, $entry);
-          $genes[$index] = $new_gene;
+          $genes{$uid} = $new_gene;
         }
       else
         {
@@ -329,13 +329,13 @@ sub _build_genes_from_csv
               $pending{$uid}->{entries} = [$entry];
             }
           else
-            { push (@genes, $gene); }
+            { $genes{$uid} = $gene; }
         }
     }
   if (%pending)
     { croak 'Unable to form Gene for '. join (" ", keys %pending); }
 
-  return \@genes;
+  return [values %genes];
 }
 
 
