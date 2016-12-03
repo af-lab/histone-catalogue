@@ -100,7 +100,7 @@ sub test_db
   is ($hist1h4ai->histone_type, 'H4', "Read histone type of coding canonical");
 
   my ($h2afj) = grep {$_->symbol eq 'H2AFJ'} @genes;
-  is ($hist1h4ai->type, 'coding', "Read coding gene with non-coding transcript");
+  is ($h2afj->type, 'coding', "Read coding gene with non-coding transcript");
   is_deeply ($h2afj->products, {'NM_177925' => 'NP_808760', 'NR_027716' => ''},
     'read products with non-coding transcripts');
 
