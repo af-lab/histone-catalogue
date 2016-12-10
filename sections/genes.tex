@@ -33,6 +33,7 @@
             \colorbox{red}{\strut in Histone cluster 1}
           }
         \end{minipage}
+        \label{subfig:nomenclature-coding-canonical}
       }
       \subbottom[canonical pseudogene]{%
         \begin{minipage}{0.37\textwidth}
@@ -52,6 +53,7 @@
             \colorbox{red}{\strut in cluster 2}
           }
         \end{minipage}
+        \label{subfig:nomenclature-pseudo-canonical}
       }
       \subbottom[variant]{%
         \begin{minipage}{0.22\textwidth}
@@ -68,11 +70,18 @@
             \colorbox{blue!40}{\strut member X}
           }
         \end{minipage}
+        \label{subfig:nomenclature-variant}
       }
       \caption{Histone gene nomenclature.
-               A. Canonical core histone gene names encode relative genomic order by cluster.
-               B. Pseudogenes named since 2002 include cluster, PS label and discovery order identifier.
-               C. Most variant core histone genes are identified by type then F for family and identifier letter.}
+               \subcaptionref{subfig:nomenclature-coding-canonical}
+               Canonical core histone gene names encode relative genomic
+               order by cluster.
+               \subcaptionref{subfig:nomenclature-pseudo-canonical}
+               Pseudogenes named since 2002 include cluster, PS label,
+               and discovery order identifier.
+               \subcaptionref{subfig:nomenclature-variant}
+               Most variant core histone genes are identified by type
+               then F for family and identifier letter.}
       \label{fig:nomenclature}
     \end{figure*}
 
@@ -100,9 +109,9 @@
     pseudogenes and functional coding genes,
     so \textit{HIST3H2BA} is a pseudogene whereas neighbouring
     \textit{HIST3H2BB} is the only functional H2B coding gene in HIST3.
-    The HGNC definition of a pseudogene is 
-    a sequence that is generally untranscribed and untranslated 
-    but which has at least 50\% predicted amino acid identity 
+    The HGNC definition of a pseudogene is
+    a sequence that is generally untranscribed and untranslated
+    but which has at least 50\% predicted amino acid identity
     across 50\% of the open reading frame to a named gene \citep{HGNC2013}.
     Newly uncovered histone pseudogenes are now suffixed with PS and a
     number in order of discovery (\fref{fig:nomenclature}),
@@ -132,32 +141,32 @@
     proximal to the outlying \textit{HIST1H2AA} and \textit{HIST1H2AA} pair.
 
     The implications of tight and exclusive histone gene clustering are not well understood.
-    It has been argued that histone clustering 
+    It has been argued that histone clustering
     does not contributes to gene conversion \citep{NeiRooney2005}.
     HIST1 is located towards the distal end of the major histocompatibility complex (MHC)
     in the extended class~I region \citep{MHC-I-transcript, MHC-complete-sequencing-1999}.
-    and it has even been suggested that this proximity 
+    and it has even been suggested that this proximity
     may suppresses recombination in the MHC Class~I region \citep{MHC-repressed-by-HIST}.
     In contrast, HIST2 may be prone to deletions and frequent rearrangements
     \citep{HISTTwo-prone-deletion-discovery, HISTTwo-prone-deletion-focus}
 
     The functional significance of histone gene clustering remains to be demonstrated.
     It has been suggested that clustering may facilitate coordinate regulation \citep{Eirinlopez2009,close-regulators},
-    but interpreting such a functional relationship with genome organisation 
+    but interpreting such a functional relationship with genome organisation
     first requires a detailed catalogue of the histone genes and their individual roles.
 
     Conversely, progress in understanding histone gene function
-    is also suggesting a need to update 
+    is also suggesting a need to update
     the definitions of the canonical histone gene clusters.
 
-    For example, the \textit{HIST1H2AA} and \textit{HIST1H2BA} genes 
+    For example, the \textit{HIST1H2AA} and \textit{HIST1H2BA} genes
     are located \SI{300}{\kilo\bp} upstream of the rest of the HIST1 cluster
     and separated from all other cluster members a number of non-histone genes.
-    Although the two genes have been assigned canonical histone gene names, 
+    Although the two genes have been assigned canonical histone gene names,
     the \textit{HIST1H2BA} gene encodes the most divergent canonical H2B protein
-    also known as TH2/TH2B/hTSH2B and considered to be 
+    also known as TH2/TH2B/hTSH2B and considered to be
     a testes-specific histone protein \citep{Zalensky2002,LiAusio2005,Shinagawa2014}.
-    \textit{HIST1H2BA} is adjacent to \textit{HIST1H2AA} encoding 
+    \textit{HIST1H2BA} is adjacent to \textit{HIST1H2AA} encoding
     a H2A protein isoform of similarly high variation.
     The syntenic rat orthologues of \textit{HIST1H2AA} and \textit{HIST1H2BA}
     are divergently transcribed specifically in testes \citep{HuhChae1991},
@@ -170,14 +179,14 @@
 
     A similar case may exist for the small HIST3 cluster \SI{80}{\mega\bp} downstream of HIST2.
     HIST3 contains protein coding genes \textit{HIST3H2A}, \textit{HIST3H2BB} and \textit{HIST3H3}.
-    \textit{HIST3H3} encodes testes-specific H3T/H3.4 
+    \textit{HIST3H3} encodes testes-specific H3T/H3.4
     that has distinctive biochemical properties \citep{WittExpCellRes1996,KurumizakaCOSB2013},
     while the proteins encoded by \textit{HIST3H2A} and \textit{HIST3H2BB}
     are amongst the most divergent canonical histones of their types.
 
-    The examples of the \textit{HIST1H2AA} and \textit{HIST1H2BA} pair, 
-    and the HIST3 cluster members illustrate 
-    the evolving nature of the human canonical histone complement 
+    The examples of the \textit{HIST1H2AA} and \textit{HIST1H2BA} pair,
+    and the HIST3 cluster members illustrate
+    the evolving nature of the human canonical histone complement
     and the need for a dynamic approach to classification.
 
   \subsection{Histone gene sequences}
@@ -200,7 +209,7 @@
     for histone genes across eukaryotes \citep{Piontkivska2002, Rooney2002}.
     It supports a hypothesis that histone protein sequence conservation
     results from birth and death evolution through strong selective pressure
-    at the protein level rather than 
+    at the protein level rather than
     sequence homogenisation based on clustering \citep{NeiRooney2005}.
 
     Despite the level of synonymous substitution,
