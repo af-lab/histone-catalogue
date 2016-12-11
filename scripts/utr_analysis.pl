@@ -19,6 +19,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
+
 use Bio::Tools::Run::Alignment::Clustalw;
 use Statistics::Basic;          # we want to calculate mode
 use Bio::Seq;
@@ -111,17 +112,17 @@ open (my $var_file, ">", $var_path)
   or die "Could not open $var_path for writing: $!";
 
 say {$var_file} HistoneCatalogue::latex_newcommand (
-  "StemLoopStart",
+  "StemLoopStartMode",
   Statistics::Basic::mode (@inits),
   "Mode of distances, in bp, between the end of the CDS and the start of the stem loop."
 );
 say {$var_file} HistoneCatalogue::latex_newcommand (
-  "StemLoopEnd",
+  "StemLoopEndMode",
   Statistics::Basic::mode (@ends),
   "Mode of distances, in bp, between the end of the CDS and the end of the stem loop."
 );
 say {$var_file} HistoneCatalogue::latex_newcommand (
-  "HDEsDistanceFromStemLoop",
+  "HDEsDistanceFromStemLoopMode",
   Statistics::Basic::mode (@sl2hde),
   "Mode of distances, in bp, between the HDE and the stem loop."
 );
