@@ -451,6 +451,13 @@ manuscript = env.PDF (
 env.Alias ("manuscript", manuscript)
 Depends (manuscript, [figures, analysis])
 
+## Because the manuscript is not built by default, then it's also not
+## removed by default by doing `scons -c`.  So we add it to the default
+## targets when cleaning
+## See http://dcreager.net/2010/01/08/default-scons-clean-targets/
+if env.GetOption("clean"):
+  env.Default(manuscript)
+
 
 ## TARGET check
 ##
