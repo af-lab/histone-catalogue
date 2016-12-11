@@ -72,7 +72,7 @@ for my $gene (@{ $db->genes })
                        map { [$_, /_(\d+)$/] } @proteins;
 
         for (0..$#proteins)
-          { $pacc2gsym{$proteins[$_]} = "$symbol-" . ($_+1); }
+          { $pacc2gsym{$proteins[$_]} = "$symbol." . ($_+1); }
       }
   }
 HistoneCatalogue::say_table_isoforms_description($align, %pacc2gsym);
