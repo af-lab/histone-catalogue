@@ -184,13 +184,11 @@ sub say_histone_catalogue
             } keys %$products;
 
           my @transcripts = sort keys %tex_products;
-          say "  " . join (" & ", @cols, $transcripts[0],
-                                  $tex_products{$transcripts[0]}) . "\\\\";
-
-          ## In the case of a gene with multiple transcripts, each will have
-          ## its line on the table but the first two columns will be empty.
-          foreach (@transcripts[1 .. $#transcripts])
-            { say "      & & & $_ & $tex_products{$_} \\\\"; }
+          foreach my $transcript (@transcripts)
+            {
+              say "  " . join (" & ", @cols, $transcript,
+                                      $tex_products{$transcript}) . "\\\\";
+            }
         }
     }
 

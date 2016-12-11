@@ -170,7 +170,7 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->canonical_core) },
   \midrule
   H2A & HIST1H2APS4 & 8333 & pseudogene & pseudogene\\
   H2B & HIST1H2BD & 3017 & NM\_021063 & NP\_066407\\
-      & & & NM\_138720 & NP\_619790 \\
+  H2B & HIST1H2BD & 3017 & NM\_138720 & NP\_619790\\
   H3 & HIST1H3F & 8968 & NM\_021018 & NP\_066298\\
   H4 & HIST1H4I & 8294 & NM\_003495 & NP\_003486\\
   H4 & HIST1H4K & 8362 & NM\_003541 & NP\_003532\\
@@ -186,11 +186,11 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants_core) },
   Type & Gene name & Gene UID & Transcript accession & Protein accession \\
   \midrule
   H2A & H2AFJ & 55766 & NM\_177925 & NP\_808760\\
-      & & & NR\_027716 & non-coding \\
+  H2A & H2AFJ & 55766 & NR\_027716 & non-coding\\
   H2A & H2AFZ & 3015 & NM\_002106 & NP\_002097\\
   H2A & H2AFZP4 & 100462795 & pseudogene & pseudogene\\
   H3 & CENPA & 1058 & NM\_001042426 & NP\_001035891\\
-      & & & NM\_001809 & NP\_001800 \\
+  H3 & CENPA & 1058 & NM\_001809 & NP\_001800\\
   \bottomrule
 \end{ctabular}
 END
