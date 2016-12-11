@@ -19,6 +19,7 @@ use strict;                     # Enforce some good programming rules
 use warnings;                   # Replacement for the -w flag, but lexically scoped
 use File::Spec;                 # Perform operation on file names
 use File::Temp;                 # Create temporary files
+use List::Util;
 
 use Bio::Tools::Run::Alignment::Clustalw;
 use Statistics::Basic;          # we want to calculate mode
@@ -120,6 +121,16 @@ say {$var_file} HistoneCatalogue::latex_newcommand (
   "StemLoopEndMode",
   Statistics::Basic::mode (@ends),
   "Mode of distances, in bp, between the end of the CDS and the end of the stem loop."
+);
+say {$var_file} HistoneCatalogue::latex_newcommand (
+  "StemLoopStartMin",
+  List::Util::min (@inits),
+  "Shortest distances, in bp, between the end of a CDS and the start of a stem loop."
+);
+say {$var_file} HistoneCatalogue::latex_newcommand (
+  "StemLoopStartMax",
+  List::Util::max (@inits),
+  "Longest distances, in bp, between the end of a CDS and the start of a stem loop."
 );
 say {$var_file} HistoneCatalogue::latex_newcommand (
   "HDEsDistanceFromStemLoopMode",
