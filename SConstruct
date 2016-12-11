@@ -605,7 +605,7 @@ env.Help("""
 
 ## Seriously, this should be the default.  Otherwise, users won't even get
 ## to see the help text  unless they pass the configure tests.
-if not env.GetOption('help'):
+if not (env.GetOption('help') or env.GetOption('clean')):
   for prog in ["bp_genbank_ref_extractor", "weblogo"]:
     if not conf.CheckProg(prog):
       print ("Unable to find `%s' installed" % prog)
