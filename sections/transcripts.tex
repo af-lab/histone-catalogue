@@ -3,7 +3,7 @@
   Canonical core histone transcripts are among the only protein coding messages
   that do not undergo polyadenylation,
   instead carrying a unique stem-loop structure (\tref{tab:typical-histone-differences}).
-  They do have a 7--methyl--guanosine cap at the 5' end \citep{MarzluffNatRevGen2008}.
+  They do have a 5' 7--methyl--guanosine cap \citep{MarzluffNatRevGen2008}.
 
   Canonical core histone gene transcription is regulated
   by cell-cycle dependent phosphorylation of the histone-specific
@@ -23,15 +23,15 @@
   via stem-loop dependent mechanisms,
   and a 3--5 fold up-regulation in canonical core histone gene transcription \citep{HarrisMCB1991}.
 
-  This post-translation regulation of canonical core histone transcripts
-  is achieved by a stem-loop encoded in the mRNA 3' untranslated region
-  that is recognised by specialised spliceosome-related RNA
+  This post-transcriptional regulation is achieved by 
+  a stem-loop encoded in the mRNA 3' untranslated region
+  that is recognised by spliceosome-related RNA
   processing and stabilisation complexes \citep{stem-loop-structure}.
-  The modal location of annotated stem-loops is \StemLoopStartMode{}
-  to \StemLoopEndMode{} bp after the stop codon
-  for the set of all canonical histone genes.
-  The sequence logo of all aligned stem-loops
-  confirms these are highly conserved in sequence and structure (\fref{fig:stem-loop-seqlogo}).
+  The start location of the annotated stem-loops in human canonical histone transcripts
+  ranges from \StemLoopStartMin{} to \StemLoopStartMax{} bp after the stop codon
+  with a mode of \StemLoopStartMode{} bp.
+  The sequence logo of aligned stem-loops confirms that the stem-loop is
+  highly conserved (\fref{fig:stem-loop-seqlogo}).
 
   The RNA stem-loop structure is bound by the Stem-Loop Binding Protein (SLBP)
   which is up-regulated 10--20 fold during S~phase to stabilise
@@ -42,8 +42,7 @@
   alignment of the canonical HDE \citep{HDE-sequence} to all canonical histone genes
   shows the modal location of the HDE is
   \HDEsDistanceFromStemLoopMode{} bp downstream of the stem-loop.
-  The sequence logo calculated from all aligned HDEs
-  confirms that this feature is also highly conserved (\fref{fig:HDE-seqlogo}).
+  The sequence logo confirms that this feature is also highly conserved (\fref{fig:HDE-seqlogo}).
 
   \begin{figure}
     \centering
@@ -66,8 +65,8 @@
   \end{figure}
 
   Stabilisation and processing extend the half life of canonical core histone \mbox{mRNAs}
-  and contribute to increased histone translation efficiency,
-  enabling rapid production of histones to package the newly duplicated genome.
+  during S phase and contribute to increased histone translation efficiency,
+  enabling rapid production of histones to package the newly duplicated genomes.
 
   Although the vast bulk of canonical core histone transcripts
   appear to be regulated by this mechanism,
@@ -76,7 +75,7 @@
   differing in whether they have stem-loop or polyadenylation signals (\tref{tab:curation-anomalies}).
 
   Core histone variant transcripts lack a 3' stem-loop and are
-  polyadenylated in the same way as almost all other protein coding genes.
+  polyadenylated in the same way as most protein coding genes.
   The exception is H2AX, which has alternatively processed transcripts
-  exhibiting the stem-loop characteristic of canonical core histones
-  or a poly(A) tail found on variant core histones \citep{HTwoAX-transcripts,our-H2AX-review}.
+  exhibiting both the stem-loop characteristic of a canonical core histone
+  and a poly(A) tail found on variant core histones \citep{HTwoAX-transcripts,our-H2AX-review}.
