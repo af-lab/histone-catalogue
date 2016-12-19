@@ -119,10 +119,10 @@ sub _get_version
   my $self = shift;
   my $bin = $self->bin_path;
   ## We expect something like "WebLogo 3.4 (2014-06-02)"
-  `$bin --version` =~ m/^WebLogo ([0-9\.]+) \(/;
-  if (! defined $1)
+  my $r = `python -c 'import pkg_resources; print pkg_resources.require("weblogo")[0].version'`;
+  if ($?)
     { croak "Unable to identify version of weblogo"; }
-  return $1;
+  return $r;
 }
 
 
