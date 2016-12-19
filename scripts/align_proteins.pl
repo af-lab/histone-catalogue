@@ -80,6 +80,7 @@ my $tcoffee = Bio::Tools::Run::Alignment::TCoffee->new(
   'aformat' => 'fasta',
   'output'  => 'fasta', # do not be fooled by documentation
   'quiet'   => 1,       # do not be fooled by documentation
+  'gapopen' => -10,     # tuned as discussed on issue #32
 );
 
 $tcoffee->outfile($out_fpath);
