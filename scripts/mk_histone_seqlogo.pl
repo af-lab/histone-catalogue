@@ -50,6 +50,12 @@ $weblogo->call(
   {
     "--units",          "probability",
     "--show-yaxis",     "no",
+    ## High value for "--number-interval" is a workaround in order to
+    ## disable x axis numbering only ('--show-xaxis no' would remove
+    ## the whole x axis.  And we want to remove the numbering because
+    ## some readers forget that this is an alignment and expect that the
+    ## numbering matches the most common sequence (issue #33).
+    "--number-interval", "9999",
     ## Use a multiple of 3 so that codons get aligned (useful to show that
     ## changes on the 3rd letter of a codon are much more frequent).
     "--stacks-per-line", 45,

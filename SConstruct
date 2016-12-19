@@ -512,6 +512,12 @@ def CheckProg(context, app_name):
   context.Result(is_ok)
   return is_ok
 
+def CheckCommand(context, command, message):
+  context.Message("Checking %s..." % message)
+  is_ok = context.TryAction(command)[0]
+  context.Result(is_ok)
+  return is_ok
+
 def CheckPerlModule(context, module_name):
   context.Message("Checking for perl module %s..." % module_name)
   is_ok = 0 == subprocess.call(["perl", "-M" + module_name, "-e 1"],
@@ -527,7 +533,8 @@ conf = Configure(
     "CheckBibTeXStyle"  : CheckBibTeXStyle,
     "CheckPerlModule"   : CheckPerlModule,
     "CheckEmail"        : CheckEmail,
-    "CheckProg"         : CheckProg
+    "CheckProg"         : CheckProg,
+    "CheckCommand"      : CheckCommand,
   }
 )
 
@@ -617,6 +624,15 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     if not conf.CheckProg(prog):
       print ("Unable to find `%s' installed" % prog)
       Exit(1)
+
+  ## We need this option in weblogo to remove the numbering from the X axis.
+  ## See issue #33.  This option was added to weblogo version 3.5.0.
+  if not conf.CheckCommand("printf '>1\\nAC\\n>2\\nAC\\n'"
+                           + " | weblogo --number-interval 50"
+                           + " > %s" % os.devnull,
+                           "if weblogo supports --number-interval"):
+    print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
+    Exit(1)
 
   for module in perl_module_dependencies:
     if not conf.CheckPerlModule(module):
