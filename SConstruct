@@ -185,7 +185,7 @@ def create_extract_sequences_args():
 
   bp_genbank_ref_extractor_call = [
     "bp_genbank_ref_extractor",
-    "--assembly",     "Reference GRCh",
+    "--assembly",     "Reference GRC",
     "--genes",        "uid",
     "--pseudo",
     "--non-coding",
