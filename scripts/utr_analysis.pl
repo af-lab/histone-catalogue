@@ -68,9 +68,6 @@ foreach my $gene (MyLib::load_canonical ($path{sequences})) {
     my $cds = ($seq->get_SeqFeatures ("CDS"))[0];
     next if (! $sl || ! $cds);
 
-    next if $seq->display_id eq "NM_001024599";
-
-
     push (@stem_loops, $sl->seq);
     push (@inits, $sl->start - $cds->end -1);
     push (@ends,  $sl->end - $cds->end -1);
