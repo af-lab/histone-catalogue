@@ -66,9 +66,8 @@ sub BUILD
   if (! $2)
     { croak 'unable to find histone type from symbol ' . $self->symbol (); }
 
-  ## Should we uc?
   $self->_cluster ($1);
-  $self->_histone_type ($2);
+  $self->_histone_type (uc ($2));
 }
 
 

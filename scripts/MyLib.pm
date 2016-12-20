@@ -106,7 +106,7 @@ sub load_csv {
     ## having a field for UID is not duplicating data because later we will
     ## use this to make sets of each entry, and won't have access to the key
     $genes{$uid}{'uid'}     //= $uid;
-    $genes{$uid}{'symbol'}  //= uc ($$entry{'gene symbol'});
+    $genes{$uid}{'symbol'}  //= $$entry{'gene symbol'};
     $genes{$uid}{'desc'}    //= $$entry{'gene name'};
     $genes{$uid}{'species'} //= $$entry{'species'};
     $genes{$uid}{'pseudo'}  //= $$entry{'pseudo'};
