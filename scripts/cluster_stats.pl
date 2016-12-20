@@ -62,11 +62,11 @@ sub get_locus
       my $seq = $db->get_transcript($acc);
       my ($feature) = $seq->get_SeqFeatures("source");
       my ($locus)   = $feature->get_tag_values("map");
-      if ($locus =~ m/[\d]+[qp][\d\.]+/)
+      if ($locus)
         { return $locus; }
       ## else, try the next transcript
     }
-  die ("Could not find locus for ${gene->symbol}");
+  die ("Could not find locus for " . $gene->symbol);
 }
 
 sub main
