@@ -333,7 +333,7 @@ sub _build_genes_from_csv
         }
     }
   if (%pending)
-    { croak 'Unable to form Gene for '. join (" ", keys %pending); }
+    { carp 'Unable to form Gene for UIDs '. join (" ", keys %pending); }
 
   return [values %genes];
 }
