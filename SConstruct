@@ -140,6 +140,198 @@ TARGETS
 
 """)
 
+## Build configuration (check if dependencies are all installed)
+##
+## The really really really right way to do the checks would be to set up a
+## scanner that finds the required LaTeX packages and perl modules. But that's
+## something that should be done upstream in SCons (the scan for LaTeX source
+## is already being worked on so this may not be necessary in the future)
+
+def CheckLaTeXPackage(context, package):
+  context.Message("Checking for LaTeX package %s..." % package)
+  is_ok = 0 == subprocess.call(["kpsewhich", package + ".sty"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
+def CheckLaTeXClass(context, doc_class):
+  context.Message("Checking for LaTeX document class %s..." % doc_class)
+  is_ok = 0 == subprocess.call(["kpsewhich", doc_class + ".cls"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
+def CheckBibTeXStyle(context, style):
+  context.Message("Checking for BibTeX style %s..." % style)
+  is_ok = 0 == subprocess.call(["kpsewhich", style + ".bst"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
+def CheckEmail(context, email):
+  context.Message("Checking e-mail address...")
+  ## Don't check email validity, the program that uses it will do it
+  is_ok = email
+  context.Result(is_ok)
+  return is_ok
+
+def CheckProg(context, app_name):
+  context.Message("Checking for %s..." % app_name)
+  is_ok = context.env.WhereIs(app_name)
+  context.Result(is_ok)
+  return is_ok
+
+def CheckCommand(context, command, message):
+  context.Message("Checking %s..." % message)
+  is_ok = context.TryAction(command)[0]
+  context.Result(is_ok)
+  return is_ok
+
+def CheckPerlModule(context, module_name):
+  context.Message("Checking for perl module %s..." % module_name)
+  is_ok = 0 == subprocess.call(["perl", "-M" + module_name, "-e 1"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
+conf = Configure(
+  env,
+  custom_tests = {
+    "CheckLaTeXClass"   : CheckLaTeXClass,
+    "CheckLaTeXPackage" : CheckLaTeXPackage,
+    "CheckBibTeXStyle"  : CheckBibTeXStyle,
+    "CheckPerlModule"   : CheckPerlModule,
+    "CheckEmail"        : CheckEmail,
+    "CheckProg"         : CheckProg,
+    "CheckCommand"      : CheckCommand,
+  }
+)
+
+## grep -rh '^use ' t/ lib-perl5/ scripts/| sort | uniq
+## and then remove the core modules and pragmas
+perl_module_dependencies = [
+  "Bio::AlignIO",
+  "Bio::Align::Utilities",
+  "Bio::CodonUsage::Table",
+  "Bio::DB::EUtilities",
+  "Bio::LocatableSeq",
+  "Bio::Root::Version",
+  "Bio::Seq",
+  "Bio::SeqIO",
+  "Bio::SeqUtils",
+  "Bio::SimpleAlign",
+  "Bio::Tools::CodonTable",
+  "Bio::Tools::EUtilities",
+  "Bio::Tools::Run::Alignment::Clustalw",
+  "Bio::Tools::Run::Alignment::TCoffee",
+  "Bio::Tools::Run::Phylo::PAML::Codeml",
+  "Bio::Tools::SeqStats",
+  "File::Which",
+  "Moose",
+  "Moose::Util::TypeConstraints",
+  "MooseX::StrictConstructor",
+  "namespace::autoclean",
+  "Statistics::Basic",
+  "Test::Exception",
+  "Test::Output",
+  "Text::CSV",
+]
+
+latex_package_dependencies = [
+  "fontenc",
+  "inputenc",
+  "graphicx",
+  "url",
+  "todonotes",
+  "natbib",
+  "color",
+  "kpfonts",
+  "seqsplit",
+  "eqparbox",
+  "capt-of",
+  "hyperref",
+  "fp",
+  "afterpage",
+  "isodate",
+  "etoolbox",
+  "stringstrings",
+  "intcalc",
+  "siunitx",
+]
+
+env.Help("""
+DEPENDENCIES
+
+  Programs:
+    * bp_genbank_ref_extractor - Distributed with the perl module
+      Bio-EUtilities version 1.74 or later.
+    * weblogo - Available at http://weblogo.threeplusone.com/
+
+  Perl modules:
+""")
+for module in perl_module_dependencies:
+  env.Help("    * %s\n" % module)
+
+env.Help("""
+  LaTeX document class
+    * memoir
+
+  LaTeX packages
+""")
+for package in latex_package_dependencies:
+  env.Help("    * %s\n" % package)
+
+env.Help("""
+  BibTeX style
+    * agu
+""")
+
+## Seriously, this should be the default.  Otherwise, users won't even get
+## to see the help text  unless they pass the configure tests.
+if not (env.GetOption('help') or env.GetOption('clean')):
+  for prog in ["bp_genbank_ref_extractor", "weblogo"]:
+    if not conf.CheckProg(prog):
+      print ("Unable to find `%s' installed" % prog)
+      Exit(1)
+
+  ## We need this option in weblogo to remove the numbering from the X axis.
+  ## See issue #33.  This option was added to weblogo version 3.5.0.
+  if not conf.CheckCommand("printf '>1\\nAC\\n>2\\nAC\\n'"
+                           + " | weblogo --number-interval 50"
+                           + " > %s" % os.devnull,
+                           "if weblogo supports --number-interval"):
+    print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
+    Exit(1)
+
+  for module in perl_module_dependencies:
+    if not conf.CheckPerlModule(module):
+      print "Unable to find perl module %s." % module
+      Exit(1)
+
+  for package in latex_package_dependencies:
+    if not conf.CheckLaTeXPackage(package):
+      print "Unable to find required LaTeX package %s." % package
+      Exit(1)
+
+  if not conf.CheckLaTeXClass("memoir"):
+    print "Unable to find the LaTeX document class memoir."
+    Exit(1)
+
+  if not conf.CheckBibTeXStyle("agu"):
+    print "Unable to find the BibTeX style agu."
+    Exit(1)
+
+  if not conf.CheckEmail(env.GetOption("email")):
+    print ("Per NCBI policy, an email is required when using EUtilities to retrieve data\n"
+           "from the Entrez system. Run `scons -h' for details.")
+    Exit(1)
+
+env = conf.Finish()
+
+##
+## Actual TARGETS from this point on
+##
+
 scripts_dir   = "scripts"
 results_dir   = "results"
 figures_dir   = "figs"
@@ -469,192 +661,3 @@ if "check" in COMMAND_LINE_TARGETS:
     unit = env.PerlScript(source=test_file, target=None, action=[])
     test_suite.append(unit)
   check = Alias ("check", [test_suite])
-
-
-## Build configuration (check if dependencies are all installed)
-##
-## The really really really right way to do the checks would be to set up a
-## scanner that finds the required LaTeX packages and perl modules. But that's
-## something that should be done upstream in SCons (the scan for LaTeX source
-## is already being worked on so this may not be necessary in the future)
-
-def CheckLaTeXPackage(context, package):
-  context.Message("Checking for LaTeX package %s..." % package)
-  is_ok = 0 == subprocess.call(["kpsewhich", package + ".sty"],
-                               stdout = open(os.devnull, "wb"))
-  context.Result(is_ok)
-  return is_ok
-
-def CheckLaTeXClass(context, doc_class):
-  context.Message("Checking for LaTeX document class %s..." % doc_class)
-  is_ok = 0 == subprocess.call(["kpsewhich", doc_class + ".cls"],
-                               stdout = open(os.devnull, "wb"))
-  context.Result(is_ok)
-  return is_ok
-
-def CheckBibTeXStyle(context, style):
-  context.Message("Checking for BibTeX style %s..." % style)
-  is_ok = 0 == subprocess.call(["kpsewhich", style + ".bst"],
-                               stdout = open(os.devnull, "wb"))
-  context.Result(is_ok)
-  return is_ok
-
-def CheckEmail(context, email):
-  context.Message("Checking e-mail address...")
-  ## Don't check email validity, the program that uses it will do it
-  is_ok = email
-  context.Result(is_ok)
-  return is_ok
-
-def CheckProg(context, app_name):
-  context.Message("Checking for %s..." % app_name)
-  is_ok = context.env.WhereIs(app_name)
-  context.Result(is_ok)
-  return is_ok
-
-def CheckCommand(context, command, message):
-  context.Message("Checking %s..." % message)
-  is_ok = context.TryAction(command)[0]
-  context.Result(is_ok)
-  return is_ok
-
-def CheckPerlModule(context, module_name):
-  context.Message("Checking for perl module %s..." % module_name)
-  is_ok = 0 == subprocess.call(["perl", "-M" + module_name, "-e 1"],
-                               stdout = open(os.devnull, "wb"))
-  context.Result(is_ok)
-  return is_ok
-
-conf = Configure(
-  env,
-  custom_tests = {
-    "CheckLaTeXClass"   : CheckLaTeXClass,
-    "CheckLaTeXPackage" : CheckLaTeXPackage,
-    "CheckBibTeXStyle"  : CheckBibTeXStyle,
-    "CheckPerlModule"   : CheckPerlModule,
-    "CheckEmail"        : CheckEmail,
-    "CheckProg"         : CheckProg,
-    "CheckCommand"      : CheckCommand,
-  }
-)
-
-## grep -rh '^use ' t/ lib-perl5/ scripts/| sort | uniq
-## and then remove the core modules and pragmas
-perl_module_dependencies = [
-  "Bio::AlignIO",
-  "Bio::Align::Utilities",
-  "Bio::CodonUsage::Table",
-  "Bio::DB::EUtilities",
-  "Bio::LocatableSeq",
-  "Bio::Root::Version",
-  "Bio::Seq",
-  "Bio::SeqIO",
-  "Bio::SeqUtils",
-  "Bio::SimpleAlign",
-  "Bio::Tools::CodonTable",
-  "Bio::Tools::EUtilities",
-  "Bio::Tools::Run::Alignment::Clustalw",
-  "Bio::Tools::Run::Alignment::TCoffee",
-  "Bio::Tools::Run::Phylo::PAML::Codeml",
-  "Bio::Tools::SeqStats",
-  "File::Which",
-  "Moose",
-  "Moose::Util::TypeConstraints",
-  "MooseX::StrictConstructor",
-  "namespace::autoclean",
-  "Statistics::Basic",
-  "Test::Exception",
-  "Test::Output",
-  "Text::CSV",
-]
-
-latex_package_dependencies = [
-  "fontenc",
-  "inputenc",
-  "graphicx",
-  "url",
-  "todonotes",
-  "natbib",
-  "color",
-  "kpfonts",
-  "seqsplit",
-  "eqparbox",
-  "capt-of",
-  "hyperref",
-  "fp",
-  "afterpage",
-  "isodate",
-  "etoolbox",
-  "stringstrings",
-  "intcalc",
-  "siunitx",
-]
-
-env.Help("""
-DEPENDENCIES
-
-  Programs:
-    * bp_genbank_ref_extractor - Distributed with the perl module
-      Bio-EUtilities version 1.74 or later.
-    * weblogo - Available at http://weblogo.threeplusone.com/
-
-  Perl modules:
-""")
-for module in perl_module_dependencies:
-  env.Help("    * %s\n" % module)
-
-env.Help("""
-  LaTeX document class
-    * memoir
-
-  LaTeX packages
-""")
-for package in latex_package_dependencies:
-  env.Help("    * %s\n" % package)
-
-env.Help("""
-  BibTeX style
-    * agu
-""")
-
-## Seriously, this should be the default.  Otherwise, users won't even get
-## to see the help text  unless they pass the configure tests.
-if not (env.GetOption('help') or env.GetOption('clean')):
-  for prog in ["bp_genbank_ref_extractor", "weblogo"]:
-    if not conf.CheckProg(prog):
-      print ("Unable to find `%s' installed" % prog)
-      Exit(1)
-
-  ## We need this option in weblogo to remove the numbering from the X axis.
-  ## See issue #33.  This option was added to weblogo version 3.5.0.
-  if not conf.CheckCommand("printf '>1\\nAC\\n>2\\nAC\\n'"
-                           + " | weblogo --number-interval 50"
-                           + " > %s" % os.devnull,
-                           "if weblogo supports --number-interval"):
-    print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
-    Exit(1)
-
-  for module in perl_module_dependencies:
-    if not conf.CheckPerlModule(module):
-      print "Unable to find perl module %s." % module
-      Exit(1)
-
-  for package in latex_package_dependencies:
-    if not conf.CheckLaTeXPackage(package):
-      print "Unable to find required LaTeX package %s." % package
-      Exit(1)
-
-  if not conf.CheckLaTeXClass("memoir"):
-    print "Unable to find the LaTeX document class memoir."
-    Exit(1)
-
-  if not conf.CheckBibTeXStyle("agu"):
-    print "Unable to find the BibTeX style agu."
-    Exit(1)
-
-  if not conf.CheckEmail(env.GetOption("email")):
-    print ("Per NCBI policy, an email is required when using EUtilities to retrieve data\n"
-           "from the Entrez system. Run `scons -h' for details.")
-    Exit(1)
-
-env = conf.Finish()
