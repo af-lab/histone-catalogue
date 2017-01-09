@@ -240,6 +240,7 @@ perl_module_dependencies = [
   "Bio::Tools::Run::Phylo::PAML::Codeml",
   "Bio::Tools::SeqStats",
   "File::Which",
+  "Module::ScanDeps", # this is needed by the scons perl tool
   "Moose",
   "Moose::Util::TypeConstraints",
   "MooseX::StrictConstructor",
