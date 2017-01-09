@@ -194,6 +194,18 @@ def CheckPerlModule(context, module_name):
   context.Result(is_ok)
   return is_ok
 
+def CheckVariable(context, variable_name):
+  context.Message("Checking for variable %s..." % variable_name)
+  ## Because env is not really a dict, we can't use 'is in env'
+  ## and need to resort to a try catch.
+  try:
+    context.env[variable_name]
+    is_ok = True
+  except KeyError:
+    is_ok = False
+  context.Result(is_ok)
+  return is_ok
+
 conf = Configure(
   env,
   custom_tests = {
@@ -204,6 +216,7 @@ conf = Configure(
     "CheckEmail"        : CheckEmail,
     "CheckProg"         : CheckProg,
     "CheckCommand"      : CheckCommand,
+    "CheckVariable"     : CheckVariable,
   }
 )
 
@@ -307,6 +320,16 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     if not conf.CheckPerlModule(module):
       print "Unable to find perl module %s." % module
       Exit(1)
+
+  if not conf.CheckVariable('EPSTOPDF'):
+    print "SCons EPSTOPDF not configured.  Do you have epstopdf installed (part of texlive)"
+    Exit(1)
+
+  ## We need this so we can then use CheckLatex* or the user gets a
+  ## pretty cryptic error message.
+  if not conf.CheckProg("kpsewhich"):
+    print "Unable to find `kpsewhich' (part of texlive) installed"
+    Exit(1)
 
   for package in latex_package_dependencies:
     if not conf.CheckLaTeXPackage(package):
