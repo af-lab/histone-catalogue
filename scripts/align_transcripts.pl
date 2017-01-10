@@ -67,20 +67,29 @@ for my $gene (@{ $db->genes })
   }
 my $mrna_aln = Bio::Align::Utilities::aa_to_dna_aln($aa_aln, \%seqs);
 
-## aa_to_dna_aln() only changes the actual sequences.  It does not change
-## anything else such as display_id and description which are used again
-## to write the.file.  But when we write the transcript alignment, we want
-## to have the right accession numbers for the transcripts.  Fix that:
-## https://github.com/bioperl/bioperl-live/issues/137
-for my $aln_seq ($mrna_aln->each_seq)
+## In older versions of bioperl, aa_to_dna_aln() only changed the
+## actual sequences from protein to dna but kept the protein
+## display_id on the Bio::LocatableSeq objects.  When we later write
+## the transcript alignment, we want to have the transcript accession
+## numbers so we needed that fixed.
+## See https://github.com/bioperl/bioperl-live/issues/137
+##
+## We worked around that by changing the display_id ourselves but the
+## fix on bioperl was backwards incompatible.  So we check the output
+## of aa_to_dna_aln and apply our workaround only if needed.
+## See https://github.com/af-lab/histone-catalogue/issues/36
+if ($mrna_aln->get_seq_by_id ((keys %seqs)[0]))
   {
-    $mrna_aln->remove_seq($aln_seq);
+    for my $aln_seq ($mrna_aln->each_seq)
+      {
+        $mrna_aln->remove_seq($aln_seq);
 
-    my $mrna = $seqs{$aln_seq->display_id};
-    $aln_seq->display_id($mrna->display_id);
-    $aln_seq->desc($mrna->desc);
+        my $mrna = $seqs{$aln_seq->display_id};
+        $aln_seq->display_id($mrna->display_id);
+        $aln_seq->desc($mrna->desc);
 
-    $mrna_aln->add_seq($aln_seq);
+        $mrna_aln->add_seq($aln_seq);
+      }
   }
 
 
