@@ -206,6 +206,16 @@ def CheckVariable(context, variable_name):
   context.Result(is_ok)
   return is_ok
 
+## Many modules bioperl-run are mainly a wrapper to executable.  Checking
+## for the presence of the module is not enough, we need to check if they
+## are working (well, we just check if bioperl finds the programs).
+def CheckBioperlRunExecutable(context, module):
+  context.Message("Checking for working %s..." % module)
+  command = ("perl -M%s -e '%s->new()->executable()'" % (module, module))
+  is_ok = context.TryAction(command)[0]
+  context.Result(is_ok)
+  return is_ok
+
 conf = Configure(
   env,
   custom_tests = {
@@ -217,6 +227,7 @@ conf = Configure(
     "CheckProg"         : CheckProg,
     "CheckCommand"      : CheckCommand,
     "CheckVariable"     : CheckVariable,
+    "CheckBioperlRunExecutable" : CheckBioperlRunExecutable,
   }
 )
 
@@ -235,9 +246,6 @@ perl_module_dependencies = [
   "Bio::SimpleAlign",
   "Bio::Tools::CodonTable",
   "Bio::Tools::EUtilities",
-  "Bio::Tools::Run::Alignment::Clustalw",
-  "Bio::Tools::Run::Alignment::TCoffee",
-  "Bio::Tools::Run::Phylo::PAML::Codeml",
   "Bio::Tools::SeqStats",
   "File::Which",
   "Module::ScanDeps", # this is needed by the scons perl tool
@@ -250,6 +258,14 @@ perl_module_dependencies = [
   "Test::Output",
   "Text::CSV",
 ]
+
+## This is a dict where the key is perl module and value the likely program
+## (or suite of programs) that is likely to be missing to make it work.
+bioperl_run_dependencies = {
+  "Bio::Tools::Run::Alignment::Clustalw" : "clustalw",
+  "Bio::Tools::Run::Alignment::TCoffee" : "t-coffee",
+  "Bio::Tools::Run::Phylo::PAML::Codeml" : "PAML",
+}
 
 latex_package_dependencies = [
   "fontenc",
@@ -283,7 +299,7 @@ DEPENDENCIES
 
   Perl modules:
 """)
-for module in perl_module_dependencies:
+for module in perl_module_dependencies + bioperl_run_dependencies.keys():
   env.Help("    * %s\n" % module)
 
 env.Help("""
@@ -317,9 +333,14 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
     Exit(1)
 
-  for module in perl_module_dependencies:
+  for module in perl_module_dependencies + bioperl_run_dependencies.keys():
     if not conf.CheckPerlModule(module):
       print "Unable to find perl module %s." % module
+      Exit(1)
+
+  for module, program in bioperl_run_dependencies.iteritems():
+    if not conf.CheckBioperlRunExecutable(module):
+      print "bioperl's %s is not working (did you install %s?)" % (module, program)
       Exit(1)
 
   if not conf.CheckVariable('EPSTOPDF'):
