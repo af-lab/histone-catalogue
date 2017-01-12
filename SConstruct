@@ -31,48 +31,42 @@ env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command_action)}
 ## FIXME very temporary while we move all of MyLib to our modules
 env.Append(PERL5LIB=['scripts'])
 
-
 env.Help("""
-By default, SCons will download new data from the Entrez Gene database,
-analyse it, and prepare a ready to publish PDF of the paper. Each of these
-is a different target and SCons can be used to process only part of them.
-The different target names are:
+TARGETS
 
-    data        - download new data
-    analysis    - analyse data
-    manuscript  - prepare PDF of the published paper
+  catalogue (default)
+    Build pdf for catalogue --- the pdf with tables of all genes
+    and their products, counts of genes per cluster, sequence
+    alignment, and list of anomalies.
 
-Not specifying any target, calling `scons` on its own, is equivalent to
-selecting all of them. That means, if all dependencies are installed, the
-following command will take care of everything:
+  data
+    Get raw data required for the analysis from the Entrez system
+    This will not download new data if there is only data already
+    downloaded.  See target 'update' for that.
 
-    scons --email=example@domain.com
+  update
+    Remove previously downloaded raw data and download fresh one.
+    It will not rebuild a catalogue or manuscript unless those targets
+    are also specified.
 
-Note than in order to prevent overload of the NCBI servers, a valid email is
-required to connect to the Entrez Gene database using E-utilities. Other
-limitations may be in place. See section *"Usage guidelines and requirements"*,
-on [A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books/NBK25497/).
+  csa_data
+    Prepare a csv file with the histone gene information downloaded
+    from the Entrez gene database.
 
-> In order not to overload the E-utility servers, NCBI recommends that users
-> post no more than three URL requests per second and limit large jobs to either
-> weekends or between 9:00 PM and 5:00 AM Eastern time during weekdays. Failure
-> to comply with this policy may result in an IP address being blocked from
-> accessing NCBI.
->
-> ...
->
-> The value of email will be used only to contact developers if NCBI observes
-> requests that violate our policies, and we will attempt such contact prior to
-> blocking access.
+  analysis
+    Run all the scripts to analyse the data such as: sequence alignments,
+    search for anomalies on the sequence annotations, LaTeX tables listing
+    all genes and proteins, sequence differences between isoforms. The
+    analysis results are required for the publication.
 
-Each target may require specific tools to be installed in your system, or
-certain options to be specified.
+  manuscript
+    Build manuscript.pdf.
+
 
 OPTIONS
 
   --email=ADDRESS
-      Set email to be used when connecting to the NCBI servers. This can
-      be anything that conforms to RCF822. The following are valid:
+      Set email to be used when connecting to the NCBI servers.:
 
           scons --email="Your Name <your.name@domain.here>"
           scons --email="<your.name@domain.here>"
@@ -80,7 +74,6 @@ OPTIONS
   --organism=NAME
       Organism species name to use when searching RefSeq for histone
       sequences.  Defaults to Homo Sapiens.
-
 
   --verbose
       LaTeX and BibTeX compilers are silenced by default using the
@@ -119,27 +112,6 @@ if not env.GetOption("verbose"):
   env.AppendUnique(TEXFLAGS       = "-interaction=batchmode")
   env.AppendUnique(LATEXFLAGS     = "-interaction=batchmode")
   env.AppendUnique(BIBTEXFLAGS    = "--terse")  # some ports of BibTeX may use --quiet instead
-
-env.Help("""
-TARGETS
-
-  data
-    Get raw data required for the analysis from the Entrez system.  This
-    data is then used for analysis.
-
-  update
-    Remove previously downloaded raw data and download fresh one.
-
-  analysis
-    Run all the scripts to analyse the data such as: sequence alignments,
-    search for anomalies on the sequence annotations, LaTeX tables listing
-    all genes and proteins, sequence differences between isoforms. The
-    analysis results are required for the publication.
-
-  manuscript
-    Build PDF for publication.
-
-""")
 
 ## Build configuration (check if dependencies are all installed)
 ##
@@ -232,9 +204,15 @@ conf = Configure(
   }
 )
 
-## grep -rh '^use ' t/ lib-perl5/ scripts/| sort | uniq
+
+## this is needed by the scons perl tool
+perl_dependencies = [
+  "Module::ScanDeps",
+]
+
+## grep -rh '^use ' lib-perl5/ scripts/| sort | uniq
 ## and then remove the core modules and pragmas
-perl_module_dependencies = [
+perl_analysis_dependencies = [
   "Bio::AlignIO",
   "Bio::Align::Utilities",
   "Bio::CodonUsage::Table",
@@ -249,15 +227,22 @@ perl_module_dependencies = [
   "Bio::Tools::EUtilities",
   "Bio::Tools::SeqStats",
   "File::Which",
-  "Module::ScanDeps", # this is needed by the scons perl tool
   "Moose",
   "Moose::Util::TypeConstraints",
   "MooseX::StrictConstructor",
   "namespace::autoclean",
   "Statistics::Basic",
+  "Text::CSV",
+]
+
+## grep -rh '^use ' t/ | sort | uniq
+## and then remove the core modules and pragmas
+perl_test_dependencies = [
+  "Bio::LocatableSeq",
+  "Bio::Seq",
+  "Bio::SimpleAlign",
   "Test::Exception",
   "Test::Output",
-  "Text::CSV",
 ]
 
 ## This is a dict where the key is perl module and value the likely program
@@ -300,7 +285,14 @@ DEPENDENCIES
 
   Perl modules:
 """)
-for module in perl_module_dependencies + bioperl_run_dependencies.keys():
+for module in (perl_dependencies + perl_analysis_dependencies
+               + bioperl_run_dependencies.keys()):
+  env.Help("    * %s\n" % module)
+
+env.Help("""
+  Perl modules for test suite:
+""")
+for module in perl_test_dependencies:
   env.Help("    * %s\n" % module)
 
 env.Help("""
@@ -317,8 +309,10 @@ env.Help("""
     * agu
 """)
 
-## Seriously, this should be the default.  Otherwise, users won't even get
-## to see the help text  unless they pass the configure tests.
+## Seriously, this should be the default.  Otherwise, users won't even
+## get to see the help text  unless they pass the configure tests.
+## And Configure(..., clean=False,help=False) does not really work,
+## it just makes all configure tests fail.
 if not (env.GetOption('help') or env.GetOption('clean')):
   for prog in ["bp_genbank_ref_extractor", "weblogo"]:
     if not conf.CheckProg(prog):
@@ -334,7 +328,8 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
     Exit(1)
 
-  for module in perl_module_dependencies + bioperl_run_dependencies.keys():
+  for module in set (perl_dependencies + perl_analysis_dependencies
+                     + bioperl_run_dependencies.keys()):
     if not conf.CheckPerlModule(module):
       print "Unable to find perl module %s." % module
       Exit(1)
@@ -343,6 +338,12 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     if not conf.CheckBioperlRunExecutable(module):
       print "bioperl's %s is not working (did you install %s?)" % (module, program)
       Exit(1)
+
+  if "check" in COMMAND_LINE_TARGETS:
+    for module in set (perl_test_dependencies):
+      if not conf.CheckPerlModule(module):
+        print "Unable to find perl module %s." % module
+        Exit(1)
 
   if not conf.CheckVariable('EPSTOPDF'):
     print "SCons EPSTOPDF not configured.  Do you have epstopdf installed (part of texlive)"
