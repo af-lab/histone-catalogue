@@ -93,6 +93,7 @@ AddOption(
   dest    = "email",
   action  = "store",
   type    = "string",
+  default = "",
   help    = "E-mail provided to NCBI when connecting to Entrez."
 )
 AddOption(
@@ -366,10 +367,12 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     print "Unable to find the BibTeX style agu."
     Exit(1)
 
+  ## If the users does not want to set an email, let him.  We warn
+  ## here and Bio-EUtilities warns again, but don't force it.
   if not conf.CheckEmail(env.GetOption("email")):
-    print ("Per NCBI policy, an email is required when using EUtilities to retrieve data\n"
-           "from the Entrez system. Run `scons -h' for details.")
-    Exit(1)
+    print ("WARNING: Per NCBI policy, an email is required when using EUtilities\n"
+           "         to retrieve data from the Entrez system.  Consider using\n"
+           "         '--email' and see README for details why.")
 
 env = conf.Finish()
 
@@ -434,10 +437,6 @@ def create_extract_sequences_args():
     "--format",       "genbank",
     "--save",         seq_dir,
     "--save-data",    "csv",
-    ## Should we check the email is valid?  It is important that the
-    ## email is correct since this script allows one to abuse the NCBI
-    ## servers who may block access. With an email address they will
-    ## contact the user first.
     "--email",        env.GetOption("email"),
     entrez_query
   ]
