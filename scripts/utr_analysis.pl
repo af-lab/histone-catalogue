@@ -14,19 +14,19 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;                      # Use Perl 5.10
-use strict;                     # Enforce some good programming rules
-use warnings;                   # Replacement for the -w flag, but lexically scoped
-use File::Spec;                 # Perform operation on file names
-use File::Temp;                 # Create temporary files
+use 5.010;
+use strict;
+use warnings;
+use File::Spec;
+use File::Temp;
 use List::Util;
 
 use Bio::Tools::Run::Alignment::Clustalw;
-use Statistics::Basic;          # we want to calculate mode
+use Statistics::Basic;
 use Bio::Seq;
 
 use WebLogo;
-use MyLib;
+use MyLib; # FIXME: we should stop using this.
 
 ## This script will look at the UTR (currently, only the stem loop)
 ##

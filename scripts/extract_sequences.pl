@@ -26,13 +26,13 @@
 ##
 ## extract_sequences path_to_save_sequences
 
-use 5.010;                      # Use Perl 5.10
-use strict;                     # Enforce some good programming rules
-use warnings;                   # Replacement for the -w flag, but lexically scoped
-use File::Spec;                 # Perform operation on file names
-use Storable;                   # persistence for Perl data structures
+use 5.010;
+use strict;
+use warnings;
+use File::Spec;
+use Storable;
 
-use MyLib;
+use MyLib; # FIXME: we should stop using this.
 
 ## Path to save the donwloaded sequences
 my $seq_dir = $ARGV[0];

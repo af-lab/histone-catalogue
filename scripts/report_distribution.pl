@@ -14,13 +14,13 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;                      # Use Perl 5.10
-use strict;                     # Enforce some good programming rules
-use warnings;                   # Replacement for the -w flag, but lexically scoped
+use 5.010;
+use strict;
+use warnings;
 use List::Util qw(max min);
 use Bio::DB::EUtilities;
 
-use MyLib;
+use MyLib; # FIXME: we should stop using this.
 
 ## report_distribution.pl --sequences path/for/sequences --cluster cluster_n --email address
 

@@ -31,7 +31,7 @@ use Bio::Tools::Run::Alignment::Clustalw;
 use Bio::Seq;
 
 use HistoneCatalogue;
-use MyLib;
+use MyLib; # FIXME: we should stop using this.
 
 my %path = MyLib::parse_argv ("sequences");
 

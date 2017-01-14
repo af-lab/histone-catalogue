@@ -28,13 +28,13 @@ use utf8;
 ## prints to stdout, a list of LaTeX \\item for use in an itemize
 ## envioronment.
 
-use 5.010;                      # Use Perl 5.10
-use strict;                     # Enforce some good programming rules
-use warnings;                   # Replacement for the -w flag, but lexically scoped
+use 5.010;
+use strict;
+use warnings;
 
 use HistoneCatalogue;
 use HistoneSequencesDB;
-use MyLib;
+use MyLib; # FIXME: we should stop using this.
 
 if (@ARGV != 1)
   {

@@ -1,4 +1,4 @@
-package MyLib;
+package MyLib; # FIXME: we should stop using this.
 ## Copyright (C) 2011-2014 Carnë Draug <carandraug+dev@gmail.com>
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -14,15 +14,15 @@ package MyLib;
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;                                  # use Perl 5.10
-use strict;                                 # enforce some good programming rules
-use warnings;                               # replacement for the -w flag, but lexically scoped
-use File::Spec;                             # Perform operation on file names
-use Text::CSV 1.21;                         # Comma-separated values manipulator (require 1.21 for getline_hr_all)
-use POSIX;                                  # Perl interface to IEEE Std 1003.1
-use Bio::SeqIO;                             # Handler for SeqIO formats
-use Getopt::Long;                           # Parse program arguments
-use Storable;                               # persistence for Perl data structures
+use 5.010;
+use strict;
+use warnings;
+use File::Spec;
+use Text::CSV 1.21; # require 1.21 for getline_hr_all
+use POSIX;
+use Bio::SeqIO;
+use Getopt::Long;
+use Storable;
 
 use HistoneCatalogue;
 
