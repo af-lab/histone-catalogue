@@ -34,6 +34,8 @@ use 5.010;
 use strict;
 use warnings;
 
+use List::Util;
+
 use Bio::CodonUsage::Table;
 use Bio::Tools::CodonTable;
 use Bio::Tools::SeqStats;
@@ -75,7 +77,6 @@ sub compute_cds_codon_counts
   return $codonstats;
 }
 
-
 =func say_codon_table
 Print the actual laex table with the relative frequency of each codon.
 
@@ -108,11 +109,28 @@ sub say_codon_table
       foreach my $idx (0 .. $#codons)
         {
           my $codon = $codons[$idx];
+          my @freqs; # frequency of this codon for each histone.
 
-          ## Some codons have count 0 and codon_rel_frequency() returns
-          ## undef, hence the '|| 0'
-          ## TODO fix upstream
-          my @freqs = map { $usage{$_}->codon_rel_frequency($codon) // 0 } @headers;
+          ## Some codons have count 0 and codon_rel_frequency()
+          ## returns undef.  If all of the codons for this amino acid
+          ## are undefined, then this amino acid is not present at all
+          ## in which case it's NA instead of zero.  If only some are
+          ## undefined, then that codon frequency is zero (TODO: fix
+          ## that upstream).
+          foreach my $histone (@headers)
+            {
+              my $table = $usage{$histone};
+              my $val = $table->codon_rel_frequency ($codon);
+              if (List::Util::none {defined $table->codon_rel_frequency ($_)} @codons)
+                {
+                  $val = "NA";
+                }
+              elsif (! defined $val)
+                {
+                  $val = 0;
+                }
+              push @freqs, $val;
+            }
 
           my $tex_codon = "\\texttt{$codon}";
           ## Only print the 3 letter amino acid on its first codon
