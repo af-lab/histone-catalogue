@@ -385,7 +385,8 @@ scripts_dir   = "scripts"
 results_dir   = "results"
 figures_dir   = "figs"
 seq_dir       = os.path.join (results_dir, "sequences")
-reference_dir = os.path.join ("data", "reference-Marzluff_2002")
+reference_dir = os.path.join ("data", "reference-"
+                              + env.GetOption("organism").replace(" ", "-").lower())
 
 def path4lib(name):
   return os.path.join("lib-perl5", name)
@@ -558,12 +559,6 @@ analysis = [
     source = path4script("protein_stats.pl"),
     args   = [db_store],
   ),
-  env.PerlScript(
-    target = refer_targets,
-    source = path4script ("reference_comparison.pl"),
-    action = ["--sequences", seq_dir, "--results", results_dir,
-              "--reference", reference_dir],
-  ),
   env.PerlOutput(
     target = path4result("histone_insanities.tex"),
     source = path4script("histone_sanity_checks.pl"),
@@ -587,6 +582,22 @@ analysis = [
     args   = [db_store],
   ),
 ]
+
+if os.path.isdir(reference_dir):
+  analysis.append (env.PerlScript(
+    target = refer_targets,
+    source = path4script ("reference_comparison.pl"),
+    action = ["--sequences", seq_dir, "--results", results_dir,
+              "--reference", reference_dir],
+  ))
+else:
+  ## This is only needed for manuscript.pdf anyway.  If we ever get to
+  ## support a manuscript for multiple organisms, it may be possible
+  ## that they will have no reference, so we will have to figure out a
+  ## way to handle this better then.
+  print ("WARNING: no reference data found for %s.\n"
+         "         Skipping comparison against reference."
+         % env.GetOption("organism"))
 
 ## The whole mess of alignment targets and their dependencies:
 ##

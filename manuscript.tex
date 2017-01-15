@@ -2,6 +2,25 @@
 \counterwithout{section}{chapter}
 
 \input{preamble}
+\input{results/variables-reference_comparison}
+\input{data/reference-homo-sapiens/variables-Marzluff-stats}
+
+%%
+%% Some computations fit better here in LaTeX than the scripts.
+%%
+
+\FPeval{\result}{\SequenceChangeSinceReference{}
+                + \PseudoSinceReference{}
+                + \CodingSinceReference{}
+                + \AddedSinceReference{}
+                + \RemovedSinceReference{}}
+\FPround{\TotalChangesSinceReference}{\result}{0} % of course is an integer
+
+\FPeval{\result}{\SequenceChangeSinceReference{}
+                +\PseudoSinceReference{}
+                +\CodingSinceReference{}}
+\FPround{\SequencesUpdatedSinceReference}{\result}{0} % of course is an integer
+
 
 \author{David Miguel Susano Pinto \and Andrew Flaus}
 \title{The Human Canonical Core Histone Catalogue}

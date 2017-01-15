@@ -48,8 +48,6 @@
 \input{results/variables-histone_counts}
 \input{results/variables-align_proteins_stats}
 \input{results/variables-align_transcripts_stats}
-\input{results/variables-reference_comparison}
-\input{data/variables-Marzluff-stats}
 
 %% We define a style here which will be used around all the values that
 %% are copmuted automatically.  The idea is to place them in a grey box
@@ -191,19 +189,4 @@
 \FPmin{\result}{\result}{\HThreePID}
 \FPmin{\HallMinPID}{\result}{\HFourPID}
 
-
-\FPeval{\result}{\SequenceChangeSinceReference{}
-                + \PseudoSinceReference{}
-                + \CodingSinceReference{}
-                + \AddedSinceReference{}
-                + \RemovedSinceReference{}}
-\FPround{\TotalChangesSinceReference}{\result}{0} % of course is an integer
-
-
 \FPeval{\PercentageGenesInHISTOne}{\CoreCodingGenesInHISTOne{}*100/\TotalCoreCodingGenes{}}
-
-
-\FPeval{\result}{\SequenceChangeSinceReference{}
-                +\PseudoSinceReference{}
-                +\CodingSinceReference{}}
-\FPround{\SequencesUpdatedSinceReference}{\result}{0} % of course is an integer
