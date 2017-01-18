@@ -120,6 +120,7 @@ sub _get_version
   my $bin = $self->bin_path;
   ## We expect something like "WebLogo 3.4 (2014-06-02)"
   my $r = `python -c 'import pkg_resources; print pkg_resources.require("weblogo")[0].version'`;
+  chomp $r;
   if ($?)
     { croak "Unable to identify version of weblogo"; }
   return $r;

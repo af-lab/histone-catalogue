@@ -37,7 +37,7 @@ throws_ok { WebLogo->new(bin_path => '/bin') }
 
 ## We can't really test this well, but we can check that at least
 ## we only get numbers and dots.
-like (WebLogo->new()->version, qr/^\d[\d\.]+$/, 'get a version number');
+like (WebLogo->new()->version, qr/^\d[\d\.]+\z/, 'get a version number');
 
 my $data_dir    = File::Spec->catfile($FindBin::Bin, "test-data");
 my $input_test  = File::Spec->catfile($data_dir, "seqlogo-test_input.eps");
