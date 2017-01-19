@@ -34,6 +34,7 @@ use strict;
 use warnings;
 
 use File::Spec;
+use List::Util;
 
 ## Codeml implements the method of Goldman and Yang (1994)
 ## Yn00 implements the method of Yang and Nielsen (2000)
@@ -107,6 +108,23 @@ sub get_dNdS_stats
   return $stats;
 }
 
+=func min_decimal_places
+
+Returns the smallest number of decimal places in an array of numbers.
+
+Args:
+  s (ArrayRef)
+
+Returns:
+  integer
+=cut
+sub min_decimal_places
+{
+    my $s = shift;
+    my @nd = map {$_ =~ /^\d+\.(\d+)$/; length $1} @{$s};
+    return List::Util::min (@nd);
+}
+
 
 sub main
 {
@@ -134,15 +152,18 @@ sub main
 
       my $dNdS_stats = get_dNdS_stats ($aln);
 
-      ## We set IPRES to 4 for the dN and dS values, and 5 for omega,
-      ## because that's the precision we get back from codeml
-      local $Statistics::Basic::IPRES = 4;
+      ## Use the same number of decimal places as the numbers we are
+      ## averaging.  The rules of thumb for significant figures don't
+      ## seem to apply when computing the average (see issue #24).
+
+      local $Statistics::Basic::IPRES = min_decimal_places ($dNdS_stats->{'dN'});
       say HistoneCatalogue::latex_newcommand (
         "Mean".$histone."dN",
         Statistics::Basic::mean ($dNdS_stats->{'dN'}),
         "Mean of estimates of non-synonymous substitutions per "
         . "non-synonymous site (dN or Ka) between all core $histone pairs"
       );
+      local $Statistics::Basic::IPRES = min_decimal_places ($dNdS_stats->{'dS'});
       say HistoneCatalogue::latex_newcommand (
         "Mean".$histone."dS",
         Statistics::Basic::mean ($dNdS_stats->{'dS'}),
@@ -150,7 +171,7 @@ sub main
         . "synonymous site (dS or Ks) between all core $histone pairs"
       );
 
-      local $Statistics::Basic::IPRES = 5;
+      local $Statistics::Basic::IPRES = min_decimal_places ($dNdS_stats->{'omega'});
       say HistoneCatalogue::latex_newcommand (
         "Mean".$histone."dNdS",
         Statistics::Basic::mean ($dNdS_stats->{'omega'}),
