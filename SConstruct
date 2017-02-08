@@ -455,7 +455,7 @@ raw_data = env.NoShellCommand(
 
 ## AddPreAction() is required so that the directory is removed when rebuilding.
 ## Clean() is required so that it's removed when calling "scons -c".
-env.AddPreAction(raw_data, 'rm -r ' + seq_dir)
+env.AddPreAction(raw_data, Delete (seq_dir))
 env.Clean(raw_data, seq_dir)
 
 db_store = path4result("histones_db.store")
