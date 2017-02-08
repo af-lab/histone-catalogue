@@ -100,7 +100,7 @@ if (! -d $out_dir)
 my $out_path = sub { File::Spec->catdir ($out_dir, $_[0]); };
 
 gene2csv (&$out_path ("canonical_core_histones.csv"), $db->canonical_core);
-gene2csv (&$out_path ("variant_histones.csv"), $db->variants);
+gene2csv (&$out_path ("variant_core_histones.csv"), $db->variants_core);
 
 ## this is both H1 and H5 (when they exist), and variant H1
 gene2csv (&$out_path ("linker_histones.csv"), $db->linkers);

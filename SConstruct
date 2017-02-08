@@ -489,7 +489,7 @@ def path4csv (name=""):
 
 csv_data = env.PerlScript(
   target = [path4csv ("canonical_core_histones.csv"),
-            path4csv ("variant_histones.csv"),
+            path4csv ("variant_core_histones.csv"),
             path4csv ("linker_histones.csv")],
   source = path4script ("create_histone_csv.pl"),
   action = [db_store, path4csv()]
