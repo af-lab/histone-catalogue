@@ -29,7 +29,7 @@ env.Append(BUILDERS={'NoShellCommand' : Builder(action=no_shell_command_action)}
 
 
 ## FIXME very temporary while we move all of MyLib to our modules
-env.Append(PERL5LIB=['scripts'])
+env.Append(PERL5LIB=[env.Dir('scripts')])
 
 env.Help("""
 TARGETS
@@ -381,23 +381,24 @@ env = conf.Finish()
 ## Actual TARGETS from this point on
 ##
 
-scripts_dir   = "scripts"
-results_dir   = "results"
-figures_dir   = "figs"
-seq_dir       = os.path.join (results_dir, "sequences")
-reference_dir = os.path.join ("data", "reference-"
-                              + env.GetOption("organism").replace(" ", "-").lower())
+scripts_dir   = env.Dir ("scripts")
+results_dir   = env.Dir ("results")
+figures_dir   = env.Dir ("figs")
+seq_dir       = env.Dir (os.path.join (str (results_dir), "sequences"))
+
+reference_dirname = "reference-" + env.GetOption("organism").replace(" ", "-").lower()
+reference_dir = env.Dir (os.path.join ("data", reference_dirname))
 
 def path4lib(name):
   return os.path.join("lib-perl5", name)
 def path4script (name):
-  return os.path.join (scripts_dir, name)
+  return os.path.join (str (scripts_dir), name)
 def path4result (name):
-  return os.path.join (results_dir, name)
+  return os.path.join (str (results_dir), name)
 def path4figure (name):
-  return os.path.join (figures_dir, name)
+  return os.path.join (str (figures_dir), name)
 def path4seq (name):
-  return os.path.join (seq_dir, name)
+  return os.path.join (str (seq_dir), name)
 
 
 ## TARGET data
@@ -458,11 +459,12 @@ raw_data = env.NoShellCommand(
 env.AddPreAction(raw_data, Delete (seq_dir))
 env.Clean(raw_data, seq_dir)
 
-db_store = path4result("histones_db.store")
+db_store = File (path4result("histones_db.store"))
 data_store = env.PerlSub(
   target = db_store,
   source = path4lib("HistoneSequencesDB.pm"),
-  action = 'HistoneSequencesDB->new("%s")->write_db("%s")' %(seq_dir, db_store)
+  action = ('HistoneSequencesDB->new("%s")->write_db("%s")'
+            %(seq_dir.path, db_store.path))
 )
 env.Depends(data_store, raw_data)
 
@@ -485,14 +487,14 @@ env.Alias("data", [raw_data, data_store, seq_store])
 ## See https://github.com/af-lab/histone-catalogue/issues/3
 
 def path4csv (name=""):
-  return os.path.join(results_dir, "csv", name)
+  return os.path.join(str (results_dir), "csv", name)
 
 csv_data = env.PerlScript(
   target = [path4csv ("canonical_core_histones.csv"),
             path4csv ("variant_core_histones.csv"),
             path4csv ("linker_histones.csv")],
   source = path4script ("create_histone_csv.pl"),
-  action = [db_store, path4csv()]
+  action = [db_store, Dir (path4csv()).path]
 )
 env.Depends(csv_data, [data_store])
 env.Alias("csv", csv_data)
@@ -511,7 +513,7 @@ if "update" in COMMAND_LINE_TARGETS:
 ## groups all of them. Each of these scripts generate a large number of
 ## files, the targets, we need to make lists of them all
 
-perl_db_var = "HistoneSequencesDB::read_db('%s')" % db_store
+perl_db_var = "HistoneSequencesDB::read_db('%s')" % db_store.path
 
 clust_targets = list ()
 refer_targets = list ()
@@ -574,7 +576,8 @@ analysis = [
     target = path4result("variables-configuration.tex"),
     source = path4lib("HistoneCatalogue.pm"),
     M      = ["HistoneCatalogue"],
-    eval   = "HistoneCatalogue::write_config_variables('%s')" % path4seq("extractor.log")
+    eval   = ("HistoneCatalogue::write_config_variables('%s')"
+              % File (path4seq("extractor.log")).path)
   ),
   env.PerlOutput(
     target = path4result("table-codon_usage.tex"),
@@ -583,7 +586,7 @@ analysis = [
   ),
 ]
 
-if os.path.isdir(reference_dir):
+if os.path.isdir(str (reference_dir)):
   analysis.append (env.PerlScript(
     target = refer_targets,
     source = path4script ("reference_comparison.pl"),
@@ -612,7 +615,7 @@ cds_aligns = []
 protein_aligns = []
 
 for histone in ["H2A", "H2B", "H3", "H4"]:
-  protein_align_f = path4result("aligned_%s_proteins.fasta" % histone)
+  protein_align_f = File (path4result("aligned_%s_proteins.fasta" % histone))
   protein_align = env.PerlScript(
     target = protein_align_f,
     source = path4script("align_proteins.pl"),
@@ -621,7 +624,7 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
   env.Depends(protein_align, [data_store])
   protein_aligns += protein_align
 
-  cds_align_f = path4result("aligned_%s_cds.fasta" % histone)
+  cds_align_f = File (path4result("aligned_%s_cds.fasta" % histone))
   cds_align = env.PerlScript(
     target = cds_align_f,
     source = path4script("align_transcripts.pl"),
@@ -638,8 +641,8 @@ for histone in ["H2A", "H2B", "H3", "H4"]:
   env.Depends(isoforms_desc, protein_align)
   analysis += [isoforms_desc]
 
-  protein_logo_f = path4figure("seqlogo_%s_proteins.eps" % histone)
-  cds_logo_f = path4figure("seqlogo_%s_cds.eps" % histone)
+  protein_logo_f = File (path4figure("seqlogo_%s_proteins.eps" % histone))
+  cds_logo_f = File (path4figure("seqlogo_%s_cds.eps" % histone))
   for aln, logo_f in zip ([protein_align, cds_align], [protein_logo_f, cds_logo_f]):
     logo = env.PerlScript(
       target = logo_f,
@@ -669,11 +672,11 @@ analysis += [protein_align_stats]
 env.Alias ("analysis", analysis)
 env.Depends (
   analysis,
-  [data_store, seq_store, path4script ("MyLib.pm")]
+  [data_store, seq_store, File (path4script ("MyLib.pm"))]
 )
 
 ## Our figures, converted to pdf as required for pdflatex
-figures = env.PDF(source = Glob(os.path.join(figures_dir, "*.eps")))
+figures = env.PDF(source = Glob(os.path.join(str(figures_dir), "*.eps")))
 
 ## TARGET catalogue
 ##
