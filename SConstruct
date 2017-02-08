@@ -6,7 +6,7 @@ import os.path
 import subprocess
 
 env = Environment()
-env.Append(PERL5LIB=['lib-perl5'])
+env.Append(PERL5LIB=[env.Dir('lib-perl5')])
 env.Tool('perl5')
 
 ## Add a NoShellCommand builder to be used like Command()
