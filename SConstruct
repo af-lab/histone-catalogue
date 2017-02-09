@@ -20,7 +20,9 @@ env.Tool('perl5')
 ##  https://pairlist4.pair.net/pipermail/scons-users/2015-November/004193.html
 
 def no_shell_command(target, source, env):
-  return subprocess.call(env['action'])
+  ## Some args may be File or Dir which need to be converted to str.
+  args = [str(x) for x in env['action']]
+  return subprocess.call(args)
 def no_shell_command_strfunc(target, source, env):
   args = env['action']
   return "$ %s " % (args[0]) + " ".join(["'%s'" % (arg) for arg in args[1:]])
