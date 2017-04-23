@@ -277,6 +277,26 @@ latex_package_dependencies = [
   "intcalc",
   "siunitx",
   "xtab",
+
+  ## Required by the elife document class.
+  "calc",
+  "regexpatch",
+  "mdframed",
+  "lineno",
+  "microtype",
+  "booktabs",
+  "geometry",
+  "changepage",
+  "silence",
+  "caption",
+  "lastpage",
+  "fancyhdr",
+  "titlesec",
+  "enumitem",
+  "alphalph",
+  "newfloat",
+  "wrapfig",
+  "newfile",
 ]
 
 env.Help("""
@@ -300,18 +320,10 @@ for module in perl_test_dependencies:
   env.Help("    * %s\n" % module)
 
 env.Help("""
-  LaTeX document class
-    * memoir
-
   LaTeX packages
 """)
 for package in latex_package_dependencies:
   env.Help("    * %s\n" % package)
-
-env.Help("""
-  BibTeX style
-    * agu
-""")
 
 ## Seriously, this should be the default.  Otherwise, users won't even
 ## get to see the help text  unless they pass the configure tests.
@@ -363,14 +375,6 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     if not conf.CheckLaTeXPackage(package):
       print "Unable to find required LaTeX package %s." % package
       Exit(1)
-
-  if not conf.CheckLaTeXClass("memoir"):
-    print "Unable to find the LaTeX document class memoir."
-    Exit(1)
-
-  if not conf.CheckBibTeXStyle("agu"):
-    print "Unable to find the BibTeX style agu."
-    Exit(1)
 
   ## If the users does not want to set an email, let him.  We warn
   ## here and Bio-EUtilities warns again, but don't force it.

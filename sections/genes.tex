@@ -18,7 +18,7 @@
 
     \begin{figure*}
       \centering
-      \subbottom[canonical coding gene]{%
+      \subfloat[canonical coding gene]{%
         \begin{minipage}{0.37\textwidth}
           \centering
           \Huge{%
@@ -35,7 +35,7 @@
         \end{minipage}
         \label{subfig:nomenclature-coding-canonical}
       }
-      \subbottom[canonical pseudogene]{%
+      \subfloat[canonical pseudogene]{%
         \begin{minipage}{0.37\textwidth}
           \centering
           \Huge{%
@@ -55,7 +55,7 @@
         \end{minipage}
         \label{subfig:nomenclature-pseudo-canonical}
       }
-      \subbottom[variant]{%
+      \subfloat[variant]{%
         \begin{minipage}{0.22\textwidth}
           \centering
           \Huge{%
@@ -73,13 +73,13 @@
         \label{subfig:nomenclature-variant}
       }
       \caption{Histone gene nomenclature.
-               \subcaptionref{subfig:nomenclature-coding-canonical}
+               \protect\subref{subfig:nomenclature-coding-canonical}
                Canonical core histone gene names encode relative genomic
                order by cluster.
-               \subcaptionref{subfig:nomenclature-pseudo-canonical}
+               \protect\subref{subfig:nomenclature-pseudo-canonical}
                Pseudogenes named since 2002 include cluster, PS label,
                and discovery order identifier.
-               \subcaptionref{subfig:nomenclature-variant}
+               \protect\subref{subfig:nomenclature-variant}
                Most variant core histone genes are identified by type
                then F for family and identifier letter.}
     \end{figure*}
