@@ -256,6 +256,7 @@ bioperl_run_dependencies = {
 }
 
 latex_package_dependencies = [
+  "authblk",
   "fontenc",
   "inputenc",
   "graphicx",
