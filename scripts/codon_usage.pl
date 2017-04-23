@@ -97,7 +97,7 @@ sub say_codon_table
   my @aa = qw(Ala Arg Asn Asp Cys Gln Glu Gly His Ile Leu Lys
               Met Phe Pro Ser Thr Trp Tyr Val);
 
-  say "\\begin{ctabular}{l l " . join(" ", ("l") x @headers) . "}";
+  say "\\begin{xtabular}{l l " . join(" ", ("l") x @headers) . "}";
   say "  \\toprule";
   say "  \\null & \\null & " . join (" & ", @headers). " \\\\";
   say "  \\midrule";
@@ -142,7 +142,7 @@ sub say_codon_table
     }
 
   say "  \\bottomrule";
-  say "\\end{ctabular}";
+  say "\\end{xtabular}";
 }
 
 

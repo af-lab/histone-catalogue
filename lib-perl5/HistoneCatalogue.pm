@@ -161,7 +161,7 @@ sub say_histone_catalogue
 {
   my @genes = HistoneSequencesDB::sort_histones(@_);
 
-  say "\\begin{ctabular}{l l l l l}";
+  say "\\begin{xtabular}{l l l l l}";
   say "  \\toprule";
   say "  Type & Gene name & Gene UID & Transcript accession & Protein accession \\\\";
   say "  \\midrule";
@@ -193,7 +193,7 @@ sub say_histone_catalogue
     }
 
   say "  \\bottomrule";
-  say "\\end{ctabular}";
+  say "\\end{xtabular}";
   return;
 }
 

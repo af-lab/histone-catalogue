@@ -164,7 +164,7 @@ my $db = create_test_db ();
 
 stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->canonical_core) },
     <<'END', 'Test canonical core latex table');
-\begin{ctabular}{l l l l l}
+\begin{xtabular}{l l l l l}
   \toprule
   Type & Gene name & Gene UID & Transcript accession & Protein accession \\
   \midrule
@@ -176,12 +176,12 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->canonical_core) },
   H4 & HIST1H4K & 8362 & NM\_003541 & NP\_003532\\
   H4 & HIST1H4L & 8368 & NM\_003546 & NP\_003537\\
   \bottomrule
-\end{ctabular}
+\end{xtabular}
 END
 
 stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants_core) },
     <<'END', 'Test variant histones with non-coding transcripts latex table');
-\begin{ctabular}{l l l l l}
+\begin{xtabular}{l l l l l}
   \toprule
   Type & Gene name & Gene UID & Transcript accession & Protein accession \\
   \midrule
@@ -192,7 +192,7 @@ stdout_is (sub {HistoneCatalogue::say_histone_catalogue($db->variants_core) },
   H3 & CENPA & 1058 & NM\_001042426 & NP\_001035891\\
   H3 & CENPA & 1058 & NM\_001809 & NP\_001800\\
   \bottomrule
-\end{ctabular}
+\end{xtabular}
 END
 
 stdout_is (sub { HistoneCatalogue::say_histone_counts($db) },
