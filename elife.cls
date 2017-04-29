@@ -281,7 +281,8 @@
 % \AtEndEnvironment{floatingfigure}{\vskip8pt\noindent\textcolor{eLifeMediumGrey}{\rule{\hsize}{2pt}}}
 
 \DeclareFloatingEnvironment[placement=btp,name=Box]{featurebox}
-\captionsetup[featurebox]{font={Large,bf,color=eLifeDarkBlue}}
+\captionsetup[featurebox]{font={Large,bf,color=eLifeDarkBlue},%
+                          aboveskip=0pt,belowskip=0pt}
 
 \newcounter{featurefigure}
 \newcounter{featuretable}
@@ -299,7 +300,8 @@
 
 }
 \apptocmd{\featurebox}{%
-  \begin{mdframed}[linewidth=0pt,backgroundcolor=eLifeLightBlue!10,fontcolor=eLifeDarkBlue]
+  \begin{mdframed}[innertopmargin=0pt,%
+      linewidth=0pt,backgroundcolor=eLifeLightBlue!10,fontcolor=eLifeDarkBlue]
   \if@reqslineno\addtolength{\linenumbersep}{1em}\internallinenumbers\fi%
 }{}{}
 \pretocmd{\endfeaturebox}{\end{mdframed}}{}{}
