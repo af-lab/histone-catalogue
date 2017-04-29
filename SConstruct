@@ -276,6 +276,7 @@ latex_package_dependencies = [
   "stringstrings",
   "intcalc",
   "siunitx",
+  "textgreek",
   "xtab",
 
   ## Required by the elife document class.
