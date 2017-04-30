@@ -22,3 +22,7 @@
   within=section,
 ]{supplement}
 \newcommand{\supref}[1]{Supplementary Table~\ref{#1}}
+
+%% Prevent floats from taken the whole page.  Only if they take more
+%% than 80% of the page will it happen (default is 60%).
+\renewcommand{\floatpagefraction}{.75}
