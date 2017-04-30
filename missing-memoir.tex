@@ -11,3 +11,14 @@
 \newcommand{\fref}[1]{Figure~\ref{#1}}
 \newcommand{\tref}[1]{Table~\ref{#1}}
 \newcommand{\bref}[1]{Box~\ref{#1}}
+
+%% We are not really going to use the floating capabilities for
+%% supplementary tables.  They need to come one after the other in
+%% order.  Instead, we use captionof so insert captions and manage the
+%% reference counters.  See issue #39.
+\DeclareFloatingEnvironment[
+  fileext=lost,
+  name=Supplementary Table,
+  within=section,
+]{supplement}
+\newcommand{\supref}[1]{Supplementary Table~\ref{#1}}
