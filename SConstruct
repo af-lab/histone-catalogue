@@ -136,6 +136,13 @@ def CheckLaTeXClass(context, doc_class):
   context.Result(is_ok)
   return is_ok
 
+def CheckTeXDef(context, tex_def):
+  context.Message("Checking for TeX definition file %s..." % tex_def)
+  is_ok = 0 == subprocess.call(["kpsewhich", tex_def + ".def"],
+                               stdout = open(os.devnull, "wb"))
+  context.Result(is_ok)
+  return is_ok
+
 def CheckBibTeXStyle(context, style):
   context.Message("Checking for BibTeX style %s..." % style)
   is_ok = 0 == subprocess.call(["kpsewhich", style + ".bst"],
@@ -196,6 +203,7 @@ conf = Configure(
   custom_tests = {
     "CheckLaTeXClass"   : CheckLaTeXClass,
     "CheckLaTeXPackage" : CheckLaTeXPackage,
+    "CheckTeXDef"       : CheckTeXDef,
     "CheckBibTeXStyle"  : CheckBibTeXStyle,
     "CheckPerlModule"   : CheckPerlModule,
     "CheckEmail"        : CheckEmail,
@@ -371,6 +379,15 @@ if not (env.GetOption('help') or env.GetOption('clean')):
 
   if not conf.CheckBibTeXStyle("agu"):
     print "Unable to find the BibTeX style agu."
+    Exit(1)
+
+  ## We shouldn't need this.  If textgreek is properly installed, this
+  ## is not a problem but that doesn't happen in Debian Jessie and
+  ## many Ubuntu versions.  And instead of checking for lgrenc we
+  ## should be testing for a working textgreek package but I don't
+  ## want to setup such configure check with SCons.
+  if not conf.CheckTeXDef("lgrenc"):
+    print "Didn't found lgrenc.def so textgreek is broken."
     Exit(1)
 
   ## If the users does not want to set an email, let him.  We warn
