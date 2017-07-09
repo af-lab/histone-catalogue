@@ -885,7 +885,7 @@ FUNCTION {format.note}
   if$
   doi empty$
     'skip$
-    { "\href{" doi * "}{\doiprefix " * doi * "}" * output }
+    { "\href{http://dx.doi.org/" doi * "}{\doiprefix " * doi * "}" * output }
   if$
  note empty$
     { "" }
