@@ -1373,7 +1373,12 @@ FUNCTION {format.incoll.inproc.crossref}
 }
 FUNCTION {misc}
 { output.bibitem
-  format.authors "author" output.check
+  %% If there is no author and editor (see Error Prone, a Nature
+  %% editorial from 2012), use the entry key value.
+  author empty$
+    { key "\textbf{\color{eLifeMediumGrey} " swap$ * "} " * }
+    { format.authors "author" output.check }
+  if$
   format.editors "author and editor" output.check
   format.title "title" output.check
   type missing$
