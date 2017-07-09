@@ -62,8 +62,8 @@
 
         \item[Canonical core histones]\hfill \newline
         Core histones with properties described in \tref{tab:typical-histone-differences}.
-        Contribute the majority of core histones in chromatin.
-        Encompasses multiple protein isoforms.
+        that contribute the majority of core histones in chromatin
+        encompassing multiple protein isoforms.
         Complement of variant histones.
 
         \item[Core histones]\hfill \newline
@@ -82,7 +82,7 @@
         Synonym for ``subtypes''.
 
         \item[Families] \hfill \newline
-        Synonym for ``histone types''.
+        Synonym for ``types''.
 
         \item[Isoforms] \hfill \newline
         Proteins with high sequence identity and largely equivalent function.
@@ -109,8 +109,8 @@
 
         \item[Subtypes] \hfill \newline
         Canonical core histone type isoforms separable by TAU PAGE
-        (e.g. H2A.1 and H2A.2).  Despite their naming, there is not necessarily functional evidence
-        for differences between them.
+        (e.g. H2A.1 and H2A.2). There is not necessarily functional evidence
+        for differences between subtypes.
 
         \item[Types] \hfill \newline
         Histone proteins sharing sequence homology
@@ -141,7 +141,7 @@
     nucleosome core particle. These four histones are referred to as core histones.
     In contrast, H1 associates with the linker DNA between nucleosome core particles
     and is referred to as a linker histone.
-    The somatic H1 isoforms and its tissue-specific
+    The somatic H1 isoforms and tissue-specific
     variants are described elsewhere \citep{HarshmanFreitas2013}.
 
     Arginine and lysine content was used as an early distinction between the histones \citep{ElginWeintraub1975}.
@@ -177,8 +177,7 @@
     to partner variants throughout the cell cycle.
     Metazoan canonical core histone genes are distinctive
     because they lack introns and give rise to non-polyadenylated protein coding transcripts.
-    Turnover is independently regulated via a highly
-    conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
+    Transcript turnover is regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
 
     In contrast, variant histones such as H2A.Z, TH2B, H3.3, and CENP-A have
     reduced sequence identity and lower abundance \citep{TalbertHenikoff2010}.
@@ -186,7 +185,7 @@
     so are described as ``replication independent''.
     Since histone variants are interpreted as taking the place
     of equivalent canonical core histone types,
-    they are also referred to as ``replacement'' histones.
+    they are referred to as ``replacement'' histones.
 
   \subsection{Genomic perspective}
 
@@ -204,32 +203,40 @@
   \subsection{Curation of canonical core histone diversity}
 
     Despite the importance of histones for chromatin organisation and extensive interest
-    in their role in epigenetics and regulation, the systematic
+    in their role in epigenetics and regulation, the
     curation and classification of human histone
-    gene and protein sequences has not been revisited
-    since the landmark 2002 survey by \citet{Marzluff02}.
-    The canonical core histone catalogue has since accumulated
-    \TotalChangesSinceReference{}~differences
+    gene and protein sequences has not been systematically revisited
+    since the landmark survey by \citet{Marzluff02}.
+    The Histone Database has for many years provided an online database of
+    histone sequences from across eukarya using sequence homology searching
+    \citep{HistoneDB1996,HistoneDB1997,HistoneDB1998,HistoneDB1999,
+      HistoneDB2000,HistoneDB2002,HistoneDB2004,HistoneDB2006,HistoneDB2011,
+      HistoneDB2016},
+    while some manually collated listings including human histones have also been undertaken
+    \citep{Ederveen2011,HIstome2012,ElkennaniGovin2017}.
+    This reflects continual revisions in genome sequence databases
+    and the ongoing need for information about human histones.
+    In fact, differences in \TotalChangesSinceReference{}~canonical core histone gene details
     (\supref{sup:difference-from-Marzluff02})
-    from that survey due to rich annotations continuing to propagate
-    into reference sequence databases.
+    have so far accumulated since the original 2002 survey
+    due to rich annotations continuing to propagate into reference sequence databases.
 
     In this manuscript we provide a comprehensive catalogue
     of canonical core histone genes, encoded proteins, and pseudogenes
-    based on reference genome annotations.
+    using reference genome annotations as the originating source.
     This reveals a surprising and seldom recognised variation in encoded histone proteins
     that exceeds commonly used subtype designations
     but whose functional implications have not been investigated.
 
     Since curation and annotation are dynamic and evolving, we have
-    implemented the manuscript so that it can be regenerated from the
-    most current data in the NCBI RefSeq database in order to maintain
-    its value as a reference source in an accessible format.  All
-    figures and tables were automatically generated using NCBI RefSeq
-    data from \printdate{\SequencesDate{}}.  In addition,
-    automatically generated values in the text are displayed with a
-    light grey background.  This manuscript generation process has
-    remained stable in our laboratory for several years and represents
-    an example of ``reproducible research'' \citep{Claerbout2000} that
+    implemented the manuscript so that it can be regenerated at any time
+    from the most current data in the NCBI RefSeq database in order to maintain
+    its ongoing value as a reference source in an accessible format.
+    All figures and tables were automatically generated using NCBI RefSeq
+    data from \printdate{\SequencesDate{}}.
+    All dynamically generated values in this copy of the text are displayed
+    with a light grey background.
+    The manuscript generation process has remained stable in our laboratory for several years
+    and represents an example of ``reproducible research'' \citep{Claerbout2000} that
     provides a novel model for curating relatively stable gene
     families.
