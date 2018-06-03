@@ -64,13 +64,13 @@
         Core histones with properties described in \tref{tab:typical-histone-differences}.
         that contribute the majority of core histones in chromatin
         encompassing multiple protein isoforms.
-        Complement of variant histones.
+        %% Complement of variant histones.
 
         \item[Core histones]\hfill \newline
         Histones that form part of the nucleosome core particle wrapping \SI{147}{\bp} of DNA,
         comprising types H2A, H2B, H3, and H4.
-        Encompasses both canonical and variant histones,
-        and complements linker histones.
+        Encompasses both canonical and variant histones.
+        %% Complement of linker histones.
 
         \item[Heteromorphous variants] \hfill \newline
         Core histone variants with distinct function and localisation
@@ -90,10 +90,14 @@
 
         \item[Linker histones] \hfill \newline
         Histones binding to linker DNA adjacent to the nucleosome core particle.
-        The two linker histone types are H1 and H5. Complement of core histones.
+        The two linker histone types are H1 and H5.
+        %% Complement of core histones.
 
         \item[Non-allelic variants] \hfill \newline
         Synonym for ``variant histones''. See also ``allelic variants''.
+
+        \item[Oncohistones] \hfill \newline
+        Histone genes with missense mutations occuring at high frequency in certain cancers.
 
         \item[Replacement histones] \hfill \newline
         Synonym for ``variant histones''.
@@ -120,7 +124,7 @@
         \item[Variant histones] \hfill \newline
         Core histones with properties described in \tref{tab:typical-histone-differences}.
         Contribute a minor proportion of histones in chromatin and perform specialised functions.
-        Complement of canonical core histones.
+        %% Complement of canonical core histones.
 
         \item[Wild type histones] \hfill \newline
         Synonym of ``canonical core histones''.
@@ -177,7 +181,8 @@
     to partner variants throughout the cell cycle.
     Metazoan canonical core histone genes are distinctive
     because they lack introns and give rise to non-polyadenylated protein coding transcripts.
-    Transcript turnover is regulated via a highly conserved 3' stem-loop (\tref{tab:typical-histone-differences}).
+    Transcript turnover is regulated via a highly conserved 3' stem-loop \citep{MarzluffNatRevGen2008}
+    (\tref{tab:typical-histone-differences}).
 
     In contrast, variant histones such as H2A.Z, TH2B, H3.3, and CENP-A have
     reduced sequence identity and lower abundance \citep{TalbertHenikoff2010}.
@@ -196,11 +201,15 @@
     although both genes and protein products display
     variation in primary sequence and relative abundance,
     and their functional equivalence has not been tested.
+    A number of mutations in individual canonical and variant histone genes
+    have been revealed to contribute to cancer \citep{WeinbergAllis2017,FunatoTabar2018}.
+    These ``oncohistones'' demonstrate that single amino acid changes
+    in individual histone genes can have functional implications.
     In contrast, almost all variant histones are encoded by single genes dispersed in the genome
     with typical properties including introns, alternative splicing,
     and polyadenylated transcripts (\tref{tab:typical-histone-differences}).
 
-  \subsection{Curation of canonical core histone diversity}
+  \subsection{Cataloguing of canonical core histone diversity}
 
     Despite the importance of histones for chromatin organisation and extensive interest
     in their role in epigenetics and regulation, the
@@ -228,7 +237,7 @@
     that exceeds commonly used subtype designations
     but whose functional implications have not been investigated.
 
-    Since curation and annotation are dynamic and evolving, we have
+    Since curation and annotation of reference databases are dynamic and evolving, we have
     implemented the manuscript so that it can be regenerated at any time
     from the most current data in the NCBI RefSeq database in order to maintain
     its ongoing value as a reference source in an accessible format.
@@ -238,5 +247,4 @@
     with a light grey background.
     The manuscript generation process has remained stable in our laboratory for several years
     and represents an example of ``reproducible research'' \citep{Claerbout2000} that
-    provides a novel model for curating relatively stable gene
-    families.
+    provides a novel model for cataloguing gene families.

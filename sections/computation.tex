@@ -1,41 +1,38 @@
 \section{Reproducible research}
 
   A considerable number of builds and updates of the human genome sequence have been made
-  since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}
-  resulting in
+  since the last major survey of human canonical histone genes in 2002 \citep{Marzluff02}.
+  This has resulted in
   \AddedSinceReference{} canonical core histone genes added,
   \RemovedSinceReference{} removed,
-  and \SequencesUpdatedSinceReference{}
-  sequences updated (\supref{sup:difference-from-Marzluff02}).
+  and \SequencesUpdatedSinceReference{} sequences
+  being updated for the current RefSeq release (\supref{sup:difference-from-Marzluff02}).
   These changes reflect the ongoing nature and challenges of
-  genome curation and annotation \citep{BorkKoonin1998}.
+  genome curation and annotation in reference databases \citep{BorkKoonin1998}.
 
-  The human canonical core histone gene complement is relatively mature
-  and is unlikely to undergo major change.
-  Nevertheless, it is inevitable that sequences and annotations will be revised over time
+  It is inevitable that sequences and annotations will continue to be revised
   based on continuous curation and improved experimental insights.
-  This in turn prompts reevaluation of assumptions about their properties,
+  This in turn prompts reevaluation of assumptions about their biological contributions,
   illustrated by the recognition that some genes
   annotated as canonical core histone isoforms are testes-specific variants \citep{Talbert2012},
   and by new observations of cell type-specific expression \citep{Molden2015}.
 
   It is important for communities of researchers to contribute
-  to ongoing curation of genomics resources
-  and to feed back information to database maintainers \citep{SteinNRG2001},
+  to ongoing formal curation of genomics resources
+  by feeding back information to database maintainers \citep{SteinNRG2001},
   although many are unaware of this opportunity \citep{HollidaySPR2015}.
-  We have submitted a significant number of proposals
-  for incorrect, inconsistent, or missing annotations to RefSeq curators.
-  These annotation issues were identified automatically
-  by scripted tests for consistency and uniformity
+  In the course of this work we have suggested a significant number of proposals
+  for improvements to RefSeq curators.
+  These were identified automatically by scripted tests for consistency and uniformity
   between the database annotations and expected properties of histones.
-  \supref{sup:curation-anomalies} lists current apparent anomalies from these tests
+  \supref{sup:curation-anomalies} lists the current apparent anomalies from these tests
   and is the basis for ongoing discussions with curators.
 
   Dynamic data can be presented in specialist online database resources
   such as the Histone Database \citep{HistoneDB2016} and HIstome \citep{HIstome2012}.
   These database interfaces provide comprehensive access to data
   but have limited curation and are difficult to cite.
-  They can also become moribund or inaccessible.
+  They can also cease to be updated or become inaccessible.
   In contrast, manuscripts are the established method of scientific communication
   because they provide descriptive context and accessible formatting for readers,
   can be peer reviewed, and have well-established methods for citation.
@@ -46,7 +43,7 @@
 
   A self-updating manuscript bridges the features of dynamic database and static manuscript
   presentation styles by providing convenient access to the most current information.
-  It encourages communities of researchers to directly feed into the annotation process
+  It encourages communities of researchers to directly feed into the formal curation process
   and enables rapid leveraging of the most current data for relatively stable gene families.
 
   Implementating a dynamic manuscript is also an example of ``reproducible research''
@@ -69,11 +66,11 @@
 
   One potential challenge for researchers is the referencing of dynamic data within such a manuscript.
   This can be simply addressed by users citing the publication as a traditional static manuscript
-  then stating the access date in Materials and Methods, as they would for a database.
+  then stating the build date in Materials and Methods, as they would for a database.
 
   Although the dynamic data will remain current,
   major revisions in understanding of a gene family or accumulation of small insights
-  may in time render the explanatory static manuscript text obsolete.
+  can in time render the explanatory static manuscript text obsolete.
   In this case the manuscript can simply be refreshed and republished independently
   in the same way as a traditional manuscript would be.
   The underlying scripts generating the dynamic data do not need to be rewritten,
