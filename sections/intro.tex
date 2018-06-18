@@ -20,6 +20,10 @@
   of which \TotalCoreCodingGenes{} are coding genes and \TotalCorePseudoGenes{}
   are pseudogenes (\tref{tab:histone-gene-count}).
 
+  %% Get tables out of the first page.  After we made the abstract
+  %% shorter to follow eLife requirements, this gets moved to the
+  %% first page and above the title.
+  \afterpage{
   \begin{table}
     \caption{Properties distinguishing canonical and variant core histone proteins.}
     \label{tab:typical-histone-differences}
@@ -44,6 +48,7 @@
     \centering
     \input{sections/table-histone_count}
   \end{table}
+  }
 
   Relationships within the histone family have been described using a variety of terminologies
   reflecting biochemical, functional, and genomic perspectives that are briefly described below
