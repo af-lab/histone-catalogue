@@ -362,6 +362,12 @@ if not (env.GetOption('help') or env.GetOption('clean')):
     print "SCons EPSTOPDF not configured.  Do you have epstopdf installed (part of texlive)"
     Exit(1)
 
+  ## We can get SCons in a state where EPSTOPDF is defined but the
+  ## program where it points to does not really exist.  See issue #48
+  if not conf.CheckProg(env['EPSTOPDF']):
+    print "Unable to find `epstodpf' (part of texlive) installed"
+    Exit(1)
+
   ## We need this so we can then use CheckLatex* or the user gets a
   ## pretty cryptic error message.
   if not conf.CheckProg("kpsewhich"):
