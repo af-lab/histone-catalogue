@@ -1,11 +1,12 @@
 \section{Materials and methods}
 
   The primary manuscript is generated from \LaTeX{} sources, derived
-  from dynamic data, and built using SCons \citep{SCons2005}.
-  Search and download of fresh data is performed by bp\_genbank\_ref\_extractor
-  which was implemented for the Bioperl project \citep{bioperl} and has
-  been included in the Bio-EUtilities module. Analysis of the data relies
-  heavily on BioPerl.
+  from dynamic data, and built using SCons \citep{SCons2005}. To
+  search the Entrez Gene database and download the associated genomic,
+  transcript, and protein sequences, we have created the
+  bp\_genbank\_ref\_extractor program. This program has been included
+  in the Bio-EUtilities distribution since version 1.73. Analysis of
+  the data relies heavily on BioPerl \citep{bioperl}.
 
   All sources are freely available in a git repository at
   \url{https://github.com/af-lab/histone-catalogue.git}, including all
