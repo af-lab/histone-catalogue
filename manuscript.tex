@@ -1,22 +1,45 @@
-\documentclass[a4paper,oneside,onecolumn,article,draft]{memoir}
+\documentclass[a4paper,10pt,oneside,onecolumn,article]{memoir}
+\semiisopage
+\checkandfixthelayout
+
 \counterwithout{section}{chapter}
+\setcounter{secnumdepth}{0}
 
 \input{preamble}
 \input{preamble-manuscript}
 
 \title{The Human Canonical Core Histone Catalogue}
+\author{David Miguel Susano Pinto\thanks{Centre for Chromosome
+    Biology, School of Natural Sciences, National University of
+    Ireland Galway, Galway, Ireland},
+    Andrew Flaus\thanksmark{1}\thanks{Corresponding author: Andrew Flaus
+    (\href{mailto:andrew.flaus@nuigalway.ie}{andrew.flaus@nuigalway.ie})}}
 
-\author[1]{David Miguel Susano Pinto}
-\author[1]{Andrew Flaus}
+\makepagestyle{rxiv}
+\makerunningwidth{rxiv}{\headwidth}
+\makefootrule{rxiv}{\headwidth}{\normalrulethickness}{\footruleskip}
+\makeoddfoot{rxiv}{}{}{\thepage}
+\makeevenfoot{rxiv}{\thepage}{}{}
+\makeheadposition{rxiv}{}{}{flushright}{flushleft}
+\pagestyle{rxiv}
 
-\affil[1]{Centre for Chromosome Biology, School of Natural Sciences,
-  National University of Ireland Galway, Galway, Ireland}
+
+%% Shape the maketitle command.  Remove the vertical space at the
+%% start, and the whole date stuff.
+\setlength{\droptitle}{-50pt}
+\pretitle{\begin{flushleft}\huge\bfseries\scshape}
+\posttitle{\end{flushleft}}
+\preauthor{\begin{flushleft}\large}
+\postauthor{\par\end{flushleft}}
+\predate{}
+\date{}
+\postdate{}
 
 \begin{document}
-
   \maketitle
 
   \begin{abstract}
+    \noindent
     Core histone proteins H2A, H2B, H3, and H4 are encoded
     by a large family of genes distributed across the human genome.
     Canonical core histones contribute the majority of proteins to bulk chromatin packaging,
