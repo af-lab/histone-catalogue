@@ -15,7 +15,6 @@ create a new build of the catalogue from current annotations.
 This is based on SCons, an automated software build system.
 
 # Instructions
-==================
 
 To build the catalogue:
 1. Install linux and software dependencies
@@ -33,11 +32,11 @@ and compile the catalogue in PDF format as required.
 
 Example command to generate a fully updated manuscript PDF.
 
-````scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top update manuscript
+`scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top update manuscript
 
 For a complete list of targets and options.
 
-````scons -h
+`scons -h
 
 ## Choosing the build target
 
@@ -49,16 +48,16 @@ Some additional analyses are also included.
 
 This is the format of the published histone catalogue and probably what you want.
 
-    scons manuscript
+`scons manuscript
 
 ### target as catalogue
 
 The 'catalogue' is a PDF with multiple tables and figures but not embedded in a manuscript context. 
 Catalogue is the default if no target is specified, so the following are equivalent.
 
-    scons catalogue
+`scons catalogue
 
-    scons
+`scons
 
 ### target including update
 
@@ -68,9 +67,9 @@ The build does **NOT** automatically download new data unless you specify 'updat
 
 To force a refresh of the Entrez data include 'update' in the target.
 
-    scons update catalogue
+`scons update catalogue
 
-    scons update manuscript
+`scons update manuscript
 
 Note that the sequence release datestamp is shown in the caralogue and manuscript PDFs.
 
@@ -80,7 +79,7 @@ To download only the sequence data without performing any analysis, use the `dat
 This is equivalent to 'update' but without building a catalogue or manuscript. 
 It makes all sequences available in csv format in the results/sequences subdirectory of histone-catalogue.
 
-    scons data
+`scons data
 
 Note that the data subdirectory contains certain fixed data required for the builds, not the sequence data.
 
@@ -107,7 +106,7 @@ on [A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books
 
 You should provide the `--email' option:
 
-    scons --email=example@domain.top
+`scons --email=example@domain.top
 
 ### api key
 
@@ -118,7 +117,7 @@ Note that you should also include your email address.
 
 You can include the api key using the '--api_key' option:
 
-    scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top
+`scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top
 
 ### organism
 
@@ -127,7 +126,7 @@ Other organisms can be specified using the `--organism' option.
 This is heavily dependent on the annotation state of the organism reference
 genome and has only been tested by us for human and mice.
 
-    scons --organism='mus musculus'
+`scons --organism='mus musculus'
 
 # Installing linux and software dependencies
 
