@@ -141,7 +141,7 @@ def perl5_scanner(node, env, path):
         foreach (sort keys %%{$deps})
           { print $deps->{$_}->{file} . "\\n"; }
       """ % str(fpath)
-      deps = subprocess.check_output(perl_args + ["-e", code], env=env['ENV'])
+      deps = subprocess.check_output(perl_args + ["-e", code], env=env['ENV'], text=True)
       for dep in deps.splitlines():
         dep = os.path.realpath(dep)
         if dep.startswith(cwd) and dep not in our_deps:
