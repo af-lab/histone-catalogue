@@ -1,77 +1,95 @@
-Histone Catalogue
-=================
+# Histone Catalogue
 
 This project provides a catalogue of canonical core histone genes,
 encoded proteins, and pseudogenes based on reference genome
-annotations.  It also provides a discussion on the definition of
-histone variables, isoforms, clusters, and their nomenclature.
+annotations. It also provides context on the variation of
+histone properties, isoforms, clusters, and their nomenclature.
 
 Since curation and annotation are dynamic and evolving, the catalogue
-was made a live publication so it can provide always up to date
-information in an accessible format.  Inspired by the ideals of
-reproducible research, this project contains all the code required to
-create a new build of the catalogue from current annotations as well
-as the code to automate such build.  SCons, a software build system,
-is used to automate the build.
+generates a live publication that can provide always up-to-date
+information in an accessible format.
 
+Inspired by the ideals of reproducible research, 
+this project contains all the code required to automate and 
+create a new build of the catalogue from current annotations.
+This is based on SCons, an automated software build system.
 
-Build instructions
+# Instructions
 ==================
 
-To build the catalogue, run `scons' from the root of the project.
-This will check if all required sofware is installed, search the
-databases for the histone genes, download all required sequences,
-analyze the sequences, generate figures, and finally compile a
-catalogue in pdf format.
+To build the catalogue:
+1. Install linux and software dependencies
+2. Pull the histone-catalogue project from github
+3. Run scons with the build target from the histone-catalogue directory
 
-See `scons -h' for a complete list of targets and options.
+## Running scons
 
-For detailed instructions, see our Linux distribution and version
-specific instructions for:
+Running scons will check that all required software is installed,
+search the databases for the histone genes, 
+download all required sequences,
+analyze the sequences,
+generate figures
+and compile the catalogue in PDF format as required.
 
-* [Ubuntu 20.04 LTS](how-to/manuscript-build-ubuntu-2004LTS.md)
+Example command to generate a fully updated manuscript PDF.
 
-Data
-----
+````scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top update manuscript
 
-There is no data on this repository, all of it is download from the
-Entrez databases as part of the build.  To download only the sequence
-data and skip all the analysis, use the `data' target:
+For a complete list of targets and options.
+
+````scons -h
+
+## Choosing the build target
+
+### target as manuscript
+
+The 'manuscript' comprises all tables and figures as a PDF 
+embedded in a contextual discussion of canonical histone genes and proteins. 
+Some additional analyses are also included.
+
+This is the format of the published histone catalogue and probably what you want.
+
+    scons manuscript
+
+### target as catalogue
+
+The 'catalogue' is a PDF with multiple tables and figures but not embedded in a manuscript context. 
+Catalogue is the default if no target is specified, so the following are equivalent.
+
+    scons catalogue
+
+    scons
+
+### target including update
+
+The full sequence download process can take quite some time due to Entrez data access rate limitations.
+If you have previously downloaded sequence data, your build defaults to the existing sequences.
+The build does **NOT** automatically download new data unless you specify 'update'
+
+To force a refresh of the Entrez data include 'update' in the target.
+
+    scons update catalogue
+
+    scons update manuscript
+
+Note that the sequence release datestamp is shown in the caralogue and manuscript PDFs.
+
+### target as data
+
+To download only the sequence data without performing any analysis, use the `data' target.
+This is equivalent to 'update' but without building a catalogue or manuscript. 
+It makes all sequences available in csv format in the results/sequences subdirectory of histone-catalogue.
 
     scons data
 
-Other organisms
----------------
+Note that the data subdirectory contains certain fixed data required for the builds, not the sequence data.
 
-By default, a catalogue of the human histones is generated.  Other
-organisms can be specified via the `--organism' option.  This is
-heavily dependent on the annotation state of the organism reference
-genome and it has only been tested in human and mice.
+## Additional options
 
-    scons --organism='mus musculus'
+### email
 
-Manuscript
-----------
-
-By default, only the catalogue --- a pdf with multiple tables and
-figures --- is built.  There is also a manuscript which builds
-something akin to a publication of the catalogue which includes a
-discussion of the histone genes as well as some analysis not present
-on the catalogue.
-
-Update
-------
-
-If there is previously downloaded sequence data, a new build will
-not automatically download new data.  Use the `update' target for
-that.  Note that this will only update the data, if you want to
-rebuild
-
-Email
------
-
-The Entrez databases are searched via E-utilities requires, but does
-not enforce, an email address.  This email can then be used by NCBI
+The Entrez databases searched via E-utilities requires an email address, 
+although this is not enforced.  This email is a politeness allowing NCBI
 staff to contact you in case you accidentally overload their servers.
 
 > In order not to overload the E-utility servers, NCBI recommends that
@@ -87,43 +105,42 @@ staff to contact you in case you accidentally overload their servers.
 For more details, see section *"Usage guidelines and requirements"*,
 on [A General Introduction to the E-utilities](http://www.ncbi.nlm.nih.gov/books/NBK25497/).
 
-To set an email, use the `--email' option like so:
+You should provide the `--email' option:
 
     scons --email=example@domain.top
 
-Examples
---------
+### api key
 
-* Build the catalogue for human histones:
+**To be implemented**
+The Entrez databases allow faster retrieval of 10 records per second
+if an API key is included. Users can be obtain this free via the MyNCBI interface. 
+Note that you should also include your email address.
 
-        scons
+You can include the api key using the '--api_key' option:
 
-* Build the manuscript for human histones:
+    scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top
 
-        scons manuscript
+### organism
 
-* Only download the sequences data for humans:
+A catalogue of human histones is generated by default.
+Other organisms can be specified using the `--organism' option.
+This is heavily dependent on the annotation state of the organism reference
+genome and has only been tested by us for human and mice.
 
-        scons data
+    scons --organism='mus musculus'
 
-* Only download the sequences data for mice:
+# Installing linux and software dependencies
 
-        scons --organism='mus musculus' data
+If you do not have a linux system available, the histone-catalogue can be created 
+using Ubuntu on a USB stick or in Virtualbox on a PC or Mac.
 
-* Update previously downloaded data:
+* [Installing Ubuntu on a USB stick](how-to/install-ubuntu-usb-stick.md)
+* Installing Ubuntu in Virtualbox
+* [Installing dependencies and building with Ubuntu 20.04 LTS](how-to/manuscript-build-ubuntu-2004LTS.md)
 
-        scons update
+# Dependencies
 
-* Rebuild catalogue with new data
-
-        scons update catalogue
-
-
-Dependencies
-============
-
-Several pieces of software are required to build the histone
-catalogue:
+A number of software components are required to build the histone catalogue:
 
 * [SCons](www.scons.org) which provides the build system.
 * pdflatex, bibtex, epstopdf, and several other latex packages are
@@ -142,8 +159,7 @@ A complete list of required perl modules and latex packages is listed
 via `scons -h'.
 
 
-Directory structure
-===================
+# Directory structure
 
 * data - data that is not automatically generated such as the data
   from Marzluff 2002 paper which we use as reference for comparison.
