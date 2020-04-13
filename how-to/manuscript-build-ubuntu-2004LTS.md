@@ -1,5 +1,8 @@
-# Manuscript builds using Ubuntu 17.04
-This has been tested using Ubuntu 17.04 as a live persistent installation on a 32 GB USB stick. All commands are typed into command line after  `$` in Ubuntu Terminal app.
+# Manuscript builds using Ubuntu 20.04 LTS
+This has been tested using Ubuntu 20.04 LTS beta in Virtualbox 6.1 running on macOS 10.13.6 High Sierra. Ubuntu 20.04 LTS is in beta release only at time of writing so be sure to update regularly.
+
+All commands are typed into command line after  `$` in Ubuntu Terminal app.
+
 ## 1. Ensure Ubuntu is updated
 `sudo add-apt-repository universe`
 
@@ -8,8 +11,6 @@ This has been tested using Ubuntu 17.04 as a live persistent installation on a 3
 `sudo apt update`
 
 `sudo apt upgrade`
-
-It is not possible to dist-upgrade a live USB installation because the kernal is read-only.
 
 ## 2. Install dependencies
 `sudo apt install scons`
@@ -22,16 +23,31 @@ It is not possible to dist-upgrade a live USB installation because the kernal is
 
 `sudo apt install paml`
 
-`sudo apt install libbio-eutilities-perl`
+`sudo apt install scipy`
 
-`sudo apt --yes install texlive texlive-latex-extra texlive-fonts-extra 
-texlive-science texlive-publishers texlive-lang-greek`
+`sudo apt --yes install libbio-eutilities-perl 
+libbio-tools-phylo-paml-perl 
+libbio-tools-run-alignment-tcoffee-perl`
 
-`sudo apt --yes install libmoose-perl libmoosex-strictconstructor-perl libmodule-scandeps-perl libtest-output-perl libstatistics-basic-perl libtext-csv-perl`
+`sudo apt --yes install texlive 
+texlive-latex-extra 
+texlive-fonts-extra 
+texlive-font-utils 
+texlive-science 
+texlive-publishers 
+texlive-lang-greek`
 
-`sudo apt install python-setuptools`
+`sudo apt --yes install libmoose-perl 
+libmoosex-strictconstructor-perl 
+libmodule-scandeps-perl 
+libtest-output-perl 
+libstatistics-basic-perl 
+libtext-csv-perl 
+libfile-which-perl`
 
-`sudo easy_install weblogo`
+`sudo apt install python3-pip`
+
+`sudo pip3 install weblogo`
 
 ## 3. Clone histone-catalogue
 `git clone https://github.com/af-lab/histone-catalogue.git`

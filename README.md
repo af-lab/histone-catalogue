@@ -29,8 +29,7 @@ See `scons -h' for a complete list of targets and options.
 For detailed instructions, see our Linux distribution and version
 specific instructions for:
 
-* [Ubuntu 16.04](how-to/manuscript-build-ubuntu-1604-LTS.md)
-* [Ubuntu 17.04](how-to/manuscript-build-ubuntu-1704.md) (easier)
+* [Ubuntu 20.04 LTS](how-to/manuscript-build-ubuntu-2004LTS.md)
 
 Data
 ----
