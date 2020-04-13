@@ -298,7 +298,7 @@ DEPENDENCIES
   Perl modules:
 """)
 for module in (perl_dependencies + perl_analysis_dependencies
-               + bioperl_run_dependencies.keys()):
+               + list(bioperl_run_dependencies.keys())):
   env.Help("    * %s\n" % module)
 
 env.Help("""
@@ -337,53 +337,53 @@ if not (env.GetOption('help') or env.GetOption('clean')):
                            + " | weblogo --number-interval 50"
                            + " > %s" % os.devnull,
                            "if weblogo supports --number-interval"):
-    print "weblogo has no --number-interval option (added in weblogo 3.5.0)"
+    print ("weblogo has no --number-interval option (added in weblogo 3.5.0)")
     Exit(1)
 
   for module in set (perl_dependencies + perl_analysis_dependencies
-                     + bioperl_run_dependencies.keys()):
+                     + list(bioperl_run_dependencies.keys())):
     if not conf.CheckPerlModule(module):
-      print "Unable to find perl module %s." % module
+      print ("Unable to find perl module %s." % module)
       Exit(1)
 
-  for module, program in bioperl_run_dependencies.iteritems():
+  for module, program in bioperl_run_dependencies.items():
     if not conf.CheckBioperlRunExecutable(module):
-      print "bioperl's %s is not working (did you install %s?)" % (module, program)
+      print ("bioperl's %s is not working (did you install %s?)" % (module, program))
       Exit(1)
 
   if "check" in COMMAND_LINE_TARGETS:
     for module in set (perl_test_dependencies):
       if not conf.CheckPerlModule(module):
-        print "Unable to find perl module %s." % module
+        print ("Unable to find perl module %s." % module)
         Exit(1)
 
   if not conf.CheckVariable('EPSTOPDF'):
-    print "SCons EPSTOPDF not configured.  Do you have epstopdf installed (part of texlive)"
+    print ("SCons EPSTOPDF not configured.  Do you have epstopdf installed (part of texlive)")
     Exit(1)
 
   ## We can get SCons in a state where EPSTOPDF is defined but the
   ## program where it points to does not really exist.  See issue #48
   if not conf.CheckProg(env['EPSTOPDF']):
-    print "Unable to find `epstodpf' (part of texlive) installed"
+    print ("Unable to find `epstopdf' (part of texlive) installed")
     Exit(1)
 
   ## We need this so we can then use CheckLatex* or the user gets a
   ## pretty cryptic error message.
   if not conf.CheckProg("kpsewhich"):
-    print "Unable to find `kpsewhich' (part of texlive) installed"
+    print ("Unable to find `kpsewhich' (part of texlive) installed")
     Exit(1)
 
   for package in latex_package_dependencies:
     if not conf.CheckLaTeXPackage(package):
-      print "Unable to find required LaTeX package %s." % package
+      print ("Unable to find required LaTeX package %s." % package)
       Exit(1)
 
   if not conf.CheckLaTeXClass("memoir"):
-    print "Unable to find the LaTeX document class memoir."
+    print ("Unable to find the LaTeX document class memoir.")
     Exit(1)
 
   if not conf.CheckBibTeXStyle("agu"):
-    print "Unable to find the BibTeX style agu."
+    print ("Unable to find the BibTeX style agu.")
     Exit(1)
 
   ## We shouldn't need this.  If textgreek is properly installed, this
@@ -392,7 +392,7 @@ if not (env.GetOption('help') or env.GetOption('clean')):
   ## should be testing for a working textgreek package but I don't
   ## want to setup such configure check with SCons.
   if not conf.CheckTeXDef("lgrenc"):
-    print "Didn't found lgrenc.def so textgreek is broken."
+    print ("Didn't found lgrenc.def so textgreek is broken.")
     Exit(1)
 
   ## If the users does not want to set an email, let him.  We warn
