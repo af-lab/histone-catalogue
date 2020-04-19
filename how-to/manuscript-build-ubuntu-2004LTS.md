@@ -50,21 +50,20 @@ libfile-which-perl`
 `sudo pip3 install weblogo`
 
 ## 3. Clone histone-catalogue
-`git clone https://github.com/af-lab/histone-catalogue.git`
+````git clone https://github.com/af-lab/histone-catalogue.git`
 
 ## 4. Build manuscript
 `cd histone-catalogue`
-
 `git pull`
-
-`scons --email=youremail@youruniversity.edu manuscript`
+`scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top update manuscript`
 
 Print or copy the manuscript.pdf file generated in the histone-catalogue directory.
 
 ### Notes
-* To refresh all RefSeq data use `scons -c --email=youremail@youruniversity.edu`
+* To refresh all RefSeq data use `scons --email=youremail@youruniversity.edu update manuscript`
   * Executing scons without manuscript will generate figures only as catalogue.pdf
-  * Email address is required but is simply recorded in the log file. It is not transferred remotely or used for any other reason.
+* Email address is required but is simply recorded in the log file in case NCBI wish to discuss data transfers.
+* API key can be obtained via your MyNCBI page. This is now required for appropraite data transfers.
 * First or refreshed builds take a while to download fresh data from NCBI so it is often convenient to start them in a virtual screen session using `screen -DR build`
 
 
