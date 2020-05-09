@@ -65,8 +65,10 @@ sub symbol2type
   my $symbol = shift;
 
   my $type;
-  if ($symbol =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4)/i) # canonical
+  if ($symbol =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4)/i) # canonical old nomenclature
     { $type = uc $2; }
+  elsif ($symbol =~ m/^(H1|H2A|H2B|H3|H4)C(\d+)/i) # canonical new npmenclature
+    { $type = uc $1; }
   elsif ($symbol =~ m/^((H1|H2A|H2B|H3|H4)F|CENPA$)/i) # variant
     {
       ## $2 will be the histone if followed by F. If it's empty,

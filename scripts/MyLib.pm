@@ -141,17 +141,24 @@ sub select_canonical {
   foreach my $uid (keys %genes) {
     my $symbol = $genes{$uid}{'symbol'};
 
-    ## skip genes that don't look canonical and get cluster number
-    next unless $symbol =~ m/^HIST(\d+)($HistoneCatalogue::histone_regexp)/i;
-
-    $genes{$uid}{'cluster'} = $1;
-    $genes{$uid}{'histone'} = $2;
-
-    ## warn if a gene is found whose nomeclature mentions an unknown cluster
-    if ($genes{$uid}{'cluster'} > $HistoneCatalogue::cluster_number) {
-      warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
+    if ($symbol =~ m/^HIST(\d+)/i) # a canonical histone in old nomenclature (belongs to a cluster)
+    {
+        $genes{$uid}{'cluster'} = $1;
+        $genes{$uid}{'histone'} = $2;
+        ## warn if a gene is found whose nomeclature mentions an unknown cluster
+        if ($genes{$uid}{'cluster'} > $HistoneCatalogue::cluster_number) {
+           warn ("Update/Check the code, found possible NEW histone cluster $1 with gene '$symbol'");
+        }
+        push (@canon, $genes{$uid}); # pushing references to that struct into an array
     }
-    push (@canon, $genes{$uid}); # pushing references to that struct into an array
+    elsif ($symbol =~ m/^(H1|H2A|H2B|H3|H4|H5)C(\d+)/i) # a canonical histone in new nomenclature
+    {
+        $genes{$uid}{'cluster'} = 0;
+        $genes{$uid}{'histone'} = $1;
+        push (@canon, $genes{$uid}); # pushing references to that struct into an array
+    }
+    else
+    { next; }
   }
   return @canon;
 }

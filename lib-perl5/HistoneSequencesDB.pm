@@ -160,7 +160,9 @@ sub _csv_line_2_Gene
   my $symbol = $entry->{'gene symbol'};
 
   my $gene_ctor;
-  if ($symbol =~ m/^HIST(\d+)/i) # a canonical histone (belongs to a cluster)
+  if ($symbol =~ m/^HIST(\d+)/i) # a canonical histone in old nomenclature (belongs to a cluster)
+    { $gene_ctor = sub { CanonicalHistoneGene->new(@_); }; }
+  elsif ($symbol =~ m/^(H1|H2A|H2B|H3|H4|H5)C(\d+)/i) # a canonical histone in new nomenclature (gets cluster=0)
     { $gene_ctor = sub { CanonicalHistoneGene->new(@_); }; }
   else # must be an histone variant
     {

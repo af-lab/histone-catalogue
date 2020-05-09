@@ -60,14 +60,24 @@ sub BUILD
 {
   my $self = shift;
 
-  $self->symbol() =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4|H5)/i;
-  if (! $1)
-    { croak 'unable to find cluster number from symbol ' . $self->symbol (); }
-  if (! $2)
-    { croak 'unable to find histone type from symbol ' . $self->symbol (); }
-
-  $self->_cluster ($1);
-  $self->_histone_type (uc ($2));
+  if ($symbol =~ m/^HIST(\d+)/i) # a canonical histone in old nomenclature (belongs to a cluster)
+  {
+    $self->symbol() =~ m/^HIST(\d+)(H1|H2A|H2B|H3|H4|H5)/i;
+    if (! $1)
+      { croak 'unable to find cluster number from symbol ' . $self->symbol (); }
+    if (! $2)
+      { croak 'unable to find histone type from symbol ' . $self->symbol (); }
+    $self->_cluster ($1);
+    $self->_histone_type (uc ($2));
+  }
+  else # must be a canonical histone in new nomenclature
+  {
+    $self->symbol() =~ m/^(H1|H2A|H2B|H3|H4|H5)C(\d+)/i;
+    if (! $1)
+      { croak 'unable to find histone type from symbol ' . $self->symbol (); }
+    $self->_cluster (0);
+    $self->_histone_type (uc ($1));
+  }
 }
 
 
