@@ -67,6 +67,13 @@ TARGETS
 
 OPTIONS
 
+  --api-key=API-KEY
+      Set NCBI E-utilities API key for requests.  Without an API key,
+      NCBI will limit the number of requests and the getting data step
+      may fail.
+
+          scons --api-key="36-characters-hexadecimal-string"
+
   --email=ADDRESS
       Set email to be used when connecting to the NCBI servers.:
 
@@ -90,6 +97,14 @@ AddOption(
   type    = "string",
   default = "",
   help    = "E-mail provided to NCBI when connecting to Entrez."
+)
+AddOption(
+  "--api-key",
+  dest    = "api-key",
+  action  = "store",
+  type    = "string",
+  default = "",
+  help    = "NCBI E-utilities API key."
 )
 AddOption(
   "--verbose",
@@ -157,6 +172,12 @@ def CheckEmail(context, email):
   context.Result(is_ok)
   return is_ok
 
+def CheckAPIKey(context, api_key):
+  context.Message("Checking api-key...")
+  is_ok = api_key
+  context.Result(api_key)
+  return is_ok
+
 def CheckProg(context, app_name):
   context.Message("Checking for %s..." % app_name)
   is_ok = context.env.WhereIs(app_name)
@@ -207,6 +228,7 @@ conf = Configure(
     "CheckBibTeXStyle"  : CheckBibTeXStyle,
     "CheckPerlModule"   : CheckPerlModule,
     "CheckEmail"        : CheckEmail,
+    "CheckAPIKey"       : CheckAPIKey,
     "CheckProg"         : CheckProg,
     "CheckCommand"      : CheckCommand,
     "CheckVariable"     : CheckVariable,
@@ -402,6 +424,14 @@ if not (env.GetOption('help') or env.GetOption('clean')):
            "         to retrieve data from the Entrez system.  Consider using\n"
            "         '--email' and see README for details why.")
 
+  ## If the users does not want to set an email, let him.  We warn
+  ## here and Bio-EUtilities warns again, but don't force it.
+  if not conf.CheckAPIKey(env.GetOption("api-key")):
+    print ("WARNING: a NCBI E-utilities API Key is required to make the number\n"
+           "         of queries that retrieving the data for this project.\n"
+           "         Considering a NCBI account, then create an API key, and\n"
+           "         pass it via the '--api-key' option.")
+
 env = conf.Finish()
 
 ##
@@ -468,8 +498,11 @@ def create_extract_sequences_args():
     "--save",         seq_dir,
     "--save-data",    "csv",
     "--email",        env.GetOption("email"),
-    entrez_query
   ]
+  if env.GetOption("api-key"):
+    bp_genbank_ref_extractor_call.extend(["--api-key", env.GetOption("api-key")])
+
+  bp_genbank_ref_extractor_call.append(entrez_query)
   return bp_genbank_ref_extractor_call
 
 ## Ideally we would set target to the sequences directory and it would be
