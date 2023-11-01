@@ -497,8 +497,9 @@ def create_extract_sequences_args():
     "--format",       "genbank",
     "--save",         seq_dir,
     "--save-data",    "csv",
-    "--email",        env.GetOption("email"),
   ]
+  if env.GetOption("email"):
+    bp_genbank_ref_extractor_call.extend(["--email", env.GetOption("email")])
   if env.GetOption("api-key"):
     bp_genbank_ref_extractor_call.extend(["--api-key", env.GetOption("api-key")])
 
