@@ -4,56 +4,67 @@ This has been tested using Ubuntu 20.04 LTS beta in Virtualbox 6.1 running on ma
 All commands are typed into command line after  `$` in Ubuntu Terminal app.
 
 ## 1. Ensure Ubuntu is updated
-`sudo add-apt-repository universe`
 
-`sudo add-apt-repository multiverse`
-
-`sudo apt update`
-
-`sudo apt upgrade`
+```
+sudo add-apt-repository universe
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt upgrade
+```
 
 ## 2. Install dependencies
-`sudo apt install scons`
 
-`sudo apt install git`
+```
+sudo apt install scons
+sudo apt install git
+sudo apt install bioperl
+sudo apt install paml
+sudo apt install scipy
 
-`sudo apt install bioperl`
+sudo apt --yes install \
+    libbio-eutilities-perl \
+    libbio-tools-phylo-paml-perl \
+    libbio-tools-run-alignment-tcoffee-perl
 
-`sudo apt install paml`
+sudo apt --yes install \
+    texlive \
+    texlive-latex-extra \
+    texlive-fonts-extra \
+    texlive-font-utils \
+    texlive-science \
+    texlive-publishers \
+    texlive-lang-greek
 
-`sudo apt install scipy`
+sudo apt --yes install \
+    libmoose-perl \
+    libmoosex-strictconstructor-perl \
+    libmodule-scandeps-perl \
+    libtest-output-perl \
+    libstatistics-basic-perl \
+    libtext-csv-perl \
+    libfile-which-perl
 
-`sudo apt --yes install libbio-eutilities-perl
-libbio-tools-phylo-paml-perl
-libbio-tools-run-alignment-tcoffee-perl`
+sudo apt install python3-pip
 
-`sudo apt --yes install texlive
-texlive-latex-extra
-texlive-fonts-extra
-texlive-font-utils
-texlive-science
-texlive-publishers
-texlive-lang-greek`
-
-`sudo apt --yes install libmoose-perl
-libmoosex-strictconstructor-perl
-libmodule-scandeps-perl
-libtest-output-perl
-libstatistics-basic-perl
-libtext-csv-perl
-libfile-which-perl`
-
-`sudo apt install python3-pip`
-
-`sudo pip3 install weblogo`
+sudo pip3 install weblogo
+```
 
 ## 3. Clone histone-catalogue
-````git clone https://github.com/af-lab/histone-catalogue.git`
+
+```
+git clone https://github.com/af-lab/histone-catalogue.git
+```
 
 ## 4. Build manuscript
-`cd histone-catalogue`
-`git pull`
-`scons --api_key='xxxxxxxxxxxxxxxxxxx' --email=example@domain.top update manuscript`
+
+```
+cd histone-catalogue
+git pull
+scons \
+    --api_key='xxxxxxxxxxxxxxxxxxx' \
+    --email='example@domain.top' \
+    update manuscript
+```
 
 Print or copy the manuscript.pdf file generated in the histone-catalogue directory.
 

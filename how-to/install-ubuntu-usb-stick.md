@@ -12,11 +12,11 @@ The installation uses mkusb which enables creation of a partition for persistent
 ## 1. Install mkusb on parent
 Follow the instructions at https://help.ubuntu.com/community/mkusb
 
-`$ sudo add-apt-repository ppa:mkusb/ppa`
-
-`$ sudo apt update`
-
-`$ sudo apt install mkusb mkusb-nox usb-pack-efi`
+```
+sudo add-apt-repository ppa:mkusb/ppa
+sudo apt update
+sudo apt install mkusb mkusb-nox usb-pack-efi
+```
 
 ## 2. Create bootable Ubuntu on USB stick
 1. Launch mkusb (eg click Dash and type `mkusb`)
