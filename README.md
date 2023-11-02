@@ -110,10 +110,10 @@ You should provide the --email option:
 
 ### api key
 
-**To be implemented**
 The Entrez databases allow faster retrieval of 10 records per second
-if an API key is included. Users can be obtain this free via the MyNCBI interface. 
-Note that you should also include your email address.
+if an API key is included.  Users can be obtain this free via the
+MyNCBI interface.  Note that you should also include your email
+address.
 
 You can include the api key using the --api_key option:
 
