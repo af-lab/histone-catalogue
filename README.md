@@ -151,16 +151,17 @@ of Eastern Time zone.  Also, ensure you specify an email address and a
 valid NCBI E-utilities API key.
 
 
-# Installing linux and software dependencies
+# Installing Linux and software dependencies
 
-If you do not have a linux system available, the histone-catalogue can be created
-using Ubuntu on a USB stick or in Virtualbox on a PC or Mac.
+While technically possible to build this on Windows or MacOS, it is
+far easier to do it on Linux.  If you do not have a Linux system
+available, the histone-catalogue can be created using Ubuntu on a USB
+stick or in Virtualbox on a PC or Mac.
 
 * [Installing Ubuntu on a USB stick](how-to/install-ubuntu-usb-stick.md)
 * Installing Ubuntu in Virtualbox
-* [Installing dependencies and building with Ubuntu 20.04 LTS](how-to/manuscript-build-ubuntu-2004LTS.md)
 
-# Dependencies
+## Dependencies
 
 A number of software components are required to build the histone catalogue:
 
@@ -170,7 +171,7 @@ A number of software components are required to build the histone catalogue:
   method is to install [TeX Live](http://www.tug.org/tex-live/) which
   provides all of them in a single distribution.
 * [Perl](https://www.perl.org/) as well as several perl modules.
-* bp_genbank_ref_extractor which is used for search and download of
+* `bp_genbank_ref_extractor` which is used for search and download of
   sequences is part of bioperl's
   [Bio-EUtilities](https://metacpan.org/release/Bio-EUtilities)
   distribution.
@@ -178,6 +179,12 @@ A number of software components are required to build the histone catalogue:
 
 A complete list of required perl modules and latex packages is listed
 via `scons -h'.
+
+If you are on Linux Debian, or a Debian derivative such as Ubuntu,
+these are pre-packaged for you.  See the following instructions:
+
+* [Debian 12 (Bookworm)](how-to/manuscript-build-debian-12.md)
+* [Ubuntu 20.04 LTS](how-to/manuscript-build-ubuntu-2004LTS.md)
 
 
 # Directory structure
