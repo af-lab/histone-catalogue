@@ -17,8 +17,6 @@ All commands are typed into command line after  `$` in Ubuntu Terminal app.
 
 `sudo apt install git`
 
-`sudo apt install inkscape`
-
 `sudo apt install bioperl`
 
 `sudo apt install paml`

@@ -175,7 +175,6 @@ A number of software components are required to build the histone catalogue:
   [Bio-EUtilities](https://metacpan.org/release/Bio-EUtilities)
   distribution.
 * [weblogo](weblogo.threeplusone.com) to generate the sequence logos.
-* [inkscape](https://inkscape.org/) for figure svg to pdf conversion.
 
 A complete list of required perl modules and latex packages is listed
 via `scons -h'.
