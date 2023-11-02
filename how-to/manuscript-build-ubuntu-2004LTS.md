@@ -23,24 +23,24 @@ All commands are typed into command line after  `$` in Ubuntu Terminal app.
 
 `sudo apt install scipy`
 
-`sudo apt --yes install libbio-eutilities-perl 
-libbio-tools-phylo-paml-perl 
+`sudo apt --yes install libbio-eutilities-perl
+libbio-tools-phylo-paml-perl
 libbio-tools-run-alignment-tcoffee-perl`
 
-`sudo apt --yes install texlive 
-texlive-latex-extra 
-texlive-fonts-extra 
-texlive-font-utils 
-texlive-science 
-texlive-publishers 
+`sudo apt --yes install texlive
+texlive-latex-extra
+texlive-fonts-extra
+texlive-font-utils
+texlive-science
+texlive-publishers
 texlive-lang-greek`
 
-`sudo apt --yes install libmoose-perl 
-libmoosex-strictconstructor-perl 
-libmodule-scandeps-perl 
-libtest-output-perl 
-libstatistics-basic-perl 
-libtext-csv-perl 
+`sudo apt --yes install libmoose-perl
+libmoosex-strictconstructor-perl
+libmodule-scandeps-perl
+libtest-output-perl
+libstatistics-basic-perl
+libtext-csv-perl
 libfile-which-perl`
 
 `sudo apt install python3-pip`
@@ -63,5 +63,3 @@ Print or copy the manuscript.pdf file generated in the histone-catalogue directo
 * Email address is required but is simply recorded in the log file in case NCBI wish to discuss data transfers.
 * API key can be obtained via your MyNCBI page. This is now required for appropraite data transfers.
 * First or refreshed builds take a while to download fresh data from NCBI so it is often convenient to start them in a virtual screen session using `screen -DR build`
-
-
