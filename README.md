@@ -128,6 +128,29 @@ genome and has only been tested by us for human and mice.
 
 `scons --organism='mus musculus'`
 
+# Error downloading data
+
+When you're downloading fresh data from the NCBI servers, you may come
+across the following (or similar) error:
+
+```
+------------- EXCEPTION: Bio::Root::Exception -------------
+MSG: Response Error
+Bad Request
+STACK: Error::throw
+STACK: Bio::Root::Root::throw /usr/share/perl5/Bio/Root/Root.pm:449
+STACK: Bio::DB::GenericWebAgent::get_Response /usr/share/perl5/Bio/DB/GenericWebAgent.pm:215
+STACK: Bio::DB::EUtilities::get_Response /usr/share/perl5/Bio/DB/EUtilities.pm:34
+STACK: main::analyze_entrez_genes /usr/bin/bp_genbank_ref_extractor:239
+STACK: main::analyze_entrez_genes /usr/bin/bp_genbank_ref_extractor:312
+STACK: /usr/bin/bp_genbank_ref_extractor:177
+```
+
+If you do, then try again, either in the weekend or during the night
+of Eastern Time zone.  Also, ensure you specify an email address and a
+valid NCBI E-utilities API key.
+
+
 # Installing linux and software dependencies
 
 If you do not have a linux system available, the histone-catalogue can be created 
