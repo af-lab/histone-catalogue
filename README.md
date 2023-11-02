@@ -9,8 +9,8 @@ Since curation and annotation are dynamic and evolving, the catalogue
 generates a live publication that can provide always up-to-date
 information in an accessible format.
 
-Inspired by the ideals of reproducible research, 
-this project contains all the code required to automate and 
+Inspired by the ideals of reproducible research,
+this project contains all the code required to automate and
 create a new build of the catalogue from current annotations.
 This is based on SCons, an automated software build system.
 
@@ -24,7 +24,7 @@ To build the catalogue:
 ## Running scons
 
 Running scons will check that all required software is installed,
-search the databases for the histone genes, 
+search the databases for the histone genes,
 download all required sequences,
 analyze the sequences,
 generate figures
@@ -42,8 +42,8 @@ For a complete list of targets and options.
 
 ### target as manuscript
 
-The 'manuscript' comprises all tables and figures as a PDF 
-embedded in a contextual discussion of canonical histone genes and proteins. 
+The 'manuscript' comprises all tables and figures as a PDF
+embedded in a contextual discussion of canonical histone genes and proteins.
 Some additional analyses are also included.
 
 This is the format of the published histone catalogue and probably what you want.
@@ -52,7 +52,7 @@ This is the format of the published histone catalogue and probably what you want
 
 ### target as catalogue
 
-The 'catalogue' is a PDF with multiple tables and figures but not embedded in a manuscript context. 
+The 'catalogue' is a PDF with multiple tables and figures but not embedded in a manuscript context.
 Catalogue is the default if no target is specified, so the following are equivalent.
 
 `scons catalogue`
@@ -76,7 +76,7 @@ Note that the sequence release datestamp is shown in the caralogue and manuscrip
 ### target as data
 
 To download only the sequence data without performing any analysis, use the `data' target.
-This is equivalent to 'update' but without building a catalogue or manuscript. 
+This is equivalent to 'update' but without building a catalogue or manuscript.
 It makes all sequences available in csv format in the results/sequences subdirectory of histone-catalogue.
 
 `scons data`
@@ -87,7 +87,7 @@ Note that the data subdirectory contains certain fixed data required for the bui
 
 ### email
 
-The Entrez databases searched via E-utilities requires an email address, 
+The Entrez databases searched via E-utilities requires an email address,
 although this is not enforced.  This email is a politeness allowing NCBI
 staff to contact you in case you accidentally overload their servers.
 
@@ -153,7 +153,7 @@ valid NCBI E-utilities API key.
 
 # Installing linux and software dependencies
 
-If you do not have a linux system available, the histone-catalogue can be created 
+If you do not have a linux system available, the histone-catalogue can be created
 using Ubuntu on a USB stick or in Virtualbox on a PC or Mac.
 
 * [Installing Ubuntu on a USB stick](how-to/install-ubuntu-usb-stick.md)
